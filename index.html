@@ -90,7 +90,7 @@ const style = document.createElement('style');style.textContent = `@keyframes sp
 <script>
 (function(){const a=document.getElementById("downloads"),b=document.getElementById("downloadBtn"),c="683f23508960c979a5a4d239",d="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";async function e(){try{const f=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),g=await f.json(),h=g.record.count||0;a.textContent=`[ التحميلات: ${h} ]`}catch(i){a.textContent="[ التحميلات: غير متوفرة ]",console.error(i)}}async function j(){try{if(sessionStorage.getItem("alreadyDownloaded"))return;const k=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),l=await k.json();let m=l.record.count||0;m++;await fetch(`https://api.jsonbin.io/v3/b/${c}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":d,"X-Bin-Versioning":"false"},body:JSON.stringify({count:m})});a.textContent=`[ التحميلات: ${m} ]`;sessionStorage.setItem("alreadyDownloaded","true")}catch(n){alert("[ فشل تحديث عدد التحميلات ]"),console.error(n)}}e(),b.addEventListener("click",j)})();
 </script>
-<txt style="color:#00F500">لقطات الشاشة :</txt>
+<txt style="color:#00F500">لقطات من التطبيق :</txt>
 <style>
 .ss-track{display:flex;gap:10px;overflow-x:auto;margin-top:20px;padding-bottom:5px}
 .ss-item{width:91px;height:180px;background:#000;border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
