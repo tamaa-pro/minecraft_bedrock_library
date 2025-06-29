@@ -6,20 +6,14 @@
 <title>مكتبة ماين كرافت بيدروك</title>
 <style>
 html, body {margin: 0;padding: 0;background-color: #444444;color: white;font-family: sans-serif;overflow-y: auto;}
-.container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #222;border-radius: 15px;box-shadow: 0 0 10px #000;}
+.container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #444444;border-radius: 15px;box-shadow: 0 0 10px #000;}
 a, h2, p, span {color: white;text-decoration: none;}
 </style>
 </head>
 <body>
 <script>
-if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {
-  sessionStorage.setItem("reloaded", "true");
-  setTimeout(() => {
-    location.reload();
-  }, 1000); // بعد ثانية واحدة
-} else {
-  sessionStorage.removeItem("reloaded");
-}
+if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
+setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
 </script>
 <style>
 html, body {margin: 0;padding: 0;background-color: #000;visibility: hidden;}
