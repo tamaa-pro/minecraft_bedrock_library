@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>مكتبة ماين كرافت بيدروك</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-html, body {margin: 0;padding: 0;background: #000;height: 100%;font-family: sans-serif;overflow: hidden;user-select: none;}
-.center {height: 100%;display: flex;align-items: center;justify-content: center;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة ماين كرافت بيدروك</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: white;
+      font-family: sans-serif;
+      overflow-y: auto;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    a, h2, p, span {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
+<script>
+if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {
+  sessionStorage.setItem("reloaded", "true");
+  setTimeout(() => {
+    location.reload();
+  }, 1000); // بعد ثانية واحدة
+} else {
+  sessionStorage.removeItem("reloaded");
+}
+</script>
 <style>
 html, body {margin: 0;padding: 0;background-color: #000;visibility: hidden;}
 </style>
@@ -188,5 +218,6 @@ lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove',
 .comment-content {font-size: 14px;line-height: 1.6;margin-top: 5px;}
 #comments {margin-top: 30px;border-top: 2px solid #555;padding-top: 20px;}
 </style>
+</div>
 </body>
 </html>
