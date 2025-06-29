@@ -35,8 +35,7 @@ const isAndroid = /Android/i.test(navigator.userAgent);document.addEventListener
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<div style="background-color: #444444; border-radius: 10px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 20px;">
-<!--ماذا تفعل هنا 🙂-->
+<div style="background-color: #444444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 20px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
 <img alt="أيقونة التطبيق" src="https://k.top4top.io/p_3439brqf60.png" style="border-radius: 15px; height: 80px; object-fit: cover; width: 80px;" />
 <div>
