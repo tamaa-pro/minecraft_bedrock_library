@@ -105,27 +105,29 @@ const style = document.createElement('style');style.textContent = `@keyframes sp
 const images=[
 ["https://g.top4top.io/p_3439q2ub70.jpg",
  "شعار الأستوديو"],
-["https://h.top4top.io/p_3439clujb1.jpg",
+["https://a.top4top.io/p_346822c881.jpg",
  "الصفحة الرئيسية"],
-["https://a.top4top.io/p_3457dps9g0.jpg",
+["https://b.top4top.io/p_3468w3v741.jpg",
  "القائمة الجانبية"],
-["https://b.top4top.io/p_3463aosch1.jpg",
+["https://h.top4top.io/p_346820vt31.jpg",
  "آخر إصدار"],
-["https://k.top4top.io/p_3439ea4734.jpg",
+["https://f.top4top.io/p_346823dh11.jpg",
  "الإصدارات الأساسية"],
-["https://l.top4top.io/p_34390ct7y5.jpg",
+["https://j.top4top.io/p_34680hi921.jpg",
  "إصدارات 21-20-19"],
-["https://a.top4top.io/p_3439j1df86.jpg",
+["https://i.top4top.io/p_3468qyssz1.jpg",
  "إصدارات 18-17-16"],
-["https://c.top4top.io/p_34593e52d1.jpg",
+["https://c.top4top.io/p_346878r9y1.jpg",
+ "إصدارات أقدم من 1.16"],
+["https://e.top4top.io/p_34686966k1.jpg",
  "باتش"],
-["https://b.top4top.io/p_34397g6zy7.jpg",
+["https://d.top4top.io/p_34684199z1.jpg",
  "أوامر ماين كرافت"],
-["https://c.top4top.io/p_3439c0jx58.jpg",
+["https://k.top4top.io/p_3468to37o1.jpg",
  "برامج مقترحة"],
-["https://d.top4top.io/p_3455ubsda0.jpg",
+["https://g.top4top.io/p_3468wbnni1.jpg",
  "مواقع مقترحة"],
-["https://d.top4top.io/p_3439uo3yo9.jpg",
+["https://l.top4top.io/p_3468557ym1.jpg",
  "دردشة المجتمع"]
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});});function loadSequential(index=0){if(index>=elements.length)return;const {img,spinner,src}=elements[index];const image=new Image();image.onload=()=>{img.src=src;img.style.display="block";spinner.remove();loadSequential(index+1);};image.onerror=()=>{spinner.style.borderTopColor="red";loadSequential(index+1)};image.src=src;}loadSequential();
 </script>
@@ -164,7 +166,7 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة: 2025/06/01</sifaw><br/>
-<sifaw>تاريخ آخر تحديث للصفحة: 2025/06/29</sifaw><br/>
+<sifaw>تاريخ آخر تحديث للصفحة: 2025/06/30</sifaw><br/>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.4): 2025/02/28</sifaw><br />
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br />
 <sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br />
