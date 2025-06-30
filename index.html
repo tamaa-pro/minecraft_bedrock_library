@@ -35,21 +35,14 @@ const isAndroid = /Android/i.test(navigator.userAgent);document.addEventListener
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-<div style="width:80px;height:80px;position:relative;background:#000;border-radius:15px;display:flex;align-items:center;justify-content:center;">
-<div id="icnSpin" style="width:20px;height:20px;border:2px solid #555;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite;"></div>
-<img id="icnApp" src="https://k.top4top.io/p_3439brqf60.png" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:15px;position:absolute;" />
-</div>
+<div style="background-color: #444444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 20px;">
+<div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
+<img alt="أيقونة التطبيق" src="https://k.top4top.io/p_3439brqf60.png" style="border-radius: 15px; height: 80px; object-fit: cover; width: 80px;" />
 <div>
-<h2 style="margin:0;">المكتبة</h2>
-<p style="margin:3px 0;font-size:14px;color:#ccc;">TAMAA PRO STUDIO</p>
+<h2 style="margin: 0px;">المكتبة</h2>
+<p style="color: #cccccc; font-size: 14px; margin: 3px 0px;">TAMAA PRO STUDIO</p>
 </div>
 </div>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-<script>
-let i=document.getElementById("icnApp"),s=document.getElementById("icnSpin");
-let x=new Image();x.onload=()=>{i.style.display="block";s.remove()};x.onerror=()=>{s.style.borderTopColor="red"};x.src=i.src;
-</script>
 <div style="background-color: #333333; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
 <span id="size" style="margin-right: 20px;">[ 28MB ]</span>
