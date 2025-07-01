@@ -14,6 +14,13 @@ a, h2, p, span {color: white;text-decoration: none;}
 </style>
 </head>
 <body>
+
+<script>
+document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) && 
+(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
+lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+</script>
 <script>
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
 setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
@@ -168,11 +175,11 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة: 2025/06/01</sifaw><br/>
-<sifaw>تاريخ آخر تحديث للصفحة: 2025/06/30</sifaw><br/>
-<sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.4): 2025/02/28</sifaw><br />
-<sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br />
-<sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br />
-<sifaw>المالك: Sifaw Tinsti</sifaw><br />
+<sifaw>تاريخ آخر تحديث للصفحة: 2025/06/30</sifaw><b/>
+<sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.4): 2025/06/28</sifaw><br/>
+<sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br/>
+<sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br/>
+<sifaw>المالك: Sifaw Tinsti</sifaw><br/>
 <sifaw>تابع لطرف: TAMAA PRODUCTION STUDIOS</sifaw>
 </div>
 <script>
@@ -182,23 +189,7 @@ const toggle = document.getElementById('infoToggle');const panel = document.getE
 <div style="margin-top: 25px; text-align: center;">
 <a href="https://www.facebook.com/minecraft.bedrock.library?mibextid=ZbWKwL" style="color: #0066ff; text-decoration: underline;" target="_blank">صفحة التطبيق على الفيسبوك</a>
 </div>
-<script>
-document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
-
-document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) && 
-(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
-lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-</script>
 </div>
-<style>
-.comments-title {font-size: 20px;color: #fff;background: #222;padding: 10px;border-radius: 8px;margin-bottom: 15px;}
-.comment-block, .comment-thread .comment {background: #1e1e1e;color: #ddd;border-radius: 10px;padding: 10px 15px;margin-bottom: 12px;border: 1px solid #333;}
-.comment-avatar img {width: 40px;height: 40px;border-radius: 50%;object-fit: cover;border: 1px solid #444;}
-.comment-author {font-weight: bold;color: #00f5a0;margin-bottom: 5px;font-size: 14px;}
-.comment-timestamp {font-size: 11px;color: #aaa;}
-.comment-content {font-size: 14px;line-height: 1.6;margin-top: 5px;}
-#comments {margin-top: 30px;border-top: 2px solid #555;padding-top: 20px;}
-</style>
 </div>
 </body>
 </html>
