@@ -15,6 +15,12 @@ a, h2, p, span {color: white;text-decoration: none;}
 </head>
 <body>
 <script>
+document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) && 
+(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
+lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+</script>
+<script>
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
 setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
 </script>
@@ -168,7 +174,8 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة: 2025/06/01</sifaw><br/>
-<sifaw>تاريخ آخر تحديث للصفحة: 2025/06/30</sifaw><b/>
+<sifaw>تاريخ آخر تعديل للصفحة: 2025/06/30</sifaw><br/>
+<sifaw>رمز التعديل : 1050.18</sifaw>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.4): 2025/06/28</sifaw><br/>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br/>
 <sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br/>
