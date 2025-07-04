@@ -82,6 +82,9 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <div style="margin: 20px auto; padding: 0px 10px; text-align: center;">
 <a href="https://github.com/tamaa-pro/Minecraft_Library/releases/download/v2.4/library_2.4.apk" id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
+<style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
+<div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
+<script>let updateInProgress=true;if(updateInProgress){window.addEventListener("DOMContentLoaded",()=>{const b=document.getElementById("downloadBtn"),t=document.getElementById("toastUpdate");if(b){b.disabled=true;b.style.pointerEvents="none";b.style.backgroundColor="#8B0000";b.innerText="في انتظار التحديث..."}t.style.display="block";setTimeout(()=>{t.style.bottom="25px"},100);});}</script>
 <div id="toastMessage" style="position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-family:sans-serif;font-size:14px;padding:12px 20px;border-radius:10px;box-shadow:0 0 10px #000;white-space:nowrap;display:flex;align-items:center;gap:10px;transition:bottom 0.4s ease;z-index:9999;">
   <span style="display:inline-block;animation:jump 0.5s infinite alternate;">🐈‍⬛</span>
   إذا أعجبك التطبيق فلا تنسى نشره مع غيرك لضمان إستمراريته .
@@ -192,8 +195,8 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة: 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تعديل للصفحة: 2025/07/03</sifaw><br>
-<sifaw>رمز التعديل :(1923)-27</sifaw><br>
+<sifaw>تاريخ آخر تعديل للصفحة: 2025/07/04</sifaw><br>
+<sifaw>رمز التعديل :(1305)-28</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.4): 2025/06/28</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br>
