@@ -56,7 +56,6 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <span id="version" style="margin-right: 20px;">[ v2.5 ]</span>
 <span id="date" style="margin-right: 20px;">[ 2025/07/04 ]</span>
 <span id="platform" style="margin-right: 20px;">[ Android ]</span>
-<span id="no.ads" style="margin-right: 20px;">[ بلا إعلانات ]</span>
 <span id="author" style="margin-right: 20px;">[ Sifaw Tinsti ]</span>
 </div>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
@@ -71,8 +70,6 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 "تاريخ نشر هذا الإصدار (2025/07/04) ."],
 "platform":
 ["fab fa-android","نظام التشغيل المدعوم: أندرويد فقط ."],
-"no.ads":
-["fa-ban","لا يشغل التطبيق أي إعلانات مزعجة ."],
 "author":
 ["fa-user-gear","صاحب التطبيق و أحد أعضاء الأستوديو ."]
 };let isShowing=!1,pendingTip=null;for(const id in tips){const el=document.getElementById(id);el&&el.addEventListener("click",e=>{e.stopPropagation(),isShowing?(pendingTip=tips[id],hideTip(!0)):showTip(...tips[id])})}function showTip(e,t){const i=document.getElementById("tip-toast"),n=document.getElementById("tip-icon"),o=document.getElementById("tip-text");n.className=e.includes("fab")?`fab ${e.split(" ")[1]}`:`fa-solid ${e}`,o.textContent=t,i.style.display="flex",requestAnimationFrame(()=>{i.style.opacity="1",i.style.transform="translateY(0)",isShowing=!0}),clearTimeout(window.toastTimer),window.toastTimer=setTimeout(()=>hideTip(!1),4e3)}function hideTip(e){const t=document.getElementById("tip-toast");t.style.opacity="0",t.style.transform="translateY(-150%)",isShowing=!1,clearTimeout(window.toastTimer),setTimeout(()=>{t.style.display="none",e&&pendingTip&&(showTip(...pendingTip),pendingTip=null)},400)}document.addEventListener("click",()=>{isShowing&&hideTip(!1)});</script>
@@ -192,8 +189,8 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة: 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تعديل للصفحة: 2025/07/09</sifaw><br>
-<sifaw>رمز التعديل :(1412)-31</sifaw><br>
+<sifaw>تاريخ آخر تعديل للصفحة: 2025/07/11</sifaw><br>
+<sifaw>رمز التعديل :(1047)-32</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5): 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0): 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول (النسخة السابقة): 2024/01/07</sifaw><br>
