@@ -79,10 +79,6 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
 <div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
 <script>let updateInProgress=false;if(updateInProgress){window.addEventListener("DOMContentLoaded",()=>{const b=document.getElementById("downloadBtn"),t=document.getElementById("toastUpdate");if(b){b.disabled=true;b.style.pointerEvents="none";b.style.backgroundColor="#8B0000";b.innerText="في انتظار التحديث..."}t.style.display="block";setTimeout(()=>{t.style.bottom="25px"},100);});}</script>
-<div id="toastMessage" style="position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-family:sans-serif;font-size:14px;padding:12px 20px;border-radius:10px;box-shadow:0 0 10px #000;white-space:nowrap;display:flex;align-items:center;gap:10px;transition:bottom 0.4s ease;z-index:9999;">
-  <span style="display:inline-block;animation:jump 0.5s infinite alternate;">🐈‍⬛</span>
-  إذا أعجبك التطبيق فلا تنسى نشره مع غيرك لضمان إستمراريته .
-</div>
 <style>
 @keyframes jump{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
 </style>
@@ -189,8 +185,8 @@ const images=[
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/14</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (20:38)-41</sifaw><br>
+<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/16</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (15:21)-42</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/28</sifaw><br>
