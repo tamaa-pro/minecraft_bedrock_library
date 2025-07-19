@@ -1,1 +1,134 @@
-0
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إحصائيات التحميلات الشهرية</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .card {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    canvas {
+      width: 100% !important;
+      max-width: 900px;
+      height: 400px !important;
+    }
+    select {
+      padding: 10px;
+      background-color: #222;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📈 مبيانات التحميلات والمستخدمين حسب الأشهر</h1>
+  <label for="monthSelect">اختر شهرًا:</label>
+  <select id="monthSelect"></select>
+
+  <div class="card">
+    <canvas id="chart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const stats = {
+      "2025-06/يونيو": {
+        "days":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+        "users":[21,25,19,28,18,28,32,22,22,21,16,18,26,30,35,31,33,24,51,62,69,61,51,56,52,51,60,67,63,50],
+        "downloads":[7,11,7,14,10,12,15,8,4,5,6,6,13,14,16,8,8,8,20,28,41,30,12,27,19,15,19,28,23,14]
+      },
+      "2025-05/ماي": {
+        "days":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+        "users":[13,12,11,17,11,14,13,16,17,9,14,14,16,13,18,13,12,21,13,9,11,18,20,19,27,21,19,18,30,25,29],
+        "downloads":[3,5,4,6,2,3,3,7,6,3.5,3,7,2,4,2,4,9,1,2,6,9,7,7,12,5,4,4,13,9,10,1]
+      },
+      "2025-04/أبريل": {
+        "days":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+        "users":[4,3,3,4,2,0,2,2,2,3,2,0,6,4,9,6,6,2,9,9,9,14,18,12,6,6,11,13,9],
+        "downloads":[2,2,0,2,0,0,1,1,1,0,0,0,1,0,0,1,8,1,7,2,1,5,3,6,9,5,4,4,4,5,2]
+      },
+      "2025-03/مارس": {
+        "days":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+        "users":[7,7,4,10,6,5,1,1,4,7,3,1,6,1,4,2,1,5,3,4,3,5,3,4,3,4,3,8,4,6,5,2],
+        "downloads":[5,5,1,7,2,2,0,1,3,2,2,0,3,1,0,1,4,1,1,2,1,2,1,0,1,1,1,3,3,2]
+      },
+      "2025-02/فبراير": {
+        "days":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"],
+        "users":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        "downloads":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2]
+      }
+    };
+
+    const select = document.getElementById("monthSelect");
+    const ctx = document.getElementById("chart").getContext("2d");
+
+    // Populate dropdown
+    Object.keys(stats).forEach(month => {
+      const option = document.createElement("option");
+      option.value = month;
+      option.textContent = month.split("/")[1];
+      select.appendChild(option);
+    });
+
+    let chart;
+
+    function updateChart(monthKey) {
+      const monthData = stats[monthKey];
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: monthData.days,
+          datasets: [
+            {
+              label: 'المستخدمين',
+              data: monthData.users,
+              borderColor: 'rgba(0, 150, 255, 1)',
+              backgroundColor: 'rgba(0, 150, 255, 0.1)',
+              tension: 0.3,
+              pointRadius: 3
+            },
+            {
+              label: 'التحميلات',
+              data: monthData.downloads,
+              borderColor: 'rgba(255, 80, 80, 1)',
+              backgroundColor: 'rgba(255, 80, 80, 0.1)',
+              tension: 0.3,
+              pointRadius: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: "#fff" } }
+          },
+          scales: {
+            x: { ticks: { color: "#fff" }, title: { display: true, text: "الأيام", color: "#fff" } },
+            y: { ticks: { color: "#fff" }, title: { display: true, text: "العدد", color: "#fff" } }
+          }
+        }
+      });
+    }
+
+    select.addEventListener("change", (e) => {
+      updateChart(e.target.value);
+    });
+
+    // Initialize with the first month
+    updateChart(select.value = Object.keys(stats)[0]);
+  </script>
+</body>
+</html>
