@@ -62,8 +62,8 @@
             border-radius: 8px;
             margin-top: 20px;
             position: relative;
-            height: 350px; /* تقليل ارتفاع المبيان */
-            max-height: 45vh; /* تحديد ارتفاع أقصى بالنسبة لارتفاع الشاشة */
+            height: 300px; /* تقليل ارتفاع المبيان أكثر */
+            max-height: 40vh; /* تحديد ارتفاع أقصى بالنسبة لارتفاع الشاشة */
         }
         canvas {
             width: 100% !important;
@@ -253,36 +253,44 @@
 
         // دالة لحساب النسبة المئوية للتغير
         function getPercentageChange(currentValue, previousValue) {
-            if (previousValue === 0 || previousValue === "N/A") return "N/A";
+            if (previousValue === 0 || previousValue === "N/A" || previousValue === undefined) return "N/A";
             const change = ((currentValue - previousValue) / previousValue) * 100;
             return change.toFixed(2);
         }
 
         // دالة لتحديد الخطوات (ticks) للمحور Y بناءً على أعلى قيمة
-        function getSuggestedMax(maxValue) {
-            if (maxValue === 0) return 10; // قيمة افتراضية للقيم الصفرية
+        function getSuggestedMaxAndStepSize(maxValue) {
+            if (maxValue === 0) return { max: 10, stepSize: 1 }; // قيم افتراضية صغيرة جداً
+
             let stepSize;
             if (maxValue <= 50) {
-                stepSize = 5; // تقسم إلى 50 وحدة (50/5 = 10 خطوات)
+                stepSize = 5;
             } else if (maxValue <= 100) {
-                stepSize = 10; // تقسم إلى 100 وحدة
+                stepSize = 10;
             } else if (maxValue <= 150) {
-                stepSize = 15; // تقسم إلى 150 وحدة
+                stepSize = 15;
             } else {
-                // للقيم الأكبر، نقسم على أساس 10% من القيمة القصوى
-                // أو أقرب رقم مناسب يجعل الخطوات منتظمة
-                stepSize = Math.ceil(maxValue / 100) * 10; // مثال: 120 -> 20، 250 -> 30
-                if (stepSize < 25) stepSize = 25; // ضمان ألا تكون الخطوات صغيرة جداً
+                // للقيم الأكبر من 150
+                // نجعل الخطوة حوالي 10-15% من القيمة القصوى ثم نقربها لأقرب مضاعف لـ 25 أو 50
+                let rawStep = maxValue / 8; // تقسيم على 8-10 خطوات تقريباً
+                if (rawStep <= 25) {
+                    stepSize = Math.ceil(rawStep / 5) * 5; // أقرب مضاعف لـ 5
+                } else if (rawStep <= 50) {
+                    stepSize = Math.ceil(rawStep / 10) * 10; // أقرب مضاعف لـ 10
+                } else {
+                    stepSize = Math.ceil(rawStep / 25) * 25; // أقرب مضاعف لـ 25
+                }
             }
             // ضمان أن القيمة القصوى للمحور تغطي أعلى قيمة في البيانات
-            return Math.ceil(maxValue / stepSize) * stepSize;
+            const calculatedMax = Math.ceil(maxValue / stepSize) * stepSize;
+            return { max: calculatedMax === 0 ? stepSize : calculatedMax, stepSize: stepSize };
         }
 
         // دالة لتحديث المخطط والجدول بناءً على الشهر المختار
         function updateChartAndTable() {
             const selectedMonthIndex = parseInt(monthSelector.value);
             const currentMonthData = allData.monthly_data[selectedMonthIndex];
-            const previousMonthData = allData.monthly_data[selectedMonthIndex + 1]; // الشهر السابق في القائمة (بسبب الفرز التنازلي)
+            const previousMonthData = allData.monthly_data[selectedMonthIndex + 1]; // الشهر السابق (بسبب الفرز التنازلي)
 
             const userStats = calculateStats(currentMonthData.users);
             const downloadStats = calculateStats(currentMonthData.downloads);
@@ -324,7 +332,8 @@
 
             // تحديد أعلى قيمة للمحور Y لكلا المستخدمين والتحميلات
             const maxYValue = Math.max(userStats.max, downloadStats.max);
-            const suggestedMax = getSuggestedMax(maxYValue);
+            const { max: suggestedMax, stepSize: calculatedStepSize } = getSuggestedMaxAndStepSize(maxYValue);
+
 
             // تحديث المخطط البياني
             const labels = currentMonthData.days.map(day => `${day}`); // أرقام الأيام فقط
@@ -369,7 +378,7 @@
                                 maxRotation: 0,   // اجعلها أفقية
                                 minRotation: 0,
                                 font: {
-                                    size: 10 // حجم خط أصغر للأيام
+                                    size: 8 // حجم خط أصغر للأيام لتقليل التداخل
                                 }
                             },
                             grid: {
@@ -380,8 +389,7 @@
                             beginAtZero: true,
                             ticks: {
                                 color: '#aaa',
-                                stepSize: suggestedMax / (suggestedMax <= 50 ? 10 : (suggestedMax <= 100 ? 10 : (suggestedMax <= 150 ? 10 : 10))), // تطبيق منطق الخطوات
-                                // سيتم حساب stepSize بناءً على suggestedMax
+                                stepSize: calculatedStepSize, // استخدام الخطوة المحسوبة ديناميكياً
                                 callback: function(value, index, values) {
                                     return value.toLocaleString(); // تنسيق الأرقام
                                 }
@@ -389,7 +397,7 @@
                             grid: {
                                 color: '#444'
                             },
-                            max: suggestedMax // تحديد الحد الأقصى للمحور Y
+                            max: suggestedMax // تحديد الحد الأقصى للمحور Y بناءً على أعلى قيمة ومنطق التقسيم
                         }
                     },
                     plugins: {
