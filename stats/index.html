@@ -62,7 +62,8 @@
             border-radius: 8px;
             margin-top: 20px;
             position: relative;
-            height: 400px; /* تحديد ارتفاع للمبيان */
+            height: 350px; /* تقليل ارتفاع المبيان */
+            max-height: 45vh; /* تحديد ارتفاع أقصى بالنسبة لارتفاع الشاشة */
         }
         canvas {
             width: 100% !important;
@@ -103,7 +104,7 @@
             color: #f44336; /* أحمر */
         }
 
-        /* Responsive adjustments */
+        /* Responsive adjustments for table */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -115,12 +116,13 @@
             h1 {
                 font-size: 2em;
             }
+            /* تحويل الجدول إلى عرض "بطاقة" لكل صف على الشاشات الصغيرة */
+            .stats-table thead {
+                display: none; /* إخفاء رأس الجدول */
+            }
             .stats-table, .stats-table tbody, .stats-table tr, .stats-table td {
                 display: block;
                 width: 100%;
-            }
-            .stats-table thead {
-                display: none; /* Hide header on small screens */
             }
             .stats-table tr {
                 margin-bottom: 10px;
@@ -129,12 +131,12 @@
             }
             .stats-table td {
                 text-align: right;
-                padding-left: 50%;
+                padding-left: 50%; /* لإفساح مجال لتسمية الخانة */
                 position: relative;
                 border: none;
             }
             .stats-table td::before {
-                content: attr(data-label);
+                content: attr(data-label); /* عرض التسمية من خاصية data-label */
                 position: absolute;
                 left: 15px;
                 width: calc(50% - 30px);
@@ -188,7 +190,6 @@
                 "downloads": [3, 5, 4, 6, 2, 3, 3, 7, 6, 3, 5, 3, 7, 2, 4, 2, 4, 9, 1, 2, 6, 9, 7, 7, 12, 5, 4, 4, 13, 9, 10]
             },
             "2025-04/أبريل": {
-                // تم تصحيح الأيام هنا لتكون متسلسلة من 1 إلى 30
                 "days": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"],
                 "users": [4, 3, 3, 4, 2, 0, 2, 2, 2, 3, 2, 0, 2, 6, 4, 9, 6, 10, 6, 2, 9, 9, 9, 14, 18, 12, 6, 11, 13, 9],
                 "downloads": [2, 2, 0, 2, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 8, 1, 7, 2, 1, 5, 3, 6, 9, 5, 4, 4, 4, 5, 2]
@@ -205,18 +206,21 @@
             }
         };
 
-        // تحويل البيانات الخام إلى هيكل سهل الاستخدام في الكود
         const allData = { monthly_data: [] };
-        const monthKeys = Object.keys(rawData).sort().reverse(); // Sort to have latest month first in dropdown
+        // فرز الشهور بحيث يكون أحدث شهر هو الأول في القائمة المنسدلة
+        const monthKeys = Object.keys(rawData).sort((a, b) => {
+            const dateA = new Date(a.substring(0, 7)); // '2025-06'
+            const dateB = new Date(b.substring(0, 7));
+            return dateB - dateA; // تنازلياً
+        });
 
         monthKeys.forEach(key => {
             const parts = key.split('/');
-            const monthName = parts[1]; // "يونيو", "ماي"
+            const monthName = parts[1];
             allData.monthly_data.push({
-                month: monthName + " " + parts[0].substring(0, 4), // "يونيو 2025"
+                month: monthName + " " + parts[0].substring(0, 4),
                 users: rawData[key].users,
                 downloads: rawData[key].downloads,
-                // يمكنك إضافة الأيام هنا إذا كنت بحاجة لها في مكان آخر غير تسميات المخطط
                 days: rawData[key].days
             });
         });
@@ -225,7 +229,7 @@
         const monthSelector = document.getElementById('monthSelector');
         const statsTableBody = document.getElementById('statsTableBody');
         const ctx = document.getElementById('myChart').getContext('2d');
-        let myChart; // للاحتفاظ بنسخة المخطط
+        let myChart;
 
         // ملء قائمة الشهور (month selector)
         allData.monthly_data.forEach((data, index) => {
@@ -249,17 +253,36 @@
 
         // دالة لحساب النسبة المئوية للتغير
         function getPercentageChange(currentValue, previousValue) {
-            if (previousValue === 0) return "N/A"; // تجنب القسمة على صفر
+            if (previousValue === 0 || previousValue === "N/A") return "N/A";
             const change = ((currentValue - previousValue) / previousValue) * 100;
             return change.toFixed(2);
+        }
+
+        // دالة لتحديد الخطوات (ticks) للمحور Y بناءً على أعلى قيمة
+        function getSuggestedMax(maxValue) {
+            if (maxValue === 0) return 10; // قيمة افتراضية للقيم الصفرية
+            let stepSize;
+            if (maxValue <= 50) {
+                stepSize = 5; // تقسم إلى 50 وحدة (50/5 = 10 خطوات)
+            } else if (maxValue <= 100) {
+                stepSize = 10; // تقسم إلى 100 وحدة
+            } else if (maxValue <= 150) {
+                stepSize = 15; // تقسم إلى 150 وحدة
+            } else {
+                // للقيم الأكبر، نقسم على أساس 10% من القيمة القصوى
+                // أو أقرب رقم مناسب يجعل الخطوات منتظمة
+                stepSize = Math.ceil(maxValue / 100) * 10; // مثال: 120 -> 20، 250 -> 30
+                if (stepSize < 25) stepSize = 25; // ضمان ألا تكون الخطوات صغيرة جداً
+            }
+            // ضمان أن القيمة القصوى للمحور تغطي أعلى قيمة في البيانات
+            return Math.ceil(maxValue / stepSize) * stepSize;
         }
 
         // دالة لتحديث المخطط والجدول بناءً على الشهر المختار
         function updateChartAndTable() {
             const selectedMonthIndex = parseInt(monthSelector.value);
             const currentMonthData = allData.monthly_data[selectedMonthIndex];
-            // الشهر السابق، لتضمينه في حساب النسبة المئوية للتغير
-            const previousMonthData = allData.monthly_data[selectedMonthIndex + 1];
+            const previousMonthData = allData.monthly_data[selectedMonthIndex + 1]; // الشهر السابق في القائمة (بسبب الفرز التنازلي)
 
             const userStats = calculateStats(currentMonthData.users);
             const downloadStats = calculateStats(currentMonthData.downloads);
@@ -283,7 +306,7 @@
                     <td data-label="أقل قيمة">${userStats.min.toLocaleString()}</td>
                     <td data-label="المجموع">${userStats.sum.toLocaleString()}</td>
                     <td data-label="المتوسط">${userStats.average.toFixed(0).toLocaleString()}</td>
-                    <td data-label="% التغير" class="${userChange > 0 ? 'positive' : (userChange < 0 ? 'negative' : '')}">
+                    <td data-label="% التغير" class="${userChange !== "N/A" ? (parseFloat(userChange) > 0 ? 'positive' : (parseFloat(userChange) < 0 ? 'negative' : '')) : ''}">
                         ${userChange !== "N/A" ? `${userChange}%` : userChange}
                     </td>
                 </tr>
@@ -293,16 +316,18 @@
                     <td data-label="أقل قيمة">${downloadStats.min.toLocaleString()}</td>
                     <td data-label="المجموع">${downloadStats.sum.toLocaleString()}</td>
                     <td data-label="المتوسط">${downloadStats.average.toFixed(0).toLocaleString()}</td>
-                    <td data-label="% التغير" class="${downloadChange > 0 ? 'positive' : (downloadChange < 0 ? 'negative' : '')}">
+                    <td data-label="% التغير" class="${downloadChange !== "N/A" ? (parseFloat(downloadChange) > 0 ? 'positive' : (parseFloat(downloadChange) < 0 ? 'negative' : '')) : ''}">
                         ${downloadChange !== "N/A" ? `${downloadChange}%` : downloadChange}
                     </td>
                 </tr>
             `;
 
-            // تحديث المخطط البياني
-            // استخدام أيام الشهر المحددة كتسميات للمحور السيني
-            const labels = currentMonthData.days.map(day => `يوم ${day}`);
+            // تحديد أعلى قيمة للمحور Y لكلا المستخدمين والتحميلات
+            const maxYValue = Math.max(userStats.max, downloadStats.max);
+            const suggestedMax = getSuggestedMax(maxYValue);
 
+            // تحديث المخطط البياني
+            const labels = currentMonthData.days.map(day => `${day}`); // أرقام الأيام فقط
 
             if (myChart) {
                 myChart.destroy(); // تدمير نسخة المخطط القديمة قبل إنشاء واحدة جديدة
@@ -316,8 +341,8 @@
                         {
                             label: 'المستخدمون',
                             data: currentMonthData.users,
-                            borderColor: '#4CAF50', // أخضر للمستخدمين
-                            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                            borderColor: '#2196F3', // أزرق للمستخدمين
+                            backgroundColor: 'rgba(33, 150, 243, 0.2)',
                             tension: 0.3,
                             fill: true,
                             pointRadius: 3
@@ -325,8 +350,8 @@
                         {
                             label: 'التحميلات',
                             data: currentMonthData.downloads,
-                            borderColor: '#2196F3', // أزرق للتحميلات
-                            backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                            borderColor: '#F44336', // أحمر للتحميلات
+                            backgroundColor: 'rgba(244, 67, 54, 0.2)',
                             tension: 0.3,
                             fill: true,
                             pointRadius: 3
@@ -339,26 +364,38 @@
                     scales: {
                         x: {
                             ticks: {
-                                color: '#aaa' // لون علامات المحور السيني
+                                color: '#aaa',
+                                autoSkip: false, // لا تتخطى أي تسمية
+                                maxRotation: 0,   // اجعلها أفقية
+                                minRotation: 0,
+                                font: {
+                                    size: 10 // حجم خط أصغر للأيام
+                                }
                             },
                             grid: {
-                                color: '#444' // لون خطوط الشبكة للمحور السيني
+                                color: '#444'
                             }
                         },
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                color: '#aaa' // لون علامات المحور الصادي
+                                color: '#aaa',
+                                stepSize: suggestedMax / (suggestedMax <= 50 ? 10 : (suggestedMax <= 100 ? 10 : (suggestedMax <= 150 ? 10 : 10))), // تطبيق منطق الخطوات
+                                // سيتم حساب stepSize بناءً على suggestedMax
+                                callback: function(value, index, values) {
+                                    return value.toLocaleString(); // تنسيق الأرقام
+                                }
                             },
                             grid: {
-                                color: '#444' // لون خطوط الشبكة للمحور الصادي
-                            }
+                                color: '#444'
+                            },
+                            max: suggestedMax // تحديد الحد الأقصى للمحور Y
                         }
                     },
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#f0f0f0' // لون نصوص وسيلة الإيضاح
+                                color: '#f0f0f0'
                             }
                         },
                         tooltip: {
