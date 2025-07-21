@@ -449,4 +449,153 @@
                                 }
                             },
                             grid: {
-                              
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'المستخدمون',
+                                color: '#eee'
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                stepSize: usersStepSize
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            min: 0,
+                            suggestedMax: Math.ceil(maxUsers / usersStepSize) * usersStepSize
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'التحميلات',
+                                color: '#eee'
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                stepSize: downloadsStepSize
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            min: 0,
+                            suggestedMax: Math.ceil(maxDownloads / downloadsStepSize) * downloadsStepSize
+                        }
+                    }
+                }
+            });
+        }
+        
+        // تبديل عرض/إخفاء مجموعة البيانات
+        function toggleDataset(index) {
+            const meta = chart.getDatasetMeta(index);
+            meta.hidden = !meta.hidden;
+            chart.update();
+        }
+        
+        // حساب الإحصائيات
+        function calculateStats(monthKey) {
+            const monthIndex = monthOrder.indexOf(monthKey);
+            const currentMonth = data[monthKey];
+            const prevMonthKey = monthOrder[monthIndex + 1];
+            const prevMonth = data[prevMonthKey];
+            
+            // حساب الإحصائيات الأساسية
+            const maxUsers = Math.max(...currentMonth.users);
+            const minUsers = Math.min(...currentMonth.users);
+            const totalUsers = currentMonth.users.reduce((a, b) => a + b, 0);
+            const avgUsers = (totalUsers / currentMonth.users.length).toFixed(1);
+            
+            const maxDownloads = Math.max(...currentMonth.downloads);
+            const minDownloads = Math.min(...currentMonth.downloads);
+            const totalDownloads = currentMonth.downloads.reduce((a, b) => a + b, 0);
+            const avgDownloads = (totalDownloads / currentMonth.downloads.length).toFixed(1);
+            
+            // حساب التغيير عن الشهر السابق
+            let usersChange = 'N/A';
+            let downloadsChange = 'N/A';
+            
+            if (prevMonth) {
+                const prevTotalUsers = prevMonth.users.reduce((a, b) => a + b, 0);
+                const prevTotalDownloads = prevMonth.downloads.reduce((a, b) => a + b, 0);
+                
+                if (prevTotalUsers > 0) {
+                    const change = ((totalUsers - prevTotalUsers) / prevTotalUsers * 100).toFixed(1);
+                    usersChange = `${change}%`;
+                }
+                
+                if (prevTotalDownloads > 0) {
+                    const change = ((totalDownloads - prevTotalDownloads) / prevTotalDownloads * 100).toFixed(1);
+                    downloadsChange = `${change}%`;
+                }
+            }
+            
+            // تحديث الجدول
+            document.getElementById('max-users').textContent = maxUsers;
+            document.getElementById('min-users').textContent = minUsers;
+            document.getElementById('total-users').textContent = totalUsers;
+            document.getElementById('avg-users').textContent = avgUsers;
+            document.getElementById('change-users').innerHTML = formatChange(usersChange);
+            
+            document.getElementById('max-downloads').textContent = maxDownloads;
+            document.getElementById('min-downloads').textContent = minDownloads;
+            document.getElementById('total-downloads').textContent = totalDownloads;
+            document.getElementById('avg-downloads').textContent = avgDownloads;
+            document.getElementById('change-downloads').innerHTML = formatChange(downloadsChange);
+        }
+        
+        // تنسيق النسبة المئوية للتغيير
+        function formatChange(change) {
+            if (change === 'N/A') return change;
+            
+            const num = parseFloat(change);
+            if (num > 0) {
+                return `<span class="positive">+${change}</span>`;
+            } else if (num < 0) {
+                return `<span class="negative">${change}</span>`;
+            } else {
+                return change;
+            }
+        }
+        
+        // تحديث الصفحة عند تغيير الشهر
+        document.getElementById('month-select').addEventListener('change', function() {
+            const selectedMonth = this.value;
+            const monthData = data[selectedMonth];
+            
+            createChart(monthData);
+            calculateStats(selectedMonth);
+        });
+        
+        // تهيئة الصفحة بالبيانات الأولية
+        window.onload = function() {
+            const initialMonth = "2025-06/2";
+            document.getElementById('month-select').value = initialMonth;
+            
+            createChart(data[initialMonth]);
+            calculateStats(initialMonth);
+        };
+    </script>
+    
+    <script>
+document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) && 
+(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
+lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+    </script>
+    <script>
+if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
+setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
+    </script>
+</body>
+</html>
