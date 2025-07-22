@@ -223,7 +223,7 @@ console.warn=(...args)=>{original.warn(...args);debugLog(args.join(' '),'warn')}
 console.info=(...args)=>{original.info(...args);debugLog(args.join(' '),'info')};
 </script>
 <style>
-#debugConsoleBtn{display:none;position:fixed;top:10px;left:10px;z-index:1000;background:rgba(0,0,0,0.7);color:#fff;border:none;padding:3px 8px;border-radius:12px;font-size:10px;cursor:pointer;font-family:sans-serif}
+#debugConsoleBtn{display:none;position:fixed;top:10px;left:10px;z-index:9999;background:rgba(0,0,0,0.7);color:#fff;border:none;padding:3px 8px;border-radius:12px;font-size:10px;cursor:pointer;font-family:sans-serif}
 #debugConsole{display:none;position:fixed;top:35px;left:10px;width:90%;max-width:300px;max-height:200px;background:rgba(0,0,0,0.9);color:#0f0;font:12px monospace;padding:8px;overflow:auto;border:1px solid #444;border-radius:8px;z-index:999;box-shadow:0 0 10px #000}
 .debug-log{color:#0f0}.debug-error{color:#f00}.debug-warn{color:#ff0}.debug-info{color:#0ff}
 </style>
