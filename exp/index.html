@@ -1,182 +1,168 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محرر HTML</title>
+  <title>محرر تاما</title>
   <style>
     body {
+      background: #444;
+      color: white;
+      font-family: monospace;
       margin: 0;
-      background-color: #444;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
+      padding: 0;
       overflow: hidden;
-      font-family: sans-serif;
-    }#editor {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-textarea {
-  flex: 1;
-  resize: none;
-  background-color: #000;
-  color: #fff;
-  border: 2px solid #666;
-  padding: 10px;
-  font-family: monospace;
-  font-size: 14px;
-  direction: ltr;
-  unicode-bidi: plaintext;
-}
-
-#toolbar {
-  display: flex;
-  justify-content: space-around;
-  background-color: #333;
-  padding: 5px;
-}
-
-#toolbar button, #bottom-buttons button {
-  background: #666;
-  color: white;
-  border: none;
-  padding: 8px;
-  margin: 2px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-#bottom-buttons {
-  display: flex;
-  justify-content: space-around;
-  padding: 5px;
-  background-color: #222;
-}
-
-iframe {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  z-index: 9999;
-  background: white;
-}
-
-.hidden {
-  display: none;
-}
-
+    }
+    #toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: #222;
+      padding: 8px;
+      justify-content: start;
+      border-bottom: 1px solid #555;
+    }
+    #toolbar button, #colorSelect {
+      padding: 5px 10px;
+      background: #555;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #toolbar button:hover, #colorSelect:hover {
+      background: #666;
+    }
+    #editorContainer {
+      display: flex;
+      height: calc(100vh - 50px);
+      overflow: hidden;
+    }
+    #lineNumbers {
+      background: #333;
+      color: #aaa;
+      padding: 10px 5px;
+      user-select: none;
+      text-align: right;
+    }
+    #editor {
+      flex: 1;
+      padding: 10px;
+      background: #444;
+      color: white;
+      outline: none;
+      white-space: pre;
+      overflow: auto;
+      resize: none;
+      font-family: monospace;
+      direction: ltr;
+    }
+    #bottomTools {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 5px;
+      background: #222;
+      border-top: 2px solid #111;
+    }
+    #bottomTools button {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: none;
+      background: #555;
+      color: white;
+    }
   </style>
 </head>
 <body>
-  <div id="editor">
-    <div id="toolbar">
-      <button onclick="setColor('white')">أبيض</button>
-      <button onclick="setColor('black')">أسود</button>
-      <button onclick="setColor('highlight')">ألوان مميزة</button>
-      <button onclick="toggleLines()">شريط الترقيم</button>
-      <input type="file" accept=".html" onchange="loadFile(event)">
-      <button onclick="downloadCode()">حفظ كملف</button>
-    </div>
-    <textarea id="code" oninput="saveCode()"></textarea>
-    <div id="bottom-buttons">
-      <button onclick="copyCode()">نسخ</button>
-      <button onclick="pasteCode()">لصق</button>
-      <button onclick="clearCode()">حذف</button>
-      <button onclick="undo()">رجوع</button>
-      <button onclick="redo()">تقدم</button>
-      <button onclick="runCode()">تشغيل</button>
-    </div>
-  </div>
-  <iframe id="preview" class="hidden"></iframe>
-  <script>
-    const textarea = document.getElementById("code");
-    const preview = document.getElementById("preview");
-    let undoStack = [], redoStack = [];function saveCode() {
-  localStorage.setItem("savedCode", textarea.value);
-  undoStack.push(textarea.value);
-}
+  <div id="toolbar">
+    <button onclick="copyText()">📋 نسخ</button>
+    <button onclick="pasteText()">📥 لصق</button>
+    <button onclick="deleteText()">🗑 حذف</button>
+    <button onclick="undoText()">↩ تراجع</button>
+    <button onclick="redoText()">↪ تقدم</button>
+    <select id="colorSelect" onchange="changeColor(this.value)">
+      <option value="white">أبيض</option>
+      <option value="black">أسود</option>
+      <option value="gray">رمادي</option>
+      <option value="green">أخضر</option>
+      <option value="github">مميز</option>
+    </select>
+    <button onclick="saveAsFile()">💾 حفظ كملف</button>
+    <button onclick="openPreview()">▶️ تشغيل الكود</button>
+  </div>  <div id="editorContainer">
+    <div id="lineNumbers"></div>
+    <pre id="editor" contenteditable oninput="updateLineNumbers(); autoSave();"></pre>
+  </div>  <div id="bottomTools">
+    <button onclick="copyText()">نسخ</button>
+    <button onclick="pasteText()">لصق</button>
+    <button onclick="deleteText()">حذف</button>
+    <button onclick="undoText()">تراجع</button>
+    <button onclick="redoText()">تقدم</button>
+  </div>  <script>
+    const editor = document.getElementById("editor");
+    const lineNumbers = document.getElementById("lineNumbers");
 
-function loadCode() {
-  const saved = localStorage.getItem("savedCode");
-  if (saved) textarea.value = saved;
-}
+    function updateLineNumbers() {
+      const lines = editor.innerText.split("\n").length;
+      lineNumbers.innerHTML = Array.from({length: lines}, (_, i) => (i+1)).join("<br>");
+    }
 
-function copyCode() {
-  navigator.clipboard.writeText(textarea.value);
-}
+    function autoSave() {
+      localStorage.setItem("tamacode", editor.innerText);
+    }
 
-function pasteCode() {
-  navigator.clipboard.readText().then(text => textarea.value += text);
-}
+    function loadSaved() {
+      const saved = localStorage.getItem("tamacode");
+      if (saved) editor.innerText = saved;
+      updateLineNumbers();
+    }
 
-function clearCode() {
-  textarea.value = "";
-  saveCode();
-}
+    function copyText() {
+      navigator.clipboard.writeText(editor.innerText);
+    }
+    function pasteText() {
+      navigator.clipboard.readText().then(text => editor.innerText += text);
+    }
+    function deleteText() {
+      editor.innerText = "";
+      updateLineNumbers();
+    }
+    function undoText() { document.execCommand("undo"); }
+    function redoText() { document.execCommand("redo"); }
 
-function undo() {
-  if (undoStack.length > 1) {
-    redoStack.push(undoStack.pop());
-    textarea.value = undoStack[undoStack.length - 1];
-  }
-}
+    function changeColor(value) {
+      if (value === "github") {
+        editor.style.color = "#eee";
+        editor.style.background = "#282c34";
+      } else {
+        editor.style.color = value;
+        editor.style.background = "#444";
+      }
+    }
 
-function redo() {
-  if (redoStack.length) {
-    const redoValue = redoStack.pop();
-    textarea.value = redoValue;
-    undoStack.push(redoValue);
-  }
-}
+    function saveAsFile() {
+      const blob = new Blob([editor.innerText], {type: "text/html"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "tamafile.html";
+      a.click();
+    }
 
-function runCode() {
-  preview.classList.remove("hidden");
-  preview.srcdoc = textarea.value;
-}
+    function openPreview() {
+      const previewWin = window.open(location.href + "?p=view", "_blank");
+      localStorage.setItem("tamaview", editor.innerText);
+    }
 
-function setColor(mode) {
-  if (mode === 'white') {
-    textarea.style.color = '#fff';
-    textarea.style.backgroundColor = '#000';
-  } else if (mode === 'black') {
-    textarea.style.color = '#000';
-    textarea.style.backgroundColor = '#fff';
-  } else if (mode === 'highlight') {
-    // بدائية مؤقتة لتلوين الكود
-    alert('نمط الألوان المميزة غير مدعوم بعد');
-  }
-}
-
-function toggleLines() {
-  alert("ميزة شريط الترقيم قيد التطوير.");
-}
-
-function loadFile(event) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    textarea.value = e.target.result;
-    saveCode();
-  };
-  reader.readAsText(event.target.files[0]);
-}
-
-function downloadCode() {
-  const blob = new Blob([textarea.value], { type: 'text/html' });
-  const link = document.createElement('a');
-  link.download = 'code.html';
-  link.href = URL.createObjectURL(blob);
-  link.click();
-}
-
-loadCode();
-
-  </script>
-</body>
+    if (location.search.includes("p=view")) {
+      document.body.innerHTML = localStorage.getItem("tamaview") || "<h1>لا يوجد كود لعرضه</h1>";
+      const scriptTags = document.getElementsByTagName("script");
+      for (let s of scriptTags) {
+        const newScript = document.createElement("script");
+        newScript.textContent = s.textContent;
+        s.replaceWith(newScript);
+      }
+    } else {
+      loadSaved();
+    }
+  </script></body>
 </html>
