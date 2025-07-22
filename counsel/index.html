@@ -131,7 +131,7 @@ const images=[
  "القائمة الجانبية"],
 ["https://d.top4top.io/p_34845evz21.jpg",
  "آخر إصدار"],
-["https://a.top4top.io/p_3479kxqx01.jp",
+["http",
  "صفحة التحميل"],
 ["https://f.top4top.io/p_346823dh11.jpg",
  "الإصدارات الأساسية"],
@@ -211,22 +211,112 @@ const toggle = document.getElementById('infoToggle');const panel = document.getE
 </div>
 </div>
 </div>
+
 <script>
-let clickCount=0;document.addEventListener('click',()=>{if(++clickCount===6){document.getElementById('debugConsoleBtn').style.display='block';setTimeout(()=>{clickCount=0},2000)}});
-const debugBtn=document.getElementById('debugConsoleBtn'),debugConsole=document.getElementById('debugConsole'),debugContent=document.getElementById('debugContent');
-debugBtn.addEventListener('click',()=>{debugConsole.style.display=debugConsole.style.display==='none'?'block':'none'});
-const debugLog=(msg,type='log')=>{const el=document.createElement('div');el.textContent=msg,el.className=`debug-${type}`,debugContent.appendChild(el),debugConsole.scrollTop=debugConsole.scrollHeight};
-const original={log:console.log,error:console.error,warn:console.warn,info:console.info};
-console.log=(...args)=>{original.log(...args);debugLog(args.join(' '),'log')};
-console.error=(...args)=>{original.error(...args);debugLog(args.join(' '),'error')};
-console.warn=(...args)=>{original.warn(...args);debugLog(args.join(' '),'warn')};
-console.info=(...args)=>{original.info(...args);debugLog(args.join(' '),'info')};
+// عداد النقرات
+let tapCount = 0;
+
+// زر الكونسول
+const consoleBtn = document.createElement('button');
+consoleBtn.id = 'mobileConsoleBtn';
+consoleBtn.innerHTML = '📝 Console';
+consoleBtn.style.cssText = `
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: Arial;
+  font-size: 12px;
+`;
+
+// نافذة الكونسول
+const consoleDiv = document.createElement('div');
+consoleDiv.id = 'mobileConsole';
+consoleDiv.style.cssText = `
+  display: none;
+  position: fixed;
+  top: 40px;
+  left: 10px;
+  width: 90%;
+  max-width: 300px;
+  height: 200px;
+  background: rgba(0,0,0,0.9);
+  color: lime;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 10px;
+  overflow: auto;
+  border: 1px solid #444;
+  border-radius: 5px;
+  z-index: 9998;
+`;
+
+// تفعيل بست نقرات
+document.addEventListener('click', () => {
+  tapCount++;
+  if (tapCount === 6) {
+    document.body.appendChild(consoleBtn);
+    document.body.appendChild(consoleDiv);
+    consoleBtn.style.display = 'block';
+    tapCount = 0;
+  }
+});
+
+// تبديل عرض الكونسول
+consoleBtn.addEventListener('click', () => {
+  consoleDiv.style.display = consoleDiv.style.display === 'none' ? 'block' : 'none';
+});
+
+// دالة تسجيل الرسائل
+function mobileLog(message, type = 'log') {
+  const msgElement = document.createElement('div');
+  msgElement.textContent = message;
+  msgElement.style.color = 
+    type === 'error' ? 'red' :
+    type === 'warn' ? 'yellow' :
+    type === 'info' ? 'cyan' : 'lime';
+  
+  consoleDiv.appendChild(msgElement);
+  consoleDiv.scrollTop = consoleDiv.scrollHeight;
+}
+
+// إعادة تعريف console.log
+const originalConsole = {
+  log: console.log,
+  error: console.error,
+  warn: console.warn,
+  info: console.info
+};
+
+console.log = (...args) => {
+  originalConsole.log(...args);
+  mobileLog(args.join(' '), 'log');
+};
+
+console.error = (...args) => {
+  originalConsole.error(...args);
+  mobileLog(args.join(' '), 'error');
+};
+
+console.warn = (...args) => {
+  originalConsole.warn(...args);
+  mobileLog(args.join(' '), 'warn');
+};
+
+console.info = (...args) => {
+  originalConsole.info(...args);
+  mobileLog(args.join(' '), 'info');
+};
+
+// رسالة ترحيبية
+console.log('تم تحميل الكونسول المدمج بنجاح');
 </script>
-<style>
-#debugConsoleBtn{display:none;position:fixed;top:10px;left:10px;z-index:9999;background:rgba(0,0,0,0.7);color:#fff;border:none;padding:3px 8px;border-radius:12px;font-size:10px;cursor:pointer;font-family:sans-serif}
-#debugConsole{display:none;position:fixed;top:35px;left:10px;width:90%;max-width:300px;max-height:200px;background:rgba(0,0,0,0.9);color:#0f0;font:12px monospace;padding:8px;overflow:auto;border:1px solid #444;border-radius:8px;z-index:999;box-shadow:0 0 10px #000}
-.debug-log{color:#0f0}.debug-error{color:#f00}.debug-warn{color:#ff0}.debug-info{color:#0ff}
-</style>
-<button id="debugConsoleBtn">🐞 Debug</button><div id="debugConsole"><div id="debugContent"></div></div>
+
 </body>
 </html>
