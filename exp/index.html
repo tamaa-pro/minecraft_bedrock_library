@@ -1,168 +1,384 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محرر تاما</title>
-  <style>
-    body {
-      background: #444;
-      color: white;
-      font-family: monospace;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    #toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      background: #222;
-      padding: 8px;
-      justify-content: start;
-      border-bottom: 1px solid #555;
-    }
-    #toolbar button, #colorSelect {
-      padding: 5px 10px;
-      background: #555;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #toolbar button:hover, #colorSelect:hover {
-      background: #666;
-    }
-    #editorContainer {
-      display: flex;
-      height: calc(100vh - 50px);
-      overflow: hidden;
-    }
-    #lineNumbers {
-      background: #333;
-      color: #aaa;
-      padding: 10px 5px;
-      user-select: none;
-      text-align: right;
-    }
-    #editor {
-      flex: 1;
-      padding: 10px;
-      background: #444;
-      color: white;
-      outline: none;
-      white-space: pre;
-      overflow: auto;
-      resize: none;
-      font-family: monospace;
-      direction: ltr;
-    }
-    #bottomTools {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 5px;
-      background: #222;
-      border-top: 2px solid #111;
-    }
-    #bottomTools button {
-      padding: 5px 10px;
-      border-radius: 4px;
-      border: none;
-      background: #555;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع تجربة الكود</title>
+    <style>
+        body {
+            background-color: #808080;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 10px 10px 0 10px;
+            box-sizing: border-box;
+        }
+        
+        .code-container {
+            flex: 1;
+            background-color: #000;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #codeArea {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            border: none;
+            resize: none;
+            white-space: pre;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            background-color: #555;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .controls button {
+            padding: 5px 10px;
+            min-width: 30px;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            background-color: #555;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        button, select, input {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:hover, select:hover {
+            background-color: #666;
+        }
+        
+        .option-group {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .option-group label {
+            color: white;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            padding: 5px;
+            bottom: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content button {
+            width: 100%;
+            text-align: left;
+            margin: 2px 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .color-option {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #fff;
+        }
+    </style>
 </head>
 <body>
-  <div id="toolbar">
-    <button onclick="copyText()">📋 نسخ</button>
-    <button onclick="pasteText()">📥 لصق</button>
-    <button onclick="deleteText()">🗑 حذف</button>
-    <button onclick="undoText()">↩ تراجع</button>
-    <button onclick="redoText()">↪ تقدم</button>
-    <select id="colorSelect" onchange="changeColor(this.value)">
-      <option value="white">أبيض</option>
-      <option value="black">أسود</option>
-      <option value="gray">رمادي</option>
-      <option value="green">أخضر</option>
-      <option value="github">مميز</option>
-    </select>
-    <button onclick="saveAsFile()">💾 حفظ كملف</button>
-    <button onclick="openPreview()">▶️ تشغيل الكود</button>
-  </div>  <div id="editorContainer">
-    <div id="lineNumbers"></div>
-    <pre id="editor" contenteditable oninput="updateLineNumbers(); autoSave();"></pre>
-  </div>  <div id="bottomTools">
-    <button onclick="copyText()">نسخ</button>
-    <button onclick="pasteText()">لصق</button>
-    <button onclick="deleteText()">حذف</button>
-    <button onclick="undoText()">تراجع</button>
-    <button onclick="redoText()">تقدم</button>
-  </div>  <script>
-    const editor = document.getElementById("editor");
-    const lineNumbers = document.getElementById("lineNumbers");
+    <div class="container">
+        <div class="code-container">
+            <div class="controls">
+                <button title="تراجع" id="undoBtn">↩</button>
+                <button title="إعادة" id="redoBtn">↪</button>
+                <button title="قص" id="cutBtn">✂</button>
+                <button title="نسخ" id="copyBtn">⎘</button>
+                <button title="لصق" id="pasteBtn">📋</button>
+                <button title="حذف" id="deleteBtn">❌</button>
+            </div>
+            <textarea id="codeArea" spellcheck="false"></textarea>
+        </div>
+        
+        <div class="options">
+            <div class="option-group dropdown">
+                <button id="colorBtn">🎨 لون النص</button>
+                <div class="dropdown-content">
+                    <button data-color="#ffffff"><span class="color-option" style="background:#ffffff"></span>أبيض</button>
+                    <button data-color="#000000"><span class="color-option" style="background:#000000"></span>أسود</button>
+                    <button data-color="#808080"><span class="color-option" style="background:#808080"></span>رمادي</button>
+                    <button data-color="#90EE90"><span class="color-option" style="background:#90EE90"></span>أخضر فاتح</button>
+                    <button data-color="#006400"><span class="color-option" style="background:#006400"></span>أخضر غامق</button>
+                    <button id="customColorBtn"><span class="color-option" style="background:linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff)"></span>مخصص</button>
+                </div>
+            </div>
+            
+            <div class="option-group">
+                <input type="file" id="fileImport" accept=".html,.htm,.txt,.js,.css,.php" style="display: none;">
+                <button id="importFileBtn">📂 استيراد من ملف</button>
+            </div>
+            
+            <div class="option-group">
+                <input type="text" id="urlInput" placeholder="رابط الكود">
+                <button id="importUrlBtn">🌐 استيراد من رابط</button>
+            </div>
+            
+            <button id="exportFileBtn">💾 حفظ كملف</button>
+            <button id="shareBtn">🔗 مشاركة</button>
+            <button id="runBtn" style="background-color: #4CAF50;">▶ تشغيل الكود</button>
+        </div>
+    </div>
 
-    function updateLineNumbers() {
-      const lines = editor.innerText.split("\n").length;
-      lineNumbers.innerHTML = Array.from({length: lines}, (_, i) => (i+1)).join("<br>");
-    }
-
-    function autoSave() {
-      localStorage.setItem("tamacode", editor.innerText);
-    }
-
-    function loadSaved() {
-      const saved = localStorage.getItem("tamacode");
-      if (saved) editor.innerText = saved;
-      updateLineNumbers();
-    }
-
-    function copyText() {
-      navigator.clipboard.writeText(editor.innerText);
-    }
-    function pasteText() {
-      navigator.clipboard.readText().then(text => editor.innerText += text);
-    }
-    function deleteText() {
-      editor.innerText = "";
-      updateLineNumbers();
-    }
-    function undoText() { document.execCommand("undo"); }
-    function redoText() { document.execCommand("redo"); }
-
-    function changeColor(value) {
-      if (value === "github") {
-        editor.style.color = "#eee";
-        editor.style.background = "#282c34";
-      } else {
-        editor.style.color = value;
-        editor.style.background = "#444";
-      }
-    }
-
-    function saveAsFile() {
-      const blob = new Blob([editor.innerText], {type: "text/html"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "tamafile.html";
-      a.click();
-    }
-
-    function openPreview() {
-      const previewWin = window.open(location.href + "?p=view", "_blank");
-      localStorage.setItem("tamaview", editor.innerText);
-    }
-
-    if (location.search.includes("p=view")) {
-      document.body.innerHTML = localStorage.getItem("tamaview") || "<h1>لا يوجد كود لعرضه</h1>";
-      const scriptTags = document.getElementsByTagName("script");
-      for (let s of scriptTags) {
-        const newScript = document.createElement("script");
-        newScript.textContent = s.textContent;
-        s.replaceWith(newScript);
-      }
-    } else {
-      loadSaved();
-    }
-  </script></body>
+    <script>
+        // عناصر DOM
+        const codeArea = document.getElementById('codeArea');
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        const cutBtn = document.getElementById('cutBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const pasteBtn = document.getElementById('pasteBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const colorBtn = document.getElementById('colorBtn');
+        const customColorBtn = document.getElementById('customColorBtn');
+        const fileImport = document.getElementById('fileImport');
+        const importFileBtn = document.getElementById('importFileBtn');
+        const urlInput = document.getElementById('urlInput');
+        const importUrlBtn = document.getElementById('importUrlBtn');
+        const exportFileBtn = document.getElementById('exportFileBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const runBtn = document.getElementById('runBtn');
+        
+        // تاريخ التعديلات للتراجع والإعادة
+        let history = [''];
+        let historyIndex = 0;
+        
+        // تهيئة المحرر
+        initEditor();
+        
+        function initEditor() {
+            // استعادة الإعدادات المحفوظة
+            const savedColor = localStorage.getItem('textColor') || '#ffffff';
+            codeArea.style.color = savedColor;
+            
+            // استعادة المحتوى المحفوظ
+            const savedCode = localStorage.getItem('savedCode');
+            if (savedCode) {
+                codeArea.value = savedCode;
+                history = [savedCode];
+            }
+            
+            // إعداد مستمعات الأحداث
+            setupEventListeners();
+        }
+        
+        function setupEventListeners() {
+            // التحكم في النص
+            undoBtn.addEventListener('click', undo);
+            redoBtn.addEventListener('click', redo);
+            cutBtn.addEventListener('click', cutText);
+            copyBtn.addEventListener('click', copyText);
+            pasteBtn.addEventListener('click', pasteText);
+            deleteBtn.addEventListener('click', deleteText);
+            
+            // تغيير اللون
+            document.querySelectorAll('.dropdown-content button[data-color]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const color = e.target.getAttribute('data-color');
+                    codeArea.style.color = color;
+                    localStorage.setItem('textColor', color);
+                });
+            });
+            
+            customColorBtn.addEventListener('click', () => {
+                const color = prompt('أدخل لون النص (اسم اللون أو كود HEX):', codeArea.style.color);
+                if (color) {
+                    codeArea.style.color = color;
+                    localStorage.setItem('textColor', color);
+                }
+            });
+            
+            // استيراد من ملف
+            importFileBtn.addEventListener('click', () => fileImport.click());
+            
+            fileImport.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    codeArea.value = event.target.result;
+                    saveToHistory();
+                };
+                reader.readAsText(file);
+            });
+            
+            // استيراد من رابط
+            importUrlBtn.addEventListener('click', async () => {
+                const url = urlInput.value.trim();
+                if (!url) return;
+                
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('فشل جلب الملف');
+                    const text = await response.text();
+                    codeArea.value = text;
+                    saveToHistory();
+                } catch (error) {
+                    alert('حدث خطأ أثناء جلب الملف: ' + error.message);
+                }
+            });
+            
+            // تصدير إلى ملف
+            exportFileBtn.addEventListener('click', () => {
+                const blob = new Blob([codeArea.value], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'code.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+            
+            // مشاركة الكود
+            shareBtn.addEventListener('click', async () => {
+                try {
+                    const response = await fetch('https://api.short.io/links', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'YOUR_API_KEY' // استبدل بمفتاح API الخاص بك
+                        },
+                        body: JSON.stringify({
+                            originalURL: URL.createObjectURL(new Blob([codeArea.value], { type: 'text/plain' })),
+                            domain: 'short.io'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.secureShortURL) {
+                        prompt('رابط المشاركة:', data.secureShortURL);
+                    } else {
+                        throw new Error('فشل في إنشاء الرابط');
+                    }
+                } catch (error) {
+                    alert('حدث خطأ أثناء إنشاء الرابط: ' + error.message);
+                    // بديل إذا فشل API
+                    const blob = new Blob([codeArea.value], { type: 'text/plain' });
+                    prompt('يمكنك نسخ الكود ومشاركته يدوياً:', codeArea.value);
+                }
+            });
+            
+            // تشغيل الكود في صفحة جديدة
+            runBtn.addEventListener('click', () => {
+                const code = codeArea.value;
+                const blob = new Blob([code], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                window.open(url, '_blank');
+            });
+            
+            // حفظ التاريخ عند التعديل
+            codeArea.addEventListener('input', () => {
+                saveToHistory();
+                localStorage.setItem('savedCode', codeArea.value);
+            });
+        }
+        
+        // وظائف التحكم في النص
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                codeArea.value = history[historyIndex];
+            }
+        }
+        
+        function redo() {
+            if (historyIndex < history.length - 1) {
+                historyIndex++;
+                codeArea.value = history[historyIndex];
+            }
+        }
+        
+        function cutText() {
+            document.execCommand('cut');
+        }
+        
+        function copyText() {
+            document.execCommand('copy');
+            alert('تم نسخ النص إلى الحافظة');
+        }
+        
+        function pasteText() {
+            document.execCommand('paste');
+        }
+        
+        function deleteText() {
+            const start = codeArea.selectionStart;
+            const end = codeArea.selectionEnd;
+            if (start === end) return;
+            
+            codeArea.value = codeArea.value.substring(0, start) + codeArea.value.substring(end);
+            codeArea.selectionStart = codeArea.selectionEnd = start;
+            saveToHistory();
+        }
+        
+        function saveToHistory() {
+            if (codeArea.value === history[historyIndex]) return;
+            
+            history = history.slice(0, historyIndex + 1);
+            history.push(codeArea.value);
+            historyIndex = history.length - 1;
+            
+            // الحد الأقصى لتاريخ التعديلات
+            if (history.length > 50) {
+                history.shift();
+                historyIndex--;
+            }
+        }
+    </script>
+</body>
 </html>
