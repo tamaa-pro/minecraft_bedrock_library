@@ -25,8 +25,7 @@
         }
         
         .code-container {
-            flex: 1;
-            min-height: 60%;
+            height: 60vh; /* يمكنك تغيير هذا الرقم حسب احتياجك */
             background-color: #000;
             border: 2px solid #333;
             border-radius: 5px;
@@ -172,6 +171,38 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* تلوين النص الأساسي */
+        .color-option {
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #fff;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            padding: 5px;
+            bottom: 100%;
+            left: 0;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -189,6 +220,26 @@
         </div>
         
         <div class="options-container">
+            <div class="option-group dropdown">
+                <button id="colorBtn">🎨 لون النص</button>
+                <div class="dropdown-content">
+                    <button data-color="#ffffff" data-bg="#000000"><span class="color-option" style="background:#ffffff"></span>أبيض</button>
+                    <button data-color="#000000" data-bg="#ffffff"><span class="color-option" style="background:#000000"></span>أسود</button>
+                    <button data-color="#808080" data-bg="#000000"><span class="color-option" style="background:#808080"></span>رمادي</button>
+                    <button data-color="#90EE90" data-bg="#000000"><span class="color-option" style="background:#90EE90"></span>أخضر فاتح</button>
+                    <button data-color="#006400" data-bg="#000000"><span class="color-option" style="background:#006400"></span>أخضر غامق</button>
+                </div>
+            </div>
+            
+            <div class="option-group dropdown">
+                <button id="compressBtn">🗜 ضغط الكود</button>
+                <div class="dropdown-content">
+                    <button id="removeSpacesBtn">حذف الفراغات فقط</button>
+                    <button id="removeLineBreaksBtn">حذف النزول للسطر فقط</button>
+                    <button id="compressAllBtn">ضغط كامل</button>
+                </div>
+            </div>
+            
             <div class="option-group toggle-switch">
                 <label for="wrapToggle">السطر التلقائي:</label>
                 <label class="switch">
@@ -217,6 +268,11 @@
     <script>
         // عناصر DOM
         const codeArea = document.getElementById('codeArea');
+        const colorBtn = document.getElementById('colorBtn');
+        const compressBtn = document.getElementById('compressBtn');
+        const removeSpacesBtn = document.getElementById('removeSpacesBtn');
+        const removeLineBreaksBtn = document.getElementById('removeLineBreaksBtn');
+        const compressAllBtn = document.getElementById('compressAllBtn');
         const wrapToggle = document.getElementById('wrapToggle');
         const fileImport = document.getElementById('fileImport');
         const importFileBtn = document.getElementById('importFileBtn');
@@ -240,6 +296,11 @@
         initEditor();
         
         function initEditor() {
+            // استعادة الألوان المحفوظة
+            const savedColor = localStorage.getItem('textColor') || '#ffffff';
+            const savedBg = localStorage.getItem('textBg') || '#000000';
+            applyColors(savedColor, savedBg);
+            
             // استعادة وضع السطر التلقائي
             const savedWrap = localStorage.getItem('wrapMode') !== 'false';
             wrapToggle.checked = savedWrap;
@@ -264,6 +325,20 @@
             copyBtn.addEventListener('click', copyText);
             pasteBtn.addEventListener('click', handlePaste);
             deleteBtn.addEventListener('click', handleDelete);
+            
+            // تغيير اللون
+            document.querySelectorAll('.dropdown-content button[data-color]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const color = e.target.getAttribute('data-color');
+                    const bg = e.target.getAttribute('data-bg');
+                    applyColors(color, bg);
+                });
+            });
+            
+            // ضغط الكود
+            removeSpacesBtn.addEventListener('click', () => compressCode('spaces'));
+            removeLineBreaksBtn.addEventListener('click', () => compressCode('lineBreaks'));
+            compressAllBtn.addEventListener('click', () => compressCode('all'));
             
             // تبديل وضع السطر التلقائي
             wrapToggle.addEventListener('change', () => {
@@ -334,6 +409,38 @@
                 saveToHistory();
                 saveCode();
             });
+        }
+        
+        // تطبيق الألوان
+        function applyColors(color, bg) {
+            codeArea.style.color = color;
+            codeArea.style.backgroundColor = bg;
+            localStorage.setItem('textColor', color);
+            localStorage.setItem('textBg', bg);
+        }
+        
+        // ضغط الكود
+        function compressCode(mode) {
+            let compressed = codeArea.value;
+            
+            switch(mode) {
+                case 'spaces':
+                    compressed = compressed.replace(/\s+/g, ' ').trim();
+                    showNotification('تم حذف الفراغات الزائدة');
+                    break;
+                case 'lineBreaks':
+                    compressed = compressed.replace(/\n+/g, '');
+                    showNotification('تم حذف النزول للسطر');
+                    break;
+                case 'all':
+                    compressed = compressed.replace(/\s+/g, '');
+                    showNotification('تم ضغط الكود بالكامل');
+                    break;
+            }
+            
+            codeArea.value = compressed;
+            saveToHistory();
+            saveCode();
         }
         
         // تحديث وضع السطر التلقائي
