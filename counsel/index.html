@@ -1,7 +1,26 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
+<script>
+(()=>{  
+  let u = navigator.userAgent.toLowerCase(),  
+      p = navigator.platform.toLowerCase(),  
+      w = window.innerWidth,  
+      h = window.innerHeight,  
+      dpr = window.devicePixelRatio || 1,  
+      sw = screen.width,  
+      sh = screen.height,  
+      isMobileUA = /android|iphone|ipad|ipod|mobile|touch/.test(u),  
+      isMobilePlatform = /android|ios|windows phone/.test(p),  
+      isSmallScreen = (Math.min(sw, sh) * dpr) <= 800;
 
+  if(!(isMobileUA || isMobilePlatform || isSmallScreen)){  
+    let a = window.open("about:blank", "_self");  
+    if(a) a.close();  
+    window.close();  
+  }  
+})();
+</script>
 
 <head>
 <meta charset="UTF-8" />
