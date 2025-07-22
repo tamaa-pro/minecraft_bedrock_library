@@ -92,59 +92,315 @@ input:checked+.slider:before{transform:translateX(14px)}
 </div>
 <div class="notification" id="notification"></div>
 <script>
-const codeArea=document.getElementById('codeArea'),colorDropdown=document.getElementById('colorDropdown'),
-compressDropdown=document.getElementById('compressDropdown'),wrapToggle=document.getElementById('wrapToggle'),
-fileImport=document.getElementById('fileImport'),importFileBtn=document.getElementById('importFileBtn'),
-urlInput=document.getElementById('urlInput'),importUrlBtn=document.getElementById('importUrlBtn'),
-exportFileBtn=document.getElementById('exportFileBtn'),runBtn=document.getElementById('runBtn'),
-undoBtn=document.getElementById('undoBtn'),redoBtn=document.getElementById('redoBtn'),cutBtn=document.getElementById('cutBtn'),
-copyBtn=document.getElementById('copyBtn'),pasteBtn=document.getElementById('pasteBtn'),deleteBtn=document.getElementById('deleteBtn'),
-notification=document.getElementById('notification');let history=[''],historyIndex=0;
-function initEditor(){const e=localStorage.getItem('textColor')||'#ffffff',t=localStorage.getItem('textBg')||'#000000';
-applyColors(e,t);const n=localStorage.getItem('wrapMode')!=='false';wrapToggle.checked=n,updateWrapMode(n);
-const o=localStorage.getItem('savedCode');o&&(codeArea.value=o,history=[o]),setupEventListeners()}
-function setupEventListeners(){undoBtn.addEventListener('click',undo),redoBtn.addEventListener('click',redo),
-cutBtn.addEventListener('click',()=>document.execCommand('cut')),copyBtn.addEventListener('click',copyText),
-pasteBtn.addEventListener('click',handlePaste),deleteBtn.addEventListener('click',handleDelete),
-document.querySelectorAll('[data-color]').forEach(e=>{e.addEventListener('click',e=>{const t=e.target.getAttribute('data-color'),
-n=e.target.getAttribute('data-bg');applyColors(t,n)})}),removeSpacesBtn.addEventListener('click',()=>compressCode('spaces')),
-removeLineBreaksBtn.addEventListener('click',()=>compressCode('lineBreaks')),compressAllBtn.addEventListener('click',()=>compressCode('all')),
-wrapToggle.addEventListener('change',()=>{const e=wrapToggle.checked;updateWrapMode(e),localStorage.setItem('wrapMode',e)}),
-importFileBtn.addEventListener('click',()=>fileImport.click()),fileImport.addEventListener('change',e=>{const t=e.target.files[0];
-if(!t)return;const n=new FileReader;n.onload=e=>{codeArea.value=e.target.result,saveToHistory(),saveCode(),
-showNotification('تم تحميل الملف بنجاح')},n.readAsText(t)}),importUrlBtn.addEventListener('click',async()=>{const e=urlInput.value.trim();
-if(!e)return;try{const t=await fetch(e);if(!t.ok)throw new Error('فشل جلب الملف');const n=await t.text();
-codeArea.value=n,saveToHistory(),saveCode(),showNotification('تم تحميل الرابط بنجاح')}catch(e){showNotification('حدث خطأ أثناء جلب الملف: '+e.message,!0)}}),
-exportFileBtn.addEventListener('click',()=>{const e=new Blob([codeArea.value],{type:'text/html'}),t=URL.createObjectURL(e),
-n=document.createElement('a');n.href=t,n.download='index.html',n.click(),URL.revokeObjectURL(t),
-showNotification('تم تحميل الملف بنجاح')}),runBtn.addEventListener('click',()=>{const e=new Blob([codeArea.value],{type:'text/html'}),
-t=URL.createObjectURL(e);window.open(t,'_blank'),showNotification('تم تشغيل الكود في نافذة جديدة')}),
-codeArea.addEventListener('input',()=>{saveToHistory(),saveCode()}),colorBtn.addEventListener('click',()=>{
-colorDropdown.classList.toggle('active')}),compressBtn.addEventListener('click',()=>{
-compressDropdown.classList.toggle('active')}),document.addEventListener('click',e=>{e.target!==colorBtn&&
-!colorDropdown.contains(e.target)&&colorDropdown.classList.remove('active'),e.target!==compressBtn&&
-!compressDropdown.contains(e.target)&&compressDropdown.classList.remove('active')})}
-function applyColors(e,t){codeArea.style.color=e,codeArea.style.backgroundColor=t,document.documentElement.style.setProperty('--text-color',e),
-document.documentElement.style.setProperty('--bg-color',t),localStorage.setItem('textColor',e),localStorage.setItem('textBg',t)}
-function compressCode(e){let t=codeArea.value;switch(e){case'spaces':t=t.replace(/\s+/g,' ').trim(),
-showNotification('تم حذف الفراغات الزائدة');break;case'lineBreaks':t=t.replace(/\n+/g,''),
-showNotification('تم حذف النزول للسطر');break;case'all':t=t.replace(/\s+/g,''),showNotification('تم ضغط الكود بالكامل')}
-codeArea.value=t,saveToHistory(),saveCode()}function updateWrapMode(e){if(e){codeArea.style.whiteSpace='pre-wrap',
-codeArea.style.overflowX='hidden',codeArea.style.wordWrap='break-word'}else codeArea.style.whiteSpace='pre',
-codeArea.style.overflowX='auto',codeArea.style.wordWrap='normal'}function handlePaste(){navigator.clipboard.readText().then(e=>{
-const t=codeArea.selectionStart,n=codeArea.selectionEnd,o=codeArea.value;codeArea.value=o.substring(0,t)+e+o.substring(n),
-codeArea.selectionStart=codeArea.selectionEnd=t+e.length,saveToHistory(),saveCode(),showNotification('تم لصق النص')}).catch(()=>{
-document.execCommand('paste')})}function handleDelete(){codeArea.selectionStart===codeArea.selectionEnd?(codeArea.value='',
-showNotification('تم حذف كل النص')):document.execCommand('delete'),saveToHistory(),saveCode()}
-function undo(){historyIndex>0&&(historyIndex--,codeArea.value=history[historyIndex],showNotification('تم التراجع'))}
-function redo(){historyIndex<history.length-1&&(historyIndex++,codeArea.value=history[historyIndex],showNotification('تم الإعادة'))}
-function copyText(){codeArea.select(),document.execCommand('copy'),showNotification('تم نسخ النص')}
-function saveToHistory(){codeArea.value!==history[historyIndex]&&(history=history.slice(0,historyIndex+1),
-history.push(codeArea.value),historyIndex=history.length-1,history.length>50&&(history.shift(),historyIndex--)}
-function saveCode(){localStorage.setItem('savedCode',codeArea.value)}
-function showNotification(e,t){const n=notification;n.innerHTML=(t?'<i class="fas fa-exclamation-circle"></i> ':'')+e,
-n.className='notification'+(t?' error':''),n.style.display='block',setTimeout(()=>{n.style.display='none'},2e3)}
+// عناصر DOM
+const codeArea = document.getElementById('codeArea');
+const colorBtn = document.getElementById('colorBtn');
+const colorDropdown = document.getElementById('colorDropdown');
+const compressBtn = document.getElementById('compressBtn');
+const compressDropdown = document.getElementById('compressDropdown');
+const removeSpacesBtn = document.getElementById('removeSpacesBtn');
+const removeLineBreaksBtn = document.getElementById('removeLineBreaksBtn');
+const compressAllBtn = document.getElementById('compressAllBtn');
+const wrapToggle = document.getElementById('wrapToggle');
+const fileImport = document.getElementById('fileImport');
+const importFileBtn = document.getElementById('importFileBtn');
+const urlInput = document.getElementById('urlInput');
+const importUrlBtn = document.getElementById('importUrlBtn');
+const exportFileBtn = document.getElementById('exportFileBtn');
+const runBtn = document.getElementById('runBtn');
+const undoBtn = document.getElementById('undoBtn');
+const redoBtn = document.getElementById('redoBtn');
+const cutBtn = document.getElementById('cutBtn');
+const copyBtn = document.getElementById('copyBtn');
+const pasteBtn = document.getElementById('pasteBtn');
+const deleteBtn = document.getElementById('deleteBtn');
+const notification = document.getElementById('notification');
+
+// تاريخ التعديلات للتراجع والإعادة
+let history = [''];
+let historyIndex = 0;
+
+// تهيئة المحرر
 initEditor();
+
+function initEditor() {
+    // استعادة الألوان المحفوظة
+    const savedColor = localStorage.getItem('textColor') || '#ffffff';
+    const savedBg = localStorage.getItem('textBg') || '#000000';
+    applyColors(savedColor, savedBg);
+    
+    // استعادة وضع السطر التلقائي
+    const savedWrap = localStorage.getItem('wrapMode') !== 'false';
+    wrapToggle.checked = savedWrap;
+    updateWrapMode(savedWrap);
+    
+    // استعادة المحتوى المحفوظ
+    const savedCode = localStorage.getItem('savedCode');
+    if (savedCode) {
+        codeArea.value = savedCode;
+        history = [savedCode];
+    }
+    
+    // إعداد مستمعات الأحداث
+    setupEventListeners();
+}
+
+function setupEventListeners() {
+    // التحكم في النص
+    undoBtn.addEventListener('click', undo);
+    redoBtn.addEventListener('click', redo);
+    cutBtn.addEventListener('click', () => document.execCommand('cut'));
+    copyBtn.addEventListener('click', copyText);
+    pasteBtn.addEventListener('click', handlePaste);
+    deleteBtn.addEventListener('click', handleDelete);
+    
+    // تغيير اللون
+    document.querySelectorAll('[data-color]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const color = e.target.getAttribute('data-color');
+            const bg = e.target.getAttribute('data-bg');
+            applyColors(color, bg);
+            colorDropdown.classList.remove('active');
+        });
+    });
+    
+    // ضغط الكود
+    removeSpacesBtn.addEventListener('click', () => {
+        compressCode('spaces');
+        compressDropdown.classList.remove('active');
+    });
+    removeLineBreaksBtn.addEventListener('click', () => {
+        compressCode('lineBreaks');
+        compressDropdown.classList.remove('active');
+    });
+    compressAllBtn.addEventListener('click', () => {
+        compressCode('all');
+        compressDropdown.classList.remove('active');
+    });
+    
+    // تبديل وضع السطر التلقائي
+    wrapToggle.addEventListener('change', () => {
+        const enabled = wrapToggle.checked;
+        updateWrapMode(enabled);
+        localStorage.setItem('wrapMode', enabled);
+    });
+    
+    // استيراد من ملف
+    importFileBtn.addEventListener('click', () => fileImport.click());
+    
+    fileImport.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            codeArea.value = event.target.result;
+            saveToHistory();
+            saveCode();
+            showNotification('تم تحميل الملف بنجاح');
+        };
+        reader.readAsText(file);
+    });
+    
+    // استيراد من رابط
+    importUrlBtn.addEventListener('click', async () => {
+        const url = urlInput.value.trim();
+        if (!url) return;
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('فشل جلب الملف');
+            const text = await response.text();
+            codeArea.value = text;
+            saveToHistory();
+            saveCode();
+            showNotification('تم تحميل الرابط بنجاح');
+        } catch (error) {
+            showNotification('حدث خطأ أثناء جلب الملف: ' + error.message, true);
+        }
+    });
+    
+    // تصدير إلى ملف
+    exportFileBtn.addEventListener('click', () => {
+        const blob = new Blob([codeArea.value], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        a.click();
+        URL.revokeObjectURL(url);
+        showNotification('تم تحميل الملف بنجاح');
+    });
+    
+    // تشغيل الكود في صفحة جديدة
+    runBtn.addEventListener('click', () => {
+        const code = codeArea.value;
+        const blob = new Blob([code], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        
+        window.open(url, '_blank');
+        showNotification('تم تشغيل الكود في نافذة جديدة');
+    });
+    
+    // حفظ التاريخ عند التعديل
+    codeArea.addEventListener('input', () => {
+        saveToHistory();
+        saveCode();
+    });
+    
+    // إدارة القوائم المنسدلة
+    colorBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        colorDropdown.classList.toggle('active');
+        compressDropdown.classList.remove('active');
+    });
+    
+    compressBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        compressDropdown.classList.toggle('active');
+        colorDropdown.classList.remove('active');
+    });
+    
+    document.addEventListener('click', () => {
+        colorDropdown.classList.remove('active');
+        compressDropdown.classList.remove('active');
+    });
+}
+
+// تطبيق الألوان
+function applyColors(color, bg) {
+    codeArea.style.color = color;
+    codeArea.style.backgroundColor = bg;
+    localStorage.setItem('textColor', color);
+    localStorage.setItem('textBg', bg);
+    showNotification('تم تغيير لون النص');
+}
+
+// ضغط الكود
+function compressCode(mode) {
+    let compressed = codeArea.value;
+    
+    switch(mode) {
+        case 'spaces':
+            compressed = compressed.replace(/\s+/g, ' ').trim();
+            showNotification('تم حذف الفراغات الزائدة');
+            break;
+        case 'lineBreaks':
+            compressed = compressed.replace(/\n+/g, '');
+            showNotification('تم حذف النزول للسطر');
+            break;
+        case 'all':
+            compressed = compressed.replace(/\s+/g, '');
+            showNotification('تم ضغط الكود بالكامل');
+            break;
+    }
+    
+    codeArea.value = compressed;
+    saveToHistory();
+    saveCode();
+}
+
+// تحديث وضع السطر التلقائي
+function updateWrapMode(enabled) {
+    if (enabled) {
+        codeArea.style.whiteSpace = 'pre-wrap';
+        codeArea.style.overflowX = 'hidden';
+        codeArea.style.wordWrap = 'break-word';
+    } else {
+        codeArea.style.whiteSpace = 'pre';
+        codeArea.style.overflowX = 'auto';
+        codeArea.style.wordWrap = 'normal';
+    }
+}
+
+// معالجة اللصق
+function handlePaste() {
+    navigator.clipboard.readText().then(text => {
+        const startPos = codeArea.selectionStart;
+        const endPos = codeArea.selectionEnd;
+        const currentText = codeArea.value;
+        
+        codeArea.value = currentText.substring(0, startPos) + text + currentText.substring(endPos);
+        
+        // تحديث موضع المؤشر
+        codeArea.selectionStart = codeArea.selectionEnd = startPos + text.length;
+        
+        saveToHistory();
+        saveCode();
+        showNotification('تم لصق النص');
+    }).catch(() => {
+        document.execCommand('paste');
+    });
+}
+
+// معالجة الحذف
+function handleDelete() {
+    if (codeArea.selectionStart === codeArea.selectionEnd) {
+        // إذا لم يكن هناك نص محدد، احذف كل شيء
+        codeArea.value = '';
+        showNotification('تم حذف كل النص');
+    } else {
+        // إذا كان هناك نص محدد، احذفه فقط
+        document.execCommand('delete');
+        showNotification('تم حذف النص المحدد');
+    }
+    
+    saveToHistory();
+    saveCode();
+}
+
+// وظائف التحكم في التاريخ
+function undo() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        codeArea.value = history[historyIndex];
+        showNotification('تم التراجع');
+    }
+}
+
+function redo() {
+    if (historyIndex < history.length - 1) {
+        historyIndex++;
+        codeArea.value = history[historyIndex];
+        showNotification('تم الإعادة');
+    }
+}
+
+function copyText() {
+    codeArea.select();
+    document.execCommand('copy');
+    showNotification('تم نسخ النص');
+}
+
+function saveToHistory() {
+    if (codeArea.value === history[historyIndex]) return;
+    
+    history = history.slice(0, historyIndex + 1);
+    history.push(codeArea.value);
+    historyIndex = history.length - 1;
+    
+    // الحد الأقصى لتاريخ التعديلات
+    if (history.length > 50) {
+        history.shift();
+        historyIndex--;
+    }
+}
+
+function saveCode() {
+    localStorage.setItem('savedCode', codeArea.value);
+}
+
+// عرض الإشعارات
+function showNotification(message, isError = false) {
+    const notificationElement = notification;
+    notificationElement.innerHTML = (isError ? '<i class="fas fa-exclamation-circle"></i> ' : '') + message;
+    notificationElement.className = 'notification' + (isError ? ' error' : '');
+    notificationElement.style.display = 'block';
+    
+    setTimeout(() => {
+        notificationElement.style.display = 'none';
+    }, 2000);
+}
 </script>
 </body>
 </html>
