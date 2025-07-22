@@ -2,17 +2,26 @@
 <html lang="ar" dir="rtl">
 
 <script>
-// الكشف الدقيق عن الأجهزة غير الأندرويد
-const isNotAndroid = 
-  /windows|macintosh|linux|iphone|ipad|ipod/i.test(navigator.userAgent) || 
-  (!/android/i.test(navigator.userAgent) && !/chrome|firefox|samsungbrowser/i.test(navigator.userAgent));
+// كشف دقيق للأندرويد (باستثناء المتصفحات المزيفة)
+const isRealAndroid = /Android/i.test(navigator.userAgent) && 
+                    !/windows|macintosh|linux|iphone|ipad|ipod/i.test(navigator.userAgent);
 
-// إعادة التوجيه الفوري إذا لم يكن أندرويد
-if (isNotAndroid) {
-  window.stop(); // إيقاف أي تحميل للصفحة
-  window.location.replace('about:blank'); // الإعادة التوجيه الأكثر فعالية
-  document.open(); document.close(); // تنظيف DOM
-  document.write(''); // محو المحتوى بالكامل
+// إغلاق الصفحة فوراً إذا لم يكن أندرويد حقيقي
+if (!isRealAndroid) {
+  window.stop(); // إيقاف تحميل الصفحة
+  document.documentElement.style.display = 'none'; // إخفاء كل شيء
+  
+  // محاولات متعددة للإغلاق (لضمان العمل على جميع المتصفحات)
+  setTimeout(() => {
+    window.location.replace('about:blank');
+    window.open('', '_self', '').close();
+  }, 10);
+  
+  // منع الذاكرة المؤقتة
+  window.addEventListener('beforeunload', () => {
+    document.write('');
+    window.location.href = 'about:blank';
+  });
 }
 </script>
 
