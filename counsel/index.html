@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
-
+<script>
+(() => {
+  const ua = navigator.userAgent.toLowerCase();
+  const isAndroid = ua.includes("android");
+  const isSmallScreen = screen.width < 800; // يمكن تعديله حسب الحاجة
+  if (!isAndroid || !isSmallScreen) {
+    // هذا ليس هاتف حقيقي
+    open("about:blank", "_self")?.close?.();
+  }
+})();
+</script>
 
 <head>
 <meta charset="UTF-8" />
