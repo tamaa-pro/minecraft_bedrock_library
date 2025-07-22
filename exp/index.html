@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقع تجربة الكود</title>
-    <!-- مكتبة Prism.js للتلوين النحوي -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-html.min.js"></script>
     <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --controls-bg: #555555;
+            --button-bg: #444444;
+            --button-hover: #666666;
+            --run-button: #4CAF50;
+            --border-color: #333333;
+        }
+        
         body {
             background-color: #808080;
             margin: 0;
-            padding: 0;
+            padding: 10px;
             font-family: Arial, sans-serif;
             height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -25,30 +31,37 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow: hidden;
+            gap: 10px;
         }
         
         .code-container {
             flex: 1;
-            background-color: #000;
-            border: 2px solid #333;
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
             border-radius: 5px;
-            margin-bottom: 10px;
             overflow: hidden;
-            position: relative;
             display: flex;
             flex-direction: column;
+            min-height: 200px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            background-color: var(--controls-bg);
+        }
+        
+        .controls button {
+            padding: 5px 10px;
+            min-width: 30px;
         }
         
         #codeArea {
-            width: 100%;
             flex: 1;
-            padding: 10px 10px 10px 40px;
-            box-sizing: border-box;
-            background-color: #000;
-            color: #fff;
+            padding: 10px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: monospace;
             font-size: 14px;
             line-height: 1.5;
@@ -57,82 +70,25 @@
             white-space: pre;
             direction: ltr;
             text-align: left;
-            overflow-y: auto;
-            overflow-x: hidden;
-            word-wrap: break-word;
+            overflow: auto;
             tab-size: 4;
         }
         
-        .code-area-wrap {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            position: relative;
-        }
-        
-        .line-numbers {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 30px;
-            height: 100%;
-            padding: 10px 5px;
-            box-sizing: border-box;
-            background-color: #1a1a1a;
-            color: #666;
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: right;
-            user-select: none;
-            overflow: hidden;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 5px;
-            padding: 5px;
-            background-color: #555;
-            border-radius: 4px 4px 0 0;
-        }
-        
-        .controls button {
-            padding: 5px 10px;
-            min-width: 30px;
-        }
-        
-        .options {
+        .options-container {
+            background-color: var(--controls-bg);
+            border-radius: 5px;
+            padding: 10px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            padding: 10px;
-            background-color: #555;
-            border-radius: 0 0 4px 4px;
-            overflow-y: auto;
-            max-height: 100px;
-        }
-        
-        button, select, input {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            background-color: #444;
-            color: white;
-            cursor: pointer;
-        }
-        
-        button:hover, select:hover {
-            background-color: #666;
+            align-items: center;
+            justify-content: center;
         }
         
         .option-group {
             display: flex;
             gap: 5px;
             align-items: center;
-        }
-        
-        .option-group label {
-            color: white;
         }
         
         .dropdown {
@@ -143,7 +99,7 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #444;
+            background-color: var(--button-bg);
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
@@ -153,19 +109,35 @@
             left: 0;
         }
         
-        .dropdown-content button {
-            width: 100%;
-            text-align: left;
-            margin: 2px 0;
-        }
-        
         .dropdown:hover .dropdown-content {
             display: block;
         }
         
+        button, input {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--button-bg);
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        button:hover {
+            background-color: var(--button-hover);
+        }
+        
+        #runBtn {
+            background-color: var(--run-button);
+        }
+        
+        #runBtn:hover {
+            filter: brightness(1.1);
+        }
+        
         .color-option {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             display: inline-block;
             margin-right: 5px;
             vertical-align: middle;
@@ -217,7 +189,7 @@
         }
         
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: var(--run-button);
         }
         
         input:checked + .slider:before {
@@ -228,13 +200,26 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #4CAF50;
+            background-color: var(--run-button);
             color: white;
-            padding: 10px;
+            padding: 10px 15px;
             border-radius: 5px;
             z-index: 1000;
             display: none;
+            animation: fadeIn 0.3s;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* التلوين النحوي البسيط */
+        .html-tag { color: #569cd6; }
+        .html-attr { color: #9cdcfe; }
+        .html-value { color: #ce9178; }
+        .html-comment { color: #6a9955; }
+        .html-doctype { color: #808080; }
     </style>
 </head>
 <body>
@@ -248,13 +233,10 @@
                 <button title="لصق" id="pasteBtn">📋</button>
                 <button title="حذف" id="deleteBtn">❌</button>
             </div>
-            <div class="code-area-wrap">
-                <div id="lineNumbers" class="line-numbers"></div>
-                <textarea id="codeArea" spellcheck="false"></textarea>
-            </div>
+            <textarea id="codeArea" spellcheck="false"></textarea>
         </div>
         
-        <div class="options">
+        <div class="options-container">
             <div class="option-group dropdown">
                 <button id="colorBtn">🎨 لون النص</button>
                 <div class="dropdown-content">
@@ -263,7 +245,14 @@
                     <button data-color="#808080" data-bg="#000000"><span class="color-option" style="background:#808080"></span>رمادي</button>
                     <button data-color="#90EE90" data-bg="#000000"><span class="color-option" style="background:#90EE90"></span>أخضر فاتح</button>
                     <button data-color="#006400" data-bg="#000000"><span class="color-option" style="background:#006400"></span>أخضر غامق</button>
-                    <button id="syntaxHighlightBtn"><span class="color-option" style="background:linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff)"></span>تلوين نحوي</button>
+                </div>
+            </div>
+            
+            <div class="option-group dropdown">
+                <button id="highlightBtn">✨ تمييز النص</button>
+                <div class="dropdown-content">
+                    <button id="highlightHTMLBtn">تمييز HTML</button>
+                    <button id="clearHighlightBtn">إزالة التمييز</button>
                 </div>
             </div>
             
@@ -274,22 +263,6 @@
                     <button id="removeLineBreaksBtn">حذف النزول للسطر فقط</button>
                     <button id="compressAllBtn">ضغط كامل</button>
                 </div>
-            </div>
-            
-            <div class="option-group toggle-switch">
-                <label for="lineNumbersToggle">ترقيم الأسطر:</label>
-                <label class="switch">
-                    <input type="checkbox" id="lineNumbersToggle" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="option-group toggle-switch">
-                <label for="wrapToggle">السطر التلقائي:</label>
-                <label class="switch">
-                    <input type="checkbox" id="wrapToggle" checked>
-                    <span class="slider"></span>
-                </label>
             </div>
             
             <div class="option-group">
@@ -303,7 +276,7 @@
             </div>
             
             <button id="exportFileBtn">💾 حفظ كملف</button>
-            <button id="runBtn" style="background-color: #4CAF50;">▶ تشغيل الكود</button>
+            <button id="runBtn">▶ تشغيل الكود</button>
         </div>
     </div>
 
@@ -312,33 +285,32 @@
     <script>
         // عناصر DOM
         const codeArea = document.getElementById('codeArea');
-        const lineNumbers = document.getElementById('lineNumbers');
-        const undoBtn = document.getElementById('undoBtn');
-        const redoBtn = document.getElementById('redoBtn');
-        const cutBtn = document.getElementById('cutBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const pasteBtn = document.getElementById('pasteBtn');
-        const deleteBtn = document.getElementById('deleteBtn');
         const colorBtn = document.getElementById('colorBtn');
-        const syntaxHighlightBtn = document.getElementById('syntaxHighlightBtn');
+        const highlightBtn = document.getElementById('highlightBtn');
+        const highlightHTMLBtn = document.getElementById('highlightHTMLBtn');
+        const clearHighlightBtn = document.getElementById('clearHighlightBtn');
         const compressBtn = document.getElementById('compressBtn');
         const removeSpacesBtn = document.getElementById('removeSpacesBtn');
         const removeLineBreaksBtn = document.getElementById('removeLineBreaksBtn');
         const compressAllBtn = document.getElementById('compressAllBtn');
-        const lineNumbersToggle = document.getElementById('lineNumbersToggle');
         const fileImport = document.getElementById('fileImport');
         const importFileBtn = document.getElementById('importFileBtn');
         const urlInput = document.getElementById('urlInput');
         const importUrlBtn = document.getElementById('importUrlBtn');
         const exportFileBtn = document.getElementById('exportFileBtn');
         const runBtn = document.getElementById('runBtn');
-        const wrapToggle = document.getElementById('wrapToggle');
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        const cutBtn = document.getElementById('cutBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const pasteBtn = document.getElementById('pasteBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
         const notification = document.getElementById('notification');
         
         // تاريخ التعديلات للتراجع والإعادة
         let history = [''];
         let historyIndex = 0;
-        let isSyntaxHighlighted = false;
+        let isHighlighted = false;
         
         // تهيئة المحرر
         initEditor();
@@ -347,25 +319,13 @@
             // استعادة الإعدادات المحفوظة
             const savedColor = localStorage.getItem('textColor') || '#ffffff';
             const savedBg = localStorage.getItem('textBg') || '#000000';
-            codeArea.style.color = savedColor;
-            codeArea.style.backgroundColor = savedBg;
-            
-            // استعادة وضع السطر التلقائي
-            const savedWrap = localStorage.getItem('wrapMode') !== 'false';
-            wrapToggle.checked = savedWrap;
-            updateWrapMode(savedWrap);
-            
-            // استعادة ترقيم الأسطر
-            const savedLineNumbers = localStorage.getItem('lineNumbers') !== 'false';
-            lineNumbersToggle.checked = savedLineNumbers;
-            lineNumbers.style.display = savedLineNumbers ? 'block' : 'none';
+            applyColors(savedColor, savedBg);
             
             // استعادة المحتوى المحفوظ
             const savedCode = localStorage.getItem('savedCode');
             if (savedCode) {
                 codeArea.value = savedCode;
                 history = [savedCode];
-                updateLineNumbers();
             }
             
             // إعداد مستمعات الأحداث
@@ -386,41 +346,18 @@
                 btn.addEventListener('click', (e) => {
                     const color = e.target.getAttribute('data-color');
                     const bg = e.target.getAttribute('data-bg');
-                    codeArea.style.color = color;
-                    codeArea.style.backgroundColor = bg;
-                    localStorage.setItem('textColor', color);
-                    localStorage.setItem('textBg', bg);
-                    
-                    // إيقاف التلوين النحوي إذا كان مفعلاً
-                    if (isSyntaxHighlighted) {
-                        isSyntaxHighlighted = false;
-                        showNotification('تم تعطيل التلوين النحوي');
-                    }
+                    applyColors(color, bg);
                 });
             });
             
-            // التلوين النحوي
-            syntaxHighlightBtn.addEventListener('click', toggleSyntaxHighlighting);
+            // تمييز النص
+            highlightHTMLBtn.addEventListener('click', highlightHTML);
+            clearHighlightBtn.addEventListener('click', clearHighlight);
             
             // ضغط الكود
             removeSpacesBtn.addEventListener('click', () => compressCode('spaces'));
             removeLineBreaksBtn.addEventListener('click', () => compressCode('lineBreaks'));
             compressAllBtn.addEventListener('click', () => compressCode('all'));
-            
-            // تبديل وضع السطر التلقائي
-            wrapToggle.addEventListener('change', () => {
-                const enabled = wrapToggle.checked;
-                updateWrapMode(enabled);
-                localStorage.setItem('wrapMode', enabled);
-            });
-            
-            // تبديل ترقيم الأسطر
-            lineNumbersToggle.addEventListener('change', () => {
-                const enabled = lineNumbersToggle.checked;
-                lineNumbers.style.display = enabled ? 'block' : 'none';
-                localStorage.setItem('lineNumbers', enabled);
-                updateLineNumbers();
-            });
             
             // استيراد من ملف
             importFileBtn.addEventListener('click', () => fileImport.click());
@@ -434,7 +371,7 @@
                     codeArea.value = event.target.result;
                     saveToHistory();
                     saveCode();
-                    updateLineNumbers();
+                    showNotification('تم تحميل الملف بنجاح');
                 };
                 reader.readAsText(file);
             });
@@ -451,7 +388,7 @@
                     codeArea.value = text;
                     saveToHistory();
                     saveCode();
-                    updateLineNumbers();
+                    showNotification('تم تحميل الرابط بنجاح');
                 } catch (error) {
                     showNotification('حدث خطأ أثناء جلب الملف: ' + error.message);
                 }
@@ -476,114 +413,103 @@
                 const url = URL.createObjectURL(blob);
                 
                 window.open(url, '_blank');
+                showNotification('تم تشغيل الكود في نافذة جديدة');
             });
             
-            // تحديث أرقام الأسطر عند التعديل
+            // حفظ التاريخ عند التعديل
             codeArea.addEventListener('input', () => {
                 saveToHistory();
                 saveCode();
-                updateLineNumbers();
-            });
-            
-            // تحديث أرقام الأسطر عند التمرير
-            codeArea.addEventListener('scroll', () => {
-                lineNumbers.scrollTop = codeArea.scrollTop;
+                if (isHighlighted) highlightHTML();
             });
         }
         
-        // تحديث أرقام الأسطر
-        function updateLineNumbers() {
-            if (!lineNumbersToggle.checked) return;
-            
-            const lines = codeArea.value.split('\n');
-            let numbers = '';
-            
-            for (let i = 0; i < lines.length; i++) {
-                numbers += (i + 1) + '<br>';
-            }
-            
-            lineNumbers.innerHTML = numbers;
-            
-            // ضبط الارتفاع ليتطابق مع منطقة النص
-            lineNumbers.style.height = codeArea.scrollHeight + 'px';
+        // تطبيق الألوان
+        function applyColors(color, bg) {
+            codeArea.style.color = color;
+            codeArea.style.backgroundColor = bg;
+            document.documentElement.style.setProperty('--text-color', color);
+            document.documentElement.style.setProperty('--bg-color', bg);
+            localStorage.setItem('textColor', color);
+            localStorage.setItem('textBg', bg);
         }
         
-        // تحديث وضع السطر التلقائي
-        function updateWrapMode(enabled) {
-            if (enabled) {
-                codeArea.style.whiteSpace = 'pre-wrap';
-                codeArea.style.overflowX = 'hidden';
-                codeArea.style.wordWrap = 'break-word';
-            } else {
-                codeArea.style.whiteSpace = 'pre';
-                codeArea.style.overflowX = 'auto';
-                codeArea.style.wordWrap = 'normal';
-            }
+        // تمييز HTML بسيط
+        function highlightHTML() {
+            let code = codeArea.value;
+            
+            // تمييز التعليقات
+            code = code.replace(/&lt;!--[\s\S]*?--&gt;/g, '<span class="html-comment">$&</span>');
+            
+            // تمييز وسم DOCTYPE
+            code = code.replace(/&lt;!DOCTYPE[\s\S]*?&gt;/g, '<span class="html-doctype">$&</span>');
+            
+            // تمييز الوسوم
+            code = code.replace(/&lt;\/?[\w]+/g, function(match) {
+                return match.replace(/&lt;\/?([\w]+)/, '&lt;$1<span class="html-tag">$1</span>');
+            });
+            
+            // تمييز السمات
+            code = code.replace/([\w-]+)=/g, '<span class="html-attr">$1</span>=');
+            
+            // تمييز القيم
+            code = code.replace(/="[^"]*"/g, '=<span class="html-value">$&</span>');
+            
+            // إنشاء عنصر div لعرض الكود المميز
+            const highlightedDiv = document.createElement('div');
+            highlightedDiv.innerHTML = code;
+            highlightedDiv.style.whiteSpace = 'pre-wrap';
+            highlightedDiv.style.fontFamily = 'monospace';
+            highlightedDiv.style.fontSize = '14px';
+            highlightedDiv.style.padding = '10px';
+            highlightedDiv.style.backgroundColor = codeArea.style.backgroundColor;
+            highlightedDiv.style.color = codeArea.style.color;
+            highlightedDiv.style.overflow = 'auto';
+            highlightedDiv.style.height = '100%';
+            
+            // استبدال textarea بالـ div المميز
+            codeArea.parentNode.replaceChild(highlightedDiv, codeArea);
+            
+            // إعادة textarea عند النقر
+            highlightedDiv.addEventListener('click', function() {
+                const newTextarea = document.createElement('textarea');
+                newTextarea.id = 'codeArea';
+                newTextarea.style.cssText = codeArea.style.cssText;
+                newTextarea.value = highlightedDiv.textContent;
+                highlightedDiv.parentNode.replaceChild(newTextarea, highlightedDiv);
+                
+                // إعادة إعداد المستمعات
+                codeArea = document.getElementById('codeArea');
+                setupEventListeners();
+                isHighlighted = false;
+            });
+            
+            isHighlighted = true;
         }
         
-        // التلوين النحوي
-        function toggleSyntaxHighlighting() {
-            if (isSyntaxHighlighted) {
-                isSyntaxHighlighted = false;
-                showNotification('تم تعطيل التلوين النحوي');
-            } else {
-                // إنشاء عنصر div لعرض الكود مع التلوين النحوي
-                const highlightedCode = Prism.highlight(
-                    codeArea.value,
-                    Prism.languages.html,
-                    'html'
-                );
-                
-                // حفظ الموضع الحالي للشاشة
-                const scrollTop = codeArea.scrollTop;
-                const scrollLeft = codeArea.scrollLeft;
-                const selectionStart = codeArea.selectionStart;
-                const selectionEnd = codeArea.selectionEnd;
-                
-                // استبدال textarea بعنصر div مؤقت لعرض الكود الملوّن
-                const tempDiv = document.createElement('div');
-                tempDiv.id = 'highlightedCode';
-                tempDiv.style.whiteSpace = 'pre-wrap';
-                tempDiv.style.fontFamily = 'monospace';
-                tempDiv.style.fontSize = '14px';
-                tempDiv.style.lineHeight = '1.5';
-                tempDiv.style.padding = '10px';
-                tempDiv.style.backgroundColor = '#000';
-                tempDiv.style.color = '#fff';
-                tempDiv.style.width = '100%';
-                tempDiv.style.height = '100%';
-                tempDiv.style.overflow = 'auto';
-                tempDiv.style.boxSizing = 'border-box';
-                tempDiv.innerHTML = highlightedCode;
-                
-                // إدراج العنصر المؤقت
-                const codeWrap = codeArea.parentElement;
-                codeWrap.replaceChild(tempDiv, codeArea);
-                
-                // إعادة textarea عند النقر
-                const restoreTextarea = () => {
-                    codeArea.value = tempDiv.textContent;
-                    codeWrap.replaceChild(codeArea, tempDiv);
-                    codeArea.focus();
+        function clearHighlight() {
+            if (isHighlighted) {
+                const highlightedDiv = document.querySelector('#codeArea + div');
+                if (highlightedDiv) {
+                    const newTextarea = document.createElement('textarea');
+                    newTextarea.id = 'codeArea';
+                    newTextarea.style.cssText = codeArea.style.cssText;
+                    newTextarea.value = highlightedDiv.textContent;
+                    highlightedDiv.parentNode.replaceChild(newTextarea, highlightedDiv);
                     
-                    // استعادة الموضع والاختيار
-                    codeArea.scrollTop = scrollTop;
-                    codeArea.scrollLeft = scrollLeft;
-                    codeArea.selectionStart = selectionStart;
-                    codeArea.selectionEnd = selectionEnd;
-                    
-                    // إزالة مستمع الأحداث
-                    tempDiv.removeEventListener('click', restoreTextarea);
-                };
-                
-                tempDiv.addEventListener('click', restoreTextarea);
-                isSyntaxHighlighted = true;
-                showNotification('تم تفعيل التلوين النحوي - انقر على الكود للعودة إلى وضع التحرير');
+                    // إعادة إعداد المستمعات
+                    codeArea = document.getElementById('codeArea');
+                    setupEventListeners();
+                }
+                isHighlighted = false;
             }
+            showNotification('تم إزالة التمييز');
         }
         
         // ضغط الكود
         function compressCode(mode) {
+            clearHighlight();
+            
             let compressed = codeArea.value;
             
             switch(mode) {
@@ -604,34 +530,26 @@
             codeArea.value = compressed;
             saveToHistory();
             saveCode();
-            updateLineNumbers();
         }
         
         // معالجة اللصق
         function handlePaste() {
-            if (codeArea.selectionStart === codeArea.selectionEnd) {
-                // إذا لم يكن هناك نص محدد، الصق في الموضع الحالي
-                navigator.clipboard.readText().then(text => {
-                    const startPos = codeArea.selectionStart;
-                    const endPos = codeArea.selectionEnd;
-                    const currentText = codeArea.value;
-                    
-                    codeArea.value = currentText.substring(0, startPos) + text + currentText.substring(endPos);
-                    
-                    // تحديث موضع المؤشر
-                    codeArea.selectionStart = codeArea.selectionEnd = startPos + text.length;
-                    
-                    saveToHistory();
-                    saveCode();
-                    updateLineNumbers();
-                    showNotification('تم لصق النص');
-                }).catch(err => {
-                    document.execCommand('paste');
-                });
-            } else {
-                // إذا كان هناك نص محدد، استبدله
+            navigator.clipboard.readText().then(text => {
+                const startPos = codeArea.selectionStart;
+                const endPos = codeArea.selectionEnd;
+                const currentText = codeArea.value;
+                
+                codeArea.value = currentText.substring(0, startPos) + text + currentText.substring(endPos);
+                
+                // تحديث موضع المؤشر
+                codeArea.selectionStart = codeArea.selectionEnd = startPos + text.length;
+                
+                saveToHistory();
+                saveCode();
+                showNotification('تم لصق النص');
+            }).catch(err => {
                 document.execCommand('paste');
-            }
+            });
         }
         
         // معالجة الحذف
@@ -648,7 +566,6 @@
             
             saveToHistory();
             saveCode();
-            updateLineNumbers();
         }
         
         // وظائف التحكم في التاريخ
@@ -656,7 +573,6 @@
             if (historyIndex > 0) {
                 historyIndex--;
                 codeArea.value = history[historyIndex];
-                updateLineNumbers();
                 showNotification('تم التراجع');
             }
         }
@@ -665,7 +581,6 @@
             if (historyIndex < history.length - 1) {
                 historyIndex++;
                 codeArea.value = history[historyIndex];
-                updateLineNumbers();
                 showNotification('تم الإعادة');
             }
         }
