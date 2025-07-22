@@ -32,6 +32,9 @@ lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove',
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
 setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
 </script>
+<style>
+html, body {margin: 0;padding: 0;background-color: #000;visibility: hidden;}
+</style>
 <script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
@@ -184,7 +187,7 @@ function loadSequential(index = 0) {if (index >= elements.length) return;const {
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw>تاريخ آخر تحديث للصفحة : 2025/07/22</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (10:39)-55</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (18:01)-56</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
