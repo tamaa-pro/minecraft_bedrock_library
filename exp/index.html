@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقع تجربة الكود</title>
+    <!-- مكتبة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة Google Fonts للخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Minecraft&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --controls-bg: #555555;
+            --button-bg: #444444;
+            --button-hover: #666666;
+            --run-button: #4CAF50;
+            --border-color: #333333;
+        }
+        
         body {
             background-color: #808080;
             margin: 0;
@@ -25,9 +39,9 @@
         }
         
         .code-container {
-            height: 60vh; /* يمكنك تغيير هذا الرقم حسب احتياجك */
-            background-color: #000;
-            border: 2px solid #333;
+            height: 60vh;
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
             border-radius: 5px;
             overflow: hidden;
             display: flex;
@@ -36,22 +50,23 @@
         
         .controls {
             display: flex;
-            gap: 5px;
-            padding: 5px;
-            background-color: #555;
+            gap: 8px;
+            padding: 8px;
+            background-color: var(--controls-bg);
         }
         
         .controls button {
-            padding: 5px 10px;
-            min-width: 30px;
+            padding: 8px 12px;
+            min-width: 36px;
+            font-size: 16px;
         }
         
         #codeArea {
             flex: 1;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
-            font-family: monospace;
+            padding: 12px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Fira Code', monospace;
             font-size: 14px;
             line-height: 1.5;
             border: none;
@@ -64,56 +79,60 @@
         }
         
         .options-container {
-            background-color: #555;
+            background-color: var(--controls-bg);
             border-radius: 5px;
-            padding: 10px;
+            padding: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
             justify-content: center;
         }
         
         .option-group {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             align-items: center;
         }
         
         button, input {
-            padding: 8px 12px;
+            padding: 10px 14px;
             border: none;
-            border-radius: 4px;
-            background-color: #444;
+            border-radius: 6px;
+            background-color: var(--button-bg);
             color: white;
             cursor: pointer;
             white-space: nowrap;
+            font-size: 14px;
+            transition: all 0.2s;
         }
         
         button:hover {
-            background-color: #666;
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
         }
         
         #runBtn {
-            background-color: #4CAF50;
+            background-color: var(--run-button);
         }
         
         #runBtn:hover {
             filter: brightness(1.1);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
         }
         
         .toggle-switch {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             color: white;
         }
         
         .switch {
             position: relative;
             display: inline-block;
-            width: 30px;
-            height: 17px;
+            width: 34px;
+            height: 20px;
         }
         
         .switch input {
@@ -131,14 +150,14 @@
             bottom: 0;
             background-color: #ccc;
             transition: .4s;
-            border-radius: 17px;
+            border-radius: 20px;
         }
         
         .slider:before {
             position: absolute;
             content: "";
-            height: 13px;
-            width: 13px;
+            height: 16px;
+            width: 16px;
             left: 2px;
             bottom: 2px;
             background-color: white;
@@ -147,24 +166,25 @@
         }
         
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: var(--run-button);
         }
         
         input:checked + .slider:before {
-            transform: translateX(13px);
+            transform: translateX(14px);
         }
         
         .notification {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4CAF50;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--run-button);
             color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 18px;
+            border-radius: 6px;
             z-index: 1000;
             display: none;
             animation: fadeIn 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
         @keyframes fadeIn {
@@ -172,14 +192,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* تلوين النص الأساسي */
         .color-option {
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 8px;
             vertical-align: middle;
             border: 1px solid #fff;
+            border-radius: 3px;
         }
         
         .dropdown {
@@ -190,12 +210,12 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #444;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            background-color: var(--button-bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             z-index: 1;
-            border-radius: 4px;
-            padding: 5px;
+            border-radius: 6px;
+            padding: 8px;
             bottom: 100%;
             left: 0;
         }
@@ -203,45 +223,87 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        
+        .dropdown-content button {
+            width: 100%;
+            text-align: left;
+            margin: 4px 0;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .font-option {
+            font-family: inherit;
+        }
+        
+        .font-fira {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .font-minecraft {
+            font-family: 'Minecraft', monospace;
+        }
+        
+        /* ألوان خاصة */
+        .yellow-glow {
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="code-container">
             <div class="controls">
-                <button title="تراجع" id="undoBtn">↩</button>
-                <button title="إعادة" id="redoBtn">↪</button>
-                <button title="قص" id="cutBtn">✂</button>
-                <button title="نسخ" id="copyBtn">⎘</button>
-                <button title="لصق" id="pasteBtn">📋</button>
-                <button title="حذف" id="deleteBtn">❌</button>
+                <button title="تراجع" id="undoBtn"><i class="fas fa-undo"></i></button>
+                <button title="إعادة" id="redoBtn"><i class="fas fa-redo"></i></button>
+                <button title="قص" id="cutBtn"><i class="fas fa-cut"></i></button>
+                <button title="نسخ" id="copyBtn"><i class="far fa-copy"></i></button>
+                <button title="لصق" id="pasteBtn"><i class="fas fa-paste"></i></button>
+                <button title="حذف" id="deleteBtn"><i class="far fa-trash-alt"></i></button>
             </div>
             <textarea id="codeArea" spellcheck="false"></textarea>
         </div>
         
         <div class="options-container">
             <div class="option-group dropdown">
-                <button id="colorBtn">🎨 لون النص</button>
+                <button id="colorBtn"><i class="fas fa-palette"></i> لون النص</button>
                 <div class="dropdown-content">
                     <button data-color="#ffffff" data-bg="#000000"><span class="color-option" style="background:#ffffff"></span>أبيض</button>
                     <button data-color="#000000" data-bg="#ffffff"><span class="color-option" style="background:#000000"></span>أسود</button>
                     <button data-color="#808080" data-bg="#000000"><span class="color-option" style="background:#808080"></span>رمادي</button>
                     <button data-color="#90EE90" data-bg="#000000"><span class="color-option" style="background:#90EE90"></span>أخضر فاتح</button>
+                    <button data-color="#32CD32" data-bg="#000000"><span class="color-option" style="background:#32CD32"></span>أخضر</button>
                     <button data-color="#006400" data-bg="#000000"><span class="color-option" style="background:#006400"></span>أخضر غامق</button>
+                    <button data-color="#ADD8E6" data-bg="#000000"><span class="color-option" style="background:#ADD8E6"></span>أزرق فاتح</button>
+                    <button data-color="#0000FF" data-bg="#000000"><span class="color-option" style="background:#0000FF"></span>أزرق</button>
+                    <button data-color="#00008B" data-bg="#000000"><span class="color-option" style="background:#00008B"></span>أزرق غامق</button>
+                    <button data-color="#800080" data-bg="#000000"><span class="color-option" style="background:#800080"></span>بنفسجي</button>
+                    <button data-color="#FFD700" data-bg="#000000" class="yellow-glow"><span class="color-option" style="background:#FFD700"></span>أصفر متوهج</button>
+                    <button data-color="#FFA500" data-bg="#000000"><span class="color-option" style="background:#FFA500"></span>برتقالي</button>
                 </div>
             </div>
             
             <div class="option-group dropdown">
-                <button id="compressBtn">🗜 ضغط الكود</button>
+                <button id="fontBtn"><i class="fas fa-font"></i> نوع الخط</button>
                 <div class="dropdown-content">
-                    <button id="removeSpacesBtn">حذف الفراغات فقط</button>
-                    <button id="removeLineBreaksBtn">حذف النزول للسطر فقط</button>
-                    <button id="compressAllBtn">ضغط كامل</button>
+                    <button class="font-option" data-font="monospace, Arial">الخط الإفتراضي</button>
+                    <button class="font-fira" data-font="'Fira Code', monospace">Fira Code</button>
+                    <button class="font-minecraft" data-font="'Minecraft', monospace">Minecraft</button>
+                </div>
+            </div>
+            
+            <div class="option-group dropdown">
+                <button id="compressBtn"><i class="fas fa-compress-alt"></i> ضغط الكود</button>
+                <div class="dropdown-content">
+                    <button id="removeSpacesBtn"><i class="fas fa-minus"></i> حذف الفراغات فقط</button>
+                    <button id="removeLineBreaksBtn"><i class="fas fa-arrow-down"></i> حذف النزول للسطر فقط</button>
+                    <button id="compressAllBtn"><i class="fas fa-file-archive"></i> ضغط كامل</button>
                 </div>
             </div>
             
             <div class="option-group toggle-switch">
-                <label for="wrapToggle">السطر التلقائي:</label>
+                <label for="wrapToggle"><i class="fas fa-text-width"></i> السطر التلقائي:</label>
                 <label class="switch">
                     <input type="checkbox" id="wrapToggle" checked>
                     <span class="slider"></span>
@@ -250,16 +312,16 @@
             
             <div class="option-group">
                 <input type="file" id="fileImport" accept=".html,.htm,.txt,.js,.css,.php" style="display: none;">
-                <button id="importFileBtn">📂 استيراد من ملف</button>
+                <button id="importFileBtn"><i class="fas fa-file-import"></i> استيراد من ملف</button>
             </div>
             
             <div class="option-group">
                 <input type="text" id="urlInput" placeholder="رابط الكود">
-                <button id="importUrlBtn">🌐 استيراد من رابط</button>
+                <button id="importUrlBtn"><i class="fas fa-link"></i> استيراد من رابط</button>
             </div>
             
-            <button id="exportFileBtn">💾 حفظ كملف</button>
-            <button id="runBtn">▶ تشغيل الكود</button>
+            <button id="exportFileBtn"><i class="fas fa-file-export"></i> حفظ كملف</button>
+            <button id="runBtn"><i class="fas fa-play"></i> تشغيل الكود</button>
         </div>
     </div>
 
@@ -269,6 +331,7 @@
         // عناصر DOM
         const codeArea = document.getElementById('codeArea');
         const colorBtn = document.getElementById('colorBtn');
+        const fontBtn = document.getElementById('fontBtn');
         const compressBtn = document.getElementById('compressBtn');
         const removeSpacesBtn = document.getElementById('removeSpacesBtn');
         const removeLineBreaksBtn = document.getElementById('removeLineBreaksBtn');
@@ -301,6 +364,10 @@
             const savedBg = localStorage.getItem('textBg') || '#000000';
             applyColors(savedColor, savedBg);
             
+            // استعادة الخط المحفوظ
+            const savedFont = localStorage.getItem('textFont') || "'Fira Code', monospace";
+            codeArea.style.fontFamily = savedFont;
+            
             // استعادة وضع السطر التلقائي
             const savedWrap = localStorage.getItem('wrapMode') !== 'false';
             wrapToggle.checked = savedWrap;
@@ -327,11 +394,21 @@
             deleteBtn.addEventListener('click', handleDelete);
             
             // تغيير اللون
-            document.querySelectorAll('.dropdown-content button[data-color]').forEach(btn => {
+            document.querySelectorAll('[data-color]').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const color = e.target.getAttribute('data-color');
                     const bg = e.target.getAttribute('data-bg');
                     applyColors(color, bg);
+                });
+            });
+            
+            // تغيير الخط
+            document.querySelectorAll('[data-font]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const font = e.target.getAttribute('data-font');
+                    codeArea.style.fontFamily = font;
+                    localStorage.setItem('textFont', font);
+                    showNotification('تم تغيير الخط: ' + font);
                 });
             });
             
@@ -415,8 +492,11 @@
         function applyColors(color, bg) {
             codeArea.style.color = color;
             codeArea.style.backgroundColor = bg;
+            document.documentElement.style.setProperty('--text-color', color);
+            document.documentElement.style.setProperty('--bg-color', bg);
             localStorage.setItem('textColor', color);
             localStorage.setItem('textBg', bg);
+            showNotification('تم تغيير الألوان');
         }
         
         // ضغط الكود
@@ -449,10 +529,12 @@
                 codeArea.style.whiteSpace = 'pre-wrap';
                 codeArea.style.overflowX = 'hidden';
                 codeArea.style.wordWrap = 'break-word';
+                showNotification('تم تفعيل السطر التلقائي');
             } else {
                 codeArea.style.whiteSpace = 'pre';
                 codeArea.style.overflowX = 'auto';
                 codeArea.style.wordWrap = 'normal';
+                showNotification('تم إيقاف السطر التلقائي');
             }
         }
         
