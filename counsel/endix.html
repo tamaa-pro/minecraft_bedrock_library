@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* زر الكونسول (شبه شفاف في الزاوية اليسرى العليا) */
+#consoleToggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: rgba(51, 51, 51, 0.5);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: Arial;
+  font-size: 12px;
+  display: none; /* مخفي في البداية */
+}
+
+/* نافذة الكونسول */
+#customConsole {
+  display: none;
+  position: fixed;
+  top: 40px;
+  left: 10px;
+  width: 300px;
+  height: 200px;
+  background: rgba(30, 30, 30, 0.9);
+  color: #00ff00;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 10px;
+  overflow-y: auto;
+  border: 1px solid #444;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+/* ألوان لأنواع الرسائل */
+.console-log { color: #00ff00; }
+.console-error { color: #ff5555; }
+.console-warn { color: #ffff55; }
+.console-info { color: #55ffff; }
+</style>
+</head>
+<body>
+
+<!-- زر الكونسول المخفي -->
+<button id="consoleToggle">👨‍💻 كونسول المطور</button>
+
+<!-- نافذة الكونسول -->
+<div id="customConsole">
+  <div id="consoleContent"></div>
+</div>
+
+<script>
+// عداد النقرات
+let clickCount = 0;
+
+// تفعيل الزر بعد 6 نقرات
+document.addEventListener('click', () => {
+  clickCount++;
+  if (clickCount >= 6) {
+    document.getElementById('consoleToggle').style.display = 'block';
+    // إلغاء متابعة النقرات بعد التفعيل
+    document.removeEventListener('click', arguments.callee);
+  }
+});
+
+// عناصر DOM
+const consoleToggle = document.getElementById('consoleToggle');
+const customConsole = document.getElementById('customConsole');
+const consoleContent = document.getElementById('consoleContent');
+
+// حالة الكونسول
+let isConsoleOpen = false;
+
+// تبديل حالة الكونسول
+consoleToggle.addEventListener('click', () => {
+  isConsoleOpen = !isConsoleOpen;
+  customConsole.style.display = isConsoleOpen ? 'block' : 'none';
+});
+
+// دالة لطباعة الرسائل
+function logToCustomConsole(message, type = 'log') {
+  const messageElement = document.createElement('div');
+  messageElement.textContent = message;
+  messageElement.className = `console-${type}`;
+  
+  consoleContent.appendChild(messageElement);
+  customConsole.scrollTop = customConsole.scrollHeight;
+}
+
+// إعادة توجيه console.log الأصلي
+(function() {
+  const original = {
+    log: console.log,
+    error: console.error,
+    warn: console.warn,
+    info: console.info
+  };
+  
+  console.log = function(...args) {
+    original.log.apply(console, args);
+    logToCustomConsole(args.join(' '), 'log');
+  };
+  
+  console.error = function(...args) {
+    original.error.apply(console, args);
+    logToCustomConsole(args.join(' '), 'error');
+  };
+  
+  console.warn = function(...args) {
+    original.warn.apply(console, args);
+    logToCustomConsole(args.join(' '), 'warn');
+  };
+  
+  console.info = function(...args) {
+    original.info.apply(console, args);
+    logToCustomConsole(args.join(' '), 'info');
+  };
+})();
+
+// مثال للاستخدام:
+console.log('تم تحميل الكونسول المدمج بنجاح!');
+console.warn('هذه رسالة تحذير');
+console.error('هذا خطأ مثال');
+</script>
+
+</body>
+</html>
