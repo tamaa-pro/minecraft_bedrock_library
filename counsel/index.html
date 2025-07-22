@@ -31,23 +31,6 @@ document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &
 lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 </script>
 <script>
-if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
-setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
-</script>
-<style>
-html, body {margin: 0;padding: 0;background-color: #000;visibility: hidden;}
-</style>
-<script>
-const forceShowError = false;
-const isAndroid = /Android/i.test(navigator.userAgent);document.addEventListener("DOMContentLoaded", function () {if (isAndroid && !forceShowError) {document.documentElement.style.visibility = "visible";document.body.style.visibility = "visible";} else {document.head.innerHTML = '';document.body.innerHTML = '';document.body.style.cssText = `margin: 0;padding: 0;background-color: #000;height: 100vh;overflow: hidden;`;document.body.innerHTML = `
-<div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background-color:#000;color:white;font-family:sans-serif;text-align:center;">
-<div style="font-size:180px;color:#ff4444;margin-bottom:20px;">&#9888;</div>
-<h1 style="font-size:28px;color:#ff4444;">ERROR CODE 103</h1>
-<p style="font-size:14px;max-width:320px;line-height:1.6;color:#ccc;margin-top:10px;">
-خطأ في التقديم، حصلت مشكلة أثناء التحقق. يُرجى فتح الصفحة من جهاز آخر.</p>
-</div>`;}});
-</script>
-<script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
