@@ -42,9 +42,6 @@ const isAndroid = /Android/i.test(navigator.userAgent);document.addEventListener
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<a href="stats/" style="display: inline-block;background: #222;padding: 3px 5px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
-<i class="fas fa-chart-line" style="color: #007bff;font-size: 15px;transition: color 0.3s ease;"></i>
-</a>
 <div style="background-color: #444444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 20px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
 <img alt="أيقونة التطبيق" src="https://k.top4top.io/p_3439brqf60.png" style="border-radius: 15px; height: 80px; object-fit: cover; width: 80px;" />
@@ -82,6 +79,10 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
 <div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
 <script>let updateInProgress=false;if(updateInProgress){window.addEventListener("DOMContentLoaded",()=>{const b=document.getElementById("downloadBtn"),t=document.getElementById("toastUpdate");if(b){b.disabled=true;b.style.pointerEvents="none";b.style.backgroundColor="#8B0000";b.innerText="في انتظار التحديث..."}t.style.display="block";setTimeout(()=>{t.style.bottom="25px"},100);});}</script>
+<div id="toastMessage" style="position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-family:sans-serif;font-size:14px;padding:12px 20px;border-radius:10px;box-shadow:0 0 10px #000;white-space:nowrap;display:flex;align-items:center;gap:10px;transition:bottom 0.4s ease;z-index:9999;">
+  <span style="display:inline-block;animation:jump 0.5s infinite alternate;">🐈‍⬛</span>
+  إذا أعجبك التطبيق فلا تنسى نشره مع غيرك لضمان إستمراريته .
+</div>
 <style>
 @keyframes jump{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
 </style>
@@ -129,9 +130,9 @@ const images=[
  "الصفحة الرئيسية"],
 ["https://l.top4top.io/p_3480kpdpc1.jpg",
  "القائمة الجانبية"],
-["https://d.top4top.io/p_34845evz21.jpg",
+["https://j.top4top.io/p_3482grjmh1.jpg",
  "آخر إصدار"],
-["http",
+["https://a.top4top.io/p_3479kxqx01.jpg",
  "صفحة التحميل"],
 ["https://f.top4top.io/p_346823dh11.jpg",
  "الإصدارات الأساسية"],
@@ -152,7 +153,6 @@ const images=[
 ["https://l.top4top.io/p_3468557ym1.jpg",
  "دردشة المجتمع"]
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});});function loadSequential(index=0){if(index>=elements.length)return;const {img,spinner,src}=elements[index];const image=new Image();image.onload=()=>{img.src=src;img.style.display="block";spinner.remove();loadSequential(index+1);};image.onerror=()=>{spinner.style.borderTopColor="red";loadSequential(index+1)};image.src=src;}loadSequential();
-function loadSequential(index = 0) {if (index >= elements.length) return;const { img, spinner, src } = elements[index];const image = new Image();image.onload = () => {img.src = src;img.style.display = "block";spinner.remove();loadSequential(index + 1);};image.onerror = () => {const errorWrapper = document.createElement("div");errorWrapper.style.position = "absolute";errorWrapper.style.display = "flex";errorWrapper.style.flexDirection = "column";errorWrapper.style.alignItems = "center";errorWrapper.style.justifyContent = "center";errorWrapper.style.width = "100%";errorWrapper.style.height = "100%";const errorIcon = document.createElement("div");errorIcon.innerHTML = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText = document.createElement("span");errorText.textContent = "فشل التحميل";errorText.style.color = "#FF0000";errorText.style.fontSize = "12px";errorText.style.marginTop = "5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);loadSequential(index + 1);};image.src = src;}
 </script>
 <br /><hr />
 <p style="line-height: 1.6;">
@@ -189,18 +189,27 @@ function loadSequential(index = 0) {if (index >= elements.length) return;const {
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/20</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (18:04)-54</sifaw><br>
+<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/14</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (20:38)-41</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
-<sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
-<sifaw>تاريخ الإصدار الأول (نسخة البيتا) : 2024/01/07</sifaw><br>
+<sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/28</sifaw><br>
+<sifaw>تاريخ الإصدار الأول (1/2/3 بيتا) : 2024/01/07</sifaw><br>
 <sifaw>المالك : Sifaw Tinsti</sifaw><br>
 <sifaw>تابع لطرف : TAMAA PRODUCTION STUDIOS</sifaw><br>
-<button onclick="window.location.href='stats/'"
-style="display: inline-flex; align-items: center; gap: 8px; background-color: #555; color: white; border: none; padding: 5px 105px; border-radius: 6px; font-size: 16px; cursor: pointer;">
-<i class="fas fa-chart-line"></i>احصائيات التطبيق
-</button>
+<sifaw>عدد المستخدمين و التحميلات لشهر يونيو :</sifaw>
+<div id="statsChart" style="background:#1a1a1a;border-radius:8px;padding:8px;max-width:auto;max-height:180px;margin:4px auto">
+ <canvas id="chart" height="320"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const d=['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+const  u=[21,25,19,28,18,28,32,22,22,21,16,18,26,30,35,31,33,24,51,62,69,61,51,56,52,51,60,67,63,50];
+const dl=[7,11,7,14,10,12,15,8,4,5,6,6,13,14,16,8,8,8,20,28,41,30,12,27,19,15,19,28,23,14];
+const max=Math.max(...u,...dl),step=Math.ceil(max/5/10)*10;
+new Chart(chart,{type:'line',data:{labels:d,datasets:[{label:'المستخدمون',data:u,borderColor:'#45a1ff',backgroundColor:'transparent',tension:.35},{label:'التحميلات',data:dl,borderColor:'#ff5252',backgroundColor:'transparent',tension:.35}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#fff',font:{size:11}}}},scales:{x:{grid:{color:'#444'},ticks:{color:'#ddd',font:{size:8},autoSkip:false,maxRotation:0,minRotation:0}},y:{beginAtZero:true,max:step*5,ticks:{stepSize:step,color:'#ddd',font:{size:9}},grid:{color:'#444'}}}}});
+</script>
+<style>#statsChart,canvas{width:5px 0px;border-radius:6px}canvas{background:#111}</style>
 </div>
 <script>
 const toggle = document.getElementById('infoToggle');const panel = document.getElementById('infoPanel');toggle.addEventListener('click', () => {panel.classList.toggle('open');toggle.textContent = panel.classList.contains('open') ? "إخفاء معلومات الصفحة": "عرض معلومات الصفحة";});
@@ -210,113 +219,6 @@ const toggle = document.getElementById('infoToggle');const panel = document.getE
 <a href="https://www.facebook.com/minecraft.bedrock.library?mibextid=ZbWKwL" style="color: #0066ff; text-decoration: underline;" target="_blank">صفحة التطبيق على الفيسبوك</a>
 </div>
 </div>
-</div
-
-<script>
-// عداد النقرات
-let tapCount = 0;
-
-// زر الكونسول
-const consoleBtn = document.createElement('button');
-consoleBtn.id = 'mobileConsoleBtn';
-consoleBtn.innerHTML = '📝 Console';
-consoleBtn.style.cssText = `
-  display: none;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-family: Arial;
-  font-size: 12px;
-`;
-
-// نافذة الكونسول
-const consoleDiv = document.createElement('div');
-consoleDiv.id = 'mobileConsole';
-consoleDiv.style.cssText = `
-  display: none;
-  position: fixed;
-  top: 40px;
-  left: 10px;
-  width: 90%;
-  max-width: 300px;
-  height: 200px;
-  background: rgba(0,0,0,0.9);
-  color: lime;
-  font-family: monospace;
-  font-size: 12px;
-  padding: 10px;
-  overflow: auto;
-  border: 1px solid #444;
-  border-radius: 5px;
-  z-index: 9998;
-`;
-
-// تفعيل بست نقرات
-document.addEventListener('click', () => {
-  tapCount++;
-  if (tapCount === 6) {
-    document.body.appendChild(consoleBtn);
-    document.body.appendChild(consoleDiv);
-    consoleBtn.style.display = 'block';
-    tapCount = 0;
-  }
-});
-
-// تبديل عرض الكونسول
-consoleBtn.addEventListener('click', () => {
-  consoleDiv.style.display = consoleDiv.style.display === 'none' ? 'block' : 'none';
-});
-
-// دالة تسجيل الرسائل
-function mobileLog(message, type = 'log') {
-  const msgElement = document.createElement('div');
-  msgElement.textContent = message;
-  msgElement.style.color = 
-    type === 'error' ? 'red' :
-    type === 'warn' ? 'yellow' :
-    type === 'info' ? 'cyan' : 'lime';
-  
-  consoleDiv.appendChild(msgElement);
-  consoleDiv.scrollTop = consoleDiv.scrollHeight;
-}
-
-// إعادة تعريف console.log
-const originalConsole = {
-  log: console.log,
-  error: console.error,
-  warn: console.warn,
-  info: console.info
-};
-
-console.log = (...args) => {
-  originalConsole.log(...args);
-  mobileLog(args.join(' '), 'log');
-};
-
-console.error = (...args) => {
-  originalConsole.error(...args);
-  mobileLog(args.join(' '), 'error');
-};
-
-console.warn = (...args) => {
-  originalConsole.warn(...args);
-  mobileLog(args.join(' '), 'warn');
-};
-
-console.info = (...args) => {
-  originalConsole.info(...args);
-  mobileLog(args.join(' '), 'info');
-};
-
-// رسالة ترحيبية
-console.log('تم تحميل الكونسول المدمج بنجاح');
-</script>
-
+</div>
 </body>
 </html>
