@@ -25,9 +25,9 @@ button:hover{background:#666}
 @keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
 .color-option{width:18px;height:18px;display:inline-block;margin-right:8px;vertical-align:middle;border:1px solid #fff;border-radius:3px}
 .dropdown{position:relative;display:inline-block}
-.dropdown-content{display:none;position:absolute;background:#444;min-width:200px;box-shadow:0 8px 16px rgba(0,0,0,.2);z-index:1;border-radius:6px;padding:8px;bottom:100%;left:0}
+.dropdown-content{display:none;position:absolute;background:#444;box-shadow:0 8px 16px rgba(0,0,0,.2);z-index:1;border-radius:6px;padding:8px;bottom:100%;left:0;width:max-content;max-width:95vw}
 .dropdown.active .dropdown-content{display:block}
-.dropdown-content button{width:100%;text-align:left;margin:4px 0;padding:8px 12px;border-radius:4px}
+.dropdown-content button{width:100%;text-align:left;margin:4px 0;padding:8px 12px;border-radius:4px;white-space:nowrap}
 .toggle-switch{display:flex;align-items:center;gap:8px;color:#fff}
 .switch{position:relative;display:inline-block;width:34px;height:20px}
 .switch input{opacity:0;width:0;height:0}
@@ -43,6 +43,8 @@ input:checked+.slider:before{transform:translateX(14px)}
 <div class="controls">
 <button title="تراجع" id="undoBtn"><i class="fas fa-undo"></i></button>
 <button title="إعادة" id="redoBtn"><i class="fas fa-redo"></i></button>
+<button title="الذهاب إلى البداية" id="goTopBtn"><i class="fas fa-arrow-up"></i></button>
+<button title="الذهاب إلى النهاية" id="goBottomBtn"><i class="fas fa-arrow-down"></i></button>
 <button title="قص" id="cutBtn"><i class="fas fa-cut"></i></button>
 <button title="نسخ" id="copyBtn"><i class="far fa-copy"></i></button>
 <button title="لصق" id="pasteBtn"><i class="fas fa-paste"></i></button>
@@ -110,6 +112,8 @@ const exportFileBtn = document.getElementById('exportFileBtn');
 const runBtn = document.getElementById('runBtn');
 const undoBtn = document.getElementById('undoBtn');
 const redoBtn = document.getElementById('redoBtn');
+const goTopBtn = document.getElementById('goTopBtn');
+const goBottomBtn = document.getElementById('goBottomBtn');
 const cutBtn = document.getElementById('cutBtn');
 const copyBtn = document.getElementById('copyBtn');
 const pasteBtn = document.getElementById('pasteBtn');
@@ -149,6 +153,16 @@ function setupEventListeners() {
     // التحكم في النص
     undoBtn.addEventListener('click', undo);
     redoBtn.addEventListener('click', redo);
+    goTopBtn.addEventListener('click', () => {
+        codeArea.selectionStart = codeArea.selectionEnd = 0;
+        codeArea.focus();
+        showNotification('تم الانتقال إلى بداية الكود');
+    });
+    goBottomBtn.addEventListener('click', () => {
+        codeArea.selectionStart = codeArea.selectionEnd = codeArea.value.length;
+        codeArea.focus();
+        showNotification('تم الانتقال إلى نهاية الكود');
+    });
     cutBtn.addEventListener('click', () => document.execCommand('cut'));
     copyBtn.addEventListener('click', copyText);
     pasteBtn.addEventListener('click', handlePaste);
@@ -235,10 +249,10 @@ function setupEventListeners() {
     // تشغيل الكود في صفحة جديدة
     runBtn.addEventListener('click', () => {
         const code = codeArea.value;
-        const blob = new Blob([code], { type: 'text/html' });
+        const blob = new Blob([`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>معاينة الكود</title></head><body>${code}</body></html>`], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
-        
-        window.open(url, '_blank');
+        const newWindow = window.open('about:blank', '_blank');
+        newWindow.location.href = url;
         showNotification('تم تشغيل الكود في نافذة جديدة');
     });
     
