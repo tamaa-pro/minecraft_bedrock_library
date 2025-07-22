@@ -1,138 +1,182 @@
 <!DOCTYPE html><html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشغل HTML</title>
-    <style>
-        body {
-            margin: 0;
-            background: #aaa;
-            font-family: sans-serif;
-            direction: rtl;
-        }
-        #editor {
-            margin: 10px;
-            height: calc(100vh - 70px);
-            background: #000;
-            color: #fff;
-            border: 1px solid #444;
-            width: calc(100% - 20px);
-            resize: none;
-            font-family: monospace;
-            font-size: 16px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        #controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 10px;
-            background: #999;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
-        }
-        #controls > * {
-            flex: 1 1 auto;
-            min-width: 100px;
-        }
-        #preview {
-            position: fixed;
-            inset: 0;
-            background: white;
-            z-index: 9999;
-            display: none;
-        }
-        #preview iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محرر HTML</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #444;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: sans-serif;
+    }#editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #666;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  direction: ltr;
+  unicode-bidi: plaintext;
+}
+
+#toolbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  padding: 5px;
+}
+
+#toolbar button, #bottom-buttons button {
+  background: #666;
+  color: white;
+  border: none;
+  padding: 8px;
+  margin: 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#bottom-buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  background-color: #222;
+}
+
+iframe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 9999;
+  background: white;
+}
+
+.hidden {
+  display: none;
+}
+
+  </style>
 </head>
 <body>
-    <textarea id="editor" spellcheck="false"></textarea>
-    <div id="controls">
-        <select id="theme">
-            <option value="light">أبيض</option>
-            <option value="dark">داكن</option>
-            <option value="github">GitHub</option>
-        </select>
-        <label><input type="checkbox" id="lineNumbers"> ترقيم الأسطر</label>
-        <input type="file" id="fileInput">
-        <input type="url" id="urlInput" placeholder="رابط استيراد">
-        <button onclick="importFromURL()">استيراد من رابط</button>
-        <button onclick="copyCode()">نسخ</button>
-        <button onclick="runCode()">تشغيل</button>
+  <div id="editor">
+    <div id="toolbar">
+      <button onclick="setColor('white')">أبيض</button>
+      <button onclick="setColor('black')">أسود</button>
+      <button onclick="setColor('highlight')">ألوان مميزة</button>
+      <button onclick="toggleLines()">شريط الترقيم</button>
+      <input type="file" accept=".html" onchange="loadFile(event)">
+      <button onclick="downloadCode()">حفظ كملف</button>
     </div>
-    <div id="preview"><iframe id="frame"></iframe></div><script>
-    const editor = document.getElementById('editor');
-    const preview = document.getElementById('preview');
-    const frame = document.getElementById('frame');
+    <textarea id="code" oninput="saveCode()"></textarea>
+    <div id="bottom-buttons">
+      <button onclick="copyCode()">نسخ</button>
+      <button onclick="pasteCode()">لصق</button>
+      <button onclick="clearCode()">حذف</button>
+      <button onclick="undo()">رجوع</button>
+      <button onclick="redo()">تقدم</button>
+      <button onclick="runCode()">تشغيل</button>
+    </div>
+  </div>
+  <iframe id="preview" class="hidden"></iframe>
+  <script>
+    const textarea = document.getElementById("code");
+    const preview = document.getElementById("preview");
+    let undoStack = [], redoStack = [];function saveCode() {
+  localStorage.setItem("savedCode", textarea.value);
+  undoStack.push(textarea.value);
+}
 
-    document.getElementById('fileInput').addEventListener('change', e => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => editor.value = reader.result;
-            reader.readAsText(file);
-        }
-    });
+function loadCode() {
+  const saved = localStorage.getItem("savedCode");
+  if (saved) textarea.value = saved;
+}
 
-    function importFromURL() {
-        const url = document.getElementById('urlInput').value;
-        fetch(url)
-            .then(res => res.text())
-            .then(code => editor.value = code)
-            .catch(() => alert('فشل التحميل'));
-    }
+function copyCode() {
+  navigator.clipboard.writeText(textarea.value);
+}
 
-    function copyCode() {
-        navigator.clipboard.writeText(editor.value).then(() => alert("تم النسخ!"));
-    }
+function pasteCode() {
+  navigator.clipboard.readText().then(text => textarea.value += text);
+}
 
-    function runCode() {
-        frame.srcdoc = editor.value;
-        preview.style.display = 'block';
-    }
+function clearCode() {
+  textarea.value = "";
+  saveCode();
+}
 
-    preview.addEventListener('click', () => {
-        preview.style.display = 'none';
-    });
+function undo() {
+  if (undoStack.length > 1) {
+    redoStack.push(undoStack.pop());
+    textarea.value = undoStack[undoStack.length - 1];
+  }
+}
 
-    // حفظ الإعدادات في الذاكرة
-    const themeSelect = document.getElementById('theme');
-    themeSelect.addEventListener('change', () => {
-        const val = themeSelect.value;
-        localStorage.setItem('theme', val);
-        applyTheme(val);
-    });
+function redo() {
+  if (redoStack.length) {
+    const redoValue = redoStack.pop();
+    textarea.value = redoValue;
+    undoStack.push(redoValue);
+  }
+}
 
-    function applyTheme(theme) {
-        if (theme === 'light') {
-            editor.style.background = '#fff';
-            editor.style.color = '#000';
-        } else if (theme === 'dark') {
-            editor.style.background = '#000';
-            editor.style.color = '#fff';
-        } else if (theme === 'github') {
-            editor.style.background = '#f6f8fa';
-            editor.style.color = '#24292e';
-        }
-    }
+function runCode() {
+  preview.classList.remove("hidden");
+  preview.srcdoc = textarea.value;
+}
 
-    // تحميل الإعدادات
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
-    themeSelect.value = savedTheme;
+function setColor(mode) {
+  if (mode === 'white') {
+    textarea.style.color = '#fff';
+    textarea.style.backgroundColor = '#000';
+  } else if (mode === 'black') {
+    textarea.style.color = '#000';
+    textarea.style.backgroundColor = '#fff';
+  } else if (mode === 'highlight') {
+    // بدائية مؤقتة لتلوين الكود
+    alert('نمط الألوان المميزة غير مدعوم بعد');
+  }
+}
 
-    const lineNumbers = document.getElementById('lineNumbers');
-    lineNumbers.addEventListener('change', () => {
-        localStorage.setItem('lineNumbers', lineNumbers.checked);
-        editor.style.counterReset = lineNumbers.checked ? 'line' : '';
-    });
+function toggleLines() {
+  alert("ميزة شريط الترقيم قيد التطوير.");
+}
 
-    lineNumbers.checked = localStorage.getItem('lineNumbers') === 'true';
-</script>
+function loadFile(event) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    textarea.value = e.target.result;
+    saveCode();
+  };
+  reader.readAsText(event.target.files[0]);
+}
 
+function downloadCode() {
+  const blob = new Blob([textarea.value], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.download = 'code.html';
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
+
+loadCode();
+
+  </script>
 </body>
 </html>
