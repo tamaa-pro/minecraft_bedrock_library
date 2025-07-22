@@ -2,52 +2,17 @@
 <html lang="ar" dir="rtl">
 
 <script>
-// تأكيد أن الجهاز غير أندرويد
-const isBlocked = !/android/i.test(navigator.userAgent) || 
-                 /windows|macintosh|linux|iphone|ipad|ipod/i.test(navigator.userAgent);
+// الكشف الدقيق عن الأجهزة غير الأندرويد
+const isNotAndroid = 
+  /windows|macintosh|linux|iphone|ipad|ipod/i.test(navigator.userAgent) || 
+  (!/android/i.test(navigator.userAgent) && !/chrome|firefox|samsungbrowser/i.test(navigator.userAgent));
 
-if (isBlocked) {
-  // 1. تدمير DOM بالكامل
-  document.documentElement.innerHTML = '';
-  document.documentElement.style.all = 'unset';
-  
-  // 2. منع التكرار والتحميل
-  window.stop();
-  document.write('');
-  
-  // 3. إعادة توجيه إلى صفحة فارغة (بعد تأخير)
-  setTimeout(() => {
-    window.location.replace('about:blank');
-    window.location.href = 'about:blank';
-    window.open('about:blank', '_self');
-  }, 50);
-  
-  // 4. تعطيل الذاكرة
-  const crash = () => {
-    while(true) {
-      const arr = new ArrayBuffer(1e9); // استهلاك الذاكرة
-      console.error(arr);
-    }
-  };
-  
-  // 5. محاولات متعددة للإغلاق
-  setTimeout(() => {
-    window.close();
-    self.close();
-    if(window.opener) window.opener.close();
-    open('', '_self', '').close();
-    crash();
-  }, 100);
-  
-  // 6. منع أي أحداث
-  document.onclick = document.onkeydown = document.ontouchstart = null;
-  window.addEventListener('load', () => { crash() }, {once: true});
-  
-  // 7. إضافة طبقة إضافية لمنع الأدوات
-  Object.defineProperty(window, 'document', {value: null});
-  Object.defineProperty(window, 'window', {value: null});
-  
-  throw new Error('Access Denied: Android Only');
+// إعادة التوجيه الفوري إذا لم يكن أندرويد
+if (isNotAndroid) {
+  window.stop(); // إيقاف أي تحميل للصفحة
+  window.location.replace('about:blank'); // الإعادة التوجيه الأكثر فعالية
+  document.open(); document.close(); // تنظيف DOM
+  document.write(''); // محو المحتوى بالكامل
 }
 </script>
 
