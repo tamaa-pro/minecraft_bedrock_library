@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -153,8 +152,9 @@ n=document.createElement('a');
 n.href=t,n.download='index.html',n.click(),URL.revokeObjectURL(t),showNotification('تم تحميل الملف بنجاح');
 }),el('runBtn').addEventListener('click',()=>{
 const e=new Blob([`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>معاينة الكود</title></head><body>${codeArea.value}</body></html>`],
-{type:'text/html'}),t=URL.createObjectURL(e),n=window.open('about:blank','_blank');
-n.location.href=t,showNotification('تم تشغيل الكود في نافذة جديدة');
+{type:'text/html'}),t=URL.createObjectURL(e);
+showNotification('جاري تحميل النتيجة...');
+setTimeout(()=>{window.location.href=t;},500);
 }),codeArea.addEventListener('input',()=>{saveToHistory(),saveCode()});
 el('colorBtn').addEventListener('click',e=>(e.stopPropagation(),colorDropdown.classList.toggle('active'),compressDropdown.classList.remove('active')));
 el('compressBtn').addEventListener('click',e=>(e.stopPropagation(),compressDropdown.classList.toggle('active'),colorDropdown.classList.remove('active')));
@@ -165,7 +165,6 @@ document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key
 
 function copyText(){
 if(codeArea.selectionStart===codeArea.selectionEnd){
-// إذا لم يكن هناك نص محدد، نسخ المحتوى كاملاً بدون تحديد
 navigator.clipboard.writeText(codeArea.value)
 .then(()=>showNotification('تم نسخ الكود بالكامل'))
 .catch(()=>{
@@ -178,7 +177,6 @@ document.body.removeChild(textarea);
 showNotification('تم نسخ الكود بالكامل');
 });
 }else{
-// إذا كان هناك نص محدد، نسخ الجزء المحدد فقط
 document.execCommand('copy');
 showNotification('تم نسخ النص المحدد');
 }
