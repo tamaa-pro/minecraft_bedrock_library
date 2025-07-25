@@ -143,7 +143,7 @@ const images=[
  "برامج مقترحة"],
 ["https://g.top4top.io/p_3468wbnni1.jpg",
  "مواقع مقترحة"],
-["https://l.top4top.io/p_3468557ym1.jpg",
+["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_community.png",
  "دردشة المجتمع"]
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});});function loadSequential(index=0){if(index>=elements.length)return;const {img,spinner,src}=elements[index];const image=new Image();image.onload=()=>{img.src=src;img.style.display="block";spinner.remove();loadSequential(index+1);};image.onerror=()=>{spinner.style.borderTopColor="red";loadSequential(index+1)};image.src=src;}loadSequential();
 function loadSequential(index = 0) {if (index >= elements.length) return;const { img, spinner, src } = elements[index];const image = new Image();image.onload = () => {img.src = src;img.style.display = "block";spinner.remove();loadSequential(index + 1);};image.onerror = () => {const errorWrapper = document.createElement("div");errorWrapper.style.position = "absolute";errorWrapper.style.display = "flex";errorWrapper.style.flexDirection = "column";errorWrapper.style.alignItems = "center";errorWrapper.style.justifyContent = "center";errorWrapper.style.width = "100%";errorWrapper.style.height = "100%";const errorIcon = document.createElement("div");errorIcon.innerHTML = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText = document.createElement("span");errorText.textContent = "فشل التحميل";errorText.style.color = "#FF0000";errorText.style.fontSize = "12px";errorText.style.marginTop = "5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);loadSequential(index + 1);};image.src = src;}
@@ -183,8 +183,8 @@ function loadSequential(index = 0) {if (index >= elements.length) return;const {
 <div id="infoToggle">عرض معلومات الصفحة</div>
 <div id="infoPanel">
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/23</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (00:32)-57</sifaw><br>
+<sifaw>تاريخ آخر تحديث للصفحة : 2025/07/25</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (18:52)-58</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
