@@ -6,6 +6,51 @@
 <title>محرر اكواد html</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+<script>
+// تأكد من أن هذا الكود يعمل قبل تحميل أي محتوى آخر للصفحة
+(function() {
+    // إعدادات يمكن تغييرها
+    const verificationSettings = {
+        enableMemory: false, // تغيير إلى true بعد الانتهاء من الاختبار
+        verificationPageUrl: 'https://tamaa-pro.github.io/azro/verification'
+    };
+    
+    // التحقق من وجود تحقق سابق في الذاكرة
+    if (verificationSettings.enableMemory && localStorage.getItem('tamaa_verification') === 'verified') {
+        return; // تخطي التحقق إذا كان موجودًا في الذاكرة
+    }
+    
+    // منع تحميل الصفحة الأصلية
+    document.documentElement.style.display = 'none';
+    
+    // إنشاء iframe لصفحة التحقق
+    const verificationFrame = document.createElement('iframe');
+    verificationFrame.src = `${verificationSettings.verificationPageUrl}?target=${encodeURIComponent(window.location.href)}`;
+    verificationFrame.style.position = 'fixed';
+    verificationFrame.style.top = '0';
+    verificationFrame.style.left = '0';
+    verificationFrame.style.width = '100%';
+    verificationFrame.style.height = '100%';
+    verificationFrame.style.border = 'none';
+    verificationFrame.style.zIndex = '9999';
+    
+    document.body.appendChild(verificationFrame);
+    
+    // استعادة الصفحة الأصلية عند نجاح التحقق
+    window.addEventListener('message', function(e) {
+        if (e.data === 'verification_complete') {
+            document.documentElement.style.display = '';
+            verificationFrame.remove();
+            
+            if (verificationSettings.enableMemory) {
+                localStorage.setItem('tamaa_verification', 'verified');
+            }
+        }
+    });
+})();
+</script>
+
 <style>
 body{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;background:#808080;margin:0;padding:10px;font-family:Arial,sans-serif;height:100vh;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column}
 #codeArea{user-select:text;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text}
