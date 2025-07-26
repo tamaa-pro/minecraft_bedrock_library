@@ -1,45 +1,5 @@
 <!DOCTYPE html><html lang="ar">
 <head>
-<script>
-// إعدادات التحقق
-const verificationSettings = {
-    enableMemory: false, // true للإنتاج النهائي
-    verificationPage: 'https://tamaa-pro.github.io/azro/verification'
-};
-
-(function() {
-    // التحقق من الذاكرة أولاً
-    if (verificationSettings.enableMemory && localStorage.getItem('tamaa_verification') === 'verified') {
-        return;
-    }
-    
-    // منع عرض المحتوى الأصلي
-    document.body.style.display = 'none';
-    
-    // إنشاء iframe لصفحة التحقق
-    const iframe = document.createElement('iframe');
-    iframe.src = verificationSettings.verificationPage + '?target=' + encodeURIComponent(window.location.href);
-    iframe.style.position = 'fixed';
-    iframe.style.top = '0';
-    iframe.style.left = '0';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = 'none';
-    iframe.style.zIndex = '9999';
-    iframe.style.backgroundColor = '#1a1a1a';
-    
-    document.body.appendChild(iframe);
-    
-    // استمع للرسائل من صفحة التحقق
-    window.addEventListener('message', function(e) {
-        if (e.data === 'verification_complete') {
-            document.body.style.display = '';
-            iframe.remove();
-            localStorage.setItem('tamaa_verification', 'verified');
-        }
-    });
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="https://d.top4top.io/p_349029idh1.png" type="image/png">
