@@ -141,7 +141,7 @@ body {
   border-radius: 50%;
   margin-left: 10px;
   background: #7f8c8d;
-  background-image: url('https://i.imgur.com/CEbZJXU.png');
+  background-image: url('https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/minecraft_icon.png');
   background-size: cover;
   background-position: center;
 }
@@ -325,19 +325,44 @@ body {
   color: white;
   font-size: 14px;
 }
-/* تصحيح محاذاة العناصر */
-.comments-container {
-    margin: 20px auto;
-    direction: rtl;
+/* تعديلات لأزرار النافذة المنبثقة */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* يضمن محاذاة الأزرار عمودياً */
+  flex-wrap: nowrap; /* يمنع الانتقال لسطر جديد */
 }
 
-/* ضبط محاذاة النصوص */
-.comment-card, .modal-content {
-    text-align: right;
+.modal-footer > div {
+  display: flex;
+  gap: 10px; /* مسافة بين الأزرار */
 }
 
-/* تعديل موقع العداد */
-.char-counter {
-    left: auto;
-    right: 10px;
+/* تأكد من أن الأزرار لن تنكمش */
+.submit-btn, .delete-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.star-rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: left;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  display: inline-block;
+  padding: 0 2px;
+  font-size: 24px;
+  color: #bdc3c7;
+  cursor: pointer;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #f1c40f;
 }
