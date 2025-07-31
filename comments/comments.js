@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
-        `};
+        `;
 document.addEventListener('DOMContentLoaded', function() {
   // العناصر الأساسية
   const BIN_ID = '686249f38561e97a502ebca0';
@@ -465,4 +465,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // بدء التطبيق
   updateCharCounters();
   fetchComments();
-});
+}});
