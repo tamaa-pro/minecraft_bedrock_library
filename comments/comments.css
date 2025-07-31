@@ -325,3 +325,19 @@ body {
   color: white;
   font-size: 14px;
 }
+/* تصحيح محاذاة العناصر */
+.comments-container {
+    margin: 20px auto;
+    direction: rtl;
+}
+
+/* ضبط محاذاة النصوص */
+.comment-card, .modal-content {
+    text-align: right;
+}
+
+/* تعديل موقع العداد */
+.char-counter {
+    left: auto;
+    right: 10px;
+}
