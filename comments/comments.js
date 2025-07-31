@@ -1,106 +1,6 @@
 // تعديل بداية الملف لضمان التحميل الصحيح
 document.addEventListener('DOMContentLoaded', function() {
-    // إنشاء هيكل التعليقات ديناميكياً
-    const container = document.getElementById('comments-container');
-    
-    container.innerHTML = `
-<div class="comments-container">
-  <div class="comments-header">
-    <div class="sort-order">
-      <button class="btn btn-secondary" id="sortBtn">
-        <i class="fas fa-sort-amount-down"></i>
-        <span id="sortText">الأحدث أولاً</span>
-      </button>
-      <div class="average-rating">
-        <span>التقييم العام:</span>
-        <div class="average-rating-value" id="averageRating">0.0</div>
-        <i class="fas fa-star"></i>
-      </div>
-    </div>
-    <button class="btn btn-primary" id="sendCommentBtn">
-      <i class="fas fa-comment-dots"></i>
-      إرسال تعليق
-    </button>
-  </div>
-  
-  <div class="comments-list" id="commentsList">
-    <div class="loading-container" id="loadingContainer">
-      <div class="jumping-cat">🐈‍⬛</div>
-      <div class="loading-text">جاري تحميل التعليقات...</div>
-    </div>
-  </div>
-</div>
 
-<!-- نافذة إرسال/تعديل تعليق -->
-<div class="modal" id="commentModal">
-  <div class="modal-content">
-    <div class="modal-header" id="modalHeader">إرسال تعليق جديد</div>
-    <div class="form-group">
-      <label for="username">اسم المستخدم (١٥ حرف كحد أقصى)</label>
-      <input type="text" id="username" maxlength="15">
-      <div class="char-counter"><span id="usernameCounter">0</span>/15</div>
-    </div>
-    
-    <div id="ratingContainer" style="display:none">
-      <div style="color:white;margin-bottom:5px;font-size:14px">التقييم:</div>
-      <div class="star-rating">
-        <input type="radio" id="star5" name="rating" value="5">
-        <label for="star5">★</label>
-        <input type="radio" id="star4" name="rating" value="4">
-        <label for="star4">★</label>
-        <input type="radio" id="star3" name="rating" value="3">
-        <label for="star3">★</label>
-        <input type="radio" id="star2" name="rating" value="2">
-        <label for="star2">★</label>
-        <input type="radio" id="star1" name="rating" value="1">
-        <label for="star1">★</label>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="comment">التعليق (١٠٠ حرف كحد أقصى)</label>
-      <textarea id="comment" maxlength="100"></textarea>
-      <div class="char-counter"><span id="commentCounter">0</span>/100</div>
-    </div>
-    
-    <div class="form-group">
-      <label for="password">كلمة السر (١٧ حرف كحد أقصى)</label>
-      <input type="password" id="password" maxlength="17">
-      <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-      <div class="char-counter"><span id="passwordCounter">0</span>/17</div>
-    </div>
-    
-    <div class="modal-footer">
-      <button class="btn btn-secondary" id="addRatingBtn" style="display:none">
-        <i class="fas fa-star"></i>
-        إضافة تقييم
-      </button>
-      <button class="btn btn-secondary" id="closeModalBtn">إغلاق</button>
-      <div>
-        <button class="btn btn-success" id="submitCommentBtn">نشر التعليق</button>
-        <button class="btn btn-danger" id="deleteCommentBtn" style="display:none">حذف التعليق</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- نافذة كلمة السر -->
-<div class="modal" id="passwordModal">
-  <div class="modal-content">
-    <div class="modal-header">أدخل كلمة السر</div>
-    <div class="form-group">
-      <label for="editPassword">كلمة السر</label>
-      <input type="password" id="editPassword" maxlength="17">
-      <i class="fas fa-eye toggle-password" id="toggleEditPassword"></i>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" id="closePasswordModalBtn">إغلاق</button>
-      <button class="btn btn-success" id="verifyPasswordBtn">تحقق</button>
-    </div>
-  </div>
-</div>
-        `;
-document.addEventListener('DOMContentLoaded', function() {
   // العناصر الأساسية
   const BIN_ID = '686249f38561e97a502ebca0';
   const API_KEY = '$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q';
@@ -465,4 +365,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // بدء التطبيق
   updateCharCounters();
   fetchComments();
-}});
+});
