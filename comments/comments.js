@@ -1,3 +1,12 @@
+// تعديل بداية الملف لضمان التحميل الصحيح
+document.addEventListener('DOMContentLoaded', function() {
+    // إنشاء هيكل التعليقات ديناميكياً
+    const container = document.getElementById('comments-container');
+    
+    container.innerHTML = `
+        <div class="comments-container">
+
+        `};
 document.addEventListener('DOMContentLoaded', function() {
   // العناصر الأساسية
   const BIN_ID = '686249f38561e97a502ebca0';
