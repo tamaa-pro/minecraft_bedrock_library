@@ -1,6 +1,4 @@
-// تعديل بداية الملف لضمان التحميل الصحيح
 document.addEventListener('DOMContentLoaded', function() {
-
   // العناصر الأساسية
   const BIN_ID = '686249f38561e97a502ebca0';
   const API_KEY = '$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q';
