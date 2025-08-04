@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديثات ماين كرافت التلقائية</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-color: #2d2d2d;
+            --text-color: #e0e0e0;
+            --accent-color: #4a8bfc;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        .section {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .version-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+        .version-date {
+            font-style: italic;
+        }
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #3a3a3a;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        .loading {
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="section" id="stable-section">
+        <div class="version-header">
+            <h2 class="version-title">الإصدار الرسمي: <span id="stable-version" class="loading">جاري التحميل...</span></h2>
+            <span class="version-date" id="stable-date"></span>
+        </div>
+        <h3>إصدارات 32-bit</h3>
+        <div class="buttons-grid" id="stable-32bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+        <h3>إصدارات 64-bit</h3>
+        <div class="buttons-grid" id="stable-64bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+    </div>
+
+    <div class="section" id="beta-section">
+        <div class="version-header">
+            <h2 class="version-title">الإصدار التجريبي: <span id="beta-version" class="loading">جاري التحميل...</span></h2>
+            <span class="version-date" id="beta-date"></span>
+        </div>
+        <h3>نسخ 32-bit</h3>
+        <div class="buttons-grid" id="beta-32bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+        <h3>نسخ 64-bit</h3>
+        <div class="buttons-grid" id="beta-64bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+    </div>
+
+    <script>
+        // الإصدارات الافتراضية للتجربة
+        const DEFAULT_VERSIONS = {
+            stable: { version: "1.21.94", url: "https://mcpedl.org/minecraft-pe-1-21-94-apk/" },
+            beta: { version: "1.21.110.22", url: "https://mcpedl.org/minecraft-pe-1-21-110-22-apk/" }
+        };
+
+        // ========== استخراج التاريخ المعدل ==========
+        async function extractVersionDate(versionUrl) {
+            try {
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(versionUrl)}`;
+                const response = await fetch(proxyUrl);
+                const html = await response.text();
+                
+                // إنشاء عنصر مؤقت لتحليل HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                // البحث عن العنصر الذي يحتوي على التاريخ
+                const dateElement = tempDiv.querySelector('span[itemprop="datePublished"]');
+                if (dateElement) {
+                    const englishDate = dateElement.textContent.trim();
+                    const dateParts = englishDate.split(' ');
+                    const months = {
+                        'January': '01', 'February': '02', 'March': '03', 'April': '04',
+                        'May': '05', 'June': '06', 'July': '07', 'August': '08',
+                        'September': '09', 'October': '10', 'November': '11', 'December': '12'
+                    };
+                    
+                    const day = dateParts[0].padStart(2, '0');
+                    const month = months[dateParts[1]];
+                    const year = dateParts[2];
+                    
+                    return `${day}-${month}-${year}`;
+                }
+                throw new Error("لم يتم العثور على التاريخ");
+            } catch (error) {
+                console.error("خطأ في جلب التاريخ:", error);
+                return "01-01-2025"; // تاريخ افتراضي إذا فشل الاستخراج
+            }
+        }
+
+        function generateDownloadLinks(version, date, isBeta = false) {
+            const versionPart = version.replace(/\./g, '-');
+            const baseUrl = "https://tamaa-pro-studio.blogspot.com/p/download-page.html?file=";
+            const mcpedlPath = `https://mcpedl.org/uploads_files/${date}/minecraft-${versionPart}`;
+            
+            return {
+                lite: `${baseUrl}${mcpedlPath}.apk/`,
+                full: `${baseUrl}${mcpedlPath}-music.apk/`,
+                liteClone: `${baseUrl}${mcpedlPath}-clone.apk/`,
+                fullClone: `${baseUrl}${mcpedlPath}-clone-music.apk/`,
+                lite64: `${baseUrl}${mcpedlPath}-arm64-v8a.apk/`,
+                full64: `${baseUrl}${mcpedlPath}-arm64-v8a-music.apk/`,
+                liteClone64: `${baseUrl}${mcpedlPath}-arm64-v8a-clone.apk/`,
+                fullClone64: `${baseUrl}${mcpedlPath}-arm64-v8a-clone-music.apk/`
+            };
+        }
+
+        function createButtons(containerId, links) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            const buttons = [
+                { text: "النسخة المخففة", url: links.lite },
+                { text: "النسخة الكاملة", url: links.full },
+                { text: "النسخة المخففة (مستنسخة)", url: links.liteClone },
+                { text: "النسخة الكاملة (مستنسخة)", url: links.fullClone }
+            ];
+            
+            if (containerId.includes('64bit')) {
+                buttons[0].text = "النسخة المخففة";
+                buttons[1].text = "النسخة الكاملة";
+                buttons[2].text = "النسخة المخففة (مستنسخة)";
+                buttons[3].text = "النسخة الكاملة (مستنسخة)";
+                buttons[0].url = links.lite64;
+                buttons[1].url = links.full64;
+                buttons[2].url = links.liteClone64;
+                buttons[3].url = links.fullClone64;
+            }
+            
+            buttons.forEach(btn => {
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.textContent = btn.text;
+                button.onclick = () => window.location.href = btn.url; // فتح في نفس النافذة
+                container.appendChild(button);
+            });
+        }
+
+        // ========== التنفيذ الرئيسي ==========
+        async function loadData() {
+            // جلب بيانات الإصدار الرسمي
+            const stableDate = await extractVersionDate(DEFAULT_VERSIONS.stable.url);
+            document.getElementById('stable-version').textContent = DEFAULT_VERSIONS.stable.version;
+            document.getElementById('stable-version').classList.remove('loading');
+            document.getElementById('stable-date').textContent = `تاريخ الإصدار: ${stableDate.replace(/-/g, '/')}`;
+            
+            const stableLinks = generateDownloadLinks(DEFAULT_VERSIONS.stable.version, stableDate);
+            createButtons('stable-32bit', stableLinks);
+            createButtons('stable-64bit', stableLinks);
+            
+            // جلب بيانات إصدار البيتا
+            const betaDate = await extractVersionDate(DEFAULT_VERSIONS.beta.url);
+            document.getElementById('beta-version').textContent = DEFAULT_VERSIONS.beta.version;
+            document.getElementById('beta-version').classList.remove('loading');
+            document.getElementById('beta-date').textContent = `تاريخ الإصدار: ${betaDate.replace(/-/g, '/')}`;
+            
+            const betaLinks = generateDownloadLinks(DEFAULT_VERSIONS.beta.version, betaDate, true);
+            createButtons('beta-32bit', betaLinks);
+            createButtons('beta-64bit', betaLinks);
+        }
+
+        // بدء التحميل عند فتح الصفحة
+        window.onload = loadData;
+    </script>
+</body>
+</html>
