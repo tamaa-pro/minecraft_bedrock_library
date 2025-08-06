@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديثات ماين كرافت التلقائية</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-color: #2d2d2d;
+            --text-color: #e0e0e0;
+            --accent-color: #4a8bfc;
+            --progress-color: #4CAF50;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        .section {
+            background-color: var(--card-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .version-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+        .version-date {
+            font-style: italic;
+        }
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #3a3a3a;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        .loading {
+            color: #aaa;
+            font-style: italic;
+        }
+        .status-box {
+            background-color: var(--card-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--progress-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .current-status {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-box">
+        <h3>حالة التحميل:</h3>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="current-status" id="current-status">جاري التهيئة...</div>
+        <div id="latest-status" class="success"></div>
+    </div>
+
+    <div class="section" id="stable-section">
+        <div class="version-header">
+            <h2 class="version-title">الإصدار الرسمي: <span id="stable-version" class="loading">جاري التحميل...</span></h2>
+            <span class="version-date" id="stable-date"></span>
+        </div>
+        <h3>إصدارات 32-bit</h3>
+        <div class="buttons-grid" id="stable-32bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+        <h3>إصدارات 64-bit</h3>
+        <div class="buttons-grid" id="stable-64bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+    </div>
+
+    <div class="section" id="beta-section">
+        <div class="version-header">
+            <h2 class="version-title">الإصدار التجريبي: <span id="beta-version" class="loading">جاري التحميل...</span></h2>
+            <span class="version-date" id="beta-date"></span>
+        </div>
+        <h3>إصدارات 32-bit</h3>
+        <div class="buttons-grid" id="beta-32bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+        <h3>إصدارات 64-bit</h3>
+        <div class="buttons-grid" id="beta-64bit">
+            <div class="loading">جاري تحميل الروابط...</div>
+        </div>
+    </div>
+
+    <script>
+        // ===== إعدادات التطبيق =====
+        const ALL_VERSIONS_URL = "https://corsproxy.io/?https://mcpedl.org/downloading/minecraft-pe-1-21/";
+        const TOTAL_STEPS = 6;
+        let currentStep = 0;
+        let cloneFormats = {
+            stable32: null,
+            stable64: null,
+            beta32: null,
+            beta64: null
+        };
+        
+        let currentVersions = { stable: null, beta: null };
+        let currentDates = { stable: null, beta: null };
+
+        // ===== إدارة حالة التقدم =====
+        function updateProgress(step, message, isError = false) {
+            currentStep = step;
+            const progressPercent = (currentStep / TOTAL_STEPS) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+            
+            document.getElementById('current-status').textContent = message;
+            document.getElementById('current-status').className = `current-status ${isError ? 'error' : ''}`;
+            
+            if (!isError) {
+                document.getElementById('latest-status').textContent = message;
+                document.getElementById('latest-status').className = 'success';
+            }
+        }
+
+        // ===== اختبار صيغة المستنسخات =====
+        async function testCloneFormat(basePath, type) {
+            const testUrls = {
+                clone: `https://corsproxy.io/?${encodeURIComponent(`${basePath}-clone-music.apk`)}`,
+                cloned: `https://corsproxy.io/?${encodeURIComponent(`${basePath}-cloned-music.apk`)}`
+            };
+
+            try {
+                // اختبار نسخة clone أولاً
+                updateProgress(currentStep, `جاري اختبار صيغة clone لـ ${type}...`);
+                const responseClone = await fetch(testUrls.clone, { method: 'HEAD' });
+                if (responseClone.ok) {
+                    updateProgress(currentStep, `تم تحديد صيغة clone لـ ${type}`);
+                    return "clone";
+                }
+                
+                // إذا فشلت، اختبار نسخة cloned
+                updateProgress(currentStep, `جاري اختبار صيغة cloned لـ ${type}...`);
+                const responseCloned = await fetch(testUrls.cloned, { method: 'HEAD' });
+                if (responseCloned.ok) {
+                    updateProgress(currentStep, `تم تحديد صيغة cloned لـ ${type}`);
+                    return "cloned";
+                }
+                
+                // إذا فشل كلاهما، نستخدم clone كافتراضي
+                updateProgress(currentStep, `استخدام صيغة clone افتراضيًا لـ ${type}`);
+                return "clone";
+                
+            } catch (error) {
+                updateProgress(currentStep, `خطأ في اختبار صيغة ${type}`, true);
+                return "clone";
+            }
+        }
+
+        // ===== استخراج أحدث إصدارين =====
+        async function getLatestVersions() {
+            updateProgress(1, "جاري جلب صفحة الإصدارات...");
+            try {
+                const response = await fetch(ALL_VERSIONS_URL);
+                if (!response.ok) throw new Error("فشل في جلب البيانات");
+                const html = await response.text();
+                
+                updateProgress(2, "جاري تحليل صفحة الإصدارات...");
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                
+                updateProgress(3, "جاري استخراج الإصدارات...");
+                const versionElements = doc.querySelectorAll('a[title^="Minecraft"]');
+                
+                let stableVersion = null;
+                let betaVersion = null;
+                
+                versionElements.forEach(element => {
+                    const versionText = element.getAttribute('title');
+                    if (versionText) {
+                        const version = versionText.split(' ')[1];
+                        const parts = version.split('.').length;
+                        
+                        if (parts === 3 && !stableVersion) {
+                            stableVersion = {
+                                version: version,
+                                url: "https://corsproxy.io/?" + encodeURIComponent(element.href)
+                            };
+                        } else if (parts === 4 && !betaVersion) {
+                            betaVersion = {
+                                version: version,
+                                url: "https://corsproxy.io/?" + encodeURIComponent(element.href)
+                            };
+                        }
+                    }
+                });
+                
+                if (!stableVersion) throw new Error('لم يتم العثور على إصدار رسمي');
+                if (!betaVersion) throw new Error('لم يتم العثور على إصدار بيتا');
+                
+                updateProgress(4, `تم العثور على الإصدار الرسمي: ${stableVersion.version}`);
+                updateProgress(4, `تم العثور على إصدار البيتا: ${betaVersion.version}`);
+                
+                return { stableVersion, betaVersion };
+                
+            } catch (error) {
+                updateProgress(currentStep, `خطأ: ${error.message}`, true);
+                throw error;
+            }
+        }
+
+        // ===== استخراج تاريخ الإصدار =====
+        async function getVersionDate(versionUrl, versionType) {
+            updateProgress(currentStep, `جاري جلب تاريخ الإصدار ${versionType}...`);
+            try {
+                const response = await fetch(versionUrl);
+                if (!response.ok) throw new Error("فشل في جلب التاريخ");
+                const html = await response.text();
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                
+                const dateElement = doc.querySelector('span[itemprop="datePublished"]');
+                if (!dateElement) throw new Error('لا يمكن العثور على التاريخ');
+                
+                const englishDate = dateElement.textContent.trim();
+                const [day, monthName, year] = englishDate.split(' ');
+                const months = {
+                    'January': '01', 'February': '02', 'March': '03', 'April': '04',
+                    'May': '05', 'June': '06', 'July': '07', 'August': '08',
+                    'September': '09', 'October': '10', 'November': '11', 'December': '12'
+                };
+                
+                const date = {
+                    displayDate: `${day}/${months[monthName]}/${year}`,
+                    fileDate: `${day}-${months[monthName]}-${year}`
+                };
+                
+                updateProgress(currentStep + 1, `تم جلب تاريخ الإصدار ${versionType}: ${date.displayDate}`);
+                return date;
+                
+            } catch (error) {
+                updateProgress(currentStep, `خطأ في جلب تاريخ الإصدار ${versionType}: ${error.message}`, true);
+                throw error;
+            }
+        }
+
+        // ===== توليد روابط التحميل =====
+        function generateDownloadLinks(version, date, type) {
+            const versionPart = version.replace(/\./g, '-');
+            const baseUrl = "https://tamaa-pro-studio.blogspot.com/p/download-page.html?file=";
+            const mcpedlPath = `https://mcpedl.org/uploads_files/${date}/minecraft-${versionPart}`;
+            const suffix = type.includes('64') ? '-arm64-v8a' : '';
+            const format = cloneFormats[type];
+            
+            return {
+                lite: `${baseUrl}${mcpedlPath}${suffix}.apk`,
+                full: `${baseUrl}${mcpedlPath}${suffix}-music.apk`,
+                liteClone: `${baseUrl}${mcpedlPath}${suffix}-${format}.apk`,
+                fullClone: `${baseUrl}${mcpedlPath}${suffix}-${format}-music.apk`
+            };
+        }
+
+        // ===== عرض البيانات =====
+        async function displayVersion(section, version, date) {
+            document.getElementById(`${section}-version`).textContent = version;
+            document.getElementById(`${section}-version`).classList.remove('loading');
+            document.getElementById(`${section}-date`).textContent = `تاريخ الإصدار: ${date.displayDate}`;
+            
+            // اختبار صيغة المستنسخات لكل مجموعة
+            const types = [`${section}32`, `${section}64`];
+            
+            for (const type of types) {
+                const basePath = `https://mcpedl.org/uploads_files/${date.fileDate}/minecraft-${version.replace(/\./g, '-')}`;
+                const suffix = type.includes('64') ? '-arm64-v8a' : '';
+                const fullPath = `${basePath}${suffix}`;
+                
+                cloneFormats[type] = await testCloneFormat(fullPath, type);
+            }
+            
+            updateButtons(section);
+        }
+
+        function updateButtons(section) {
+            // 32-bit
+            const links32 = generateDownloadLinks(currentVersions[section], currentDates[section].fileDate, `${section}32`);
+            createButtons(`${section}-32bit`, [
+                { text: "نسخة مخففة", url: links32.lite },
+                { text: "نسخة كاملة", url: links32.full },
+                { text: `نسخة مخففة (مستنسخة${cloneFormats[`${section}32`] === 'cloned' ? 'd' : ''})`, url: links32.liteClone },
+                { text: `نسخة كاملة (مستنسخة${cloneFormats[`${section}32`] === 'cloned' ? 'd' : ''})`, url: links32.fullClone }
+            ]);
+            
+            // 64-bit
+            const links64 = generateDownloadLinks(currentVersions[section], currentDates[section].fileDate, `${section}64`);
+            createButtons(`${section}-64bit`, [
+                { text: "نسخة مخففة (64-bit)", url: links64.lite },
+                { text: "نسخة كاملة (64-bit)", url: links64.full },
+                { text: `نسخة مخففة (مستنسخة${cloneFormats[`${section}64`] === 'cloned' ? 'd' : ''} - 64-bit)`, url: links64.liteClone },
+                { text: `نسخة كاملة (مستنسخة${cloneFormats[`${section}64`] === 'cloned' ? 'd' : ''} - 64-bit)`, url: links64.fullClone }
+            ]);
+            
+            updateProgress(TOTAL_STEPS, `تم إنشاء جميع الروابط لـ ${section}`);
+        }
+
+        function createButtons(containerId, buttons) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            buttons.forEach(btn => {
+                const button = document.createElement('button');
+                button.className = 'btn';
+                button.textContent = btn.text;
+                button.onclick = () => { window.location.href = btn.url; };
+                container.appendChild(button);
+            });
+        }
+
+        // ===== التنفيذ الرئيسي =====
+        async function loadData() {
+            try {
+                const { stableVersion, betaVersion } = await getLatestVersions();
+                
+                // معالجة الإصدار الرسمي
+                currentVersions.stable = stableVersion.version;
+                currentDates.stable = await getVersionDate(stableVersion.url, 'الرسمي');
+                await displayVersion('stable', stableVersion.version, currentDates.stable);
+                
+                // معالجة إصدار البيتا
+                currentVersions.beta = betaVersion.version;
+                currentDates.beta = await getVersionDate(betaVersion.url, 'البيتا');
+                await displayVersion('beta', betaVersion.version, currentDates.beta);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // بدء التحميل عند فتح الصفحة
+        window.onload = loadData;
+    </script>
+</body>
+</html>
