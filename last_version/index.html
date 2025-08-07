@@ -5,62 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحديثات ماين كرافت التلقائية</title>
     <script>
-    // نظام حماية مؤقت للصفحة - يعمل عند الفتح الأول فقط
+// نظام حماية متوافق مع GitHub Pages
 (function() {
-    // المفتاح السري والمدة الزمنية (بالملي ثانية)
-    const SECRET_KEY = '/cyn';
-    const VALID_DURATION = 5000; // 5 ثواني كحد أقصى
+    // المفتاح السري كـ query parameter
+    const SECRET_PARAM = 'cyn';
+    const VALID_DURATION = 3000; // 3 ثواني كافية للتحقق
     
-    // تحقق مما إذا كان المتصفح يفتح الصفحة لأول مرة
-    const isFirstVisit = !sessionStorage.getItem('pageAccessed');
-    
-    // تحقق من وجود المفتاح في الرابط
-    function hasValidKey() {
-        return window.location.href.endsWith(SECRET_KEY);
+    // دالة لتحليل الـ URL
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            hasKey: params.has(SECRET_PARAM),
+            cleanUrl: window.location.origin + window.location.pathname
+        };
     }
-    
-    // إعادة توجيه إلى صفحة فارغة
-    function redirectToBlank() {
-        // إضافة تأخير بسيط لتجنب كشف المفتاح في حالة التوجيه السريع
-        setTimeout(() => {
-            window.location.replace('about:blank');
-        }, 100);
-    }
-    
-    // معالجة المفتاح عند الزيارة الأولى فقط
-    if (isFirstVisit) {
-        if (!hasValidKey()) {
-            redirectToBlank();
-            return; // توقف عن تنفيذ أي كود آخر
+
+    // التحقق من الزيارة الأولى
+    if (!sessionStorage.getItem('pageAccessed')) {
+        const { hasKey, cleanUrl } = getUrlParams();
+        
+        if (!hasKey) {
+            // إعادة التوجيه مع تأخير بسيط
+            setTimeout(() => {
+                window.location.replace('about:blank');
+            }, 100);
+            return;
         }
         
-        // وضع علامة أن الصفحة تم زيارتها
+        // وضع علامة وتنظيف الـ URL
         sessionStorage.setItem('pageAccessed', 'true');
+        window.history.replaceState({}, '', cleanUrl);
         
-        // إزالة المفتاح من الرابط بدون حفظ في التاريخ
-        const cleanUrl = window.location.href.slice(0, -SECRET_KEY.length);
-        window.history.replaceState(null, '', cleanUrl);
-        
-        // تعطيل الحماية بعد فترة زمنية محددة
+        // إزالة العلامة بعد المدة المحددة
         setTimeout(() => {
             sessionStorage.removeItem('pageAccessed');
         }, VALID_DURATION);
-        
-        // حماية ضد محاولات التصفح للخلف
-        window.addEventListener('beforeunload', (e) => {
-            if (!hasValidKey()) {
-                e.preventDefault();
-                e.returnValue = 'سيتم إغلاق هذه الصفحة';
-            }
-        });
     }
+
+    // حماية إضافية ضد أدوات المطورين
+    const blockDevTools = () => {
+        window.location.href = 'about:blank';
+    };
     
-    // طبقة حماية إضافية ضد أدوات المطورين
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
     document.addEventListener('keydown', (e) => {
         if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-            e.preventDefault();
-            redirectToBlank();
+            blockDevTools();
         }
     });
 })();
