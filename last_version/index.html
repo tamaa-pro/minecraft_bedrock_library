@@ -4,6 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحديثات ماين كرافت التلقائية</title>
+    <script>
+    // نظام حماية مؤقت للصفحة - يعمل عند الفتح الأول فقط
+(function() {
+    // المفتاح السري والمدة الزمنية (بالملي ثانية)
+    const SECRET_KEY = '/cyn';
+    const VALID_DURATION = 5000; // 5 ثواني كحد أقصى
+    
+    // تحقق مما إذا كان المتصفح يفتح الصفحة لأول مرة
+    const isFirstVisit = !sessionStorage.getItem('pageAccessed');
+    
+    // تحقق من وجود المفتاح في الرابط
+    function hasValidKey() {
+        return window.location.href.endsWith(SECRET_KEY);
+    }
+    
+    // إعادة توجيه إلى صفحة فارغة
+    function redirectToBlank() {
+        // إضافة تأخير بسيط لتجنب كشف المفتاح في حالة التوجيه السريع
+        setTimeout(() => {
+            window.location.replace('about:blank');
+        }, 100);
+    }
+    
+    // معالجة المفتاح عند الزيارة الأولى فقط
+    if (isFirstVisit) {
+        if (!hasValidKey()) {
+            redirectToBlank();
+            return; // توقف عن تنفيذ أي كود آخر
+        }
+        
+        // وضع علامة أن الصفحة تم زيارتها
+        sessionStorage.setItem('pageAccessed', 'true');
+        
+        // إزالة المفتاح من الرابط بدون حفظ في التاريخ
+        const cleanUrl = window.location.href.slice(0, -SECRET_KEY.length);
+        window.history.replaceState(null, '', cleanUrl);
+        
+        // تعطيل الحماية بعد فترة زمنية محددة
+        setTimeout(() => {
+            sessionStorage.removeItem('pageAccessed');
+        }, VALID_DURATION);
+        
+        // حماية ضد محاولات التصفح للخلف
+        window.addEventListener('beforeunload', (e) => {
+            if (!hasValidKey()) {
+                e.preventDefault();
+                e.returnValue = 'سيتم إغلاق هذه الصفحة';
+            }
+        });
+    }
+    
+    // طبقة حماية إضافية ضد أدوات المطورين
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+            e.preventDefault();
+            redirectToBlank();
+        }
+    });
+})();
+    </script>
     <style>
         :root {
             --bg-color: #1a1a1a;
