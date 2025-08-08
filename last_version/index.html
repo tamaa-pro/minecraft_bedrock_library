@@ -4,20 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تحديثات ماين كرافت التلقائية</title>
+<link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
-// نظام حماية متوافق مع GitHub Pages
 (function() {const SECRET_PARAM = 'cyn';const VALID_DURATION = 3000;
-// دالة لتحليل الـ URL
-function getUrlParams() {const params = new URLSearchParams(window.location.search);return {hasKey: params.has(SECRET_PARAM), cleanUrl: window.location.origin + window.location.pathname};}
-// التحقق من الزيارة الأولى
+function getUrlParams() {const params = new URLSearchParams(window.location.search);return {hasKey: params.has(SECRET_PARAM), cleanUrl: window.location.origin + window.location.pathname};}             
 if (!sessionStorage.getItem('pageAccessed')) {const { hasKey, cleanUrl } = getUrlParams();if (!hasKey) {
-// إعادة التوجيه مع تأخير بسيط
 setTimeout(() => {window.location.replace('about:blank');}, 100);return;}
-// وضع علامة وتنظيف الـ URL
 sessionStorage.setItem('pageAccessed', 'true');window.history.replaceState({}, '', cleanUrl);
-// إزالة العلامة بعد المدة المحددة
 setTimeout(() => {sessionStorage.removeItem('pageAccessed');}, VALID_DURATION);}
-// حماية إضافية ضد أدوات المطورين
 const blockDevTools = () => {window.location.href = 'about:blank';};document.addEventListener('keydown', (e) => {if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {blockDevTools();}});})();
 </script>
 <style>
