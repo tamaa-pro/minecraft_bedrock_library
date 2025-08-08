@@ -6,75 +6,41 @@
 <title>تحديثات ماين كرافت التلقائية</title>
 <script>
 // نظام حماية متوافق مع GitHub Pages
-(function() {
-    // المفتاح السري كـ query parameter
-    const SECRET_PARAM = 'cyn';
-    const VALID_DURATION = 3000; // 3 ثواني كافية للتحقق
-    
-    // دالة لتحليل الـ URL
-    function getUrlParams() {
-        const params = new URLSearchParams(window.location.search);
-        return {
-            hasKey: params.has(SECRET_PARAM),
-            cleanUrl: window.location.origin + window.location.pathname
-        };
-    }
-
-    // التحقق من الزيارة الأولى
-    if (!sessionStorage.getItem('pageAccessed')) {
-        const { hasKey, cleanUrl } = getUrlParams();
-        
-        if (!hasKey) {
-            // إعادة التوجيه مع تأخير بسيط
-            setTimeout(() => {
-                window.location.replace('about:blank');
-            }, 100);
-            return;
-        }
-        
-        // وضع علامة وتنظيف الـ URL
-        sessionStorage.setItem('pageAccessed', 'true');
-        window.history.replaceState({}, '', cleanUrl);
-        
-        // إزالة العلامة بعد المدة المحددة
-        setTimeout(() => {
-            sessionStorage.removeItem('pageAccessed');
-        }, VALID_DURATION);
-    }
-
-    // حماية إضافية ضد أدوات المطورين
-    const blockDevTools = () => {
-        window.location.href = 'about:blank';
-    };
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-            blockDevTools();
-        }
-    });
-})();
+(function() {const SECRET_PARAM = 'cyn';const VALID_DURATION = 3000;
+// دالة لتحليل الـ URL
+function getUrlParams() {const params = new URLSearchParams(window.location.search);return {hasKey: params.has(SECRET_PARAM), cleanUrl: window.location.origin + window.location.pathname};}
+// التحقق من الزيارة الأولى
+if (!sessionStorage.getItem('pageAccessed')) {const { hasKey, cleanUrl } = getUrlParams();if (!hasKey) {
+// إعادة التوجيه مع تأخير بسيط
+setTimeout(() => {window.location.replace('about:blank');}, 100);return;}
+// وضع علامة وتنظيف الـ URL
+sessionStorage.setItem('pageAccessed', 'true');window.history.replaceState({}, '', cleanUrl);
+// إزالة العلامة بعد المدة المحددة
+setTimeout(() => {sessionStorage.removeItem('pageAccessed');}, VALID_DURATION);}
+// حماية إضافية ضد أدوات المطورين
+const blockDevTools = () => {window.location.href = 'about:blank';};document.addEventListener('keydown', (e) => {if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {blockDevTools();}});})();
 </script>
 <style>
-        :root {
+:root {
             --bg-color: #1a1a1a;
             --card-color: #2d2d2d;
             --text-color: #e0e0e0;
-            --accent-color: #4CAF50; /* تغيير اللون الأزرق إلى أخضر */
+            --accent-color: #4CAF50;
             --progress-color: #4CAF50;
         }
-        body {
+body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
         }
-        .section {
+.section {
             background-color: var(--card-color);
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 20px;
         }
-        .version-header {
+.version-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -82,33 +48,33 @@
             border-bottom: 1px solid #444;
             padding-bottom: 10px;
         }
-        .version-info {
+.version-info {
             display: flex;
             gap: 20px;
         }
-        .version-info-item {
+.version-info-item {
             display: flex;
             flex-direction: column;
         }
-        .version-info-label {
+.version-info-label {
             font-size: 0.8rem;
             color: #aaa;
         }
-        .version-info-value {
+.version-info-value {
             font-size: 1rem;
             color: var(--accent-color);
         }
-        .version-title {
+.version-title {
             font-size: 1.3rem;
             color: var(--accent-color);
         }
-        .buttons-grid {
+.buttons-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-bottom: 15px;
         }
-        .btn {
+.btn {
             background-color: #3a3a3a;
             border: none;
             color: white;
@@ -117,26 +83,26 @@
             cursor: pointer;
             transition: background-color 0.3s;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             min-height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .btn:hover {
+.btn:hover {
             background-color: var(--accent-color);
         }
-        .loading {
+.loading {
             color: #aaa;
             font-style: italic;
         }
-        .status-box {
+.status-box {
             background-color: var(--card-color);
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .progress-container {
+.progress-container {
             width: 100%;
             height: 15px;
             background-color: #333;
@@ -144,92 +110,92 @@
             margin: 10px 0 5px 0;
             overflow: hidden;
         }
-        .progress-bar {
+.progress-bar {
             height: 100%;
             background-color: var(--progress-color);
             width: 0%;
             transition: width 0.5s ease;
         }
-        .current-status {
+.current-status {
             margin: 5px 0;
             font-weight: bold;
             font-size: 0.85rem;
             min-height: 1.2em;
         }
-        .error {
+.error {
             color: #ff6b6b;
         }
-        .success {
+.success {
             color: var(--accent-color);
         }
-        .progress-percent {
+.progress-percent {
             text-align: center;
             margin-top: 3px;
             font-size: 0.8rem;
             color: #aaa;
         }
-    </style>
+</style>
 </head>
 <body>
-    <div class="status-box">
-        <h3 style="margin-top: 0; margin-bottom: 10px;">حالة التحميل:</h3>
-        <div class="progress-container">
-            <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        <div class="progress-percent" id="progress-percent">0%</div>
-        <div class="current-status" id="current-status">جاري التهيئة...</div>
-    </div>
+<div class="status-box">
+<h3 style="margin-top: 0; margin-bottom: 10px;">حالة التحميل:</h3>
+<div class="progress-container">
+<div class="progress-bar" id="progress-bar"></div>
+</div>
+<div class="progress-percent" id="progress-percent">0%</div>
+<div class="current-status" id="current-status">جاري التهيئة...</div>
+</div>
 
-    <div class="section" id="stable-section">
-        <div class="version-header">
-            <h2 class="version-title">الإصدار الرسمي</h2>
-            <div class="version-info">
-                <div class="version-info-item">
-                    <span class="version-info-label">رقم الإصدار</span>
-                    <span class="version-info-value" id="stable-version" class="loading">جاري التحميل...</span>
-                </div>
-                <div class="version-info-item">
-                    <span class="version-info-label">تاريخ الصدور</span>
-                    <span class="version-info-value" id="stable-date"></span>
-                </div>
-            </div>
-        </div>
-        <h3 style="margin-top: 0; margin-bottom: 10px;">إصدارات 32-bit</h3>
-        <div class="buttons-grid" id="stable-32bit">
-            <div class="loading">جاري تحميل الروابط...</div>
-        </div>
-        <h3 style="margin-top: 0; margin-bottom: 10px;">إصدارات 64-bit</h3>
-        <div class="buttons-grid" id="stable-64bit">
-            <div class="loading">جاري تحميل الروابط...</div>
-        </div>
-    </div>
+<div class="section" id="stable-section">
+<div class="version-header">
+<h2 class="version-title">الإصدار الرسمي</h2>
+<div class="version-info">
+<div class="version-info-item">
+<span class="version-info-label">رقم الإصدار</span>
+<span class="version-info-value" id="stable-version" class="loading">جاري التحميل...</span>
+</div>
+<div class="version-info-item">
+<span class="version-info-label">تاريخ الصدور</span>
+<span class="version-info-value" id="stable-date"></span>
+</div>
+</div>
+</div>
+<h3 style="margin-top: 0; margin-bottom: 10px;">نسخ 32-bit</h3>
+<div class="buttons-grid" id="stable-32bit">
+<div class="loading">جاري تحميل الروابط...</div>
+</div>
+<h3 style="margin-top: 0; margin-bottom: 10px;">نسخ 64-bit</h3>
+<div class="buttons-grid" id="stable-64bit">
+<div class="loading">جاري تحميل الروابط...</div>
+</div>
+</div>
 
-    <div class="section" id="beta-section">
-        <div class="version-header">
-            <h2 class="version-title">الإصدار التجريبي</h2>
-            <div class="version-info">
-                <div class="version-info-item">
-                    <span class="version-info-label">رقم الإصدار</span>
-                    <span class="version-info-value" id="beta-version" class="loading">جاري التحميل...</span>
-                </div>
-                <div class="version-info-item">
-                    <span class="version-info-label">تاريخ الصدور</span>
-                    <span class="version-info-value" id="beta-date"></span>
-                </div>
-            </div>
-        </div>
-        <h3 style="margin-top: 0; margin-bottom: 10px;">إصدارات 32-bit</h3>
-        <div class="buttons-grid" id="beta-32bit">
-            <div class="loading">جاري تحميل الروابط...</div>
-        </div>
-        <h3 style="margin-top: 0; margin-bottom: 10px;">إصدارات 64-bit</h3>
-        <div class="buttons-grid" id="beta-64bit">
-            <div class="loading">جاري تحميل الروابط...</div>
-        </div>
-    </div>
+<div class="section" id="beta-section">
+<div class="version-header">
+<h2 class="version-title">الإصدار التجريبي</h2>
+<div class="version-info">
+<div class="version-info-item">
+<span class="version-info-label">رقم الإصدار</span>
+<span class="version-info-value" id="beta-version" class="loading">جاري التحميل...</span>
+</div>
+<div class="version-info-item">
+<span class="version-info-label">تاريخ الصدور</span>
+<span class="version-info-value" id="beta-date"></span>
+</div>
+</div>
+</div>
+<h3 style="margin-top: 0; margin-bottom: 10px;">نسخ 32-bit</h3>
+<div class="buttons-grid" id="beta-32bit">
+<div class="loading">جاري تحميل الروابط...</div>
+</div>
+<h3 style="margin-top: 0; margin-bottom: 10px;">نسخ 64-bit</h3>
+<div class="buttons-grid" id="beta-64bit">
+<div class="loading">جاري تحميل الروابط...</div>
+</div>
+</div>
 
-    <script>
-        // ===== إعدادات التطبيق =====
+<script>
+// ===== إعدادات التطبيق =====
         const ALL_VERSIONS_URL = "https://corsproxy.io/?https://mcpedl.org/downloading/minecraft-pe-1-21/";
         const TOTAL_STEPS = 33;
         let currentStep = 0;
@@ -249,7 +215,7 @@
             beta64: null
         };
 
-        // ===== إدارة حالة التقدم =====
+// ===== إدارة حالة التقدم =====
         async function updateProgress(step, message, isError = false) {
             currentStep = step;
             const progressPercent = Math.min((currentStep / TOTAL_STEPS) * 100, 100);
@@ -263,7 +229,7 @@
             await new Promise(resolve => setTimeout(resolve, 200));
         }
 
-        // ===== استخراج أحدث إصدارين =====
+// ===== استخراج أحدث إصدارين =====
         async function getLatestVersions() {
             await updateProgress(1, "تجاوز الحماية و تحميل الصفحة");
             try {
@@ -314,7 +280,7 @@
             }
         }
 
-        // ===== استخراج تاريخ الإصدار =====
+// ===== استخراج تاريخ الإصدار =====
         async function getVersionDate(versionUrl, versionType, isStable) {
             const stepPrefix = isStable ? 4 : 14;
             await updateProgress(stepPrefix, `استخراج تاريخ آخر ${isStable ? 'رسمي' : 'بيتا'}`);
@@ -355,7 +321,7 @@
             }
         }
 
-        // ===== توليد روابط التحميل =====
+// ===== توليد روابط التحميل =====
         function generateDownloadLinks(version, date, type, isStable) {
             const versionPart = version.replace(/\./g, '-');
             const baseUrl = "https://tamaa-pro-studio.blogspot.com/p/download-page.html?file=";
@@ -371,12 +337,12 @@
             };
         }
 
-        // ===== عرض البيانات =====
+// ===== عرض البيانات =====
         async function displayVersion(section, version, date, isStable) {
             document.getElementById(`${section}-version`).textContent = version;
             document.getElementById(`${section}-date`).textContent = date.displayDate;
             
-            // توليد الروابط مع عرض كل خطوة
+// توليد الروابط مع عرض كل خطوة
             const stepPrefix = isStable ? 7 : 17;
             
             await updateProgress(stepPrefix, `توليد رابط النسخة المخففة ${section}32`);
@@ -395,7 +361,7 @@
             updateButtons(section);
         }
 
-        // ===== اختبار روابط المستنسخات =====
+// ===== اختبار روابط المستنسخات =====
         async function testCloneLinks(type, isStable) {
             const stepPrefix = isStable ? 23 : 27;
             const stepOffset = type.includes('32') ? 0 : 2;
@@ -404,12 +370,12 @@
             await updateProgress(stepPrefix + stepOffset + 1, `اختبار رابط النسخة الكاملة (مستنسخة) ${type}`);
             
             try {
-                // اختبار رابط النسخة المخففة
+// اختبار رابط النسخة المخففة
                 const liteCloneUrl = downloadLinks[type].liteClone.replace('https://tamaa-pro-studio.blogspot.com/p/download-page.html?file=', '');
                 const responseLite = await fetch(`https://corsproxy.io/?${encodeURIComponent(liteCloneUrl)}`, { method: 'HEAD' });
                 
                 if (!responseLite.ok) {
-                    // إذا فشل، نجرب صيغة cloned
+// إذا فشل، نجرب صيغة cloned
                     const clonedUrl = liteCloneUrl.replace('-clone.apk', '-cloned.apk');
                     const testResponse = await fetch(`https://corsproxy.io/?${encodeURIComponent(clonedUrl)}`, { method: 'HEAD' });
                     if (testResponse.ok) {
@@ -419,12 +385,12 @@
                     }
                 }
                 
-                // اختبار رابط النسخة الكاملة
+// اختبار رابط النسخة الكاملة
                 const fullCloneUrl = downloadLinks[type].fullClone.replace('https://tamaa-pro-studio.blogspot.com/p/download-page.html?file=', '');
                 const responseFull = await fetch(`https://corsproxy.io/?${encodeURIComponent(fullCloneUrl)}`, { method: 'HEAD' });
                 
                 if (!responseFull.ok) {
-                    // إذا فشل، نجرب صيغة cloned
+// إذا فشل، نجرب صيغة cloned
                     const clonedUrl = fullCloneUrl.replace('-clone-music.apk', '-cloned-music.apk');
                     const testResponse = await fetch(`https://corsproxy.io/?${encodeURIComponent(clonedUrl)}`, { method: 'HEAD' });
                     if (testResponse.ok && cloneFormats[type] !== "cloned") {
@@ -439,14 +405,14 @@
             }
         }
 
-        // ===== تصحيح الروابط بعد الاختبار =====
+// ===== تصحيح الروابط بعد الاختبار =====
         async function correctLinks() {
             await updateProgress(31, "تصحيح روابط مستنسخات آخر إصدار رسمي");
             await updateProgress(32, "تصحيح روابط مستنسخات آخر إصدار بيتا");
         }
 
         function updateButtons(section) {
-            // 32-bit
+// 32-bit
             createButtons(`${section}-32bit`, [
                 { text: "النسخة المخففة", url: downloadLinks[`${section}32`].lite },
                 { text: "النسخة الكاملة", url: downloadLinks[`${section}32`].full },
@@ -454,7 +420,7 @@
                 { text: "النسخة الكاملة (مستنسخة)", url: downloadLinks[`${section}32`].fullClone }
             ]);
             
-            // 64-bit
+// 64-bit
             createButtons(`${section}-64bit`, [
                 { text: "النسخة المخففة", url: downloadLinks[`${section}64`].lite },
                 { text: "النسخة الكاملة", url: downloadLinks[`${section}64`].full },
@@ -476,34 +442,34 @@
             });
         }
 
-        // ===== التنفيذ الرئيسي =====
+// ===== التنفيذ الرئيسي =====
         async function loadData() {
             try {
-                // البيانات الأولية/التحليل و الإستخراج
+// البيانات الأولية/التحليل و الإستخراج
                 const { stableVersion, betaVersion } = await getLatestVersions();
                 
-                // متعلق بالرسمية/الإستخراج و التوليد
+// متعلق بالرسمية/الإستخراج و التوليد
                 currentVersions.stable = stableVersion.version;
                 currentDates.stable = await getVersionDate(stableVersion.url, 'الرسمي', true);
                 await displayVersion('stable', stableVersion.version, currentDates.stable, true);
                 
-                // متعلق بالبيتا/الإستخراج و التوليد
+// متعلق بالبيتا/الإستخراج و التوليد
                 currentVersions.beta = betaVersion.version;
                 currentDates.beta = await getVersionDate(betaVersion.url, 'البيتا', false);
                 await displayVersion('beta', betaVersion.version, currentDates.beta, false);
                 
-                // اختبارات الرسمية
+// اختبارات الرسمية
                 await testCloneLinks('stable32', true);
                 await testCloneLinks('stable64', true);
                 
-                // اختبارات البيتا
+// اختبارات البيتا
                 await testCloneLinks('beta32', false);
                 await testCloneLinks('beta64', false);
                 
-                // البيانات النهائية/التصحيح و الإكمال
+// البيانات النهائية/التصحيح و الإكمال
                 await correctLinks();
                 
-                // إعادة عرض الروابط بعد التصحيح
+// إعادة عرض الروابط بعد التصحيح
                 updateButtons('stable');
                 updateButtons('beta');
                 
@@ -511,12 +477,19 @@
                 
             } catch (error) {
                 console.error('Error:', error);
-                await updateProgress(currentStep, `حدث خطأ: ${error.message}`, true);
-            }
-        }
-
-        // بدء التحميل عند فتح الصفحة
-        window.onload = loadData;
-    </script>
+                await updateProgress(currentStep, `حدث خطأ: ${error.message}`, true);}}
+// بدء التحميل عند فتح الصفحة
+window.onload = loadData;
+</script>
+<script>
+document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &&
+(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
+lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+</script>
+<script>
+if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
+setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
+</script>
 </body>
 </html>
