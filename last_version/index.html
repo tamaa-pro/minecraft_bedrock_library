@@ -16,7 +16,7 @@ const blockDevTools = () => {window.location.href = 'about:blank';};document.add
 </script>
 <style>
 :root {
-            --bg-color: #111;
+            --bg-color: #1a1a1a;
             --card-color: #2d2d2d;
             --text-color: #e0e0e0;
             --accent-color: #4CAF50;
@@ -77,7 +77,7 @@ body {
             cursor: pointer;
             transition: background-color 0.3s;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             min-height: 40px;
             display: flex;
             align-items: center;
@@ -123,7 +123,7 @@ body {
             color: var(--accent-color);
         }
 .progress-percent {
-            text-align: center;
+            text-align: left;
             margin-top: 3px;
             font-size: 0.8rem;
             color: #aaa;
@@ -134,9 +134,10 @@ body {
 <div class="status-box">
 <h3 style="margin-top: 0; margin-bottom: 10px;">حالة التحميل:</h3>
 <div class="progress-container">
+<div class="progress-percent" id="progress-percent">0%</div>
 <div class="progress-bar" id="progress-bar"></div>
 </div>
-<div class="progress-percent" id="progress-percent">0%</div>
+
 <div class="current-status" id="current-status">جاري التهيئة...</div>
 </div>
 
