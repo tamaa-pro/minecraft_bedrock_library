@@ -6,59 +6,13 @@
 <title>تحديثات ماين كرافت التلقائية</title>
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
-(function() {
-    const SECRET_PARAM = 'cyn';
-    const VALID_DURATION = 900;
-    
-    function getUrlParams() {
-        const params = new URLSearchParams(window.location.search);
-        return {
-            hasKey: params.has(SECRET_PARAM),
-            cleanUrl: window.location.origin + window.location.pathname
-        };
-    }
-    
-    // الوظيفة الجديدة: التحقق من الرابط وإزالة المفتاح إذا وجد
-    function checkAndCleanUrl() {
-        const { hasKey, cleanUrl } = getUrlParams();
-        if (hasKey) {
-            window.history.replaceState({}, '', cleanUrl);
-        }
-    }
-    
-    if (!sessionStorage.getItem('pageAccessed')) {
-        const { hasKey, cleanUrl } = getUrlParams();
-        if (!hasKey) {
-            setTimeout(() => {
-                window.location.replace('about:blank');
-            }, 100);
-            return;
-        }
-        
-        sessionStorage.setItem('pageAccessed', 'true');
-        window.history.replaceState({}, '', cleanUrl);
-        
-        setTimeout(() => {
-            sessionStorage.removeItem('pageAccessed');
-        }, VALID_DURATION);
-    }
-    
-    // الوظيفة الجديدة: التحقق التلقائي كل ثانية
-    setInterval(checkAndCleanUrl, 1000);
-    
-    // التحقق أيضاً عند تحميل الصفحة
-    checkAndCleanUrl();
-    
-    const blockDevTools = () => {
-        window.location.href = 'about:blank';
-    };
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-            blockDevTools();
-        }
-    });
-})();
+(function() {const SECRET_PARAM = 'cyn';const VALID_DURATION = 900;
+function getUrlParams() {const params = new URLSearchParams(window.location.search);return {hasKey: params.has(SECRET_PARAM), cleanUrl: window.location.origin + window.location.pathname};}             
+if (!sessionStorage.getItem('pageAccessed')) {const { hasKey, cleanUrl } = getUrlParams();if (!hasKey) {
+setTimeout(() => {window.location.replace('about:blank');}, 100);return;}
+sessionStorage.setItem('pageAccessed', 'true');window.history.replaceState({}, '', cleanUrl);
+setTimeout(() => {sessionStorage.removeItem('pageAccessed');}, VALID_DURATION);}
+const blockDevTools = () => {window.location.href = 'about:blank';};document.addEventListener('keydown', (e) => {if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {blockDevTools();}});})();
 </script>
 <style>
 :root {
