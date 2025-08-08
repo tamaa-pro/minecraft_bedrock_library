@@ -123,8 +123,8 @@ body {
             color: var(--accent-color);
         }
 .progress-percent {
-            text-align: left;
-            margin-top: 0px;
+            text-align: counter;
+            margin-top: 3px;
             font-size: 0.8rem;
             color: #aaa;
         }
@@ -133,9 +133,10 @@ body {
 <body>
 <div class="status-box">
 <h3 style="margin-top: 0; margin-bottom: 10px;">حالة التحميل:</h3>
-<div class="progress-percent" id="progress-percent">0%</div>
 <div class="progress-container">
-<div class="progress-bar" id="progress-bar"></div>
+<div class="progress-bar" id="progress-bar">
+<div class="progress-percent" id="progress-percent">0%</div>
+</div>
 </div>
 
 <div class="current-status" id="current-status">جاري التهيئة...</div>
