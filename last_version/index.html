@@ -10,7 +10,7 @@
     // تشفير المفتاح بطريقة غير واضحة
     const ENCRYPTED_PARTS = [0x76, 0x7D, 0x7A];
     const decryptKey = (arr) => arr.map(c => String.fromCharCode(c ^ 0x0F)).join('');
-    const SECRET_KEY = decryptKey(ENCRYPTED_PARTS);
+    const SECRET_KEY = decryptKey(ENCRYPTED_PARTS); // سيعطي 'cyn'
     
     let isPageValidated = false;
     let cleanupInterval = null;
@@ -19,7 +19,7 @@
         if (isPageValidated) return true;
         
         const urlParams = new URLSearchParams(window.location.search);
-        const keyParam = urlParams.get('x'); // استخدام معامل غير واضح
+        const keyParam = urlParams.get('x');
         
         if (keyParam === SECRET_KEY) {
             isPageValidated = true;
@@ -46,38 +46,32 @@
         }, 1000);
     }
     
-    function redirectToBlank() {
-        // إعادة توجيه إلى صفحة فارغة بدلاً من إفراغ الصفحة الحالية
-        window.stop(); // إيقاف تحميل أي موارد إضافية
-        window.location.replace('about:blank');
-        return false;
-    }
-    
     function initialCheck() {
         if (!validateAndCleanUrl()) {
-            return redirectToBlank();
+            window.stop(); // إيقاف تحميل أي موارد إضافية
+            window.location.replace('about:blank');
+            return;
         }
         
         startUrlCleanupWatcher();
-        window.addEventListener('popstate', handleUrlChange);
+        window.addEventListener('popstate', function() {
+            if (isPageValidated && new URLSearchParams(window.location.search).has('x')) {
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        });
     }
     
-    function handleUrlChange() {
-        if (isPageValidated && new URLSearchParams(window.location.search).has('x')) {
-            window.history.replaceState({}, '', window.location.pathname);
-        }
-    }
-    
-    // بدء التحقق فورًا دون انتظار تحميل الصفحة بالكامل
+    // التحقق الفوري عند التنفيذ
     if (window.location.href !== 'about:blank') {
-        if (!validateAndCleanUrl()) {
-            redirectToBlank();
-        } else {
+        if (validateAndCleanUrl()) {
             if (document.readyState === 'complete') {
                 initialCheck();
             } else {
-                window.addEventListener('DOMContentLoaded', initialCheck);
+                document.addEventListener('DOMContentLoaded', initialCheck);
             }
+        } else {
+            window.stop();
+            window.location.replace('about:blank');
         }
     }
 })();
