@@ -7,45 +7,67 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // طريقة غير واضحة لتخزين المفتاح
-    const SECRET_KEY = atob('Y3lu'); // = 'cyn' في Base64
+    // إعدادات الحماية (المفتاح مخفي بطريقة غير مباشرة)
+    const SECRET_PARAM = (() => {
+        const arr = [99, 121, 110]; // 'c', 'y', 'n' في ASCII
+        return arr.map(c => String.fromCharCode(c)).join('');
+    })();
     
-    // تحقق من المفتاح دون اعتماد على الكاش
-    const urlParams = new URLSearchParams(window.location.search);
-    const keyParam = urlParams.get('data'); // اسم معامل غير واضح
+    // متغير لتتبع ما إذا تم التحقق من الصفحة مسبقًا
+    let isVerified = false;
     
-    if (keyParam !== SECRET_KEY) {
-        // تحويل فوري إلى صفحة فارغة إذا كان المفتاح خاطئاً
-        window.stop();
-        window.location.replace('about:blank');
-        return;
-    } else {
-        // إذا المفتاح صحيح، إزالة المعلمة من الرابط
-        urlParams.delete('data');
-        const cleanUrl = window.location.pathname + 
-                       (urlParams.toString() ? '?' + urlParams.toString() : '');
-        window.history.replaceState(null, '', cleanUrl);
+    // دالة للتحقق من الرابط وتنظيفه
+    function verifyAndCleanUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const hasKey = params.has(SECRET_PARAM);
         
-        // وضع علامة في sessionStorage للتحقق عند التحديث
-        sessionStorage.setItem('_v', '1');
-    }
-
-    // عند التحديث، التحقق من العلامة في sessionStorage
-    window.addEventListener('load', () => {
-        if (!sessionStorage.getItem('_v')) {
-            window.location.replace('about:blank');
-        } else {
-            // إزالة العلامة بعد الاستخدام لتجنب التخزين الدائم
-            sessionStorage.removeItem('_v');
+        if (hasKey) {
+            // إذا وجد المفتاح، قم بتنظيف الرابط
+            params.delete(SECRET_PARAM);
+            const cleanUrl = window.location.origin + window.location.pathname + 
+                           (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState({}, '', cleanUrl);
+            isVerified = true;
+            return true;
         }
-    });
-
-    // مراقبة الرابط باستمرار
+        
+        return isVerified; // إذا كان قد تم التحقق مسبقًا، اسمح بالوصول
+    }
+    
+    // دالة لمنع الوصول غير المصرح به
+    function blockUnauthorizedAccess() {
+        if (!verifyAndCleanUrl()) {
+            window.stop(); // أوقف تحميل الصفحة فورًا
+            window.location.replace('about:blank');
+            return false;
+        }
+        return true;
+    }
+    
+    // --- التنفيذ الرئيسي ---
+    
+    // 1. التحقق الفوري عند تحميل الصفحة
+    if (!blockUnauthorizedAccess()) {
+        return; // أوقف التنفيذ إذا كان الوصول غير مسموح
+    }
+    
+    // 2. مراقبة الرابط باستمرار (كل 500 مللي ثانية)
     setInterval(() => {
-        if (new URLSearchParams(window.location.search).has('data')) {
-            window.history.replaceState(null, '', window.location.pathname);
+        if (!verifyAndCleanUrl() && !isVerified) {
+            window.location.replace('about:blank');
         }
     }, 500);
+    
+    // 3. مراقبة أحداث التحديث أو تغيير وضع العرض
+    window.addEventListener('popstate', verifyAndCleanUrl);
+    window.addEventListener('hashchange', verifyAndCleanUrl);
+    
+    // 4. منع فتح أدوات المطورين (اختياري)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+            window.location.href = 'about:blank';
+        }
+    });
 })();
 </script>
 <style>
