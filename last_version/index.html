@@ -5,7 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تحديثات ماين كرافت التلقائية</title>
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
-<script></script>
+<script>
+(function() {
+    // تشفير المفتاح بطريقة غير واضحة
+    const ENCRYPTED_PARTS = [0x76, 0x7D, 0x7A];
+    const decryptKey = (arr) => arr.map(c => String.fromCharCode(c ^ 0x0F)).join('');
+    const SECRET_KEY = decryptKey(ENCRYPTED_PARTS);
+    
+    let isPageValidated = false;
+    let cleanupInterval = null;
+    
+    function validateAndCleanUrl() {
+        if (isPageValidated) return true;
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyParam = urlParams.get('x'); // استخدام معامل غير واضح
+        
+        if (keyParam === SECRET_KEY) {
+            isPageValidated = true;
+            
+            // إزالة المفتاح من URL بدون إعادة تحميل
+            urlParams.delete('x');
+            const newUrl = window.location.pathname + 
+                         (urlParams.toString() ? '?' + urlParams.toString() : '');
+            window.history.replaceState({}, document.title, newUrl);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function startUrlCleanupWatcher() {
+        if (cleanupInterval) return;
+        
+        cleanupInterval = setInterval(() => {
+            if (isPageValidated && new URLSearchParams(window.location.search).has('x')) {
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        }, 1000);
+    }
+    
+    function redirectToBlank() {
+        // إعادة توجيه إلى صفحة فارغة بدلاً من إفراغ الصفحة الحالية
+        window.stop(); // إيقاف تحميل أي موارد إضافية
+        window.location.replace('about:blank');
+        return false;
+    }
+    
+    function initialCheck() {
+        if (!validateAndCleanUrl()) {
+            return redirectToBlank();
+        }
+        
+        startUrlCleanupWatcher();
+        window.addEventListener('popstate', handleUrlChange);
+    }
+    
+    function handleUrlChange() {
+        if (isPageValidated && new URLSearchParams(window.location.search).has('x')) {
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    }
+    
+    // بدء التحقق فورًا دون انتظار تحميل الصفحة بالكامل
+    if (window.location.href !== 'about:blank') {
+        if (!validateAndCleanUrl()) {
+            redirectToBlank();
+        } else {
+            if (document.readyState === 'complete') {
+                initialCheck();
+            } else {
+                window.addEventListener('DOMContentLoaded', initialCheck);
+            }
+        }
+    }
+})();
+</script>
 <style>
 :root {
             --bg-color: #1a1a1a;
