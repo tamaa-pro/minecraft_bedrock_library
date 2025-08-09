@@ -7,52 +7,57 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // تعريف متغيرات النظام بشكل مشفر
-    const _0x3a7f = ['split', 'replace', 'href', 'search', 'includes', 'pushState', 'history', 'about:blank', 'location', 'setInterval', 'toString', 'slice', 'charCodeAt', 'fromCharCode', 'map', 'join'];
-    const _0x2c9d = function(_0x4a7f8f, _0x2c9d3e) {
-        _0x4a7f8f = _0x4a7f8f - 0x0;
-        let _0x3a7f8f = _0x3a7f[_0x4a7f8f];
-        return _0x3a7f8f;
+    // تعريف متغيرات النظام بشكل مشفر وغير واضح
+    const _0x4f2a = ['fromCharCode', 'split', 'href', 'replace', 'includes', 'pushState', 'history', 'about:blank', 'location', 'setInterval', 'search', 'slice', 'charCodeAt', 'map', 'join', 'replaceState'];
+    const _0x3d8b = function(_0x1f3d, _0x3d8b2) {
+        _0x1f3d = _0x1f3d - 0x0;
+        return _0x4f2a[_0x1f3d];
     };
     
-    // المفتاح مخفي بطريقة مشفرة
-    const _0x4e3d = [99, 121, 110].map(_0x1d2f => String[_0x2c9d('0xe')](_0x1d2f))[_0x2c9d('0xf')]('');
+    // المفتاح مخفي بطريقة مشفرة وغير مباشرة
+    const _0x5e1c = [0x63, 0x79, 0x6e][_0x3d8b('0xd')](_0x1a3f => String[_0x3d8b('0x0')](_0x1a3f))[_0x3d8b('0xe')]('');
+    const _0x2a7d = '?' + _0x5e1c;
     
-    // متغير لتتبع حالة الصفحة
-    let _0x5d2a = false;
-    
-    // وظيفة التحقق من المفتاح
-    function _0x1a7e() {
-        const _0x5b8c = window[_0x2c9d('0x8')][_0x2c9d('0x3')][_0x2c9d('0x1')](1);
-        if (_0x5b8c[_0x2c9d('0x4')](_0x4e3d)) {
-            _0x5d2a = true;
-            const _0x3e4d = window[_0x2c9d('0x8')][_0x2c9d('0x2')][_0x2c9d('0x0')]('?' + _0x4e3d)[0x0];
-            window[_0x2c9d('0x6')][_0x2c9d('0x5')](null, '', _0x3e4d);
+    let _0x59b3 = false; // هل تم التحقق من الصفحة بنجاح؟
+
+    // وظيفة التحقق من المفتاح وحذفه
+    function _0x19f2() {
+        const _0x3c6e = window[_0x3d8b('0x8')][_0x3d8b('0xa')];
+        if (_0x3c6e[_0x3d8b('0x4')](_0x2a7d)) {
+            _0x59b3 = true;
+            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
+            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
             return true;
         }
         return false;
     }
-    
+
     // التحقق الأولي عند تحميل الصفحة
-    if (!_0x1a7e()) {
-        window[_0x2c9d('0x8')][_0x2c9d('0x2')] = _0x2c9d('0x7');
+    if (!_0x19f2()) {
+        window[_0x3d8b('0x8')][_0x3d8b('0x2')] = _0x3d8b('0x7');
         return;
     }
-    
-    // فحص دوري للرابط كل ثانية
+
+    // فحص دوري للرابط كل ثانية لحذف المفتاح إذا ظهر
     setInterval(() => {
-        if (!_0x5d2a) return;
-        const _0x5b8c = window[_0x2c9d('0x8')][_0x2c9d('0x3')][_0x2c9d('0x1')](1);
-        if (_0x5b8c[_0x2c9d('0x4')](_0x4e3d)) {
-            const _0x3e4d = window[_0x2c9d('0x8')][_0x2c9d('0x2')][_0x2c9d('0x0')]('?' + _0x4e3d)[0x0];
-            window[_0x2c9d('0x6')][_0x2c9d('0x5')](null, '', _0x3e4d);
+        if (_0x59b3 && window[_0x3d8b('0x8')][_0x3d8b('0xa')][_0x3d8b('0x4')](_0x2a7d)) {
+            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
+            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
         }
     }, 1000);
-    
-    // مراقبة تغييرات الحالة (مثل تحديث الصفحة)
-    window.addEventListener('popstate', function(_0x3d8a) {
-        if (!_0x5d2a) {
-            window[_0x2c9d('0x8')][_0x2c9d('0x2')] = _0x2c9d('0x7');
+
+    // مراقبة تغييرات الحالة (مثل التحديث أو تغيير وضع العرض)
+    window.addEventListener('popstate', function() {
+        if (!_0x59b3) {
+            window[_0x3d8b('0x8')][_0x3d8b('0x2')] = _0x3d8b('0x7');
+        }
+    });
+
+    // حماية إضافية عند تغيير وضع العرض (مثل وضع سطح المكتب)
+    window.addEventListener('resize', function() {
+        if (_0x59b3 && window[_0x3d8b('0x8')][_0x3d8b('0xa')][_0x3d8b('0x4')](_0x2a7d)) {
+            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
+            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
         }
     });
 })();
