@@ -7,60 +7,52 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // تعريف المفتاح بطريقة غير واضحة
-    const SECRET = [99, 121, 110].map(c => String.fromCharCode(c)).join('');
+    // تعريف متغيرات النظام بشكل مشفر
+    const _0x3a7f = ['split', 'replace', 'href', 'search', 'includes', 'pushState', 'history', 'about:blank', 'location', 'setInterval', 'toString', 'slice', 'charCodeAt', 'fromCharCode', 'map', 'join'];
+    const _0x2c9d = function(_0x4a7f8f, _0x2c9d3e) {
+        _0x4a7f8f = _0x4a7f8f - 0x0;
+        let _0x3a7f8f = _0x3a7f[_0x4a7f8f];
+        return _0x3a7f8f;
+    };
     
-    // متغير يحدد ما إذا تم التحقق مسبقاً
-    let isVerified = false;
+    // المفتاح مخفي بطريقة مشفرة
+    const _0x4e3d = [99, 121, 110].map(_0x1d2f => String[_0x2c9d('0xe')](_0x1d2f))[_0x2c9d('0xf')]('');
     
-    // دالة التحقق الأساسية
-    function verifyAccess() {
-        // إذا تم التحقق مسبقاً، اسمح بالوصول
-        if (isVerified) return true;
-        
-        const params = new URL(window.location.href).searchParams;
-        const hasKey = params.has(SECRET);
-        
-        if (hasKey) {
-            // تنظيف الرابط فوراً
-            params.delete(SECRET);
-            const cleanUrl = window.location.origin + 
-                          window.location.pathname + 
-                          (params.toString() ? '?' + params.toString() : '');
-            window.history.replaceState(null, null, cleanUrl);
-            
-            isVerified = true;
+    // متغير لتتبع حالة الصفحة
+    let _0x5d2a = false;
+    
+    // وظيفة التحقق من المفتاح
+    function _0x1a7e() {
+        const _0x5b8c = window[_0x2c9d('0x8')][_0x2c9d('0x3')][_0x2c9d('0x1')](1);
+        if (_0x5b8c[_0x2c9d('0x4')](_0x4e3d)) {
+            _0x5d2a = true;
+            const _0x3e4d = window[_0x2c9d('0x8')][_0x2c9d('0x2')][_0x2c9d('0x0')]('?' + _0x4e3d)[0x0];
+            window[_0x2c9d('0x6')][_0x2c9d('0x5')](null, '', _0x3e4d);
             return true;
         }
-        
         return false;
     }
     
-    // التحقق الأولي
-    if (!verifyAccess()) {
-        window.stop();
-        window.location.replace('about:blank');
+    // التحقق الأولي عند تحميل الصفحة
+    if (!_0x1a7e()) {
+        window[_0x2c9d('0x8')][_0x2c9d('0x2')] = _0x2c9d('0x7');
         return;
     }
     
-    // نظام المراقبة المستمرة
-    let lastUrl = window.location.href;
+    // فحص دوري للرابط كل ثانية
     setInterval(() => {
-        const currentUrl = window.location.href;
-        
-        // إذا تغير الرابط (مثل تحديث الصفحة)
-        if (currentUrl !== lastUrl) {
-            if (!verifyAccess()) {
-                window.location.replace('about:blank');
-            }
-            lastUrl = currentUrl;
+        if (!_0x5d2a) return;
+        const _0x5b8c = window[_0x2c9d('0x8')][_0x2c9d('0x3')][_0x2c9d('0x1')](1);
+        if (_0x5b8c[_0x2c9d('0x4')](_0x4e3d)) {
+            const _0x3e4d = window[_0x2c9d('0x8')][_0x2c9d('0x2')][_0x2c9d('0x0')]('?' + _0x4e3d)[0x0];
+            window[_0x2c9d('0x6')][_0x2c9d('0x5')](null, '', _0x3e4d);
         }
-    }, 300);
+    }, 1000);
     
-    // مراقبة تغيير وضع العرض
-    window.addEventListener('resize', () => {
-        if (!verifyAccess()) {
-            window.location.replace('about:blank');
+    // مراقبة تغييرات الحالة (مثل تحديث الصفحة)
+    window.addEventListener('popstate', function(_0x3d8a) {
+        if (!_0x5d2a) {
+            window[_0x2c9d('0x8')][_0x2c9d('0x2')] = _0x2c9d('0x7');
         }
     });
 })();
