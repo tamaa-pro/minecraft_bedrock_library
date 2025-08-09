@@ -7,65 +7,60 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // إعدادات الحماية (المفتاح مخفي بطريقة غير مباشرة)
-    const SECRET_PARAM = (() => {
-        const arr = [99, 121, 110]; // 'c', 'y', 'n' في ASCII
-        return arr.map(c => String.fromCharCode(c)).join('');
-    })();
+    // تعريف المفتاح بطريقة غير واضحة
+    const SECRET = [99, 121, 110].map(c => String.fromCharCode(c)).join('');
     
-    // متغير لتتبع ما إذا تم التحقق من الصفحة مسبقًا
+    // متغير يحدد ما إذا تم التحقق مسبقاً
     let isVerified = false;
     
-    // دالة للتحقق من الرابط وتنظيفه
-    function verifyAndCleanUrl() {
-        const params = new URLSearchParams(window.location.search);
-        const hasKey = params.has(SECRET_PARAM);
+    // دالة التحقق الأساسية
+    function verifyAccess() {
+        // إذا تم التحقق مسبقاً، اسمح بالوصول
+        if (isVerified) return true;
+        
+        const params = new URL(window.location.href).searchParams;
+        const hasKey = params.has(SECRET);
         
         if (hasKey) {
-            // إذا وجد المفتاح، قم بتنظيف الرابط
-            params.delete(SECRET_PARAM);
-            const cleanUrl = window.location.origin + window.location.pathname + 
-                           (params.toString() ? '?' + params.toString() : '');
-            window.history.replaceState({}, '', cleanUrl);
+            // تنظيف الرابط فوراً
+            params.delete(SECRET);
+            const cleanUrl = window.location.origin + 
+                          window.location.pathname + 
+                          (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState(null, null, cleanUrl);
+            
             isVerified = true;
             return true;
         }
         
-        return isVerified; // إذا كان قد تم التحقق مسبقًا، اسمح بالوصول
+        return false;
     }
     
-    // دالة لمنع الوصول غير المصرح به
-    function blockUnauthorizedAccess() {
-        if (!verifyAndCleanUrl()) {
-            window.stop(); // أوقف تحميل الصفحة فورًا
-            window.location.replace('about:blank');
-            return false;
-        }
-        return true;
+    // التحقق الأولي
+    if (!verifyAccess()) {
+        window.stop();
+        window.location.replace('about:blank');
+        return;
     }
     
-    // --- التنفيذ الرئيسي ---
-    
-    // 1. التحقق الفوري عند تحميل الصفحة
-    if (!blockUnauthorizedAccess()) {
-        return; // أوقف التنفيذ إذا كان الوصول غير مسموح
-    }
-    
-    // 2. مراقبة الرابط باستمرار (كل 500 مللي ثانية)
+    // نظام المراقبة المستمرة
+    let lastUrl = window.location.href;
     setInterval(() => {
-        if (!verifyAndCleanUrl() && !isVerified) {
-            window.location.replace('about:blank');
+        const currentUrl = window.location.href;
+        
+        // إذا تغير الرابط (مثل تحديث الصفحة)
+        if (currentUrl !== lastUrl) {
+            if (!verifyAccess()) {
+                window.location.replace('about:blank');
+            }
+            lastUrl = currentUrl;
         }
-    }, 500);
+    }, 300);
     
-    // 3. مراقبة أحداث التحديث أو تغيير وضع العرض
-    window.addEventListener('popstate', verifyAndCleanUrl);
-    window.addEventListener('hashchange', verifyAndCleanUrl);
-    
-    // 4. منع فتح أدوات المطورين (اختياري)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-            window.location.href = 'about:blank';
+    // مراقبة تغيير وضع العرض
+    window.addEventListener('resize', () => {
+        if (!verifyAccess()) {
+            window.location.replace('about:blank');
         }
     });
 })();
