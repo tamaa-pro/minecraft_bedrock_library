@@ -7,48 +7,46 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // ----- إعدادات الحماية (غير مرئية في الكود) -----
-    const SECRET_KEY = (() => {
-        const a = 0x63; // 'c'
-        const b = 0x79; // 'y'
-        const c = 0x6E; // 'n'
-        return String.fromCharCode(a) + String.fromCharCode(b) + String.fromCharCode(c);
-    })();
+    // طريقة غير واضحة لتخزين المفتاح
+    const SECRET_KEY = atob('Y3lu'); // 'cyn' في Base64
     
-    // ----- التحقق الفوري عند فتح الصفحة -----
-    const checkAccess = () => {
+    // تحقق مما إذا كانت الصفحة قد تم التحقق منها مسبقا
+    const wasValidated = sessionStorage.getItem('v') === '1';
+    
+    // إذا لم تكن الصفحة قد تم التحقق منها مسبقا
+    if (!wasValidated) {
         const urlParams = new URLSearchParams(window.location.search);
-        const keyParam = urlParams.get('k'); // استخدم 'k' بدل 'x' لتجنب التنبّه
+        const keyParam = urlParams.get('z'); // استخدام معلمة غير واضحة
         
         if (keyParam !== SECRET_KEY) {
-            window.stop(); // أوقف تحميل أي موارد فورًا
-            window.location.replace('about:blank'); // اذهب إلى صفحة فارغة
-            return false;
+            window.stop();
+            window.location.replace('about:blank');
+            return;
         }
         
-        // إذا المفتاح صحيح، أزله من الرابط فورًا:
-        urlParams.delete('k');
+        // تم التحقق بنجاح، احفظ الحالة
+        sessionStorage.setItem('v', '1');
+        
+        // نظف الرابط
+        urlParams.delete('z');
         const cleanUrl = window.location.pathname + 
                        (urlParams.toString() ? '?' + urlParams.toString() : '');
         window.history.replaceState({}, '', cleanUrl);
-        
-        return true;
-    };
-
-    // ----- التشغيل الرئيسي -----
-    if (!checkAccess()) {
-        // إذا فشل التحقق، لا تتابع تنفيذ أي شيء
-        return;
     }
 
-    // ----- مراقبة الرابط باستمرار (حتى بعد التحديث) -----
+    // مراقبة الرابط باستمرار
     setInterval(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('k')) {
-            urlParams.delete('k');
+        if (urlParams.has('z')) {
+            urlParams.delete('z');
             window.history.replaceState({}, '', window.location.pathname);
         }
-    }, 500); // فحص كل 0.5 ثانية للتأكد من عدم ظهور المفتاح
+    }, 500);
+
+    // تنظيف sessionStorage عند إغلاق الصفحة
+    window.addEventListener('beforeunload', () => {
+        sessionStorage.removeItem('v');
+    });
 })();
 </script>
 <style>
