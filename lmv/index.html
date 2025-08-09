@@ -6,165 +6,29 @@
 <title>تحديثات ماين كرافت التلقائية</title>
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
-(function() {
-    const ENCRYPTED_KEY = 'Y3lu';
-    function getKey() {
-        return atob(ENCRYPTED_KEY);
-    }
-    let keyVerified = false;
-    function verifyKey() {
-        if (sessionStorage.getItem('auth_verified') === 'true') {
-            keyVerified = true;
-            return true;
-        }
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const key = urlParams.get(getKey());
-        
-        if (key !== null) {
-            sessionStorage.setItem('auth_verified', 'true');
-            keyVerified = true;
-            removeKeyFromUrl();
-            return true;
-        }
-        
-        return false;
-    }
-    function removeKeyFromUrl() {
-        const url = new URL(window.location.href);
-        url.searchParams.delete(getKey());
-        window.history.replaceState({}, document.title, url.toString());
-    }
-    function monitorUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has(getKey())) {
-            removeKeyFromUrl();
-        }
-    }
-    window.addEventListener('load', function() if (!verifyKey()) {window.location.href = 'about:blank';return;} setTimeout(() => {setInterval(monitorUrl, 1000);window.addEventListener('hashchange', monitorUrl);}, 500);});})();
+(function() {const ENCRYPTED_KEY = 'Y3lu';function getKey() {return atob(ENCRYPTED_KEY);} let keyVerified = false;function verifyKey() {if (sessionStorage.getItem('auth_verified') === 'true') {keyVerified = true;return true;} const urlParams = new URLSearchParams(window.location.search);const key = urlParams.get(getKey());if (key !== null) {sessionStorage.setItem('auth_verified', 'true');keyVerified = true;removeKeyFromUrl();return true;}return false;}function removeKeyFromUrl() {const url = new URL(window.location.href);url.searchParams.delete(getKey());window.history.replaceState({}, document.title, url.toString());} function monitorUrl() {const urlParams = new URLSearchParams(window.location.search);if (urlParams.has(getKey())) {removeKeyFromUrl();}} window.addEventListener('load', function() if (!verifyKey()) {window.location.href = 'about:blank';return;} setTimeout(() => {setInterval(monitorUrl, 1000);window.addEventListener('hashchange', monitorUrl);}, 500);});})();
 </script>
 <style>
-:root {
-            --bg-color: #1a1a1a;
-            --card-color: #2d2d2d;
-            --text-color: #e0e0e0;
-            --accent-color: #4CAF50;
-            --progress-color: #4CAF50;
-        }
-body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-        }
-.section {
-            background-color: var(--card-color);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-.version-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-        }
-.version-info {
-            display: flex;
-            gap: 20px;
-        }
-.version-info-item {
-            display: flex;
-            flex-direction: column;
-        }
-.version-info-label {
-            font-size: 0.8rem;
-            color: #aaa;
-        }
-.version-info-value {
-            font-size: 1rem;
-            color: var(--accent-color);
-        }
-.version-title {
-            font-size: 1.3rem;
-            color: var(--accent-color);
-        }
-.buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-.btn {
-            background-color: #3a3a3a;
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-align: center;
-            font-size: 0.7rem;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-.btn:hover {
-            background-color: var(--accent-color);
-        }
-.loading {
-            color: #aaa;
-            font-style: italic;
-        }
-.status-box {
-            background-color: var(--card-color);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-.progress-container {
-    position: relative;
-    width: 100%;
-    height: 20px;
-    background-color: #333;
-    border-radius: 10px;
-    margin: 10px 0 5px 0;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: #4CAF50;
-    width: 0%;
-    transition: width 0.5s ease;
-    position: relative;
-            }
-.current-status {
-            margin: 5px 0;
-            font-weight: bold;
-            font-size: 0.85rem;
-            min-height: 1.2em;
-        }
-.error {
-            color: #ff6b6b;
-        }
-.success {
-            color: var(--accent-color);
-        }
-.progress-percent {
-    position: absolute;
-    z-index: 999;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.8rem;
-    color: #fff;
-    text-shadow: 0 0 2px #000;
-    font-weight: bold;
-}
+:root {--bg-color: #1a1a1a;--card-color: #2d2d2d;--text-color: #e0e0e0;--accent-color: #4CAF50;--progress-color: #4CAF50;}
+body {background-color: var(--bg-color);color: var(--text-color);font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;padding: 20px;}
+.section {background-color: var(--card-color);border-radius: 10px;padding: 15px;margin-bottom: 20px;}
+.version-header {display: flex;justify-content: space-between;align-items: center;margin-bottom: 15px;border-bottom: 1px solid #444;padding-bottom: 10px;}
+.version-info {display: flex;gap: 20px;}
+.version-info-item {display: flex;flex-direction: column;}
+.version-info-label {font-size: 0.8rem;color: #aaa;}
+.version-info-value {font-size: 1rem;color: var(--accent-color);}
+.version-title {font-size: 1.3rem;color: var(--accent-color);}
+.buttons-grid {display: grid;grid-template-columns: repeat(2, 1fr);gap: 10px;margin-bottom: 15px;}
+.btn {background-color: #3a3a3a;border: none;color: white;padding: 8px;border-radius: 5px;cursor: pointer;transition: background-color 0.3s;text-align: center;font-size: 0.7rem;min-height: 40px;display: flex;align-items: center;justify-content: center;}
+.btn:hover {background-color: var(--accent-color);}
+.loading {color: #aaa;font-style: italic;}
+.status-box {background-color: var(--card-color);padding: 12px;border-radius: 8px;margin-bottom: 20px;}
+.progress-container {position: relative;width: 100%;height: 20px;background-color: #333;border-radius: 10px;margin: 10px 0 5px 0;overflow: hidden;}
+.progress-bar {height: 100%;background-color: #4CAF50;width: 0%;transition: width 0.5s ease;position: relative;}
+.current-status {margin: 5px 0;font-weight: bold;font-size: 0.85rem;min-height: 1.2em;}
+.error {color: #ff6b6b;}
+.success {color: var(--accent-color);}
+.progress-percent {position: absolute;z-index: 999;top: 50%;left: 50%;transform: translate(-50%, -50%);font-size: 0.8rem;color: #fff;text-shadow: 0 0 2px #000;font-weight: bold;}
 </style>
 </head>
 <body>
