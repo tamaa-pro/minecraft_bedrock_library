@@ -7,43 +7,45 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // المفتاح المطلوب في الرابط (مثال: ?cyn)
-    const SECRET_KEY = 'cyn';
+    // طريقة غير واضحة لتخزين المفتاح
+    const SECRET_KEY = atob('Y3lu'); // = 'cyn' في Base64
     
-    // تحقق من وجود المفتاح في الرابط
-    function checkKey() {
-        const currentUrl = window.location.href;
-        const hasKey = currentUrl.includes('?' + SECRET_KEY);
-        
-        if (!hasKey) {
-            // إذا لم يكن المفتاح موجوداً، توجيه إلى صفحة فارغة
-            window.stop();
-            window.location.replace('about:blank');
-            return false;
-        }
-        
-        // إذا المفتاح موجود، إزالته من الرابط
-        const cleanUrl = currentUrl.split('?')[0];
-        window.history.replaceState({}, '', cleanUrl);
-        return true;
-    }
-
-    // التحقق عند تحميل الصفحة
-    if (!checkKey()) {
+    // تحقق من المفتاح دون اعتماد على الكاش
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyParam = urlParams.get('data'); // اسم معامل غير واضح
+    
+    if (keyParam !== SECRET_KEY) {
+        // تحويل فوري إلى صفحة فارغة إذا كان المفتاح خاطئاً
+        window.stop();
+        window.location.replace('about:blank');
         return;
+    } else {
+        // إذا المفتاح صحيح، إزالة المعلمة من الرابط
+        urlParams.delete('data');
+        const cleanUrl = window.location.pathname + 
+                       (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState(null, '', cleanUrl);
+        
+        // وضع علامة في sessionStorage للتحقق عند التحديث
+        sessionStorage.setItem('_v', '1');
     }
 
-    // مراقبة أي تغيير في الرابط (مثل التحديث)
-    let lastUrl = window.location.href;
-    setInterval(() => {
-        const currentUrl = window.location.href;
-        if (currentUrl !== lastUrl) {
-            if (currentUrl.includes('?' + SECRET_KEY)) {
-                window.history.replaceState({}, '', currentUrl.split('?')[0]);
-            }
-            lastUrl = currentUrl;
+    // عند التحديث، التحقق من العلامة في sessionStorage
+    window.addEventListener('load', () => {
+        if (!sessionStorage.getItem('_v')) {
+            window.location.replace('about:blank');
+        } else {
+            // إزالة العلامة بعد الاستخدام لتجنب التخزين الدائم
+            sessionStorage.removeItem('_v');
         }
-    }, 300);
+    });
+
+    // مراقبة الرابط باستمرار
+    setInterval(() => {
+        if (new URLSearchParams(window.location.search).has('data')) {
+            window.history.replaceState(null, '', window.location.pathname);
+        }
+    }, 500);
 })();
 </script>
 <style>
