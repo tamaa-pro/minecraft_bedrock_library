@@ -7,73 +7,61 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // المفتاح المطلوب
-    const REQUIRED_KEY = 'cyn';
+    // المفتاح مشفر بطريقة base64
+    const ENCRYPTED_KEY = 'Y3lu'; // "cyn" في base64
     
-    // متغير لتتبع ما إذا كان قد تم التحقق من المفتاح في هذه الجلسة
+    // دالة لفك التشفير
+    function getKey() {
+        return atob(ENCRYPTED_KEY);
+    }
+    
+    // متغير لتتبع حالة التحقق
     let keyVerified = false;
     
     // وظيفة للتحقق من المفتاح في الرابط
     function verifyKey() {
-        // إذا كان المفتاح قد تم التحقق منه بالفعل في هذه الجلسة، لا داعي للتحقق مرة أخرى
-        if (sessionStorage.getItem('keyVerified') === 'true') {
+        if (sessionStorage.getItem('auth_verified') === 'true') {
             keyVerified = true;
             return true;
         }
         
-        // الحصول على معلمات الرابط
         const urlParams = new URLSearchParams(window.location.search);
-        const key = urlParams.get(REQUIRED_KEY);
+        const key = urlParams.get(getKey());
         
-        // إذا كان المفتاح موجوداً وصحيحاً
         if (key !== null) {
-            // تخزين حالة التحقق في sessionStorage
-            sessionStorage.setItem('keyVerified', 'true');
+            sessionStorage.setItem('auth_verified', 'true');
             keyVerified = true;
-            
-            // إزالة المفتاح من الرابط بدون إعادة تحميل الصفحة
             removeKeyFromUrl();
-            
             return true;
         }
         
-        // إذا لم يكن المفتاح موجوداً
         return false;
     }
     
     // وظيفة لإزالة المفتاح من الرابط
     function removeKeyFromUrl() {
         const url = new URL(window.location.href);
-        url.searchParams.delete(REQUIRED_KEY);
-        
-        // استخدام history.replaceState لتغيير الرابط بدون إعادة تحميل الصفحة
+        url.searchParams.delete(getKey());
         window.history.replaceState({}, document.title, url.toString());
     }
     
-    // وظيفة لمراقبة الرابط وإزالة المفتاح إذا ظهر
+    // وظيفة لمراقبة الرابط
     function monitorUrl() {
-        // التحقق من وجود المفتاح في الرابط
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has(REQUIRED_KEY)) {
+        if (urlParams.has(getKey())) {
             removeKeyFromUrl();
         }
     }
     
     // عند تحميل الصفحة
     window.addEventListener('load', function() {
-        // التحقق من المفتاح أولاً
         if (!verifyKey()) {
-            // إذا لم يتم التحقق من المفتاح، توجيه إلى صفحة فارغة
             window.location.href = 'about:blank';
             return;
         }
         
-        // بدء مراقبة الرابط كل ثانية (بعد تأخير بسيط للتأكد من اكتمال التحميل)
         setTimeout(() => {
-            // مراقبة الرابط كل ثانية
             setInterval(monitorUrl, 1000);
-            
-            // أيضاً مراقبة الرابط عند تغيير hash (للتأكد من تغطية جميع الحالات)
             window.addEventListener('hashchange', monitorUrl);
         }, 500);
     });
