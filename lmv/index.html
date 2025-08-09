@@ -7,18 +7,11 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // المفتاح مشفر بطريقة base64
-    const ENCRYPTED_KEY = 'Y3lu'; // "cyn" في base64
-    
-    // دالة لفك التشفير
+    const ENCRYPTED_KEY = 'Y3lu';
     function getKey() {
         return atob(ENCRYPTED_KEY);
     }
-    
-    // متغير لتتبع حالة التحقق
     let keyVerified = false;
-    
-    // وظيفة للتحقق من المفتاح في الرابط
     function verifyKey() {
         if (sessionStorage.getItem('auth_verified') === 'true') {
             keyVerified = true;
@@ -37,35 +30,18 @@
         
         return false;
     }
-    
-    // وظيفة لإزالة المفتاح من الرابط
     function removeKeyFromUrl() {
         const url = new URL(window.location.href);
         url.searchParams.delete(getKey());
         window.history.replaceState({}, document.title, url.toString());
     }
-    
-    // وظيفة لمراقبة الرابط
     function monitorUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has(getKey())) {
             removeKeyFromUrl();
         }
     }
-    
-    // عند تحميل الصفحة
-    window.addEventListener('load', function() {
-        if (!verifyKey()) {
-            window.location.href = 'about:blank';
-            return;
-        }
-        
-        setTimeout(() => {
-            setInterval(monitorUrl, 1000);
-            window.addEventListener('hashchange', monitorUrl);
-        }, 500);
-    });
-})();
+    window.addEventListener('load', function() if (!verifyKey()) {window.location.href = 'about:blank';return;} setTimeout(() => {setInterval(monitorUrl, 1000);window.addEventListener('hashchange', monitorUrl);}, 500);});})();
 </script>
 <style>
 :root {
