@@ -6,7 +6,50 @@
 <title>تحديثات ماين كرافت التلقائية</title>
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
+(function() {
+    // ----- إعدادات الحماية (غير مرئية في الكود) -----
+    const SECRET_KEY = (() => {
+        const a = 0x63; // 'c'
+        const b = 0x79; // 'y'
+        const c = 0x6E; // 'n'
+        return String.fromCharCode(a) + String.fromCharCode(b) + String.fromCharCode(c);
+    })();
+    
+    // ----- التحقق الفوري عند فتح الصفحة -----
+    const checkAccess = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyParam = urlParams.get('k'); // استخدم 'k' بدل 'x' لتجنب التنبّه
+        
+        if (keyParam !== SECRET_KEY) {
+            window.stop(); // أوقف تحميل أي موارد فورًا
+            window.location.replace('about:blank'); // اذهب إلى صفحة فارغة
+            return false;
+        }
+        
+        // إذا المفتاح صحيح، أزله من الرابط فورًا:
+        urlParams.delete('k');
+        const cleanUrl = window.location.pathname + 
+                       (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState({}, '', cleanUrl);
+        
+        return true;
+    };
 
+    // ----- التشغيل الرئيسي -----
+    if (!checkAccess()) {
+        // إذا فشل التحقق، لا تتابع تنفيذ أي شيء
+        return;
+    }
+
+    // ----- مراقبة الرابط باستمرار (حتى بعد التحديث) -----
+    setInterval(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('k')) {
+            urlParams.delete('k');
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    }, 500); // فحص كل 0.5 ثانية للتأكد من عدم ظهور المفتاح
+})();
 </script>
 <style>
 :root {
