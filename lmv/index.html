@@ -7,58 +7,75 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script>
 (function() {
-    // تعريف متغيرات النظام بشكل مشفر وغير واضح
-    const _0x4f2a = ['fromCharCode', 'split', 'href', 'replace', 'includes', 'pushState', 'history', 'about:blank', 'location', 'setInterval', 'search', 'slice', 'charCodeAt', 'map', 'join', 'replaceState'];
-    const _0x3d8b = function(_0x1f3d, _0x3d8b2) {
-        _0x1f3d = _0x1f3d - 0x0;
-        return _0x4f2a[_0x1f3d];
-    };
+    // المفتاح المطلوب
+    const REQUIRED_KEY = 'cyn';
     
-    // المفتاح مخفي بطريقة مشفرة وغير مباشرة
-    const _0x5e1c = [0x63, 0x79, 0x6e][_0x3d8b('0xd')](_0x1a3f => String[_0x3d8b('0x0')](_0x1a3f))[_0x3d8b('0xe')]('');
-    const _0x2a7d = '?' + _0x5e1c;
+    // متغير لتتبع ما إذا كان قد تم التحقق من المفتاح في هذه الجلسة
+    let keyVerified = false;
     
-    let _0x59b3 = false; // هل تم التحقق من الصفحة بنجاح؟
-
-    // وظيفة التحقق من المفتاح وحذفه
-    function _0x19f2() {
-        const _0x3c6e = window[_0x3d8b('0x8')][_0x3d8b('0xa')];
-        if (_0x3c6e[_0x3d8b('0x4')](_0x2a7d)) {
-            _0x59b3 = true;
-            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
-            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
+    // وظيفة للتحقق من المفتاح في الرابط
+    function verifyKey() {
+        // إذا كان المفتاح قد تم التحقق منه بالفعل في هذه الجلسة، لا داعي للتحقق مرة أخرى
+        if (sessionStorage.getItem('keyVerified') === 'true') {
+            keyVerified = true;
             return true;
         }
+        
+        // الحصول على معلمات الرابط
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get(REQUIRED_KEY);
+        
+        // إذا كان المفتاح موجوداً وصحيحاً
+        if (key !== null) {
+            // تخزين حالة التحقق في sessionStorage
+            sessionStorage.setItem('keyVerified', 'true');
+            keyVerified = true;
+            
+            // إزالة المفتاح من الرابط بدون إعادة تحميل الصفحة
+            removeKeyFromUrl();
+            
+            return true;
+        }
+        
+        // إذا لم يكن المفتاح موجوداً
         return false;
     }
-
-    // التحقق الأولي عند تحميل الصفحة
-    if (!_0x19f2()) {
-        window[_0x3d8b('0x8')][_0x3d8b('0x2')] = _0x3d8b('0x7');
-        return;
+    
+    // وظيفة لإزالة المفتاح من الرابط
+    function removeKeyFromUrl() {
+        const url = new URL(window.location.href);
+        url.searchParams.delete(REQUIRED_KEY);
+        
+        // استخدام history.replaceState لتغيير الرابط بدون إعادة تحميل الصفحة
+        window.history.replaceState({}, document.title, url.toString());
     }
-
-    // فحص دوري للرابط كل ثانية لحذف المفتاح إذا ظهر
-    setInterval(() => {
-        if (_0x59b3 && window[_0x3d8b('0x8')][_0x3d8b('0xa')][_0x3d8b('0x4')](_0x2a7d)) {
-            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
-            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
+    
+    // وظيفة لمراقبة الرابط وإزالة المفتاح إذا ظهر
+    function monitorUrl() {
+        // التحقق من وجود المفتاح في الرابط
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has(REQUIRED_KEY)) {
+            removeKeyFromUrl();
         }
-    }, 1000);
-
-    // مراقبة تغييرات الحالة (مثل التحديث أو تغيير وضع العرض)
-    window.addEventListener('popstate', function() {
-        if (!_0x59b3) {
-            window[_0x3d8b('0x8')][_0x3d8b('0x2')] = _0x3d8b('0x7');
+    }
+    
+    // عند تحميل الصفحة
+    window.addEventListener('load', function() {
+        // التحقق من المفتاح أولاً
+        if (!verifyKey()) {
+            // إذا لم يتم التحقق من المفتاح، توجيه إلى صفحة فارغة
+            window.location.href = 'about:blank';
+            return;
         }
-    });
-
-    // حماية إضافية عند تغيير وضع العرض (مثل وضع سطح المكتب)
-    window.addEventListener('resize', function() {
-        if (_0x59b3 && window[_0x3d8b('0x8')][_0x3d8b('0xa')][_0x3d8b('0x4')](_0x2a7d)) {
-            const _0x1d9a = window[_0x3d8b('0x8')][_0x3d8b('0x2')][_0x3d8b('0x3')](_0x2a7d, '');
-            window[_0x3d8b('0x6')][_0x3d8b('0xf')](null, '', _0x1d9a);
-        }
+        
+        // بدء مراقبة الرابط كل ثانية (بعد تأخير بسيط للتأكد من اكتمال التحميل)
+        setTimeout(() => {
+            // مراقبة الرابط كل ثانية
+            setInterval(monitorUrl, 1000);
+            
+            // أيضاً مراقبة الرابط عند تغيير hash (للتأكد من تغطية جميع الحالات)
+            window.addEventListener('hashchange', monitorUrl);
+        }, 500);
     });
 })();
 </script>
