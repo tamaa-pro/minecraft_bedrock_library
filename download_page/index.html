@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مكتبة ماين كرافت بيدروك</title>
+<title>صفحة التحميل</title>
 <meta name="description" content="صفحة التحميل التابعة لتطبيق المكتبة .">
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 </head>
@@ -20,6 +20,9 @@
 <span id="loader"></span><span>جاري استخراج اسم الملف...</span>
 </div>
 <a id="downloadBtn" href="#" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:250px;height:40px;padding:10px;background:#0f0;color:#000;border-radius:8px;font-weight:bold;text-decoration:none;font-size:13px;transition:.2s">تحميل الملف</a>
+<div id="tryAnywayLink" style="display:none;margin-top:10px;">
+<a href="#" style="color:#ccc;font-size:12px;text-decoration:underline">تجربة الرابط على أي حال ؟</a>
+</div>
 </div>
 </div>
 <style>
@@ -42,13 +45,19 @@ let fileUrl = urlParams.get("file");
 // دالة لفحص وجود الملف باستخدام البروكسي
 async function checkFileExists(url) {try {const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);const response = await fetch(proxyUrl, { method: 'HEAD' });return response.ok;} catch (error) {return false;}}
 // دالة لتعطيل زر التحميل
-function disableDownloadBtn(reason) {btn.textContent = reason || "رابط غير صالح";btn.style.background = "#888";btn.style.pointerEvents = "none";btn.onclick = null;}
+function disableDownloadBtn(reason) {btn.textContent = reason || "رابط غير صالح";btn.style.background = "#888";btn.style.pointerEvents = "none";btn.onclick = null;
+// إظهار رابط "تجربة الرابط على أي حال" إذا كان هناك ملف ولكن غير متاح
+if(fileUrl && reason === "الملف غير متاح") {
+const tryLink = document.getElementById("tryAnywayLink");tryLink.style.display = "block";tryLink.querySelector("a").onclick = (e) => {e.preventDefault();
+// نفس سلوك الزر الأصلي
+tryLink.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:8px"><span class="loading-circle"></span>جاري التحميل...</div>';
+setTimeout(() => location.href = fileUrl, 400);};}}
 const showLoadingIcon = () => {loader.innerHTML = useCircle ? '<div class="loading-circle"></div>' :useSquare ? '<div class="loading-square"></div>' :useBar ? '<div class="loading-bar"></div>' :useCat ? '<div class="loading-cat">🐈‍⬛</div>' : '⏳';};
 const setFileName = (txt) => {document.getElementById("fileNameBox").innerHTML = '<i class="fas fa-file-alt" style="color:#ccc;font-size:14px"></i><span style="color:#fff;font-size:13px">' + txt + '</span>';};
 // دالة لإخفاء/إظهار العناصر
 function setupToggleBoxes() {const suggestionBox = document.getElementById("downloadSuggestion");const instructionsBox = document.querySelector("div[style*='position:fixed;bottom:0']");
 // إنشاء أزرار التبديل
-const toggleSuggestionBtn = document.createElement('button');toggleSuggestionBtn.id = 'toggleSuggestionBtn';toggleSuggestionBtn.className = 'toggle-box-btn';toggleSuggestionBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';toggleSuggestionBtn.onclick = () => {suggestionBox.style.display = suggestionBox.style.display === 'none' ? 'block' : 'none';};document.body.appendChild(toggleSuggestionBtn);const toggleInstructionsBtn = document.createElement('button');toggleInstructionsBtn.id = 'toggleInstructionsBtn';toggleInstructionsBtn.className = 'toggle-box-btn';toggleInstructionsBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';toggleInstructionsBtn.onclick = () => {instructionsBox.style.display = instructionsBox.style.display === 'none' ? 'block' : 'none';};document.body.appendChild(toggleInstructionsBtsug
+const toggleSuggestionBtn = document.createElement('button');toggleSuggestionBtn.id = 'toggleSuggestionBtn';toggleSuggestionBtn.className = 'toggle-box-btn';toggleSuggestionBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';toggleSuggestionBtn.onclick = () => {suggestionBox.style.display = suggestionBox.style.display === 'none' ? 'block' : 'none';};document.body.appendChild(toggleSuggestionBtn);const toggleInstructionsBtn = document.createElement('button');toggleInstructionsBtn.id = 'toggleInstructionsBtn';toggleInstructionsBtn.className = 'toggle-box-btn';toggleInstructionsBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';toggleInstructionsBtn.onclick = () => {instructionsBox.style.display = instructionsBox.style.display === 'none' ? 'block' : 'none';};document.body.appendChild(toggleInstructionsBtn);
 // التحقق من حالة العرض الأولى باستخدام localStorage
 if (!localStorage.getItem('suggestionShown')) {
 // أول مرة يفتح الصفحة - نعرض الصندوق ونضبط العلامة
@@ -79,11 +88,15 @@ window.addEventListener('DOMContentLoaded', () => {setTimeout(setupToggleBoxes, 
 ● إذا كنت تملك إصدار مثبت بالفعل على جهازك فعليك حذفه قبل تثبيت النسخة المنزلت (إلا إذا حملت النسخة المستنسخة) لأنه لا يمكن تحديث الإصدارات من خارج بلاي ستور ، و بالتالي سيفشل التحديث أو التثبيت .
 </b>
 </div>
+
+
+
 <script>
 document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
-document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &&
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) && 
 (e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
 lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 </script>
+
 </body>
 </html>
