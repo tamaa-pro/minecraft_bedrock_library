@@ -6,62 +6,6 @@
 <title>صفحة التحميل</title>
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script>
-        // نظام الحماية المعدل
-        !function(){
-            const secretKey = "Y3lu"; // هذا هو المفتاح السري (بعد فك التشفير سيكون "cyn")
-            
-            function getDecodedKey() {
-                return atob(secretKey);
-            }
-            
-            function cleanUrl() {
-                const url = new URL(window.location.href);
-                url.searchParams.delete(getDecodedKey());
-                window.history.replaceState({}, document.title, url.toString());
-            }
-            
-            function checkAndCleanUrl() {
-                const params = new URLSearchParams(window.location.search);
-                if(params.has(getDecodedKey())) {
-                    cleanUrl();
-                }
-            }
-            
-            function verifyAccess() {
-                // إذا كان المستخدم قد تم التحقق منه مسبقًا في هذه الجلسة
-                if(sessionStorage.getItem("auth_verified") === "true") {
-                    return true;
-                }
-                
-                // التحقق من وجود المفتاح في الرابط
-                const params = new URLSearchParams(window.location.search);
-                const hasValidKey = params.get(getDecodedKey()) !== null;
-                
-                if(hasValidKey) {
-                    sessionStorage.setItem("auth_verified", "true");
-                    cleanUrl();
-                    return true;
-                }
-                
-                return false;
-            }
-            
-            // عند تحميل الصفحة
-            window.addEventListener("load", function() {
-                if(!verifyAccess()) {
-                    // إذا لم يتم التحقق من الصلاحية، توجيه إلى صفحة فارغة
-                    window.location.href = "about:blank";
-                } else {
-                    // إذا تم التحقق بنجاح، تنظيف الرابط وإعداد المراقبة
-                    setTimeout(() => {
-                        setInterval(checkAndCleanUrl, 1000);
-                        window.addEventListener("hashchange", checkAndCleanUrl);
-                    }, 500);
-                }
-            });
-        }();
-    </script>
     <style>
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
