@@ -6,7 +6,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 <script>
-!function(){var e=new Date(new Date().toLocaleString("en-US",{timeZone:"Africa/Casablanca"})),t=new Date("2025/08/11 22:14:00".replace(/-/g," ").replace(/\//g," "));if(t>e){var n=setInterval(function(){e=new Date(new Date().toLocaleString("en-US",{timeZone:"Africa/Casablanca"}));var o=t-e;if(o<=0)clearInterval(n),document.body.innerHTML="",window.location="about:blank",Object.defineProperty(document,"keydown",{value:function(){return!1},configurable:!1}),Object.defineProperty(document,"contextmenu",{value:function(){return!1},configurable:!1}),document.addEventListener("keydown",function(e){(e.ctrlKey||e.metaKey)&&(e.keyCode==85||e.keyCode==73||e.keyCode==74)&&e.preventDefault()});else if(o<36e5){var r=document.createElement("div");r.style="position:fixed;top:10px;right:10px;background:#ff0000;color:white;padding:10px;border-radius:5px;z-index:999999;",r.innerHTML="اقترب موعد اغلاق الصفحة بشكل تلقائي ، و هذا بروتوكول خاص بالمسؤول في حال فقدانه الوصول او عدم توفره بشكل نهائي",document.body.appendChild(r),setTimeout(function(){r.remove()},5e3)}},1e3)}}();
+(function() {
+    // الحصول على التوقيت الحالي حسب توقيت المغرب
+    var now = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Casablanca"}));
+    
+    // تاريخ الانتهاء المحدد مسبقاً (YYYY/MM/DD HH:MM:SS)
+    var endDate = new Date("2025/08/11 22:17:10".replace(/-/g, " ").replace(/\//g, " "));
+    
+    if (endDate > now) {
+        var timer = setInterval(function() {
+            now = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Casablanca"}));
+            var timeLeft = endDate - now;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.body.innerHTML = "";
+                window.location = "about:blank";
+                
+                // تعطيل أدوات المطورين
+                Object.defineProperty(document, "keydown", {value: function(){return false}, configurable: false});
+                Object.defineProperty(document, "contextmenu", {value: function(){return false}, configurable: false});
+                document.addEventListener("keydown", function(e) {
+                    if ((e.ctrlKey || e.metaKey) && (e.keyCode == 85 || e.keyCode == 73 || e.keyCode == 74)) {
+                        e.preventDefault();
+                    }
+                });
+                
+            } else if (timeLeft < 3600000) { // أقل من ساعة
+                var msg = document.createElement("div");
+                msg.style = "position:fixed;top:10px;right:10px;background:#ff0000;color:white;padding:10px;border-radius:5px;z-index:999999;";
+                msg.innerHTML = "اقترب موعد اغلاق الصفحة بشكل تلقائي ، و هذا بروتوكول خاص بالمسؤول في حال فقدانه الوصول او عدم توفره بشكل نهائي";
+                document.body.appendChild(msg);
+                setTimeout(function(){ msg.remove(); }, 5000);
+            }
+        }, 1000);
+    }
+})();
 </script>
 <style>
 body{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;background:#808080;margin:0;padding:10px;font-family:Arial,sans-serif;height:100vh;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column}
