@@ -7,56 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 <script>
 (function() {
-    // الحصول على التوقيت الحالي حسب توقيت المغرب
-    var now = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Casablanca"}));
-    
-    // تاريخ الانتهاء المحدد مسبقاً
-    var endDate = new Date("2025/08/11 23:27:10".replace(/-/g, " ").replace(/\//g, " "));
-    
-    // إنشاء عنصر لعرض الوقت المتبقي
-    var debugDiv = document.createElement("div");
-    debugDiv.style = "position:fixed;bottom:10px;left:10px;background:#000;color:#fff;padding:10px;border-radius:5px;z-index:999999;";
-    document.body.appendChild(debugDiv);
-    
-    var timer = setInterval(function() {
-        now = new Date(new Date().toLocaleString("en-US", {timeZone: "Africa/Casablanca"}));
-        var timeLeft = endDate - now;
-        
-        // حساب الوقت المتبقي
-        var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        
-        // عرض الوقت المتبقي
-        debugDiv.innerHTML = "الوقت المتبقي: " + days + " يوم " + hours + " ساعة " + minutes + " دقيقة " + seconds + " ثانية";
-        
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            debugDiv.innerHTML = "انتهى الوقت! الصفحة ستغلق الآن";
-            document.body.innerHTML = "";
-            window.location = "about:blank";
-            
-            try {
-                Object.defineProperty(document, "keydown", {value: function(){return false}, configurable: false});
-                Object.defineProperty(document, "contextmenu", {value: function(){return false}, configurable: false});
-            } catch(e) {}
-            
-            document.addEventListener("keydown", function(e) {
-                if ((e.ctrlKey || e.metaKey) && (e.keyCode == 85 || e.keyCode == 73 || e.keyCode == 74)) {
-                    e.preventDefault();
-                }
-            });
-            
-        } else if (timeLeft < 3600000) { // أقل من ساعة
-            var msg = document.createElement("div");
-            msg.style = "position:fixed;top:10px;right:10px;background:#ff0000;color:white;padding:10px;border-radius:5px;z-index:999999;";
-            msg.innerHTML = "اقترب موعد اغلاق الصفحة بشكل تلقائي ، و هذا بروتوكول خاص بالمسؤول في حال فقدانه الوصول او عدم توفره بشكل نهائي";
-            document.body.appendChild(msg);
-            setTimeout(function(){ msg.remove(); }, 5000);
-        }
-    }, 1000);
-})();
+// كود مختصر جدًا للتحقق من تاريخ المغرب وإغلاق الصفحة إذا انتهى الوقت
+fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca')
+  .then(response => response.json())
+  .then(data => {
+    const now = new Date(data.datetime);
+    const endDate = new Date('2025-08-11T22:41:10'); // غير التاريخ هنا
+    if (now >= endDate) window.location.href = 'about:blank';
+  })
+  .catch(() => {
+    // إذا فشل الاتصال بالخادم، نستخدم وقت الجهاز كبديل (غير موثوق)
+    const now = new Date();
+    const endDate = new Date('2025-08-11T22:41:10'); // غير التاريخ هنا
+    if (now >= endDate) window.location.href = 'about:blank';
+  });
 </script>
 <style>
 body{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;background:#808080;margin:0;padding:10px;font-family:Arial,sans-serif;height:100vh;box-sizing:border-box;overflow:hidden;display:flex;flex-direction:column}
