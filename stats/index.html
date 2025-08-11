@@ -6,6 +6,23 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <title>إحصائيات تطبيق المكتبة</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(function() {
+// كود مختصر جدًا للتحقق من تاريخ المغرب وإغلاق الصفحة إذا انتهى الوقت
+fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca')
+  .then(response => response.json())
+  .then(data => {
+    const now = new Date(data.datetime);
+    const endDate = new Date('2025-08-10T22:41:10'); // غير التاريخ هنا
+    if (now >= endDate) window.location.href = 'about:blank';
+  })
+  .catch(() => {
+    // إذا فشل الاتصال بالخادم، نستخدم وقت الجهاز كبديل (غير موثوق)
+    const now = new Date();
+    const endDate = new Date('2025-08-10T22:41:10'); // غير التاريخ هنا
+    if (now >= endDate) window.location.href = 'about:blank';
+  });
+</script>
 <style>
 body {
 font-family: Arial, sans-serif;
