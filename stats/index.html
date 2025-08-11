@@ -478,30 +478,19 @@ const avgDownloads = filteredDownloads.length > 0 ? (totalDownloads / filteredDo
 // حساب التغيير عن الشهر السابق
 let usersChange = 'N/A';
 let downloadsChange = 'N/A';
-
 if (prevMonth) {
-    // التحقق مما إذا كان الشهر السابق من نفس النسخة (نفس الرقم بعد الشرطة المائلة)
-    const currentVersion = monthKey.split('/')[1];
-    const prevVersion = prevMonthKey.split('/')[1];
+// التحقق مما إذا كان الشهر السابق من نفس النسخة (نفس الرقم بعد الشرطة المائلة)
+const currentVersion = monthKey.split('/')[1];
+const prevVersion = prevMonthKey.split('/')[1];
     
-    if (currentVersion === prevVersion) {
-        const prevFilteredUsers = prevMonth.users.filter(val => val !== null);
-        const prevFilteredDownloads = prevMonth.downloads.filter(val => val !== null);
-        const prevTotalUsers = prevFilteredUsers.reduce((a, b) => a + b, 0);
-        const prevTotalDownloads = prevFilteredDownloads.reduce((a, b) => a + b, 0);
+if (currentVersion === prevVersion) {
+const prevFilteredUsers = prevMonth.users.filter(val => val !== null);
+const prevFilteredDownloads = prevMonth.downloads.filter(val => val !== null);
+const prevTotalUsers = prevFilteredUsers.reduce((a, b) => a + b, 0);
+const prevTotalDownloads = prevFilteredDownloads.reduce((a, b) => a + b, 0);
 
-        if (prevTotalUsers > 0) {
-            const change = ((totalUsers - prevTotalUsers) / prevTotalUsers * 100).toFixed(1);
-            usersChange = `${change}%`;
-        }
-
-        if (prevTotalDownloads > 0) {
-            const change = ((totalDownloads - prevTotalDownloads) / prevTotalDownloads * 100).toFixed(1);
-            downloadsChange = `${change}%`;
-        }
-    }
-}
-
+if (prevTotalUsers > 0) {const change = ((totalUsers - prevTotalUsers) / prevTotalUsers * 100).toFixed(1);usersChange = `${change}%`;}
+if (prevTotalDownloads > 0) {const change = ((totalDownloads - prevTotalDownloads) / prevTotalDownloads * 100).toFixed(1);downloadsChange = `${change}%`;}}}
 // تحديث الجدول
 document.getElementById('max-users').textContent = maxUsers;
 document.getElementById('min-users').textContent = minUsers;
