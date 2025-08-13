@@ -7,109 +7,29 @@
 <title>إحصائيات تطبيق المكتبة</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-background-color: #222;
-color: #eee;}
-.header {
-background-color: #222;
-color: white;
-height: 70px;
-padding: 20px;
-text-align: center;
-margin-bottom: 20px;}
-.container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 8px;
-background-color: #333;
-border-radius: 0px;
-box-shadow: 0 0 15px rgba(0,0,0,0.5);}
-.chart-container {
-position: relative;
-height: 250px;
-width: 100%;
-margin-bottom: 1px;}
-.month-selector {
-text-align: center;
-margin-bottom: 20px;}
-select {
-padding: 10px 15px;
-font-size: 16px;
-border-radius: 5px;
-border: 1px solid #555;
-background-color: #444;
-color: #eee;}
-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 30px;
-background-color: #444;}
-th, td {
-padding: 12px 15px;
-text-align: center;
-border: 1px solid #555;}
-th {
-background-color: #333;
-font-weight: bold;
-color: #fff;}
-tr:nth-child(even) {
-background-color: #3a3a3a;}
-tr:nth-child(odd) {
-background-color: #444;}
-.positive {
-color: #4CAF50;
-font-weight: bold;}
-.negative {
-color: #F44336;
-font-weight: bold;}
-.stats-title {
-font-size: 20px;
-font-weight: bold;
-margin: 30px 0 15px;
-text-align: center;
-color: #fff;}
-.chart-legend {
-display: flex;
-justify-content: center;
-margin-top: 15px;
-gap: 10px;}
-.legend-item {
-display: flex;نصف قطر 
-align-items: center;
-cursor: pointer;
-padding: 8px 15px;  
-border-radius: 3px;
-background-color: rgba(0, 0, 0, 0.3);
-transition: all 0.3s ease;}
-.legend-item:hover {
-background-color: rgba(0, 0, 0, 0.5);}
-.legend-color {
-width: 15px;
-height: 15px;
-margin-left: 0px;
-margin-top: 4px;
-margin-right: 5px;
-border-radius: 3px;}
-.legend-text {
-font-size: 14px;}
-button, img, a{
--webkit-tap-highlight-color:transparent;
-tap-highlight-color:transparent;
-user-select:none;
--webkit-user-drag:none;
-touch-action:manipulation;
-outline:none;}
+body {font-family: Arial, sans-serif;margin: 0;padding: 0;background-color: #222;color: #eee;}
+.header {background-color: #222;color: white;height: 70px;padding: 20px;text-align: center;margin-bottom: 20px;}
+.container {max-width: 1200px;margin: 0 auto;padding: 8px;background-color: #333;border-radius: 0px;box-shadow: 0 0 15px rgba(0,0,0,0.5);}
+.chart-container {position: relative;height: 250px;width: 100%;margin-bottom: 1px;}
+.month-selector {text-align: center;margin-bottom: 20px;}
+select {padding: 10px 15px;font-size: 16px;border-radius: 5px;border: 1px solid #555;background-color: #444;color: #eee;}
+table {width: 100%;border-collapse: collapse;margin-top: 30px;background-color: #444;}
+th, td {padding: 12px 15px;text-align: center;border: 1px solid #555;}
+th {background-color: #333;font-weight: bold;color: #fff;}
+tr:nth-child(even) {background-color: #3a3a3a;}
+tr:nth-child(odd) {background-color: #444;}
+.positive {color: #4CAF50;font-weight: bold;}
+.negative {color: #F44336;font-weight: bold;}
+.stats-title {font-size: 20px;font-weight: bold;margin: 30px 0 15px;text-align: center;color: #fff;}
+.chart-legend {display: flex;justify-content: center;margin-top: 15px;gap: 10px;}
+.legend-item {display: flex;نصف قطر 
+align-items: center;cursor: pointer;padding: 8px 15px;  border-radius: 3px;background-color: rgba(0, 0, 0, 0.3);transition: all 0.3s ease;}
+.legend-item:hover {background-color: rgba(0, 0, 0, 0.5);}
+.legend-color {width: 15px;height: 15px;margin-left: 0px;margin-top: 4px;margin-right: 5px;border-radius: 3px;}
+.legend-text {font-size: 14px;}
+button, img, a{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;user-select:none;-webkit-user-drag:none;touch-action:manipulation;outline:none;}
 .ripple-btn{position:relative;overflow:hidden}
-.ripple{
-position:absolute;
-border-radius:50%;
-background:rgba(255,255,255,.35);
-transform:scale(0);
-animation:ripple .55s linear;
-pointer-events:none;}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:ripple .55s linear;pointer-events:none;}
 @keyframes ripple{to{transform:scale(4);opacity:0}}
 footer {background: #222;padding: 2px 1px ;height: 18px;margin-top: 10px ;border-top: 3px solid var(--primary);}
 .footer-links {display: flex;justify-content: center;flex-wrap: wrap;gap: 15px;margin-bottom: 1rem;}
@@ -307,23 +227,7 @@ const data = {
 
 // ترتيب الأشهر حسب التاريخ
 const monthOrder = [
-"2025-07/2",
-"2025-06/2",
-"2025-05/2",
-"2025-04/2",
-"2025-03/2",
-"2025-02/2",
-"2025-04/1",
-"2025-03/1",
-"2025-02/1",
-"2025-01/1",
-"2024-12/1",
-"2024-11/1",
-"2024-10/1",
-"2024-09/1",
-"2024-08/1",
-"2024-07/1",
-"2024-06/1"
+"2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"
 ];
 
 // إنشاء الرسم البياني
