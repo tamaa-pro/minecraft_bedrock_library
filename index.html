@@ -345,8 +345,8 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw>تاريخ آخر تحديث للصفحة : 2025/08/24</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (05:03)-90</sifaw><br>
+<sifaw>تاريخ آخر تحديث للصفحة : 2025/08/26</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (05:58)-91</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -381,175 +381,14 @@ window.addEventListener('DOMContentLoaded', loadSifawImage);
 <hr/>
 </div>
 </div>
+
 <script>
-// كود معالجة الروابط والصور في التعليقات (يمكن وضعه في نهاية الصفحة)
-document.addEventListener('DOMContentLoaded', function() {
-  // أنماط CSS المطلوبة
-  const style = document.createElement('style');
-  style.textContent = `
-    .comment-content {
-      position: relative;
-    }
-    .comment-images {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .comment-image {
-      max-width: 100%;
-      border-radius: 8px;
-      max-height: 200px;
-      object-fit: cover;
-    }
-    .comment-links {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-    .comment-link-btn {
-      background-color: #4299e1;
-      color: white;
-      text-decoration: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      font-size: 14px;
-      display: inline-block;
-      transition: background-color 0.3s;
-    }
-    .comment-link-btn:hover {
-      background-color: #3182ce;
-      color: white;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // دالة لاستخراج ومعالجة الروابط والصور من النص
-  function processCommentText(text) {
-    if (!text) return { text: '', images: [], links: [] };
-    
-    // استخراج الصور (الروابط بين علامتي ')
-    const imageRegex = /'([^']+\.(jpg|jpeg|png|gif|bmp|webp))'/gi;
-    const images = [];
-    let processedText = text.replace(imageRegex, (match, url) => {
-      images.push(url);
-      return ''; // إزالة الرابط من النص الأصلي
-    });
-
-    // استخراج الروابط (بصيغة 'النص-الرابط')
-    const linkRegex = /'([^']+)-([^']+)'/gi;
-    const links = [];
-    processedText = processedText.replace(linkRegex, (match, linkText, url) => {
-      links.push({ text: linkText.trim(), url: url.trim() });
-      return ''; // إزالة النص والرابط من النص الأصلي
-    });
-
-    // تنظيف النص من المسافات الزائدة
-    processedText = processedText.trim().replace(/\s+/g, ' ');
-
-    return { text: processedText, images, links };
-  }
-
-  // دالة لتطبيق المعالجة على عنصر تعليق محدد
-  function processCommentElement(commentElement) {
-    const textElement = commentElement.querySelector('.comment-text');
-    if (!textElement) return;
-    
-    const originalText = textElement.textContent;
-    const processedContent = processCommentText(originalText);
-    
-    // تحديث النص المعالج
-    textElement.textContent = processedContent.text;
-    
-    // إنشاء عنصر محتوى إذا لم يكن موجوداً
-    let contentElement = commentElement.querySelector('.comment-content');
-    if (!contentElement) {
-      contentElement = document.createElement('div');
-      contentElement.className = 'comment-content';
-      textElement.parentNode.insertBefore(contentElement, textElement.nextSibling);
-      contentElement.appendChild(textElement);
-    }
-    
-    // إضافة الصور إذا وجدت
-    if (processedContent.images.length > 0) {
-      let imagesContainer = contentElement.querySelector('.comment-images');
-      if (!imagesContainer) {
-        imagesContainer = document.createElement('div');
-        imagesContainer.className = 'comment-images';
-        contentElement.appendChild(imagesContainer);
-      }
-      imagesContainer.innerHTML = '';
-      processedContent.images.forEach(img => {
-        const imgElement = document.createElement('img');
-        imgElement.src = img;
-        imgElement.className = 'comment-image';
-        imgElement.alt = 'صورة التعليق';
-        imagesContainer.appendChild(imgElement);
-      });
-    }
-    
-    // إضافة الروابط إذا وجدت
-    if (processedContent.links.length > 0) {
-      let linksContainer = contentElement.querySelector('.comment-links');
-      if (!linksContainer) {
-        linksContainer = document.createElement('div');
-        linksContainer.className = 'comment-links';
-        contentElement.appendChild(linksContainer);
-      }
-      linksContainer.innerHTML = '';
-      processedContent.links.forEach(link => {
-        const linkElement = document.createElement('a');
-        linkElement.href = link.url;
-        linkElement.target = '_blank';
-        linkElement.className = 'comment-link-btn';
-        linkElement.textContent = link.text;
-        linksContainer.appendChild(linkElement);
-      });
-    }
-  }
-
-  // دالة لتطبيق المعالجة على جميع التعليقات
-  function processAllComments() {
-    const comments = document.querySelectorAll('.comment-card, .reply-card');
-    comments.forEach(comment => {
-      processCommentElement(comment);
-    });
-  }
-
-  // مراقبة التغييرات في DOM لاكتشاف التعليقات الجديدة
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.addedNodes.length) {
-        mutation.addedNodes.forEach(function(node) {
-          if (node.nodeType === 1) { // عنصر Element
-            if (node.classList && (node.classList.contains('comment-card') || node.classList.contains('reply-card'))) {
-              processCommentElement(node);
-            } else {
-              const comments = node.querySelectorAll('.comment-card, .reply-card');
-              comments.forEach(comment => {
-                processCommentElement(comment);
-              });
-            }
-          }
-        });
-      }
-    });
-  });
-
-  // بدء المراقبة بعد تأكد تحميل DOM
-  setTimeout(function() {
-    // معالجة التعليقات الحالية
-    processAllComments();
-    
-    // بدء مراقبة التغييرات
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }, 1000);
-});
+document.addEventListener("DOMContentLoaded",function(){const e=document.createElement("style");e.textContent=`.comment-content{position:relative;margin-bottom:10px}.comment-media{margin-top:10px;width:100%;display:flex;flex-direction:column;gap:10px}.comment-media img,.comment-media video{width:100%;max-height:300px;border-radius:8px;object-fit:contain;background-color:#1a202c}.comment-media audio{width:100%;margin-top:5px}.comment-links{display:flex;justify-content:center;gap:10px;margin:15px 0;flex-wrap:wrap}.comment-link-btn{background-color:#4299e1;color:#fff;text-decoration:none;padding:8px 15px;border-radius:5px;font-size:14px;display:inline-block;transition:background-color .3s}.comment-link-btn:hover{background-color:#3182ce}`;document.head.appendChild(e);function t(t){if(!t)return{text:t,media:[],links:[]};const e=[],n=[];let o=t.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi,(t,o,r)=>{e.push({url:o,type:r.match(/(mp4|m4a|ogg|mp3|wav)/)?r.match(/(mp4|m4a)/)?"video":"audio":"image"});return""});return o=o.replace(/\['([^']+)':'([^']+)'\]/gi,(t,e,o)=>{n.push({text:e.trim(),url:o.trim()});return""}),o=o.trim().replace(/\s+/g," ").replace(/\[\]|''/g,""),{text:o,media:e,links:n}}function e(e){if("image"===e.type){const t=document.createElement("img");return t.src=e.url,t.className="comment-media-item",t.alt="صورة مرفقة",t.loading="lazy",t}if("video"===e.type){const t=document.createElement("video");return t.src=e.url,t.className="comment-media-item",t.controls=!0,t}if("audio"===e.type){const t=document.createElement("audio");return t.src=e.url,t.className="comment-media-item",t.controls=!0,t}}function n(t){const n=t.querySelector(".comment-text");if(!n)return;const o=n.textContent,r=t.querySelector(".comment-content")||function(){const e=document.createElement("div");return e.className="comment-content",n.parentNode.insertBefore(e,n),e.appendChild(n),e}();if(n.textContent=o.text,r.querySelector(".comment-media")||o.media.length>0){const t=r.querySelector(".comment-media")||function(){const t=document.createElement("div");return t.className="comment-media",r.appendChild(t),t}();o.media.forEach(e=>{const n=e(e);n&&t.appendChild(n)})}if(r.querySelector(".comment-links")||o.links.length>0){const e=r.querySelector(".comment-links")||function(){const e=document.createElement("div");return e.className="comment-links",r.appendChild(e),e}();o.links.forEach(t=>{const n=document.createElement("a");n.href=t.url,n.className="comment-link-btn",n.textContent=t.text,e.appendChild(n)})}}function o(){document.querySelectorAll(".comment-card, .reply-card").forEach(t=>{n(t)})}const r=new MutationObserver(function(e){e.forEach(function(e){if(e.addedNodes.length)for(let t of e.addedNodes)1===t.nodeType&&(t.classList&&(t.classList.contains("comment-card")||t.classList.contains("reply-card"))?setTimeout(()=>{n(t)},100):t.querySelectorAll&&t.querySelectorAll(".comment-card, .reply-card").forEach(e=>{setTimeout(()=>{n(e)},100)}))})});setTimeout(()=>{o(),r.observe(document.body,{childList:!0,subtree:!0})},500)});
 </script>
+
+<script>
+!function(){function e(e){if(!e)return 0;let t=e.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi,"");return t=t.replace(/\['([^']+)':'([^']+)'\]/gi,""),t.length}const t=window.showAddCommentModal,n=window.showEditCommentModal,o=window.showReplyModal;t&&(window.showAddCommentModal=function(){t();setTimeout(()=>{const t=document.getElementById("comment-text"),n=document.getElementById("text-counter");t&&n&&t.addEventListener("input",function(){n.textContent=e(this.value)})},100)}),n&&(window.showEditCommentModal=function(t){n(t);setTimeout(()=>{const n=document.getElementById("edit-text"),o=document.getElementById("edit-text-counter");if(n&&o){o.textContent=e(n.value);n.addEventListener("input",function(){o.textContent=e(this.value)})}},100)}),o&&(window.showReplyModal=function(){o();setTimeout(()=>{const t=document.getElementById("reply-text"),n=document.getElementById("reply-text-counter");t&&n&&t.addEventListener("input",function(){n.textContent=e(this.value)})},100)})}();
+</script>
+
 </body>
 </html>
