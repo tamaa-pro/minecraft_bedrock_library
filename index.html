@@ -346,7 +346,7 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw>تاريخ آخر تحديث للصفحة : 2025/08/26</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (10:15)-94</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (11:01)-95</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .media-style-5 { width: 30%; max-height: 150px; align-self: flex-end; }
     .media-style-6 { width: 30%; max-height: 150px; align-self: center; }
     .media-style-7 { width: 30%; max-height: 150px; align-self: flex-start; }
-    .media-style-8 { width: 100%; max-height: 300px; border: 3px solid #4299e1; padding: 5px; }
+    .media-style-8 { width: calc(100% - 10px); max-height: 300px; border: 2px solid #4299e1; padding: 3px; margin: 0 5px; }
     .comment-links {
       display: flex;
       gap: 10px;
@@ -486,7 +486,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const media = [];
     const links = [];
     
-    // استخراج الوسائط [رابط] - للصور والفيديو والصوت
     const mediaRegex = /\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi;
     let processedText = text.replace(mediaRegex, (match, url, ext) => {
       const type = ext.match(/(mp4|m4a)/) ? 'video' : 
@@ -499,7 +498,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
-    // استخراج الوسائط [رابط, رقم] - للصور فقط
     const mediaWithStyleRegex = /\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif))\s*,\s*(\d)\]/gi;
     processedText = processedText.replace(mediaWithStyleRegex, (match, url, ext, styleNum) => {
       media.push({ 
@@ -510,7 +508,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
-    // استخراج الأزرار ['النص':'الرابط', رقم]
     const buttonRegex = /\['([^']+)':\s*'([^']+)'\s*,\s*(\d)\]/gi;
     processedText = processedText.replace(buttonRegex, (match, btnText, btnUrl, styleNum) => {
       links.push({ 
@@ -521,7 +518,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
-    // استخراج الأزرار ['النص':'الرابط'] (بدون رقم - استخدام الوضع الافتراضي)
     const buttonDefaultRegex = /\['([^']+)':\s*'([^']+)'\s*\]/gi;
     processedText = processedText.replace(buttonDefaultRegex, (match, btnText, btnUrl) => {
       links.push({ 
@@ -569,7 +565,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const textElement = commentElement.querySelector('.comment-text');
     if (!textElement) return;
     
-    const originalText = textElement.textContent;
+    const originalText = textElement.textContent || textElement.innerText;
     const processed = extractMediaAndLinks(originalText);
     
     textElement.textContent = processed.text;
@@ -582,13 +578,11 @@ document.addEventListener('DOMContentLoaded', function() {
       contentElement.appendChild(textElement);
     }
     
-    // إزالة أي وسائط موجودة مسبقاً لمنع التكرار
     const existingMedia = contentElement.querySelector('.comment-media');
     if (existingMedia) {
       existingMedia.remove();
     }
     
-    // إضافة الوسائط إذا وجدت
     if (processed.media.length > 0) {
       const mediaContainer = document.createElement('div');
       mediaContainer.className = 'comment-media';
@@ -603,13 +597,11 @@ document.addEventListener('DOMContentLoaded', function() {
       contentElement.appendChild(mediaContainer);
     }
     
-    // إزالة أي روابط موجودة مسبقاً لمنع التكرار
     const existingLinks = contentElement.querySelector('.comment-links');
     if (existingLinks) {
       existingLinks.remove();
     }
     
-    // إضافة الروابط إذا وجدت
     if (processed.links.length > 0) {
       const linksContainer = document.createElement('div');
       linksContainer.className = `comment-links links-style-${processed.links[0].style}`;
@@ -634,22 +626,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   const observer = new MutationObserver(function(mutations) {
+    let shouldProcess = false;
+    
     mutations.forEach(function(mutation) {
       if (mutation.addedNodes.length) {
         mutation.addedNodes.forEach(function(node) {
           if (node.nodeType === 1) {
             if (node.classList && (node.classList.contains('comment-card') || node.classList.contains('reply-card'))) {
-              setTimeout(() => processCommentElement(node), 100);
-            } else {
-              const comments = node.querySelectorAll('.comment-card, .reply-card');
-              comments.forEach(comment => {
-                setTimeout(() => processCommentElement(comment), 100);
-              });
+              shouldProcess = true;
+            } else if (node.querySelectorAll('.comment-card, .reply-card').length > 0) {
+              shouldProcess = true;
             }
           }
         });
       }
     });
+    
+    if (shouldProcess) {
+      setTimeout(processAllComments, 50);
+    }
   });
 
   setTimeout(() => {
@@ -667,14 +662,30 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!text) return 0;
     
     let cleanText = text.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi, '');
-    
     cleanText = cleanText.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif))\s*,\s*\d\]/gi, '');
-    
     cleanText = cleanText.replace(/\['([^']+)':\s*'([^']+)'\s*,\s*\d\]/gi, '');
-    
     cleanText = cleanText.replace(/\['([^']+)':\s*'([^']+)'\s*\]/gi, '');
     
     return cleanText.length;
+  }
+  
+  function setupTextCounter(textarea, counter) {
+    if (!textarea || !counter) return;
+    
+    const updateCounter = () => {
+      const length = countTextWithoutMedia(textarea.value);
+      counter.textContent = length;
+      
+      if (length > 200) {
+        const cleanValue = textarea.value.substring(0, 200 + (textarea.value.length - length));
+        textarea.value = cleanValue;
+        counter.textContent = 200;
+      }
+    };
+    
+    updateCounter();
+    
+    textarea.addEventListener('input', updateCounter);
   }
   
   if (originalShowAddCommentModal) {
@@ -684,16 +695,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         const textarea = document.getElementById('comment-text');
         const counter = document.getElementById('text-counter');
-        
-        if (textarea && counter) {
-          const initialLength = countTextWithoutMedia(textarea.value);
-          counter.textContent = initialLength;
-          
-          textarea.addEventListener('input', function() {
-            const length = countTextWithoutMedia(this.value);
-            counter.textContent = length;
-          });
-        }
+        setupTextCounter(textarea, counter);
       }, 100);
     };
   }
@@ -705,16 +707,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         const textarea = document.getElementById('edit-text');
         const counter = document.getElementById('edit-text-counter');
-        
-        if (textarea && counter) {
-          const initialLength = countTextWithoutMedia(textarea.value);
-          counter.textContent = initialLength;
-          
-          textarea.addEventListener('input', function() {
-            const length = countTextWithoutMedia(this.value);
-            counter.textContent = length;
-          });
-        }
+        setupTextCounter(textarea, counter);
       }, 100);
     };
   }
@@ -726,17 +719,23 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         const textarea = document.getElementById('reply-text');
         const counter = document.getElementById('reply-text-counter');
-        
-        if (textarea && counter) {
-          const initialLength = countTextWithoutMedia(textarea.value);
-          counter.textContent = initialLength;
-          
-          textarea.addEventListener('input', function() {
-            const length = countTextWithoutMedia(this.value);
-            counter.textContent = length;
-          });
-        }
+        setupTextCounter(textarea, counter);
       }, 100);
+    };
+  }
+  
+  const originalSubmitComment = window.submitComment;
+  if (originalSubmitComment) {
+    window.submitComment = function() {
+      const textarea = document.getElementById('comment-text') || document.getElementById('edit-text');
+      if (textarea) {
+        const length = countTextWithoutMedia(textarea.value);
+        if (length > 200) {
+          alert('النص يتجاوز الحد المسموح به (200 حرف)');
+          return;
+        }
+      }
+      originalSubmitComment();
     };
   }
 })();
