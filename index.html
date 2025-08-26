@@ -346,7 +346,7 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw>تاريخ آخر تحديث للصفحة : 2025/08/24</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (10:50)-89</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (05:03)-90</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -381,5 +381,175 @@ window.addEventListener('DOMContentLoaded', loadSifawImage);
 <hr/>
 </div>
 </div>
+<script>
+// كود معالجة الروابط والصور في التعليقات (يمكن وضعه في نهاية الصفحة)
+document.addEventListener('DOMContentLoaded', function() {
+  // أنماط CSS المطلوبة
+  const style = document.createElement('style');
+  style.textContent = `
+    .comment-content {
+      position: relative;
+    }
+    .comment-images {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .comment-image {
+      max-width: 100%;
+      border-radius: 8px;
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .comment-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .comment-link-btn {
+      background-color: #4299e1;
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-size: 14px;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+    .comment-link-btn:hover {
+      background-color: #3182ce;
+      color: white;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // دالة لاستخراج ومعالجة الروابط والصور من النص
+  function processCommentText(text) {
+    if (!text) return { text: '', images: [], links: [] };
+    
+    // استخراج الصور (الروابط بين علامتي ')
+    const imageRegex = /'([^']+\.(jpg|jpeg|png|gif|bmp|webp))'/gi;
+    const images = [];
+    let processedText = text.replace(imageRegex, (match, url) => {
+      images.push(url);
+      return ''; // إزالة الرابط من النص الأصلي
+    });
+
+    // استخراج الروابط (بصيغة 'النص-الرابط')
+    const linkRegex = /'([^']+)-([^']+)'/gi;
+    const links = [];
+    processedText = processedText.replace(linkRegex, (match, linkText, url) => {
+      links.push({ text: linkText.trim(), url: url.trim() });
+      return ''; // إزالة النص والرابط من النص الأصلي
+    });
+
+    // تنظيف النص من المسافات الزائدة
+    processedText = processedText.trim().replace(/\s+/g, ' ');
+
+    return { text: processedText, images, links };
+  }
+
+  // دالة لتطبيق المعالجة على عنصر تعليق محدد
+  function processCommentElement(commentElement) {
+    const textElement = commentElement.querySelector('.comment-text');
+    if (!textElement) return;
+    
+    const originalText = textElement.textContent;
+    const processedContent = processCommentText(originalText);
+    
+    // تحديث النص المعالج
+    textElement.textContent = processedContent.text;
+    
+    // إنشاء عنصر محتوى إذا لم يكن موجوداً
+    let contentElement = commentElement.querySelector('.comment-content');
+    if (!contentElement) {
+      contentElement = document.createElement('div');
+      contentElement.className = 'comment-content';
+      textElement.parentNode.insertBefore(contentElement, textElement.nextSibling);
+      contentElement.appendChild(textElement);
+    }
+    
+    // إضافة الصور إذا وجدت
+    if (processedContent.images.length > 0) {
+      let imagesContainer = contentElement.querySelector('.comment-images');
+      if (!imagesContainer) {
+        imagesContainer = document.createElement('div');
+        imagesContainer.className = 'comment-images';
+        contentElement.appendChild(imagesContainer);
+      }
+      imagesContainer.innerHTML = '';
+      processedContent.images.forEach(img => {
+        const imgElement = document.createElement('img');
+        imgElement.src = img;
+        imgElement.className = 'comment-image';
+        imgElement.alt = 'صورة التعليق';
+        imagesContainer.appendChild(imgElement);
+      });
+    }
+    
+    // إضافة الروابط إذا وجدت
+    if (processedContent.links.length > 0) {
+      let linksContainer = contentElement.querySelector('.comment-links');
+      if (!linksContainer) {
+        linksContainer = document.createElement('div');
+        linksContainer.className = 'comment-links';
+        contentElement.appendChild(linksContainer);
+      }
+      linksContainer.innerHTML = '';
+      processedContent.links.forEach(link => {
+        const linkElement = document.createElement('a');
+        linkElement.href = link.url;
+        linkElement.target = '_blank';
+        linkElement.className = 'comment-link-btn';
+        linkElement.textContent = link.text;
+        linksContainer.appendChild(linkElement);
+      });
+    }
+  }
+
+  // دالة لتطبيق المعالجة على جميع التعليقات
+  function processAllComments() {
+    const comments = document.querySelectorAll('.comment-card, .reply-card');
+    comments.forEach(comment => {
+      processCommentElement(comment);
+    });
+  }
+
+  // مراقبة التغييرات في DOM لاكتشاف التعليقات الجديدة
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes.length) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) { // عنصر Element
+            if (node.classList && (node.classList.contains('comment-card') || node.classList.contains('reply-card'))) {
+              processCommentElement(node);
+            } else {
+              const comments = node.querySelectorAll('.comment-card, .reply-card');
+              comments.forEach(comment => {
+                processCommentElement(comment);
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+
+  // بدء المراقبة بعد تأكد تحميل DOM
+  setTimeout(function() {
+    // معالجة التعليقات الحالية
+    processAllComments();
+    
+    // بدء مراقبة التغييرات
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }, 1000);
+});
+</script>
 </body>
 </html>
