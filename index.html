@@ -346,7 +346,7 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw>تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw>تاريخ آخر تحديث للصفحة : 2025/08/26</sifaw><br>
-<sifaw>رمز آخر تعديل للصفحة : (09:25)-93</sifaw><br>
+<sifaw>رمز آخر تعديل للصفحة : (10:15)-94</sifaw><br>
 <sifaw>تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw>تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw>تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -390,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
       position: relative;
       margin-bottom: 10px;
     }
-    
     .comment-media {
       margin-top: 10px;
       display: flex;
@@ -402,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
       background-color: #1a202c;
       object-fit: contain;
     }
-    
     .media-style-1 { width: 100%; max-height: 300px; }
     .media-style-2 { width: 50%; max-height: 200px; align-self: flex-end; }
     .media-style-3 { width: 50%; max-height: 200px; align-self: center; }
@@ -411,7 +409,6 @@ document.addEventListener('DOMContentLoaded', function() {
     .media-style-6 { width: 30%; max-height: 150px; align-self: center; }
     .media-style-7 { width: 30%; max-height: 150px; align-self: flex-start; }
     .media-style-8 { width: 100%; max-height: 300px; border: 3px solid #4299e1; padding: 5px; }
-    
     .comment-links {
       display: flex;
       gap: 10px;
@@ -436,7 +433,6 @@ document.addEventListener('DOMContentLoaded', function() {
     .comment-link-btn:hover {
       background-color: #3182ce;
     }
-    
     .links-style-1 { justify-content: flex-end; }
     .links-style-2 { justify-content: center; }
     .links-style-3 { justify-content: flex-start; }
@@ -476,7 +472,6 @@ document.addEventListener('DOMContentLoaded', function() {
       background: none;
       color: #4299e1;
     }
-    
     .comment-media audio,
     .comment-media video {
       width: 100%;
@@ -491,8 +486,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const media = [];
     const links = [];
     
-    const mediaRegex = /\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|webp))\s*,\s*(\d)\]/gi;
-    let processedText = text.replace(mediaRegex, (match, url, ext, styleNum) => {
+    // استخراج الوسائط [رابط] - للصور والفيديو والصوت
+    const mediaRegex = /\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi;
+    let processedText = text.replace(mediaRegex, (match, url, ext) => {
+      const type = ext.match(/(mp4|m4a)/) ? 'video' : 
+                  ext.match(/(ogg|mp3|wav)/) ? 'audio' : 'image';
+      media.push({ 
+        url: url, 
+        type: type, 
+        style: 1 
+      });
+      return '';
+    });
+    
+    // استخراج الوسائط [رابط, رقم] - للصور فقط
+    const mediaWithStyleRegex = /\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif))\s*,\s*(\d)\]/gi;
+    processedText = processedText.replace(mediaWithStyleRegex, (match, url, ext, styleNum) => {
       media.push({ 
         url: url, 
         type: 'image', 
@@ -501,16 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
-    const generalMediaRegex = /\[(https?:\/\/[^\]]+\.(mp4|m4a|ogg|mp3|wav))\]/gi;
-    processedText = processedText.replace(generalMediaRegex, (match, url, ext) => {
-      media.push({ 
-        url: url, 
-        type: ext.match(/(mp4|m4a)/) ? 'video' : 'audio', 
-        style: 1 
-      });
-      return '';
-    });
-    
+    // استخراج الأزرار ['النص':'الرابط', رقم]
     const buttonRegex = /\['([^']+)':\s*'([^']+)'\s*,\s*(\d)\]/gi;
     processedText = processedText.replace(buttonRegex, (match, btnText, btnUrl, styleNum) => {
       links.push({ 
@@ -521,6 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
+    // استخراج الأزرار ['النص':'الرابط'] (بدون رقم - استخدام الوضع الافتراضي)
     const buttonDefaultRegex = /\['([^']+)':\s*'([^']+)'\s*\]/gi;
     processedText = processedText.replace(buttonDefaultRegex, (match, btnText, btnUrl) => {
       links.push({ 
@@ -531,7 +532,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return '';
     });
     
-    processedText = processedText.trim().replace(/\s+/g, ' ').replace(/\[\s*\]|''|\[\s*,\s*\d\]/g, '');
+    processedText = processedText.trim()
+      .replace(/\s+/g, ' ')
+      .replace(/\[\s*\]|''|\[\s*,\s*\d\]/g, '');
     
     return { text: processedText, media: media, links: links };
   }
@@ -579,13 +582,16 @@ document.addEventListener('DOMContentLoaded', function() {
       contentElement.appendChild(textElement);
     }
     
+    // إزالة أي وسائط موجودة مسبقاً لمنع التكرار
+    const existingMedia = contentElement.querySelector('.comment-media');
+    if (existingMedia) {
+      existingMedia.remove();
+    }
+    
+    // إضافة الوسائط إذا وجدت
     if (processed.media.length > 0) {
-      let mediaContainer = contentElement.querySelector('.comment-media');
-      if (!mediaContainer) {
-        mediaContainer = document.createElement('div');
-        mediaContainer.className = 'comment-media';
-        contentElement.appendChild(mediaContainer);
-      }
+      const mediaContainer = document.createElement('div');
+      mediaContainer.className = 'comment-media';
       
       processed.media.forEach(media => {
         const mediaElement = createMediaElement(media);
@@ -593,15 +599,20 @@ document.addEventListener('DOMContentLoaded', function() {
           mediaContainer.appendChild(mediaElement);
         }
       });
+      
+      contentElement.appendChild(mediaContainer);
     }
     
+    // إزالة أي روابط موجودة مسبقاً لمنع التكرار
+    const existingLinks = contentElement.querySelector('.comment-links');
+    if (existingLinks) {
+      existingLinks.remove();
+    }
+    
+    // إضافة الروابط إذا وجدت
     if (processed.links.length > 0) {
-      let linksContainer = contentElement.querySelector('.comment-links');
-      if (!linksContainer) {
-        linksContainer = document.createElement('div');
-        linksContainer.className = `comment-links links-style-${processed.links[0].style}`;
-        contentElement.appendChild(linksContainer);
-      }
+      const linksContainer = document.createElement('div');
+      linksContainer.className = `comment-links links-style-${processed.links[0].style}`;
       
       processed.links.forEach(link => {
         const linkElement = document.createElement('a');
@@ -610,6 +621,8 @@ document.addEventListener('DOMContentLoaded', function() {
         linkElement.textContent = link.text;
         linksContainer.appendChild(linkElement);
       });
+      
+      contentElement.appendChild(linksContainer);
     }
   }
 
@@ -653,9 +666,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function countTextWithoutMedia(text) {
     if (!text) return 0;
     
-    let cleanText = text.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|webp))\s*,\s*\d\]/gi, '');
+    let cleanText = text.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif|mp4|m4a|ogg|mp3|wav))\]/gi, '');
     
-    cleanText = cleanText.replace(/\[(https?:\/\/[^\]]+\.(mp4|m4a|ogg|mp3|wav))\]/gi, '');
+    cleanText = cleanText.replace(/\[(https?:\/\/[^\]]+\.(png|jpg|jpeg|gif))\s*,\s*\d\]/gi, '');
     
     cleanText = cleanText.replace(/\['([^']+)':\s*'([^']+)'\s*,\s*\d\]/gi, '');
     
