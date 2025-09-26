@@ -95,13 +95,6 @@ document.getElementById("downloadBtn").addEventListener("click",function(){
 });
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // جلب قيمة التقييم من span
-  let ratingValue = document.querySelector(".average-rating-value").textContent.trim();
-  document.getElementById("ratings").textContent = `[ التقييم: ${ratingValue} ]`;
-});
-</script>
-<script>
 const ua = navigator.userAgent.toLowerCase(); if (ua.includes('fbav') || ua.includes('instagram') || ua.includes('telegram')) { const warning = document.createElement('div');
 warning.style.backgroundColor = '#ffdddd';
 warning.style.color = '#b30000';
@@ -749,6 +742,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 })();
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // جلب قيمة التقييم من span
+  let ratingValue = document.querySelector(".average-rating-value").textContent.trim();
+  document.getElementById("ratings").textContent = `[ التقييم: ${ratingValue} ]`;
+});
 </script>
 
 </body>
