@@ -54,6 +54,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 </div>
 <div style="background-color: #333333; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
+<span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>
 <span id="size" style="margin-right: 20px;">[ 28MB ]</span>
 <span id="version" style="margin-right: 20px;">[ v2.5 ]</span>
 <span id="date" style="margin-right: 20px;">[ 2025/07/04 ]</span>
@@ -63,6 +64,8 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <div id="tip-toast" style="align-items: center; background: rgb(46, 46, 46); border-radius: 10px; box-shadow: rgb(0, 0, 0) 0px 0px 10px; color: white; display: flex; font-size: 13px; gap: 10px; max-width: 320px; opacity: 0; padding: 10px 15px; position: fixed; right: 20px; top: 20px; transform: translateY(-150%); transition: transform 0.4s, opacity 0.4s; z-index: 9999;"><i class="fa-solid fa-circle-info" id="tip-icon" style="font-size: 16px;"></i><span id="tip-text"></span></div><style>#counter,#tip-size,#tip-version,#tip-date,#tip-platform,#tip-author{cursor:pointer;outline:none;user-select:none}</style><script>const tips={downloads:
 ["fa-chart-column","عدد مرات الضغط على زر التحميل ."],
+"ratings":
+["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 "size":
 ["fa-box-archive","حجم التطبيق الكامل قبل التثبيت (28.8MB) ."],
 "version":
@@ -89,6 +92,13 @@ document.getElementById("downloadBtn").addEventListener("click",function(){
   const t=document.getElementById("toastMessage");
   t.style.bottom="30px";
   setTimeout(()=>{t.style.bottom="-100px"},8500);
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // جلب قيمة التقييم من span
+  let ratingValue = document.querySelector(".average-rating-value").textContent.trim();
+  document.getElementById("ratings").textContent = `[ التقييم: ${ratingValue} ]`;
 });
 </script>
 <script>
@@ -345,8 +355,8 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/08/31</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:27)-98</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/09/26</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:35)-99</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
