@@ -349,7 +349,7 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/09/26</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:35)-99</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:44)-101</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -744,11 +744,92 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // جلب قيمة التقييم من span
-  let ratingValue = document.querySelector(".average-rating-value").textContent.trim();
-  document.getElementById("ratings").textContent = `[ التقييم: ${ratingValue} ]`;
-});
+(function() {
+  const containerSelector = '.average-rating';
+  const displayEl = document.getElementById('ratings');
+  if (!displayEl) return; // اذا لم يوجد عنصر العرض لا تابع
+
+  let lastText = null;
+  // تقرأ القيمة والعدد من العنصر وتحدّث العنصر المعروض
+  function readAndUpdate(container) {
+    if (!container) return false;
+
+    const valueSpan = container.querySelector('.average-rating-value');
+    // نأخذ آخر span غير span للقيمة (هو مكان "(0 تقييمات)" في المثال)
+    const spans = Array.from(container.querySelectorAll('span'));
+    const countSpan = spans.find(s => !s.classList.contains('average-rating-value')) || null;
+
+    const rawValue = valueSpan ? valueSpan.textContent.trim() : '';
+    const rawCount = countSpan ? countSpan.textContent.trim() : '';
+
+    // استخراج أول رقم (مثل 4.5 أو 0.0) وتحويل الفاصلة إن لزم
+    const valueMatch = rawValue.match(/[\d.,]+/);
+    let value = valueMatch ? valueMatch[0].replace(',', '.') : (rawValue || '0.0');
+
+    // استخراج العدد من النص (مثل 23 من "(23 تقييمات)")
+    let count = '';
+    const countMatch = rawCount.match(/[\d,]+/);
+    if (countMatch) {
+      count = countMatch[0].replace(',', '');
+    }
+
+    // تكوين النص المعروض
+    const displayText = count ? `[ التقييم: ${value} — (${count} تقييم) ]` : `[ التقييم: ${value} ]`;
+
+    if (displayText !== lastText) {
+      displayEl.textContent = displayText;
+      lastText = displayText;
+    }
+    return true;
+  }
+
+  // مراقب للتغييرات داخل العنصر
+  let mo = null;
+  function observeContainer(container) {
+    if (!container) return;
+    if (mo) mo.disconnect();
+    mo = new MutationObserver(() => readAndUpdate(container));
+    mo.observe(container, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['class', 'data-value']
+    });
+  }
+
+  // poll حتى يظهر العنصر اذا لم يكن موجوداً فوراً (يحاول كل 300ms)
+  let pollingInterval = null;
+  function startPolling() {
+    if (pollingInterval) return;
+    pollingInterval = setInterval(() => {
+      const container = document.querySelector(containerSelector);
+      if (container) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+        readAndUpdate(container);
+        observeContainer(container);
+      }
+    }, 300);
+  }
+
+  // ابدأ عمل السكربت بعد DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector(containerSelector);
+    if (container) {
+      readAndUpdate(container);
+      observeContainer(container);
+    } else {
+      startPolling();
+    }
+  });
+
+  // دالة يدوية للاستخدام إن رغبت باستدعائها من كود آخر
+  window.updateRatingsFromAverage = function() {
+    const c = document.querySelector(containerSelector);
+    if (c) readAndUpdate(c);
+  };
+})();
 </script>
 
 </body>
