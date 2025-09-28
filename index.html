@@ -53,8 +53,8 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 </div>
 </div>
 <div style="background-color: #333333; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
-<span id="downloads" style="margin-right: 20px;">[ <i class="fa-chart-column" aria-hidden="true"></i> 0 ]</span>
-<span id="ratings" style="margin-right: 20px;">[ <i class="fas fa-star" aria-hidden="true"></i> 0.0 ]</span>
+<span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
+<span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>
 <span id="size" style="margin-right: 20px;">[ 28MB ]</span>
 <span id="version" style="margin-right: 20px;">[ v2.5 ]</span>
 <span id="date" style="margin-right: 20px;">[ 2025/07/04 ]</span>
@@ -65,7 +65,8 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <div id="tip-toast" style="align-items: center; background: rgb(46, 46, 46); border-radius: 10px; box-shadow: rgb(0, 0, 0) 0px 0px 10px; color: white; display: flex; font-size: 13px; gap: 10px; max-width: 320px; opacity: 0; padding: 10px 15px; position: fixed; right: 20px; top: 20px; transform: translateY(-150%); transition: transform 0.4s, opacity 0.4s; z-index: 9999;"><i class="fa-solid fa-circle-info" id="tip-icon" style="font-size: 16px;"></i><span id="tip-text"></span></div><style>#counter,#tip-size,#tip-version,#tip-date,#tip-platform,#tip-author{cursor:pointer;outline:none;user-select:none}</style><script>const tips={downloads:
 ["fa-chart-column","عدد مرات الضغط على زر التحميل ."],
 "ratings":
-["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                           "size":
+["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+"size":
 ["fa-box-archive","حجم التطبيق الكامل قبل التثبيت (28.8MB) ."],
 "version":
 ["fa-code-branch","رقم آخر إصدار للتطبيق (2.5) ."],
@@ -111,7 +112,7 @@ function startDownload(event) {const btn = event.currentTarget;btn.innerHTML = '
 const style = document.createElement('style');style.textContent = `@keyframes spin {0% { transform: rotate(0deg); }100% { transform: rotate(360deg); }}a:focus {outline: none !important;box-shadow: none !important;}`;document.head.appendChild(style);
 </script>
 <script>
-(function(){const a=document.getElementById("downloads"),b=document.getElementById("downloadBtn"),c="683f23508960c979a5a4d239",d="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";async function e(){try{const f=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),g=await f.json(),h=g.record.count||0;a.textContent=`[ <i class="fa-chart-column" aria-hidden="true"></i> ${h} ]`}catch(i){a.textContent="[ <i class="fa-chart-column" aria-hidden="true"></i> التحميلات غير متوفرة ]",console.error(i)}}async function j(){try{if(sessionStorage.getItem("alreadyDownloaded"))return;const k=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),l=await k.json();let m=l.record.count||0;m++;await fetch(`https://api.jsonbin.io/v3/b/${c}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":d,"X-Bin-Versioning":"false"},body:JSON.stringify({count:m})});a.textContent=`[ <i class="fa-chart-column" aria-hidden="true"></i> ${m} ]`;sessionStorage.setItem("alreadyDownloaded","true")}catch(n){alert("[ فشل تحديث عدد التحميلات ]"),console.error(n)}}e(),b.addEventListener("click",j)})();
+(function(){const a=document.getElementById("downloads"),b=document.getElementById("downloadBtn"),c="683f23508960c979a5a4d239",d="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";async function e(){try{const f=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),g=await f.json(),h=g.record.count||0;a.textContent=`[ التحميلات: ${h} ]`}catch(i){a.textContent="[ التحميلات: غير متوفرة ]",console.error(i)}}async function j(){try{if(sessionStorage.getItem("alreadyDownloaded"))return;const k=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),l=await k.json();let m=l.record.count||0;m++;await fetch(`https://api.jsonbin.io/v3/b/${c}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":d,"X-Bin-Versioning":"false"},body:JSON.stringify({count:m})});a.textContent=`[ التحميلات: ${m} ]`;sessionStorage.setItem("alreadyDownloaded","true")}catch(n){alert("[ فشل تحديث عدد التحميلات ]"),console.error(n)}}e(),b.addEventListener("click",j)})();
 </script>
 <txt style="color:#00F500">لقطات من التطبيق :</txt>
 <style>
@@ -347,8 +348,8 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/09/28</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (01:02)-103</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/09/26</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:47)-102</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -773,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تكوين النص المعروض
-    const displayText = count ? `[ <i class="fas fa-star" aria-hidden="true"></i> ${value} (${count}) ]` : `[ <i class="fas fa-star" aria-hidden="true"></i> ${value} ]`;
+    const displayText = count ? `[ التقييم: ${value} (${count}) ]` : `[ التقييم: ${value} ]`;
 
     if (displayText !== lastText) {
       displayEl.textContent = displayText;
