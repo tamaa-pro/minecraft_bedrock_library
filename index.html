@@ -14,6 +14,18 @@
 <script>
 !function(){const e=new Date('2026-01-01T00:00:00+01:00');function t(){fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca').then(t=>t.json()).then(t=>{new Date(t.datetime)>=e&&(window.location.replace('about:blank'),document.body.innerHTML='')}).catch(()=>{new Date>=e&&window.location.replace('about:blank')})}setInterval(t,1e3),window.onload=t}();
 </script>
+<script>
+(function(){
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  if (/FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua)) {
+    const url = window.location.href;
+    window.location.href = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
+    setTimeout(() => {
+      window.open(url, "_system") || window.open(url, "_blank");
+    }, 1000);
+  }
+})();
+</script>
 <style>
 html, body {margin: 0;padding: 0;background-color: #444444;color: white;font-family: sans-serif;overflow-y: auto;}
 .container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #444444;border-radius: 15px;box-shadow: 0 0 10px #000;}
@@ -348,8 +360,8 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/09/26</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (05:47)-102</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/10/20</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (14:20)-103</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -747,33 +759,28 @@ document.addEventListener('DOMContentLoaded', function() {
 (function() {
   const containerSelector = '.average-rating';
   const displayEl = document.getElementById('ratings');
-  if (!displayEl) return; // اذا لم يوجد عنصر العرض لا تابع
+  if (!displayEl) return; 
 
   let lastText = null;
-  // تقرأ القيمة والعدد من العنصر وتحدّث العنصر المعروض
   function readAndUpdate(container) {
     if (!container) return false;
 
     const valueSpan = container.querySelector('.average-rating-value');
-    // نأخذ آخر span غير span للقيمة (هو مكان "(0 تقييمات)" في المثال)
+  
     const spans = Array.from(container.querySelectorAll('span'));
     const countSpan = spans.find(s => !s.classList.contains('average-rating-value')) || null;
 
     const rawValue = valueSpan ? valueSpan.textContent.trim() : '';
     const rawCount = countSpan ? countSpan.textContent.trim() : '';
-
-    // استخراج أول رقم (مثل 4.5 أو 0.0) وتحويل الفاصلة إن لزم
     const valueMatch = rawValue.match(/[\d.,]+/);
     let value = valueMatch ? valueMatch[0].replace(',', '.') : (rawValue || '0.0');
 
-    // استخراج العدد من النص (مثل 23 من "(23 تقييمات)")
     let count = '';
     const countMatch = rawCount.match(/[\d,]+/);
     if (countMatch) {
       count = countMatch[0].replace(',', '');
     }
 
-    // تكوين النص المعروض
     const displayText = count ? `[ التقييم: ${value} (${count}) ]` : `[ التقييم: ${value} ]`;
 
     if (displayText !== lastText) {
@@ -782,8 +789,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return true;
   }
-
-  // مراقب للتغييرات داخل العنصر
+  
   let mo = null;
   function observeContainer(container) {
     if (!container) return;
@@ -798,7 +804,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // poll حتى يظهر العنصر اذا لم يكن موجوداً فوراً (يحاول كل 300ms)
   let pollingInterval = null;
   function startPolling() {
     if (pollingInterval) return;
@@ -813,7 +818,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 300);
   }
 
-  // ابدأ عمل السكربت بعد DOMContentLoaded
   document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector(containerSelector);
     if (container) {
@@ -823,8 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
       startPolling();
     }
   });
-
-  // دالة يدوية للاستخدام إن رغبت باستدعائها من كود آخر
+  
   window.updateRatingsFromAverage = function() {
     const c = document.querySelector(containerSelector);
     if (c) readAndUpdate(c);
