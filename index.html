@@ -67,9 +67,9 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <div style="background-color: #333333; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
 <span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>
-<span id="size" style="margin-right: 20px;">[ 28MB ]</span>
-<span id="version" style="margin-right: 20px;">[ v2.5 ]</span>
-<span id="date" style="margin-right: 20px;">[ 2025/07/04 ]</span>
+<span id="size" style="margin-right: 20px;">[ 30MB ]</span>
+<span id="version" style="margin-right: 20px;">[ v2.6 ]</span>
+<span id="date" style="margin-right: 20px;">[ 2025/10/27 ]</span>
 <span id="platform" style="margin-right: 20px;">[ Android ]</span>
 <span id="author" style="margin-right: 20px;"></span>
 </div>
@@ -77,21 +77,20 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <div id="tip-toast" style="align-items: center; background: rgb(46, 46, 46); border-radius: 10px; box-shadow: rgb(0, 0, 0) 0px 0px 10px; color: white; display: flex; font-size: 13px; gap: 10px; max-width: 320px; opacity: 0; padding: 10px 15px; position: fixed; right: 20px; top: 20px; transform: translateY(-150%); transition: transform 0.4s, opacity 0.4s; z-index: 9999;"><i class="fa-solid fa-circle-info" id="tip-icon" style="font-size: 16px;"></i><span id="tip-text"></span></div><style>#counter,#tip-size,#tip-version,#tip-date,#tip-platform,#tip-author{cursor:pointer;outline:none;user-select:none}</style><script>const tips={downloads:
 ["fa-chart-column","عدد مرات الضغط على زر التحميل ."],
 "ratings":
-["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-"size":
-["fa-box-archive","حجم التطبيق الكامل قبل التثبيت (28.8MB) ."],
+["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                           "size":
+["fa-box-archive","حجم التطبيق الكامل قبل التثبيت (30.66MB) ."],
 "version":
-["fa-code-branch","رقم آخر إصدار للتطبيق (2.5) ."],
+["fa-code-branch","رقم آخر إصدار للتطبيق (2.6) ."],
 "date":
 ["fa-calendar-days",
-"تاريخ نشر هذا الإصدار (2025/07/04) ."],
+"تاريخ نشر هذا الإصدار (2025/10/27) ."],
 "platform":
 ["fab fa-android","نظام التشغيل المدعوم: أندرويد فقط ."],
 "author":
 ["fa-user-gear","صاحب التطبيق و أحد أعضاء الأستوديو ."]
 };let isShowing=!1,pendingTip=null;for(const id in tips){const el=document.getElementById(id);el&&el.addEventListener("click",e=>{e.stopPropagation(),isShowing?(pendingTip=tips[id],hideTip(!0)):showTip(...tips[id])})}function showTip(e,t){const i=document.getElementById("tip-toast"),n=document.getElementById("tip-icon"),o=document.getElementById("tip-text");n.className=e.includes("fab")?`fab ${e.split(" ")[1]}`:`fa-solid ${e}`,o.textContent=t,i.style.display="flex",requestAnimationFrame(()=>{i.style.opacity="1",i.style.transform="translateY(0)",isShowing=!0}),clearTimeout(window.toastTimer),window.toastTimer=setTimeout(()=>hideTip(!1),4e3)}function hideTip(e){const t=document.getElementById("tip-toast");t.style.opacity="0",t.style.transform="translateY(-150%)",isShowing=!1,clearTimeout(window.toastTimer),setTimeout(()=>{t.style.display="none",e&&pendingTip&&(showTip(...pendingTip),pendingTip=null)},400)}document.addEventListener("click",()=>{isShowing&&hideTip(!1)});</script>
 <div style="margin: 20px auto; padding: 0px 10px; text-align: center;">
-<a href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.5/library.apk" id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
+<a href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk" id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
 <style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
 <div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
@@ -360,9 +359,9 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/10/20</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (22:14)-104</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.5) : 2025/07/04</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/10/27</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (08:15)-105</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول (نسخة البيتا) : 2024/01/07</sifaw><br>
