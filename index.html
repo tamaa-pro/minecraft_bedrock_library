@@ -27,8 +27,8 @@
 })();
 </script>
 <style>
-html, body {margin: 0;padding: 0;background-color: #444444;color: white;font-family: sans-serif;overflow-y: auto;}
-.container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #444444;border-radius: 15px;box-shadow: 0 0 10px #000;}
+html, body {margin: 0;padding: 0;background-color: #333;color: white;font-family: sans-serif;overflow-y: auto;}
+.container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #444;border-radius: 15px;box-shadow: 0 0 10px #000;}
 a, h2, p, span {color: white;text-decoration: none;}
 </style>
 </head>
@@ -54,7 +54,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <a class="btn" href="stats/" style="display: inline-block;background: #222;padding: 3px 5px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
 <i class="fas fa-chart-line" style="color: #007bff;font-size: 15px;transition: color 0.3s ease;"></i>
 </a>
-<div style="background-color: #444444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 10px;">
+<div style="background-color: #444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 10px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
 <div style="background: #000; border-radius: 15px; height: 80px; width: 80px; display: flex; align-items: center; justify-content: center;">
 <img alt="أيقونة التطبيق" src="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_icon.png" style="border-radius: 15px; height: 80px; width: 80px; object-fit: cover; display: block;" loading="eager" />
@@ -64,7 +64,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <p style="color: #cccccc; font-size: 14px; margin: 3px 0px;">TAMAA PRO STUDIO</p>
 </div>
 </div>
-<div style="background-color: #333333; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
+<div style="background-color: #222; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
 <span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>
 <span id="size" style="margin-right: 20px;">[ 30MB ]</span>
@@ -360,7 +360,7 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/09</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (06:15)-106</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (20:57)-107</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -836,7 +836,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 const style = document.createElement('style');
 style.textContent = `
-    * {
+    {
         -webkit-tap-highlight-color: transparent !important;
         -webkit-touch-callout: none !important;
     }
