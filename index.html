@@ -359,8 +359,8 @@ const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UP
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/09</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (20:57)-107</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/14</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (20:23)-108</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -836,7 +836,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 const style = document.createElement('style');
 style.textContent = `
-    {
+    *{
         -webkit-tap-highlight-color: transparent !important;
         -webkit-touch-callout: none !important;
     }
@@ -859,10 +859,8 @@ style.textContent = `
     input[type="submit"]:active, 
     input[type="button"]:active,
     .btn:active, 
-    .button-class:active,
-    .downloadBtn:active,
-    .add-comment-btn:active
-    
+    .button-class:active
+
     {
         transform: translateY(2px) !important;
     }
