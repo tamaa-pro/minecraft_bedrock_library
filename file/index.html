@@ -24,15 +24,34 @@
   /* أيقونة الوسط */
   .icon-box{display:flex;justify-content:center;align-items:center}
   .icon-box img{width:100px;height:100px;border-radius:5px;object-fit:cover}
+  .icon-box img{
+  pointer-events:none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  touch-action:none;
+  }
   /* صندوق المعلومات */
   .info-box{
-    background:#222;border-radius:8px;padding:10px;margin:10px 0;
-    color:#ccc;font-size:13px;
-    min-height:70px;display:flex;align-items:center;justify-content:center;
-  }
-  /* محتوى معلومات الملف (يظهر بعد التحميل) */
-  .info-inner{display:none;width: auto}
-  .info-row{display:flex;justify-content:space-between;align-items:center;padding:4px}
+  background:#222;
+  border-radius:8px;
+  padding:10px;
+  margin:10px 0;
+  color:#ccc;
+  font-size:13px;
+  min-height:70px;
+}
+
+.info-inner{
+  display:none;
+  width:100%;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:2px 0;
+}
   .info-label{color:#aaa;min-width:30px;text-align:right}
   .info-value{color:#fff;flex:1;text-align:left;word-break:break-all}
   /* زر التحميل — لا تغير اللون الافتراضي (أخضر) */
@@ -53,6 +72,11 @@
     transition:.12s;
     cursor:pointer;
     border:0;
+  }
+  #downloadBtn{
+  -webkit-user-drag: none;
+  user-drag: none;
+  touch-action:none;
   }
   /* حالات الزر */
   #downloadBtn.disabled{background:#555;color:#222;pointer-events:none}
@@ -78,6 +102,10 @@
   #tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;cursor:pointer}
 </style>
 </head>
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+</script>
 <body>
   <div id="downloadSuggestion">
     إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات <br>
