@@ -1,83 +1,241 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>صفحة التحميل</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-body{margin:0;background:#000;font-family:"Tajawal",sans-serif;user-select:none;touch-action:none}
-.container{max-width:400px;margin:15px auto;background:#333;padding:10px;border-radius:8px}
-.icon-box{display:flex;justify-content:center;margin-top:5px}
-.icon-box img{width:100px;height:100px;border-radius:5px}
-.info-box{background:#222;border-radius:8px;padding:10px;margin:10px 0}
-#downloadBtn{display:block;width:auto;padding:12px;background:#00FF00;color:#000;text-align:center;font-weight:bold;border-radius:8px;text-decoration:none;font-size:14px;transition:.2s}
-#downloadBtn.disabled{background:#555;color:#222;pointer-events:none}
-#downloadBtn.error{background:#8B0000;color:#fff;pointer-events:none}
-.loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite;display:inline-block}
-@keyframes spin{to{transform:rotate(360deg)}}
-#downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:11px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
-.bottom-notes{position:fixed;bottom:0;left:0;right:0;background:#111;color:#ccc;padding:10px;font-size:9px;line-height:1.6;border-top:1px solid #333;z-index:999}
-.toggle-btn{position:fixed;padding:3px 6px;background:#333;color:#ccc;font-size:10px;border:none;z-index:2000}
-#toggleSuggestionBtn{right:0;top:0}
-#toggleNotesBtn{right:0;bottom:0}
+  :root{--card-bg:#333;--info-bg:#222;--green:#00FF00;--red:#8B0000;--gray:#555}
+  html,body{height:100%;margin:0;background:#000;font-family:"Tajawal",sans-serif;user-select:none;touch-action:none}
+  /* صفحة مركزية مع حواف جانبية 15px */
+  .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0 15px;box-sizing:border-box}
+  .container{width:100%;max-width:400px;background:var(--card-bg);padding:10px;border-radius:8px;box-sizing:border-box}
+  .icon-box{display:flex;justify-content:center}
+  .icon-box img{width:100px;height:100px;border-radius:5px;object-fit:cover}
+  .info-box{background:var(--info-bg);border-radius:8px;padding:10px;margin:10px 0;min-height:64px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;position:relative}
+  /* محتوًى المعلومات بعد ظهورها */
+  .info-lines{display:none;width:100%}
+  .info-row{display:flex;gap:8px;align-items:center;color:#ccc;font-size:13px;padding:3px 0}
+  .info-row b{color:#fff;min-width:80px;text-align:left}
+  /* رمز التحميل (القطة) قبل عرض المعلومات */
+  .loading-cat{font-size:20px;animation:jump 0.8s ease-in-out infinite;display:inline-block}
+  @keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  /* دائرة التحميل المستخدمة عند الضغط - محاذاة عمودية صحيحة */
+  .loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite;display:inline-block;vertical-align:middle;margin-inline-start:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  /* زر التحميل */
+  #downloadBtn{display:inline-block;width:auto;padding:12px;background:var(--green);color:#000;text-align:center;font-weight:bold;border-radius:8px;text-decoration:none;font-size:14px;transition:.15s;border:none;cursor:pointer}
+  #downloadBtn.full{width:100%}
+  #downloadBtn.disabled{background:var(--gray);color:#222;pointer-events:none;cursor:default}
+  #downloadBtn.error{background:var(--red);color:#fff;pointer-events:none;cursor:default}
+  /* الرابط التجريبي */
+  #tryAnywayLink{text-align:center;margin-top:8px}
+  #tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;display:inline-flex;align-items:center;gap:6px}
+  /* صناديق أعلى وأسفل */
+  #downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:11px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
+  .bottom-notes{position:fixed;bottom:0;left:0;right:0;background:#111;color:#ccc;padding:10px;font-size:9px;line-height:1.6;border-top:1px solid #333;z-index:999}
+  .toggle-btn{position:fixed;padding:3px 6px;background:#333;color:#ccc;font-size:10px;border:none;z-index:2000;cursor:pointer}
+  #toggleSuggestionBtn{right:0;top:0}
+  #toggleNotesBtn{right:0;bottom:0}
+  /* ضبط محاذاة نص داخل الأزرار عند وجود الدائرة */
+  .with-loader{display:inline-flex;align-items:center;justify-content:center;gap:8px}
 </style>
 </head>
 <body>
-<div id="downloadSuggestion">
-إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات
-<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
-</div>
-<button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
-<button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
-<div class="container">
-<div class="icon-box"><img src="https://d.top4top.io/p_3585efanh1.jpg"></div>
-<div class="info-box" id="infoBox">
-<div id="fileName" style="color:#fff;font-size:14px;margin-bottom:6px">جاري استخراج اسم الملف...</div>
-<div id="fileSize" style="color:#ccc;font-size:12px">جاري حساب حجم الملف...</div>
-</div>
-<a id="downloadBtn" href="#">تحميل الملف</a>
-<div id="tryAnywayLink" style="display:none;text-align:center;margin-top:8px">
-<a href="#" style="color:#ccc;font-size:12px;text-decoration:underline">تجربة الرابط على أي حال؟</a>
-</div>
-</div>
-<div class="bottom-notes" id="notesBox">
-<b>
-● ظهور خطأ 404 يعني أن الملف غير منشور بعد أو أن رابط التحميل خاطئ.<br>
-● إذا لم يستجب زر التحميل فحدّث الصفحة أو تأكد من الشبكة.<br>
-● إذا ظهر أن الرابط غير صالح فهذا يعني عدم وجود رابط ملف.<br>
-● الانقطاع المتكرر في التحميل قد يؤدي لتلف الملف.<br>
-● إذا كان لديك إصدار مثبت مسبقاً فاحذفه قبل تثبيت النسخة الجديدة.
-</b>
-</div>
+  <div id="downloadSuggestion">
+    إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات
+    <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
+  </div>
+
+  <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+  <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
+
+  <div class="page">
+    <div class="container" role="main" aria-label="بطاقة التحميل">
+      <div class="icon-box">
+        <img id="appIcon" src="https://d.top4top.io/p_3585efanh1.jpg" alt="أيقونة" />
+      </div>
+
+      <div class="info-box" id="infoBox" aria-live="polite">
+        <!-- عرض القطة القافزة أولاً ثم يتم استبداله بالمعلومات -->
+        <div id="preloader" style="text-align:center">
+          <div class="loading-cat">🐈‍⬛</div>
+        </div>
+
+        <!-- هنا تظهر المعلومات بعد التأخير -->
+        <div class="info-lines" id="infoLines" style="flex-direction:column">
+          <div class="info-row"><b>اسم الملف :</b><span id="fileName" style="color:#fff"></span></div>
+          <div class="info-row"><b>حجم الملف :</b><span id="fileSize"></span></div>
+          <div class="info-row"><b>مصدر الملف :</b><span id="fileSource"></span></div>
+        </div>
+      </div>
+
+      <!-- زر التحميل بعرض 100% داخل البطاقة -->
+      <a id="downloadBtn" class="full" href="#" role="button" aria-disabled="false">تحميل الملف</a>
+
+      <!-- يظهر فقط عند فشل التحقق (عدم وجود رد شبكي) -->
+      <div id="tryAnywayLink" style="display:none;text-align:center;margin-top:8px">
+        <a href="#" id="tryLinkAnchor"><span id="tryLoaderPlaceholder"></span>تجربة الرابط على أي حال؟</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-notes" id="notesBox">
+    <b>
+      ● ظهور خطأ 404 يعني أن الملف غير منشور بعد أو أن رابط التحميل خاطئ.<br>
+      ● إذا لم يستجب زر التحميل فحدّث الصفحة أو تأكد من الشبكة.<br>
+      ● إذا ظهر أن الرابط غير صالح فهذا يعني عدم وجود رابط ملف.<br>
+      ● الانقطاع المتكرر في التحميل قد يؤدي لتلف الملف.<br>
+      ● إذا كان لديك إصدار مثبت مسبقاً فاحذفه قبل تثبيت النسخة الجديدة.
+    </b>
+  </div>
+
 <script>
-const btn=document.getElementById("downloadBtn");
-const fileNameBox=document.getElementById("fileName");
-const fileSizeBox=document.getElementById("fileSize");
-let raw=url=location.search.replace("?","");
-if(!raw||!raw.startsWith("http")){
-btn.classList.add("disabled");
-fileNameBox.textContent="⚠️ رابط غير صالح";
-fileSizeBox.textContent="—";
-}else{
-if(raw.endsWith("/"))raw=raw.slice(0,-1);
-const fileUrl=raw;
-fileNameBox.textContent=fileUrl.split("/").pop();
-async function checkExists(u){try{let r=await fetch("https://corsproxy.io/?"+encodeURIComponent(u),{method:"HEAD"});return r;}catch{return null;}}
-checkExists(fileUrl).then(async r=>{
-if(!r||!r.ok){btn.classList.add("error");btn.textContent="الملف غير متاح";fileSizeBox.textContent="⚠️ الملف غير موجود";return;}
-let size=r.headers.get("content-length");
-fileSizeBox.textContent=size? (Math.round(size/1024/1024*10)/10)+" MB" : "غير متوفر";
-btn.onclick=e=>{e.preventDefault();btn.innerHTML='<span class="loading-circle"></span> جاري التحميل';btn.style.background="#0c0";setTimeout(()=>location.href=fileUrl,400);};
-});
-const tryLink=document.getElementById("tryAnywayLink");
-tryLink.querySelector("a").onclick=e=>{e.preventDefault();tryLink.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';setTimeout(()=>location.href=fileUrl,400);} 
-tryLink.style.display="block";
-}
-const sug=document.getElementById("downloadSuggestion"),notes=document.getElementById("notesBox");
-document.getElementById("toggleSuggestionBtn").onclick=()=>{sug.style.display=sug.style.display==="none"?"block":"none"};
-document.getElementById("toggleNotesBtn").onclick=()=>{notes.style.display=notes.style.display==="none"?"block":"none"};
-setTimeout(()=>sug.style.display="none",6000);
-setTimeout(()=>notes.style.display="none",6000);
+  // عناصر
+  const btn = document.getElementById("downloadBtn");
+  const fileNameEl = document.getElementById("fileName");
+  const fileSizeEl = document.getElementById("fileSize");
+  const fileSourceEl = document.getElementById("fileSource");
+  const tryAnywayDiv = document.getElementById("tryAnywayLink");
+  const tryAnchor = document.getElementById("tryLinkAnchor");
+  const preloader = document.getElementById("preloader");
+  const infoLines = document.getElementById("infoLines");
+  const infoBox = document.getElementById("infoBox");
+
+  // استخراج "الرابط الكامل" من شكل الصفحة الجديد: /file?رابط_الملف/
+  // المستخدم أشار أن كل شيء بعد ? هو الرابط، مع الحفاظ على الشرطة النهائية /
+  let raw = location.search.replace("?", "");
+  // حالة عدم وجود رابط
+  if (!raw || !raw.startsWith("http")) {
+    // رابط غير صالح: زر رمادي
+    btn.classList.add("disabled");
+    btn.setAttribute("aria-disabled", "true");
+    fileNameEl.textContent = "⚠️ رابط غير صالح";
+    fileSizeEl.textContent = "—";
+    fileSourceEl.textContent = "—";
+    // إخفاء القطة وإظهار المعلومات الفارغة فوراً
+    showInfoImmediate();
+  } else {
+    // إزالة الشرطة الأخيرة إن وُجدت لكن انتبه: المستخدم أكد أن الشرطة مهمة، هنا نزيلها فقط لمنع مشكلة في استخراج الاسم
+    if (raw.endsWith("/")) raw = raw.slice(0, -1);
+    const fileUrl = raw;
+
+    // استخراج اسم الملف بدون الامتداد
+    const rawName = fileUrl.split("/").pop() || "";
+    const nameNoExt = rawName.includes(".") ? rawName.slice(0, rawName.lastIndexOf(".")) : rawName;
+
+    // مؤقت عشوائي بين 1 و 4 ثواني لعرض القطة ثم المعلومات
+    const delay = Math.floor(Math.random() * 3000) + 1000;
+
+    // عرض القطة ثم إظهار المعلومات بعد التأخير
+    setTimeout(() => {
+      showInfo(nameNoExt, fileUrl);
+    }, delay);
+
+    // دالة لفحص وجود الملف عبر بروكسي CORS (HEAD)
+    async function checkExists(u) {
+      try {
+        const res = await fetch("https://corsproxy.io/?" + encodeURIComponent(u), { method: "HEAD" });
+        return res; // قد يكون status 200 أو 404, إلخ
+      } catch (err) {
+        return null; // عدم استقبال رد (خطأ شبكي)
+      }
+    }
+
+    // عند النقر على زر التحميل (قبل أو بعد الفحص) نريد سلوك تحميل مماثل
+    function attachDownloadAction(url) {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        // وضع دائرة التحميل بجانب النص ومحاذاتها عمودياً
+        btn.innerHTML = '<span class="loading-circle" aria-hidden="true"></span><span>جاري التحميل</span>';
+        btn.style.background = "#0c0";
+        // تأخير بسيط قبل الانتقال
+        setTimeout(() => location.href = url, 400);
+      };
+      // نجعل الزر بعرض كامل كما طلبت
+      btn.classList.add("full");
+      btn.setAttribute("aria-disabled", "false");
+    }
+
+    // تنفيذ فحص
+    checkExists(fileUrl).then(res => {
+      if (res === null) {
+        // لم نتلق رد - مشكلة شبكية: لا نمنع الزر، لكن نظهر رابط "جرب على أي حال"
+        fileNameEl.textContent = nameNoExt || "غير معروف";
+        fileSizeEl.textContent = "—";
+        fileSourceEl.textContent = getSiteName(fileUrl) || "—";
+        // عرض رابط التجربة فقط في هذه الحالة
+        tryAnywayDiv.style.display = "block";
+        tryAnchor.onclick = (e) => {
+          e.preventDefault();
+          tryAnchor.innerHTML = '<span class="loading-circle" aria-hidden="true"></span>جارٍ الفتح...';
+          setTimeout(() => location.href = fileUrl, 400);
+        };
+        // إرفاق سلوك التحميل في الزر أيضاً (حتى لو الفحص فشل)
+        attachDownloadAction(fileUrl);
+      } else if (!res.ok) {
+        // تَلقى رد لكنه غير OK (مثلاً 404) => نضع الزر في حالة خطأ، ونُبيّن رسالة؛ ولا نظهر tryAnyway
+        btn.classList.add("error");
+        btn.setAttribute("aria-disabled", "true");
+        btn.textContent = "الملف غير متاح";
+        fileNameEl.textContent = nameNoExt || "غير معروف";
+        fileSizeEl.textContent = "⚠️ الملف غير موجود";
+        fileSourceEl.textContent = getSiteName(fileUrl) || "—";
+        tryAnywayDiv.style.display = "none";
+      } else {
+        // كل شيء جيد: نقرأ حجم الملف إذا كان موجوداً في الهيدر
+        let size = res.headers.get("content-length");
+        fileNameEl.textContent = nameNoExt || "غير معروف";
+        fileSizeEl.textContent = size ? (Math.round(size / 1024 / 1024 * 10) / 10) + " MB" : "غير متوفر";
+        fileSourceEl.textContent = getSiteName(fileUrl) || "—";
+        // نعلق سلوك التحميل
+        attachDownloadAction(fileUrl);
+        tryAnywayDiv.style.display = "none";
+      }
+    });
+
+  } // نهاية الفرع الرئيسي
+
+  // دوال مساعدة
+  function showInfo(name, url) {
+    // إخفاء القطة وإظهار الأسطر
+    preloader.style.display = "none";
+    infoLines.style.display = "flex";
+    // قيم افتراضية تم ضبطها سابقاً - إذا تواجدت العناصر ستمتلئ
+    if (name) fileNameEl.textContent = name;
+  }
+
+  function showInfoImmediate() {
+    preloader.style.display = "none";
+    infoLines.style.display = "flex";
+  }
+
+  // استخراج اسم الموقع (مثل mcpedl من mcpedl.org)
+  function getSiteName(u) {
+    try {
+      const host = new URL(u).hostname; // مثال: mcpedl.org أو www.example.co.uk
+      const parts = host.split(".");
+      if (parts.length === 1) return parts[0];
+      // إذا كان www في البداية أزله
+      if (parts[0].toLowerCase() === "www" && parts.length >= 2) {
+        // اختر الجزء الذي يسبق الـ tld
+        return parts[parts.length - 2];
+      }
+      // بشكل عام اختر الجزء الذي يسبق الـ tld (الجزء قبل الأخير)
+      return parts[parts.length - 2];
+    } catch {
+      return "";
+    }
+  }
+
+  // وظائف أزرار التبديل والمظاهر الصغيرة
+  const sug = document.getElementById("downloadSuggestion"), notes = document.getElementById("notesBox");
+  document.getElementById("toggleSuggestionBtn").onclick = () => { sug.style.display = sug.style.display === "none" ? "block" : "none"; };
+  document.getElementById("toggleNotesBtn").onclick = () => { notes.style.display = notes.style.display === "none" ? "block" : "none"; };
+  setTimeout(() => { if (sug) sug.style.display = "none"; }, 6000);
+  setTimeout(() => { if (notes) notes.style.display = "none"; }, 6000);
+
 </script>
 </body>
 </html>
