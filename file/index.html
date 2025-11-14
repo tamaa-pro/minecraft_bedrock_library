@@ -89,6 +89,12 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   /* القطة القافزة (رمز التحميل الأصلي) */
   .loading-cat{font-size:20px;animation:jump .8s ease-in-out infinite;display:inline-block}
+  #loadingCatArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
   @keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   /* صندوق الاقتراح العلوي و الملاحظات السفلية */
   #downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:10px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
@@ -100,12 +106,6 @@
   /* tryAnyway link */
   #tryAnywayLink{display:none;margin-top:8px;text-align:center}
   #tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;cursor:pointer}
-  #loadingCatArea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 </style>
 </head>
 <script>
@@ -115,7 +115,7 @@ document.addEventListener("dragstart", e => e.preventDefault());
 <body>
   <div id="downloadSuggestion">
     إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات <br>
-    <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
+    <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;colo#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
   </div>
 
   <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
