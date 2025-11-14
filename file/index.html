@@ -100,6 +100,12 @@
   /* tryAnyway link */
   #tryAnywayLink{display:none;margin-top:8px;text-align:center}
   #tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;cursor:pointer}
+  #loadingCatArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 </head>
 <script>
@@ -120,7 +126,7 @@ document.addEventListener("dragstart", e => e.preventDefault());
 
     <div class="info-box" id="infoBox" aria-live="polite">
       <!-- هنا نعرض القط القافز مؤقتاً -->
-      <div id="loadingCatArea"><span class="loading-cat" style="text-align:center">🐈‍⬛</span></div>
+      <div id="loadingCatArea"><span class="loading-cat">🐈‍⬛</span></div>
 
       <!-- بعد انتهاء التحميل نصبح نعرض هذه البنية -->
       <div class="info-inner" id="infoInner">
