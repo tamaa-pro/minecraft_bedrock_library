@@ -89,12 +89,6 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   /* القطة القافزة (رمز التحميل الأصلي) */
   .loading-cat{font-size:20px;animation:jump .8s ease-in-out infinite;display:inline-block}
-  #loadingCatArea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
   @keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   /* صندوق الاقتراح العلوي و الملاحظات السفلية */
   #downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:10px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
@@ -126,7 +120,7 @@ document.addEventListener("dragstart", e => e.preventDefault());
 
     <div class="info-box" id="infoBox" aria-live="polite">
       <!-- هنا نعرض القط القافز مؤقتاً -->
-      <div id="loadingCatArea"><span class="loading-cat">🐈‍⬛</span></div>
+      <div id="loadingCatArea" style="width: 100%;display: flex;justify-content: center;align-items: center"><span class="loading-cat">🐈‍⬛</span></div>
 
       <!-- بعد انتهاء التحميل نصبح نعرض هذه البنية -->
       <div class="info-inner" id="infoInner">
