@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <a id="downloadBtn" href="#" role="button" aria-disabled="false">تحميل الملف</a>
+    <a class="btn" id="downloadBtn" href="#" role="button" aria-disabled="false">تحميل الملف</a>
 
     <div id="tryAnywayLink">
       <a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
@@ -215,7 +215,7 @@ if(!raw || !raw.startsWith('http')){
           btn.setAttribute('aria-disabled','true');
           btn.textContent = 'الملف غير متاح';
           tryAnywayLinkWrap.style.display = 'none';
-          fileSizeEl.textContent = '⚠️ الملف غير موجود';
+          fileSizeEl.textContent = 'الملف غير موجود';
         } else {
           /* الملف موجود — اعرض الحجم وفعّل الزر */
           let size = res.headers.get('content-length');
@@ -244,6 +244,52 @@ if(!raw || !raw.startsWith('http')){
 
   }, delay);
 }
+</script>
+<script>
+const style = document.createElement('style');
+style.textContent = `
+    {
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+    }
+    :focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+    button, 
+    [role="button"], 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .button-class
+    {
+        transition: transform 0.05s ease;
+    }
+    button:active, 
+    [role="button"]:active, 
+    input[type="submit"]:active, 
+    input[type="button"]:active,
+    .btn:active, 
+    .button-class:active
+
+    {
+        transform: translateY(2px) !important;
+    }
+    a:active, img:active,
+    a:focus, img:focus {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    nav a:active,
+    ul li a:active,
+    .sidebar a:active
+    {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+`;
+document.head.appendChild(style);
 </script>
 </body>
 </html>
