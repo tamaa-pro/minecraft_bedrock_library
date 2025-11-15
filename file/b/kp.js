@@ -1,49 +1,59 @@
-(function(){
-  try{
-    const ss=sessionStorage;
-    const url=new URL(location.href);
-    const base="https://tamaa-pro.github.io/minecraft_bedrock_library/file/";
-    let full=url.href;
-
-    // منع أي تأخير قبل تعديل الرابط
-    document.documentElement.style.display="none";
-
-    // استخراج الجزء بعد علامة ؟ الأولى
-    let query=full.split("?")[1]||"";
-
-    // المفتاح من الجلسة
-    let savedKey=ss.getItem("key")||null;
-    let savedFile=ss.getItem("file")||null;
-
-    // إذا لم يتم حفظ المفتاح مسبقًا نبحث عنه في الرابط الحالي
-    if(!savedKey){
-      if(query.includes("?cyn")){
-        ss.setItem("key","cyn");
-        query=query.replace("?cyn","").replace("??","?");
-      } else {
-        // لا يوجد مفتاح → إغلاق فوري
-        location.replace("about:blank");
-        return;
-      }
+// التحقق من المفتاح وإدارة الروابط
+(function() {
+    'use strict';
+    
+    // المفتاح الثابت المطلوب
+    const REQUIRED_KEY = 'cyn';
+    
+    // وظيفة التحقق من المفتاح وإدارة الروابط
+    function validateAndProcessURL() {
+        const currentURL = window.location.href;
+        const urlObj = new URL(currentURL);
+        const searchParams = new URLSearchParams(urlObj.search);
+        
+        // استخراج جميع المعلمات من URL
+        const params = [];
+        for (const [key, value] of searchParams) {
+            params.push(value);
+        }
+        
+        // إذا لم توجد معلمات كافية، توجيه إلى about:blank
+        if (params.length < 2) {
+            window.location.replace('about:blank');
+            return;
+        }
+        
+        // المعلمة الأولى هي رابط الملف
+        const fileURL = params[0];
+        
+        // المعلمة الثانية هي المفتاح
+        const providedKey = params[1];
+        
+        // التحقق من المفتاح
+        if (providedKey !== REQUIRED_KEY) {
+            window.location.replace('about:blank');
+            return;
+        }
+        
+        // حفظ البيانات في sessionStorage
+        sessionStorage.setItem('fileURL', fileURL);
+        sessionStorage.setItem('accessKey', providedKey);
+        
+        // تحديث الـ URL بدون عرض المفتاح ورابط الملف
+        const cleanURL = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanURL);
     }
-
-    // بعد تأمين المفتاح نتحقق من رابط الملف
-    if(!savedFile){
-      if(query.startsWith("http")){
-        ss.setItem("file",query);
-      } else {
-        // لا رابط ملف → الصفحة بلا فائدة
-        location.replace("about:blank");
-        return;
-      }
-    }
-
-    // تنظيف الرابط من كل شيء
-    history.replaceState({}, "", base);
-
-    // إعادة إظهار الصفحة بعد الحماية
-    document.documentElement.style.display="";
-  }catch(e){
-    location.replace("about:blank");
-  }
+    
+    // تنفيذ التحقق فور تحميل الصفحة
+    validateAndProcessURL();
+    
+    // وظيفة لاسترجاع رابط الملف من sessionStorage
+    window.getFileURL = function() {
+        return sessionStorage.getItem('fileURL');
+    };
+    
+    // وظيفة للتحقق من وجود المفتاح في الجلسة
+    window.hasValidKey = function() {
+        return sessionStorage.getItem('accessKey') === REQUIRED_KEY;
+    };
 })();
