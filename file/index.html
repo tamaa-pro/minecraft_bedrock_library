@@ -45,35 +45,35 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <body>
 <div id="downloadSuggestion">
   إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات<br>
-  <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
 </div>
 <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-  <div class="header-title"><b>صفحة التحميل</b></div>
-  <div class="content-wrapper">
-    <div class="icon-box">
-      <img src="https://d.top4top.io/p_3585efanh1.jpg">
-    </div>
-    <div class="info-box">
-      <div id="loadingCatArea" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:20px">
-        <span class="loading-cat">🐈‍⬛</span>
-      </div>
+<div class="header-title"><b>صفحة التحميل</b></div>
+<div class="content-wrapper">
+<div class="icon-box">
+<img src="https://d.top4top.io/p_3585efanh1.jpg">
+</div>
+<div class="info-box">
+<div id="loadingCatArea" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:20px">
+<span class="loading-cat">🐈‍⬛</span>
+</div>
 
-      <div class="info-inner" id="infoInner">
-        <div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">—</div></div>
-        <div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
-        <div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
-      </div>
-    </div>
+<div class="info-inner" id="infoInner">
+<div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">—</div></div>
+<div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
+<div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
+</div>
+</div>
 
-  </div>
-  <a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
+</div>
+<a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
 
-  <div id="tryAnywayLink">
-    <a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
-  </div>
+<div id="tryAnywayLink">
+<a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
+</div>
 </div>
 <div class="bottom-notes" id="notesBox">
 <b style="font-size:8px">
@@ -95,15 +95,11 @@ const tryAnywayLinkWrap=document.getElementById('tryAnywayLink');
 const tryAnywayAnchor=document.getElementById('tryAnywayAnchor');
 const sug=document.getElementById('downloadSuggestion');
 const notes=document.getElementById('notesBox');
-
 document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=sug.style.display==='none'?'block':'none'};
 document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
-
 let raw=location.search.replace('?','');
-
-/* حالة: لا يوجد رابط ملف */
 if(!raw||!raw.startsWith('http')){
   btn.classList.add('disabled');
   btn.textContent='رابط غير صالح';
@@ -116,24 +112,16 @@ if(!raw||!raw.startsWith('http')){
 } else {
   if(raw.endsWith('/')) raw=raw.slice(0,-1);
   const fileUrl=raw;
-
   const rawName=fileUrl.split('/').pop()||'';
   const nameNoExt=rawName.replace(/\.[^.]+$/,'');
-  // عرض رسائل مؤقتة أثناء الفحص
   fileNameEl.textContent='جاري استخراج الاسم...';
   fileSizeEl.textContent='جاري حساب الحجم...';
   fileSourceEl.textContent='جاري التعرّف...';
-
-  // نترك رمز التحميل مرئيًا طوال مدة اختبار HEAD
   (async()=>{
     try{
       const res=await fetch('https://corsproxy.io/?'+encodeURIComponent(fileUrl),{method:'HEAD'});
-
-      // الآن بعد اكتمال الفحص نعرض المعلومات (نخفي القط ونظهر التفاصيل)
       loadingCatArea.style.display='none';
       infoInner.style.display='block';
-
-      // اسم الملف ومصدره (الاسم لا يعتمد على الاستجابة)
       fileNameEl.textContent = nameNoExt || 'غير معروف';
       try{
         const host=new URL(fileUrl).hostname;
@@ -146,9 +134,7 @@ if(!raw||!raw.startsWith('http')){
       } catch(e){
         fileSourceEl.textContent='غير معروف';
       }
-
       if(!res.ok){
-        // ملف غير متاح (رّد الخادم ليس 2xx)
         btn.classList.add('error');
         btn.classList.remove('disabled');
         btn.textContent='الملف غير متاح';
@@ -161,18 +147,14 @@ if(!raw||!raw.startsWith('http')){
         };
         return;
       }
-
       let size=res.headers.get('content-length');
       if(size){
         const mb=Math.round((size/1024/1024)*10)/10;
         fileSizeEl.textContent=mb+' MB';
       } else fileSizeEl.textContent='غير متوفر';
-
-      // تفعيل زر التحميل بعد نجاح الفحص
       btn.classList.remove('disabled','error');
       btn.textContent='تحميل الملف';
       tryAnywayLinkWrap.style.display='none';
-
       btn.onclick=e=>{
         e.preventDefault();
         btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';
@@ -181,9 +163,7 @@ if(!raw||!raw.startsWith('http')){
         btn.onclick=null;
         setTimeout(()=>location.href=fileUrl,350);
       };
-
     } catch(err){
-      // فشل في التحقق (خطأ شبكة مثلاً)
       loadingCatArea.style.display='none';
       infoInner.style.display='block';
 
@@ -199,7 +179,6 @@ if(!raw||!raw.startsWith('http')){
       } catch(e){
         fileSourceEl.textContent='غير معروف';
       }
-
       btn.textContent='التحقق فشل — جرب الرابط يدوياً';
       btn.classList.add('disabled');
       tryAnywayLinkWrap.style.display='block';
@@ -224,22 +203,6 @@ a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!importa
 nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
 `;
 document.head.appendChild(style);
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    function goFull() {
-        const el = document.documentElement;
-        if (el.requestFullscreen) el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        else if (el.msRequestFullscreen) el.msRequestFullscreen();
-    }
-    goFull();
-    document.addEventListener("fullscreenchange", () => {
-        if (!document.fullscreenElement) {
-            goFull();
-        }
-    });
-});
 </script>
 </body>
 </html>
