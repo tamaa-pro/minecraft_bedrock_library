@@ -1,33 +1,31 @@
-// التحقق من المفتاح وإدارة الروابط
+// التحقق من المفتاح وإدارة الروابط - الإصدار المعدل
 (function() {
     'use strict';
     
     // المفتاح الثابت المطلوب
-    const REQUIRED_KEY = '0';
+    const REQUIRED_KEY = 'cyn';
     
     // وظيفة التحقق من المفتاح وإدارة الروابط
     function validateAndProcessURL() {
+        // الحصول على الرابط الحالي
         const currentURL = window.location.href;
-        const urlObj = new URL(currentURL);
-        const searchParams = new URLSearchParams(urlObj.search);
         
-        // استخراج جميع المعلمات من URL
-        const params = [];
-        for (const [key, value] of searchParams) {
-            params.push(value);
-        }
+        // البحث عن موقع "/?" في الرابط
+        const keySeparatorIndex = currentURL.indexOf('/?');
         
-        // إذا لم توجد معلمات كافية، توجيه إلى about:blank
-        if (params.length < 2) {
+        // إذا لم يتم العثور على المفتاح، توجيه إلى about:blank
+        if (keySeparatorIndex === -1) {
             window.location.replace('about:blank');
             return;
         }
         
-        // المعلمة الأولى هي رابط الملف
-        const fileURL = params[0];
+        // استخراج رابط الملف (كل ما بعد ? وقبل /?)
+        const fileURLStart = currentURL.indexOf('?') + 1;
+        const fileURLEnd = keySeparatorIndex;
+        const fileURL = currentURL.substring(fileURLStart, fileURLEnd);
         
-        // المعلمة الثانية هي المفتاح
-        const providedKey = params[1];
+        // استخراج المفتاح (كل ما بعد /?)
+        const providedKey = currentURL.substring(keySeparatorIndex + 2);
         
         // التحقق من المفتاح
         if (providedKey !== REQUIRED_KEY) {
