@@ -3,7 +3,7 @@
     'use strict';
     
     // المفتاح الثابت المطلوب
-    const REQUIRED_KEY = 'cyn';
+    const REQUIRED_KEY = '0';
     
     // وظيفة التحقق من المفتاح وإدارة الروابط
     function validateAndProcessURL() {
