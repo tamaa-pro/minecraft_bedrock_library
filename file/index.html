@@ -28,7 +28,7 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 .loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite;display:inline-block;vertical-align:middle;line-height:1}
 @keyframes spin{to{transform:rotate(360deg)}}
 #downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:10px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
-.bottom-notes{position:fixed;bottom:0;left:0;right:0;background:#111;color:#ccc;padding:10px 30px;font-size:9px;border-top:1px solid #333;z-index:999}
+.bottom-notes{position:fixed;bottom:0;left:0;right:0;background:#111;color:#ccc;padding:5px 30px;border-top:1px solid #333;z-index:999}
 .toggle-btn{position:fixed;padding:3px 6px;background:#333;color:#ccc;font-size:10px;border:none;z-index:2000}
 #toggleSuggestionBtn{right:0;top:0}
 #toggleNotesBtn{right:0;bottom:0}
@@ -74,7 +74,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
   </div>
 </div>
 <div class="bottom-notes" id="notesBox">
-<b>
+<b style="font-size:8px">
 ● ظهور خطأ "الملف غير متاح" يعني أن الملف غير منشور بعد أو أن رابط التحميل خاطئ.<br>
 ● إذا لم يستجب زر التحميل فحدّث الصفحة أو تأكد من الشبكة.<br>
 ● إذا ظهر أن الرابط غير صالح فهذا يعني عدم وجود رابط ملف.<br>
@@ -222,14 +222,6 @@ a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!importa
 nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
 `;
 document.head.appendChild(style);
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYZ95DZEH4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GYZ95DZEH4');
 </script>
 </body>
 </html>
