@@ -45,16 +45,18 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 </script>
 
 <body>
+
+<!-- المستطيل العلوي -->
 <div id="downloadSuggestion">
   إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات<br>
 <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
 </div>
+
 <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
 <div class="header-title"><b>صفحة التحميل</b></div>
-
 <div class="content-wrapper">
 <div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
@@ -70,11 +72,11 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
 <div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
 </div>
+
 </div>
 </div>
 
 <a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
-
 <div id="tryAnywayLink">
 <a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
 </div>
@@ -92,28 +94,33 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 </div>
 
 <script>
-/*──────────────────────────────────────────────
-  ★★★ إضافة الميزة المطلوبة فقط ★★★
-──────────────────────────────────────────────*/
+/* ————————————————————————————————————————————————
+      نظام حفظ رابط الملف في الجلسة فقط
+——————————————————————————————————————————————— */
 
-// استخراج الرابط من شريط العنوان
-let incoming = location.search.replace("?", "");
+(function(){
+    let q = location.search.replace("?", "");
 
-// إذا كان الرابط موجودًا في شريط العنوان → خزّنه في sessionStorage وأزل الرابط مباشرة
-if (incoming && incoming.startsWith("http")) {
-    sessionStorage.setItem("download_url", incoming);
+    // إذا كان هناك رابط ملف جديد → خزّنه في الجلسة
+    if (q && q.startsWith("http")) {
+        sessionStorage.setItem("tamaa_file_url", q);
 
-    // إزالة الرابط من شريط العنوان دون إعادة تحميل الصفحة
-    history.replaceState({}, "", location.pathname);
-}
+        // إزالة الرابط فورياً من شريط العنوان
+        history.replaceState({}, "", location.pathname);
+    }
 
-// الحصول على رابط الملف من الجلسة
-let raw = sessionStorage.getItem("download_url") || "";
+    // إن لم يوجد رابط في الرابط نفسه → استخدم الرابط المخزّن في الجلسة
+    else {
+        q = sessionStorage.getItem("tamaa_file_url") || "";
+        if (q) {
+            // بناء رابط وهمي داخلي فقط لأجل استمرار الكود الأصلي
+            history.replaceState({}, "", location.pathname + "?" + q);
+        }
+    }
+})();
+</script>
 
-/*──────────────────────────────────────────────
-  نهاية الإضافة – بقية سكربت التحميل كما هو تمامًا
-──────────────────────────────────────────────*/
-
+<script>
 const btn=document.getElementById('downloadBtn');
 const fileNameEl=document.getElementById('fileName');
 const fileSizeEl=document.getElementById('fileSize');
@@ -131,6 +138,8 @@ document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
 
+let raw=location.search.replace('?','');
+
 if(!raw||!raw.startsWith('http')){
   btn.classList.add('disabled');
   btn.textContent='رابط غير صالح';
@@ -141,10 +150,13 @@ if(!raw||!raw.startsWith('http')){
   fileSourceEl.textContent='—';
   tryAnywayLinkWrap.style.display='none';
 } else {
+
   if(raw.endsWith('/')) raw=raw.slice(0,-1);
+
   const fileUrl=raw;
   const rawName=fileUrl.split('/').pop()||'';
   const nameNoExt=rawName.replace(/\.[^.]+$/,'');
+
   fileNameEl.textContent='جاري استخراج الاسم...';
   fileSizeEl.textContent='جاري حساب الحجم...';
   fileSourceEl.textContent='جاري التعرّف...';
@@ -154,6 +166,7 @@ if(!raw||!raw.startsWith('http')){
       const res=await fetch('https://corsproxy.io/?'+encodeURIComponent(fileUrl),{method:'HEAD'});
       loadingCatArea.style.display='none';
       infoInner.style.display='block';
+
       fileNameEl.textContent = nameNoExt || 'غير معروف';
 
       try{
@@ -164,7 +177,7 @@ if(!raw||!raw.startsWith('http')){
         else if(parts.length===2) domain=parts[0];
         else domain=parts[parts.length-2];
         fileSourceEl.textContent=domain||'غير معروف';
-      } catch{
+      } catch(e){
         fileSourceEl.textContent='غير معروف';
       }
 
@@ -174,6 +187,7 @@ if(!raw||!raw.startsWith('http')){
         btn.textContent='الملف غير متاح';
         fileSizeEl.textContent='الملف غير موجود';
         tryAnywayLinkWrap.style.display='block';
+
         tryAnywayAnchor.onclick=e=>{
           e.preventDefault();
           tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
@@ -191,6 +205,7 @@ if(!raw||!raw.startsWith('http')){
       btn.classList.remove('disabled','error');
       btn.textContent='تحميل الملف';
       tryAnywayLinkWrap.style.display='none';
+
       btn.onclick=e=>{
         e.preventDefault();
         btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';
@@ -213,7 +228,7 @@ if(!raw||!raw.startsWith('http')){
         else if(parts.length===2) domain=parts[0];
         else domain=parts[parts.length-2];
         fileSourceEl.textContent=domain||'غير معروف';
-      } catch{
+      } catch(e){
         fileSourceEl.textContent='غير معروف';
       }
 
@@ -225,11 +240,9 @@ if(!raw||!raw.startsWith('http')){
         tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
         setTimeout(()=>location.href=fileUrl,300);
       };
-
       fileSizeEl.textContent='—';
     }
-
-  })();
+})();
 }
 </script>
 
