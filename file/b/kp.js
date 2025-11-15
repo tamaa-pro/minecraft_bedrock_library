@@ -1,62 +1,49 @@
-(function() {
-    // ***** الإعدادات *****
-    const REQUIRED_KEY = "cyn"; 
-    const BASE = "https://tamaa-pro.github.io/minecraft_bedrock_library/file";
+(function(){
+  try{
+    const ss=sessionStorage;
+    const url=new URL(location.href);
+    const base="https://tamaa-pro.github.io/minecraft_bedrock_library/file/";
+    let full=url.href;
 
-    // **** دالة إغلاق النافذة فوراً ****
-    function closeFast() {
-        location.href = "about:blank";
+    // منع أي تأخير قبل تعديل الرابط
+    document.documentElement.style.display="none";
+
+    // استخراج الجزء بعد علامة ؟ الأولى
+    let query=full.split("?")[1]||"";
+
+    // المفتاح من الجلسة
+    let savedKey=ss.getItem("key")||null;
+    let savedFile=ss.getItem("file")||null;
+
+    // إذا لم يتم حفظ المفتاح مسبقًا نبحث عنه في الرابط الحالي
+    if(!savedKey){
+      if(query.includes("?cyn")){
+        ss.setItem("key","cyn");
+        query=query.replace("?cyn","").replace("??","?");
+      } else {
+        // لا يوجد مفتاح → إغلاق فوري
+        location.replace("about:blank");
+        return;
+      }
     }
 
-    // **** قراءة رابط الصفحة الأصلي ****
-    let full = location.href;
-
-    // **** منع التكرار عند إعادة التحميل ****
-    if (sessionStorage.getItem("file_protect_done") === "yes") return;
-
-    // **** استخراج الجزء بعد علامة ؟ الأولى فقط ****
-    let query = full.split("?")[1] || "";
-
-    // إذا لم يوجد شيء → أغلق
-    if (!query) closeFast();
-
-    // الآن لدينا شيء مثل:
-    // https://site/file.apk/?cyn
-    // أو
-    // https://site/file.apk/
-    // أو
-    // https://site/file.apk
-
-    // *** استخراج المفتاح إن وجد ***
-    const hasKey = query.includes("/?" + REQUIRED_KEY) || query.endsWith("?" + REQUIRED_KEY);
-
-    if (hasKey) {
-        // حفظ المفتاح في الجلسة فقط
-        sessionStorage.setItem("tamaa_key", REQUIRED_KEY);
-
-        // إزالة المفتاح من الرابط
-        query = query.replace("/?" + REQUIRED_KEY, "").replace("?" + REQUIRED_KEY, "");
-
-    } else {
-        // المفتاح غير موجود → أغلق فوراً
-        closeFast();
+    // بعد تأمين المفتاح نتحقق من رابط الملف
+    if(!savedFile){
+      if(query.startsWith("http")){
+        ss.setItem("file",query);
+      } else {
+        // لا رابط ملف → الصفحة بلا فائدة
+        location.replace("about:blank");
+        return;
+      }
     }
 
-    // *** استخراج رابط الملف ***
-    let fileUrl = query.trim();
+    // تنظيف الرابط من كل شيء
+    history.replaceState({}, "", base);
 
-    // يجب أن يبدأ بـ http أو https
-    if (!fileUrl.startsWith("http")) closeFast();
-
-    // حفظ رابط الملف في الجلسة
-    sessionStorage.setItem("tamaa_file", fileUrl);
-
-    // *** تنظيف رابط الصفحة ***
-    // حذف كل شيء بعد /file/
-    if (location.href !== BASE) {
-        history.replaceState(null, "", BASE);
-    }
-
-    // منع تكرار العملية عند تحديث الصفحة
-    sessionStorage.setItem("file_protect_done", "yes");
+    // إعادة إظهار الصفحة بعد الحماية
+    document.documentElement.style.display="";
+  }catch(e){
+    location.replace("about:blank");
+  }
 })();
