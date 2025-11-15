@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>صفحة التحميل</title>
-<script src="kp.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script data-goatcounter="https://tamaa-pro.goatcounter.com/count" 
@@ -40,6 +39,28 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 </style>
 </head>
 <script>
+// كود لحفظ رابط الملف في الجلسة وإزالته من عنوان الصفحة
+(function() {
+    'use strict';
+    
+    // التحقق من وجود رابط ملف في عنوان الصفحة
+    const currentUrl = new URL(window.location.href);
+    const fileUrl = currentUrl.searchParams.get('url') || 
+                    currentUrl.search.substring(1); // للحصول على المعامل بعد ?
+    
+    // إذا كان هناك رابط ملف صالح
+    if (fileUrl && fileUrl.startsWith('http')) {
+        // حفظ رابط الملف في sessionStorage
+        sessionStorage.setItem('fileDownloadUrl', fileUrl);
+        
+        // إزالة رابط الملف من عنوان الصفحة
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        
+        console.log('تم حفظ رابط الملف في الجلسة وإزالته من العنوان');
+    }
+})();
+
 document.addEventListener("contextmenu", e=>e.preventDefault());
 document.addEventListener("dragstart", e=>e.preventDefault());
 </script>
@@ -49,9 +70,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
 </div>
 <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
-<button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
-
-<div class="container">
+<button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>            <div class="container">
 <div class="header-title"><b>صفحة التحميل</b></div>
 <div class="content-wrapper">
 <div class="icon-box">
@@ -60,19 +79,13 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <div class="info-box">
 <div id="loadingCatArea" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:20px">
 <span class="loading-cat">🐈‍⬛</span>
-</div>
-
-<div class="info-inner" id="infoInner">
+</div>            <div class="info-inner" id="infoInner">
 <div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">—</div></div>
 <div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
 <div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
 </div>
-</div>
-
-</div>
-<a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
-
-<div id="tryAnywayLink">
+</div>            </div>
+<a id="downloadBtn" class="btn disabled">جاري الإعداد</a>            <div id="tryAnywayLink">
 <a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
 </div>
 </div>
@@ -100,106 +113,102 @@ document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=su
 document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
-let raw = '';
-if (window.hasValidKey()) {
-    raw = window.getFileURL() || '';
-} else {
-    // إذا لم يكن المفتاح صالحًا، توجيه إلى about:blank
-    window.location.replace('about:blank');
-    return;
-}
-if(!raw||!raw.startsWith('http')){
-  btn.classList.add('disabled');
-  btn.textContent='رابط غير صالح';
-  loadingCatArea.style.display='none';
-  infoInner.style.display='block';
-  fileNameEl.textContent='رابط غير صالح';
-  fileSizeEl.textContent='—';
-  fileSourceEl.textContent='—';
-  tryAnywayLinkWrap.style.display='none';
-} else {
-  if(raw.endsWith('/')) raw=raw.slice(0,-1);
-  const fileUrl=raw;
-  const rawName=fileUrl.split('/').pop()||'';
-  const nameNoExt=rawName.replace(/\.[^.]+$/,'');
-  fileNameEl.textContent='جاري استخراج الاسم...';
-  fileSizeEl.textContent='جاري حساب الحجم...';
-  fileSourceEl.textContent='جاري التعرّف...';
-  (async()=>{
-    try{
-      const res=await fetch('https://corsproxy.io/?'+encodeURIComponent(fileUrl),{method:'HEAD'});
-      loadingCatArea.style.display='none';
-      infoInner.style.display='block';
-      fileNameEl.textContent = nameNoExt || 'غير معروف';
-      try{
-        const host=new URL(fileUrl).hostname;
-        const parts=host.split('.');
-        let domain='';
-        if(parts.length===1) domain=parts[0];
-        else if(parts.length===2) domain=parts[0];
-        else domain=parts[parts.length-2];
-        fileSourceEl.textContent=domain||'غير معروف';
-      } catch(e){
-        fileSourceEl.textContent='غير معروف';
-      }
-      if(!res.ok){
-        btn.classList.add('error');
-        btn.classList.remove('disabled');
-        btn.textContent='الملف غير متاح';
-        fileSizeEl.textContent='الملف غير موجود';
-        tryAnywayLinkWrap.style.display='block';
-        tryAnywayAnchor.onclick=e=>{
-          e.preventDefault();
-          tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
-          setTimeout(()=>location.href=fileUrl,300);
-        };
-        return;
-      }
-      let size=res.headers.get('content-length');
-      if(size){
-        const mb=Math.round((size/1024/1024)*10)/10;
-        fileSizeEl.textContent=mb+' MB';
-      } else fileSizeEl.textContent='غير متوفر';
-      btn.classList.remove('disabled','error');
-      btn.textContent='تحميل الملف';
-      tryAnywayLinkWrap.style.display='none';
-      btn.onclick=e=>{
-        e.preventDefault();
-        btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';
-        btn.style.background='#0c0';
-        btn.style.color='#000';
-        btn.onclick=null;
-        setTimeout(()=>location.href=fileUrl,350);
-      };
-    } catch(err){
-      loadingCatArea.style.display='none';
-      infoInner.style.display='block';
 
-      fileNameEl.textContent = nameNoExt || 'غير معروف';
-      try{
-        const host=new URL(fileUrl).hostname;
-        const parts=host.split('.');
-        let domain='';
-        if(parts.length===1) domain=parts[0];
-        else if(parts.length===2) domain=parts[0];
-        else domain=parts[parts.length-2];
-        fileSourceEl.textContent=domain||'غير معروف';
-      } catch(e){
-        fileSourceEl.textContent='غير معروف';
-      }
-      btn.textContent='التحقق فشل — جرب الرابط يدوياً';
-      btn.classList.add('disabled');
-      tryAnywayLinkWrap.style.display='block';
-      tryAnywayAnchor.onclick=e=>{
-        e.preventDefault();
-        tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
-        setTimeout(()=>location.href=fileUrl,300);
-      };
-      fileSizeEl.textContent='—';
-    }
-  })();
+// التعديل هنا: استخدام sessionStorage بدلاً من location.search
+let raw = sessionStorage.getItem('fileDownloadUrl') || '';
+
+if(!raw||!raw.startsWith('http')){            
+  btn.classList.add('disabled');            
+  btn.textContent='رابط غير صالح';            
+  loadingCatArea.style.display='none';            
+  infoInner.style.display='block';            
+  fileNameEl.textContent='رابط غير صالح';            
+  fileSizeEl.textContent='—';            
+  fileSourceEl.textContent='—';            
+  tryAnywayLinkWrap.style.display='none';            
+} else {            
+  if(raw.endsWith('/')) raw=raw.slice(0,-1);            
+  const fileUrl=raw;            
+  const rawName=fileUrl.split('/').pop()||'';            
+  const nameNoExt=rawName.replace(/\.[^.]+$/,'');            
+  fileNameEl.textContent='جاري استخراج الاسم...';            
+  fileSizeEl.textContent='جاري حساب الحجم...';            
+  fileSourceEl.textContent='جاري التعرّف...';            
+  (async()=>{            
+    try{            
+      const res=await fetch('https://corsproxy.io/?'+encodeURIComponent(fileUrl),{method:'HEAD'});            
+      loadingCatArea.style.display='none';            
+      infoInner.style.display='block';            
+      fileNameEl.textContent = nameNoExt || 'غير معروف';            
+      try{            
+        const host=new URL(fileUrl).hostname;            
+        const parts=host.split('.');            
+        let domain='';            
+        if(parts.length===1) domain=parts[0];            
+        else if(parts.length===2) domain=parts[0];            
+        else domain=parts[parts.length-2];            
+        fileSourceEl.textContent=domain||'غير معروف';            
+      } catch(e){            
+        fileSourceEl.textContent='غير معروف';            
+      }            
+      if(!res.ok){            
+        btn.classList.add('error');            
+        btn.classList.remove('disabled');            
+        btn.textContent='الملف غير متاح';            
+        fileSizeEl.textContent='الملف غير موجود';            
+        tryAnywayLinkWrap.style.display='block';            
+        tryAnywayAnchor.onclick=e=>{            
+          e.preventDefault();            
+          tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';            
+          setTimeout(()=>location.href=fileUrl,300);            
+        };            
+        return;            
+      }            
+      let size=res.headers.get('content-length');            
+      if(size){            
+        const mb=Math.round((size/1024/1024)*10)/10;            
+        fileSizeEl.textContent=mb+' MB';            
+      } else fileSizeEl.textContent='غير متوفر';            
+      btn.classList.remove('disabled','error');            
+      btn.textContent='تحميل الملف';            
+      tryAnywayLinkWrap.style.display='none';            
+      btn.onclick=e=>{            
+        e.preventDefault();            
+        btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';            
+        btn.style.background='#0c0';            
+        btn.style.color='#000';            
+        btn.onclick=null;            
+        setTimeout(()=>location.href=fileUrl,350);            
+      };            
+    } catch(err){            
+      loadingCatArea.style.display='none';            
+      infoInner.style.display='block';            fileNameEl.textContent = nameNoExt || 'غير معروف';            
+  try{            
+    const host=new URL(fileUrl).hostname;            
+    const parts=host.split('.');            
+    let domain='';            
+    if(parts.length===1) domain=parts[0];            
+    else if(parts.length===2) domain=parts[0];            
+    else domain=parts[parts.length-2];            
+    fileSourceEl.textContent=domain||'غير معروف';            
+  } catch(e){            
+    fileSourceEl.textContent='غير معروف';            
+  }            
+  btn.textContent='التحقق فشل — جرب الرابط يدوياً';            
+  btn.classList.add('disabled');            
+  tryAnywayLinkWrap.style.display='block';            
+  tryAnywayAnchor.onclick=e=>{            
+    e.preventDefault();            
+    tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';            
+    setTimeout(()=>location.href=fileUrl,300);            
+  };            
+  fileSizeEl.textContent='—';            
+}
+
+})();
 }
 </script>
+
 <script>
 const style=document.createElement('style');
 style.textContent=`
@@ -211,6 +220,5 @@ a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!importa
 nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
 `;
 document.head.appendChild(style);
-</script>
-</body>
+</script>            </body>
 </html>
