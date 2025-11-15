@@ -1,57 +1,35 @@
-// التحقق من المفتاح وإدارة الروابط - الإصدار المعدل
+// كود لحفظ رابط الملف في الجلسة وإزالته من عنوان الصفحة
 (function() {
     'use strict';
     
-    // المفتاح الثابت المطلوب
-    const REQUIRED_KEY = 'cyn';
+    // التحقق من وجود رابط ملف في عنوان الصفحة
+    const currentUrl = new URL(window.location.href);
+    const fileUrl = currentUrl.searchParams.get('url') || 
+                    currentUrl.search.substring(1); // للحصول على المعامل بعد ?
     
-    // وظيفة التحقق من المفتاح وإدارة الروابط
-    function validateAndProcessURL() {
-        // الحصول على الرابط الحالي
-        const currentURL = window.location.href;
+    // إذا كان هناك رابط ملف صالح
+    if (fileUrl && fileUrl.startsWith('http')) {
+        // حفظ رابط الملف في sessionStorage
+        sessionStorage.setItem('fileDownloadUrl', fileUrl);
         
-        // البحث عن موقع "/?" في الرابط
-        const keySeparatorIndex = currentURL.indexOf('/?');
+        // إزالة رابط الملف من عنوان الصفحة
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
         
-        // إذا لم يتم العثور على المفتاح، توجيه إلى about:blank
-        if (keySeparatorIndex === -1) {
-            window.location.replace('about:blank');
-            return;
-        }
-        
-        // استخراج رابط الملف (كل ما بعد ? وقبل /?)
-        const fileURLStart = currentURL.indexOf('?') + 1;
-        const fileURLEnd = keySeparatorIndex;
-        const fileURL = currentURL.substring(fileURLStart, fileURLEnd);
-        
-        // استخراج المفتاح (كل ما بعد /?)
-        const providedKey = currentURL.substring(keySeparatorIndex + 2);
-        
-        // التحقق من المفتاح
-        if (providedKey !== REQUIRED_KEY) {
-            window.location.replace('about:blank');
-            return;
-        }
-        
-        // حفظ البيانات في sessionStorage
-        sessionStorage.setItem('fileURL', fileURL);
-        sessionStorage.setItem('accessKey', providedKey);
-        
-        // تحديث الـ URL بدون عرض المفتاح ورابط الملف
-        const cleanURL = window.location.origin + window.location.pathname;
-        window.history.replaceState({}, document.title, cleanURL);
+        console.log('تم حفظ رابط الملف في الجلسة وإزالته من العنوان');
     }
     
-    // تنفيذ التحقق فور تحميل الصفحة
-    validateAndProcessURL();
+    // دالة لاسترجاع رابط الملف من الجلسة
+    function getFileUrlFromSession() {
+        return sessionStorage.getItem('fileDownloadUrl');
+    }
     
-    // وظيفة لاسترجاع رابط الملف من sessionStorage
-    window.getFileURL = function() {
-        return sessionStorage.getItem('fileURL');
-    };
+    // دالة لمسح رابط الملف من الجلسة (اختياري)
+    function clearFileUrlFromSession() {
+        sessionStorage.removeItem('fileDownloadUrl');
+    }
     
-    // وظيفة للتحقق من وجود المفتاح في الجلسة
-    window.hasValidKey = function() {
-        return sessionStorage.getItem('accessKey') === REQUIRED_KEY;
-    };
+    // جعل الدوال متاحة عالمياً إذا لزم الأمر
+    window.getFileUrlFromSession = getFileUrlFromSession;
+    window.clearFileUrlFromSession = clearFileUrlFromSession;
 })();
