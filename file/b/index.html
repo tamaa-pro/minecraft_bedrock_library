@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<script>
+// نظام استخراج رابط الملف وتخزينه داخل النافذة قبل أن تعمل أي كودات أخرى
+(function () {
+
+    // إن كان الرابط محفوظًا مسبقًا فلا نحتاج للتحقق مرة أخرى
+    if (window.__file_url) return;
+
+    let full = window.location.href;
+    let extracted = full.split("?")[1];
+
+    if (extracted && extracted.startsWith("http")) {
+
+        // حفظ الرابط داخل النافذة فقط — يضيع عند إغلاقها
+        window.__file_url = extracted;
+
+        // إزالة الرابط من شريط المتصفح قبل أن يشتغل أي كود آخر
+        history.replaceState({}, "", window.location.pathname);
+    }
+
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>صفحة التحميل</title>
@@ -51,7 +72,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v2.1</b></div>
+<div class="header-title"><b>صفحة التحميل v2.2</b></div>
 <div class="content-wrapper">
 <div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
@@ -99,29 +120,8 @@ document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=su
 document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
-/* نظام استخراج رابط الملف وتخزينه داخل النافذة */
-
-(function () {
-    // إذا لم يتم حفظ الرابط بعد
-    if (!window.__file_url) {
-
-        // استخراج من الرابط الأصلي
-        let full = window.location.href;
-        let extracted = full.split("?")[1];
-
-        // إذا كان الرابط صحيحًا
-        if (extracted && extracted.startsWith("http")) {
-            window.__file_url = extracted;
-
-            // إزالة الرابط من شريط المتصفح
-            history.replaceState({}, "", window.location.pathname);
-        }
-    }
-})();
-
-// الآن نجعل الصفحة تعتمد على الرابط المحفوظ
 let raw = window.__file_url || "";
-if (!raw || !raw.startsWith("http")) {
+if(!raw||!raw.startsWith('http')){
   btn.classList.add('disabled');
   btn.textContent='رابط غير صالح';
   loadingCatArea.style.display='none';
