@@ -2,21 +2,30 @@
 <html lang="ar" dir="rtl">
 <head>
 <script>
-// نظام استخراج رابط الملف وتخزينه داخل النافذة قبل أن تعمل أي كودات أخرى
+// نظام ثابت لاستخراج رابط الملف واستعمال sessionStorage
+
 (function () {
+    const KEY = "__tamaa_file_url";
 
-    // إن كان الرابط محفوظًا مسبقًا فلا نحتاج للتحقق مرة أخرى
-    if (window.__file_url) return;
+    // هل الرابط محفوظ مسبقًا؟
+    if (sessionStorage.getItem(KEY)) {
+        // إزالة الرابط من شريط المتصفح دائمًا
+        history.replaceState({}, "", window.location.pathname);
+        return;
+    }
 
-    let full = window.location.href;
-    let extracted = full.split("?")[1];
+    // فحص الرابط في URL
+    let extracted = window.location.search.substring(1);
 
     if (extracted && extracted.startsWith("http")) {
 
-        // حفظ الرابط داخل النافذة فقط — يضيع عند إغلاقها
-        window.__file_url = extracted;
+        // حفظ الرابط داخل sessionStorage
+        sessionStorage.setItem(KEY, extracted);
 
-        // إزالة الرابط من شريط المتصفح قبل أن يشتغل أي كود آخر
+        // تنظيف الرابط
+        history.replaceState({}, "", window.location.pathname);
+    } else {
+        // في حال الفتح المباشر دون رابط → تنظيف أيضًا
         history.replaceState({}, "", window.location.pathname);
     }
 
@@ -72,7 +81,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v2.2</b></div>
+<div class="header-title"><b>صفحة التحميل v2.3</b></div>
 <div class="content-wrapper">
 <div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
@@ -120,7 +129,7 @@ document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=su
 document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
-let raw = window.__file_url || "";
+let raw = sessionStorage.getItem("__tamaa_file_url") || "";
 if(!raw||!raw.startsWith('http')){
   btn.classList.add('disabled');
   btn.textContent='رابط غير صالح';
