@@ -120,7 +120,11 @@ if (!window.extracted_download_url) {
     document.getElementById("status").innerText = "رابط غير صالح";
 } else {
     document.getElementById("status").innerText = "جاري التحميل...";
+    // مثال:
+    // startDownload(window.extracted_download_url);
 }
+</script>
+<script>
 const btn=document.getElementById('downloadBtn');
 const fileNameEl=document.getElementById('fileName');
 const fileSizeEl=document.getElementById('fileSize');
