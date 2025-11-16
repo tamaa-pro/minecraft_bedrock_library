@@ -55,7 +55,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v4.1</b></div>
+<div class="header-title"><b>صفحة التحميل v4.2</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -206,18 +206,13 @@ fileSourceEl.textContent='جاري التعرّف...';
 })();
 async function getFileUploadDate(fileUrl) {
     try {
-        // بروكسي لتجاوز CORS
         const proxied = "https://corsproxy.io/?" + encodeURIComponent(fileUrl);
-
         const response = await fetch(proxied, { method: "HEAD" });
         const lastModified = response.headers.get("last-modified");
-
         if (!lastModified) return "غير متوفر";
-
-        return new Date(lastModified).toLocaleString("ar-EG", {
+        return new Date(lastModified).toLocaleString("en-US", {
             hour12: false
         });
-
     } catch (e) {
         return "غير متوفر";
     }
