@@ -82,7 +82,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v2.5</b></div>
+<div class="header-title"><b>صفحة التحميل v2.6</b></div>
 <div class="content-wrapper">
 <div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
@@ -115,15 +115,6 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 ● إذا كان لديك إصدار مثبت مسبقاً فاحذفه قبل تثبيت النسخة الجديدة.
 </b>
 </div>
-<script>
-if (!window.extracted_download_url) {
-    document.getElementById("status").innerText = "رابط غير صالح";
-} else {
-    document.getElementById("status").innerText = "جاري التحميل...";
-    // مثال:
-    // startDownload(window.extracted_download_url);
-}
-</script>
 <script>
 const btn=document.getElementById('downloadBtn');
 const fileNameEl=document.getElementById('fileName');
@@ -243,6 +234,19 @@ a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!importa
 nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
 `;
 document.head.appendChild(style);
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const status = document.getElementById("status");
+
+    if (!window.extracted_download_url) {
+        status.textContent = "رابط غير صالح";
+    } else {
+        status.textContent = "جاري التحميل...";
+        // يمكنك هنا بدء التحميل
+        // startDownload(window.extracted_download_url);
+    }
+});
 </script>
 </body>
 </html>
