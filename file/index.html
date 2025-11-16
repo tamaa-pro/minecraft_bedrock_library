@@ -204,5 +204,25 @@ nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shado
 `;
 document.head.appendChild(style);
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    function goFull() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    }
+
+    // محاولة الدخول مباشرة بعد التحميل (قد يرفض المتصفح أحيانًا بدون تفاعل)
+    goFull();
+
+    // إذا خرج المستخدم من ملء الشاشة… ندخله مرة أخرى
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+            goFull();
+        }
+    });
+});
+</script>
 </body>
 </html>
