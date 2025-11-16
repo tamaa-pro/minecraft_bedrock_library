@@ -8,9 +8,7 @@
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script data-goatcounter="https://tamaa-pro.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
-
 <style>
-/* ــــــــــــــــ نفس التنسيق دون تغيير ــــــــــــــــ */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:#000;font-family:"Tajawal",sans-serif;user-select:none;touch-action:none}
 body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:15px}
@@ -50,17 +48,14 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 
 <div id="downloadSuggestion">
   إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات<br>
-  <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/"
-     style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">
-     فتح التطبيق
-  </a>
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
 </div>
 
 <button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v3.0</b></div>
+<div class="header-title"><b>صفحة التحميل</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -99,7 +94,6 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 </div>
 
 <script>
-/* عناصر الصفحة */
 const btn=document.getElementById('downloadBtn');
 const fileNameEl=document.getElementById('fileName');
 const fileSizeEl=document.getElementById('fileSize');
@@ -110,37 +104,21 @@ const tryAnywayLinkWrap=document.getElementById('tryAnywayLink');
 const tryAnywayAnchor=document.getElementById('tryAnywayAnchor');
 const sug=document.getElementById('downloadSuggestion');
 const notes=document.getElementById('notesBox');
-
 document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=sug.style.display==='none'?'block':'none'};
 document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
 setTimeout(()=>sug.style.display='none',3000);
 setTimeout(()=>notes.style.display='none',3000);
-
-/* ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
-   🔥 نظام استخراج الرابط الجديد (الذي طلبته)
-   ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ */
-
 let fileUrl = null;
-
-/* 1 — التحقق من وجود الرابط في sessionStorage */
 if (sessionStorage.getItem("fileUrl")) {
     fileUrl = sessionStorage.getItem("fileUrl");
 }
-
-/* 2 — إذا لم يكن محفوظاً، نستخرج من رابط الصفحة */
 if (!fileUrl) {
     const raw = location.search.replace("?", "");
-
     if (raw && raw.startsWith("http")) {
         fileUrl = raw;
         sessionStorage.setItem("fileUrl", fileUrl);
-
-        // إزالة الرابط من الـ URL
         history.replaceState({}, "", location.pathname);
-    }
-}
-
-/* 3 — إذا لم نجد الرابط نهائياً */
+    }}
 if (!fileUrl) {
     btn.classList.add('disabled');
     btn.textContent='رابط غير صالح';
@@ -152,29 +130,18 @@ if (!fileUrl) {
     tryAnywayLinkWrap.style.display='none';
     throw new Error("No file URL");
 }
-
-/* ـــــــــــــــــــــــــــــــــــــــــــــــــــــ
-   🔥 الآن نكمل النظام القديم كما هو باستخدام fileUrl
-   ـــــــــــــــــــــــــــــــــــــــــــــــــــــ */
-
 if (fileUrl.endsWith('/')) fileUrl = fileUrl.slice(0, -1);
-
 const rawName = fileUrl.split('/').pop() || '';
 const nameNoExt = rawName.replace(/\.[^.]+$/, '');
-
 fileNameEl.textContent='جاري استخراج الاسم...';
 fileSizeEl.textContent='جاري حساب الحجم...';
 fileSourceEl.textContent='جاري التعرّف...';
-
 (async ()=>{
     try {
         const res = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
-
         loadingCatArea.style.display='none';
         infoInner.style.display='block';
-
         fileNameEl.textContent = nameNoExt || 'غير معروف';
-
         try {
             const host = new URL(fileUrl).hostname;
             const parts = host.split('.');
@@ -183,33 +150,27 @@ fileSourceEl.textContent='جاري التعرّف...';
         } catch {
             fileSourceEl.textContent='غير معروف';
         }
-
         if (!res.ok) {
             btn.classList.add('error');
             btn.classList.remove('disabled');
             btn.textContent='الملف غير متاح';
             fileSizeEl.textContent='الملف غير موجود';
             tryAnywayLinkWrap.style.display='block';
-
             tryAnywayAnchor.onclick=e=>{
                 e.preventDefault();
                 tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
                 setTimeout(()=>location.href=fileUrl,300);
             };
-
             return;
         }
-
         let size = res.headers.get('content-length');
         if (size) {
             const mb = Math.round((size/1024/1024)*10)/10;
             fileSizeEl.textContent = mb + ' MB';
         } else fileSizeEl.textContent='غير متوفر';
-
         btn.classList.remove('disabled','error');
         btn.textContent='تحميل الملف';
         tryAnywayLinkWrap.style.display='none';
-
         btn.onclick=e=>{
             e.preventDefault();
             btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';
@@ -218,12 +179,10 @@ fileSourceEl.textContent='جاري التعرّف...';
             btn.onclick=null;
             setTimeout(()=>location.href=fileUrl,350);
         };
-
     } catch {
         loadingCatArea.style.display='none';
         infoInner.style.display='block';
         fileNameEl.textContent = nameNoExt || 'غير معروف';
-
         try {
             const host=new URL(fileUrl).hostname;
             const parts=host.split('.');
@@ -232,24 +191,20 @@ fileSourceEl.textContent='جاري التعرّف...';
         } catch {
             fileSourceEl.textContent='غير معروف';
         }
-
         btn.textContent='التحقق فشل — جرب الرابط يدوياً';
         btn.classList.add('disabled');
         tryAnywayLinkWrap.style.display='block';
-
         tryAnywayAnchor.onclick=e=>{
             e.preventDefault();
             tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
             setTimeout(()=>location.href=fileUrl,300);
         };
-
         fileSizeEl.textContent='—';
     }
 })();
 </script>
 
 <script>
-/* منع تمييز اللمس */
 const style=document.createElement('style');
 style.textContent=`
 *{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none!important}
