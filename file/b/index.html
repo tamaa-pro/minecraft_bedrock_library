@@ -2,33 +2,34 @@
 <html lang="ar" dir="rtl">
 <head>
 <script>
-// نظام ثابت لاستخراج رابط الملف واستعمال sessionStorage
-
 (function () {
-    const KEY = "__tamaa_file_url";
+    const KEY = "download_url";
 
-    // هل الرابط محفوظ مسبقًا؟
-    if (sessionStorage.getItem(KEY)) {
-        // إزالة الرابط من شريط المتصفح دائمًا
-        history.replaceState({}, "", window.location.pathname);
+    // 1. التحقق من وجود رابط محفوظ
+    const savedUrl = sessionStorage.getItem(KEY);
+    if (savedUrl) {
+        window.extracted_download_url = savedUrl;
+        return; // انتهى الأمر — لا نحتاج لاستخراج جديد
+    }
+
+    // 2. التحقق من وجود رابط الملف في رابط الصفحة
+    const currentUrl = new URL(window.location.href);
+    const full = currentUrl.searchParams.get("file");
+
+    // إذا كان رابط الملف موجوداً
+    if (full && full.trim() !== "") {
+        // حفظه
+        sessionStorage.setItem(KEY, full);
+        window.extracted_download_url = full;
+
+        // إزالة الرابط من رابط الصفحة
+        currentUrl.searchParams.delete("file");
+        window.history.replaceState({}, "", currentUrl.href);
         return;
     }
 
-    // فحص الرابط في URL
-    let extracted = window.location.search.substring(1);
-
-    if (extracted && extracted.startsWith("http")) {
-
-        // حفظ الرابط داخل sessionStorage
-        sessionStorage.setItem(KEY, extracted);
-
-        // تنظيف الرابط
-        history.replaceState({}, "", window.location.pathname);
-    } else {
-        // في حال الفتح المباشر دون رابط → تنظيف أيضًا
-        history.replaceState({}, "", window.location.pathname);
-    }
-
+    // 3. لا رابط محفوظ ولا موجود → الرابط غير صالح
+    window.extracted_download_url = null;
 })();
 </script>
 <meta charset="utf-8">
@@ -81,7 +82,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v2.3</b></div>
+<div class="header-title"><b>صفحة التحميل v2.4</b></div>
 <div class="content-wrapper">
 <div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
@@ -115,6 +116,11 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 </b>
 </div>
 <script>
+if (!window.extracted_download_url) {
+    document.getElementById("status").innerText = "رابط غير صالح";
+} else {
+    document.getElementById("status").innerText = "جاري التحميل...";
+}
 const btn=document.getElementById('downloadBtn');
 const fileNameEl=document.getElementById('fileName');
 const fileSizeEl=document.getElementById('fileSize');
