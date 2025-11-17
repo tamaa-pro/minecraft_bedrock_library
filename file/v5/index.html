@@ -250,18 +250,79 @@ async function getFileUploadDate(fileUrl) {
 }
 </script>
 <script>
-const infoInner = document.getElementById("infoInner");
-const extraInfo = document.getElementById("extraInfo");
+(function(){
+  // إعداد نبضة CSS مؤقتة — يمكن وضعها في ملف CSS المركزي إذا رغبت
+  const pulseCss = document.createElement('style');
+  pulseCss.textContent = `
+  @keyframes pulseOnce {
+    0% { background-color: #222; }
+    50% { background-color: #2c2c2c; }
+    100% { background-color: #222; }
+  }
+  `;
+  document.head.appendChild(pulseCss);
 
-let expanded = false;
-
-infoInner.addEventListener("dblclick", () => {
-    if (!expanded) {
-        extraInfo.style.display = "block";
-        expanded = true;
+  // ننتظر DOM جاهز (يضمن وجود العناصر)
+  function ready(fn){
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(fn, 0);
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
     }
-});
-infoInner.style.animation = "pulseOnce 0.4s";
+  }
+
+  ready(function(){
+    const infoInner = document.getElementById("infoInner");
+    const extraInfo = document.getElementById("extraInfo");
+
+    if (!infoInner || !extraInfo) return; // عناصر غير موجودة — لا نفعل شيئاً
+
+    // حالة التوسيع
+    let expanded = false;
+
+    // دالة للتوسيع
+    function expand() {
+      if (expanded) return;
+      // عرض القسم الإضافي وتعديل الستايل إن احتجنا
+      extraInfo.style.display = "block";
+      // تأثير نبضة خفيف
+      infoInner.style.animation = "pulseOnce 0.35s";
+      // إزالة الأنيميشن بعد انتهائه حتى لا يتكرر بلا داع
+      setTimeout(()=> infoInner.style.animation = '', 400);
+      expanded = true;
+
+      // لو أردت زيادة ارتفاع الصندوق تدريجياً يمكنك إضافة انتقال
+      extraInfo.style.maxHeight = '1000px';
+      extraInfo.style.overflow = 'hidden';
+      extraInfo.style.transition = 'max-height 260ms ease';
+    }
+
+    // 1) دعم dblclick للماوس (وسائل الإدخال التقليدية)
+    infoInner.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      expand();
+    });
+
+    // 2) دعم اللمس: كشف ضربة مزدوجة (double-tap)
+    // نستخدم عتبة زمنية 300ms بين الضربتين
+    let lastTap = 0;
+    infoInner.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      const dt = now - lastTap;
+      lastTap = now;
+      if (dt > 0 && dt <= 350) {
+        e.preventDefault();
+        expand();
+      }
+    });
+
+    // 3) خيار بديل: النقر الطويل لفتح (إذا رغبت لاحقًا)
+    // infoInner.addEventListener('longpress', expand); // غير معرف افتراضياً
+
+    // منع التداخل مع عناصر داخل infoInner (مثل محاولات اختيار النص)
+    infoInner.style.cursor = 'default';
+  });
+})();
 </script>
 <script>
 getFileUploadDate(fileUrl).then(date => {
