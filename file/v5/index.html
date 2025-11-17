@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>صفحة التحميل</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
+<script data-goatcounter="https://tamaa-pro.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#000;font-family:"Tajawal",sans-serif;user-select:none;touch-action:none}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:15px}
+.container{width:100%;max-width:400px;background:#333;padding:10px;border-radius:8px}
+.header-title{text-align:center;font-size:20px;color:#fff;margin-bottom:10px}
+.content-wrapper{display:flex;gap:10px;width:100%}
+.icon-box{width:90px;height:90px;flex-shrink:0}
+.icon-box img{width:100%;height:100%;border-radius:5px;object-fit:cover;pointer-events:none;-webkit-user-drag:none;user-drag:none}
+.info-box{flex:1;background:#222;border-radius:8px;padding:5px;color:#ccc;font-size:9px;min-height:90px}
+.info-inner{display:none;width:100%}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0}
+.info-label{color:#aaa;min-width:30px;text-align:right}
+.info-value{color:#fff;flex:1;text-align:left;word-break:break-all}
+.loading-cat{font-size:20px;animation:jump .8s ease-in-out infinite;display:inline-block}
+@keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#downloadBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:15px;padding:12px;background:#00FF00;color:#000;text-align:center;font-weight:bold;border-radius:8px;text-decoration:none;font-size:14px;transition:.12s;cursor:pointer;border:0}
+#downloadBtn.disabled{background:#555;color:#222;pointer-events:none}
+#downloadBtn.error{background:#8B0000;color:#fff;pointer-events:none}
+.loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#downloadSuggestion{position:fixed;top:0;left:0;right:0;background:#222;color:#ccc;font-size:10px;text-align:center;padding:10px;border-bottom:1px solid #444;z-index:1000;display:none}
+.bottom-notes{position:fixed;bottom:0;left:0;right:0;background:#111;color:#ccc;padding:5px 30px;border-top:1px solid #333;z-index:999}
+.toggle-btn{position:fixed;padding:3px 6px;background:#333;color:#ccc;font-size:10px;border:none;z-index:2000}
+#toggleSuggestionBtn{right:0;top:0}
+#toggleNotesBtn{right:0;bottom:0}
+#tryAnywayLink{display:none;margin-top:8px;text-align:center}
+#tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;cursor:pointer}
+</style>
+</head>
+
+<script>
+document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("dragstart", e=>e.preventDefault());
+</script>
+
+<body>
+
+<div id="downloadSuggestion">
+  إذا كنت من المتصفح ولا تملك التطبيق ننصحك باستخدام مكتبة الإصدارات<br>
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/" style="padding:2px 8px;background:#0a0;color:#fff;border-radius:4px;text-decoration:none;margin-right:5px">فتح التطبيق</a>
+</div>
+
+<button id="toggleSuggestionBtn" class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+<button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
+
+<div class="container">
+<div class="header-title"><b>صفحة التحميل</b></div>
+
+<div class="content-wrapper">
+<div class="icon-box">
+<img src="https://d.top4top.io/p_3585efanh1.jpg">
+</div>
+
+<div class="info-box">
+<div id="loadingCatArea" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:20px">
+<span class="loading-cat">🐈‍⬛</span>
+</div>
+
+<div class="info-inner" id="infoInner">
+<div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">—</div></div>
+<div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
+<div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
+<div class="info-row"><div class="info-label">تاريخ رفع الملف :</div><div class="info-value" id="uploadDate">—</div></div>
+<div id="moreInfoToggle" style="color:#0f0;text-align:center;font-size:10px;margin-top:4px;cursor:pointer">عرض المزيد من المعلومات...</div>
+<div id="extraInfo" style="display:none">
+<div class="info-row"><div class="info-label">الخادم :</div><div class="info-value" id="serverName">—</div></div>
+<div class="info-row"><div class="info-label">استئناف :</div><div class="info-value" id="resumeSupport">—</div></div>
+<div class="info-row"><div class="info-label">التشفير :</div><div class="info-value" id="transferEncoding">—</div></div>
+<div class="info-row"><div class="info-label">الاستجابة :</div><div class="info-value" id="responseTime">—</div></div>
+<div class="info-row"><div class="info-label">الحالة :</div><div class="info-value" id="statusCode">—</div></div>
+</div>
+
+</div>
+</div>
+</div>
+
+<a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
+
+<div id="tryAnywayLink">
+<a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
+</div>
+
+</div>
+
+<div class="bottom-notes" id="notesBox">
+<b style="font-size:8px">
+● ظهور خطأ "الملف غير متاح" يعني أن الملف غير منشور بعد أو أن رابط التحميل خاطئ.<br>
+● إذا لم يستجب زر التحميل فحدّث الصفحة أو تأكد من الشبكة.<br>
+● إذا ظهر أن الرابط غير صالح فهذا يعني عدم وجود رابط ملف.<br>
+● الانقطاع المتكرر في التحميل قد يؤدي لتلف الملف.<br>
+● إذا كان لديك إصدار مثبت مسبقاً فاحذفه قبل تثبيت النسخة الجديدة.
+</b>
+</div>
+
+<script>
+const btn=document.getElementById('downloadBtn');
+const fileNameEl=document.getElementById('fileName');
+const fileSizeEl=document.getElementById('fileSize');
+const fileSourceEl=document.getElementById('fileSource');
+const infoInner=document.getElementById('infoInner');
+const loadingCatArea=document.getElementById('loadingCatArea');
+const tryAnywayLinkWrap=document.getElementById('tryAnywayLink');
+const tryAnywayAnchor=document.getElementById('tryAnywayAnchor');
+const sug=document.getElementById('downloadSuggestion');
+const notes=document.getElementById('notesBox');
+document.getElementById('toggleSuggestionBtn').onclick=()=>{sug.style.display=sug.style.display==='none'?'block':'none'};
+document.getElementById('toggleNotesBtn').onclick=()=>{notes.style.display=notes.style.display==='none'?'block':'none'};
+setTimeout(()=>sug.style.display='none',3000);
+setTimeout(()=>notes.style.display='none',3000);
+let fileUrl = null;
+if (sessionStorage.getItem("fileUrl")) {
+    fileUrl = sessionStorage.getItem("fileUrl");
+}
+if (!fileUrl) {
+    const raw = location.search.replace("?", "");
+    if (raw && raw.startsWith("http")) {
+        fileUrl = raw;
+        sessionStorage.setItem("fileUrl", fileUrl);
+        history.replaceState({}, "", location.pathname);
+    }}
+if (!fileUrl) {
+    btn.classList.add('disabled');
+    btn.textContent='رابط غير صالح';
+    loadingCatArea.style.display='none';
+    infoInner.style.display='block';
+    fileNameEl.textContent='رابط غير صالح';
+    fileSizeEl.textContent='—';
+    fileSourceEl.textContent='—';
+    tryAnywayLinkWrap.style.display='none';
+    throw new Error("No file URL");
+}
+if (fileUrl.endsWith('/')) fileUrl = fileUrl.slice(0, -1);
+const rawName = fileUrl.split('/').pop() || '';
+const nameNoExt = rawName.replace(/\.[^.]+$/, '');
+fileNameEl.textContent='جاري استخراج الاسم...';
+fileSizeEl.textContent='جاري حساب الحجم...';
+fileSourceEl.textContent='جاري التعرّف...';
+(async ()=>{
+    try {
+        const res = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
+        loadingCatArea.style.display='none';
+        infoInner.style.display='block';
+        fileNameEl.textContent = nameNoExt || 'غير معروف';
+        try {
+            const host = new URL(fileUrl).hostname;
+            const parts = host.split('.');
+            let domain = (parts.length <= 2) ? parts[0] : parts[parts.length-2];
+            fileSourceEl.textContent = domain || 'غير معروف';
+        } catch {
+            fileSourceEl.textContent='غير معروف';
+        }
+        if (!res.ok) {
+            btn.classList.add('error');
+            btn.classList.remove('disabled');
+            btn.textContent='الملف غير متاح';
+            fileSizeEl.textContent='الملف غير موجود';
+            tryAnywayLinkWrap.style.display='block';
+            tryAnywayAnchor.onclick=e=>{
+                e.preventDefault();
+                tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
+                setTimeout(()=>location.href=fileUrl,300);
+            };
+            return;
+        }
+        let size = res.headers.get('content-length');
+        if (size) {
+            const mb = Math.round((size/1024/1024)*10)/10;
+            fileSizeEl.textContent = mb + ' MB';
+        } else fileSizeEl.textContent='غير متوفر';
+        btn.classList.remove('disabled','error');
+        btn.textContent='تحميل الملف';
+        tryAnywayLinkWrap.style.display='none';
+        btn.onclick=e=>{
+            e.preventDefault();
+            btn.innerHTML='<span class="loading-circle"></span><span>جاري التحميل</span>';
+            btn.style.background='#0c0';
+            btn.style.color='#000';
+            btn.onclick=null;
+            setTimeout(()=>location.href=fileUrl,350);
+        };
+    } catch {
+        loadingCatArea.style.display='none';
+        infoInner.style.display='block';
+        fileNameEl.textContent = nameNoExt || 'غير معروف';
+        try {
+            const host=new URL(fileUrl).hostname;
+            const parts=host.split('.');
+            let domain=(parts.length<=2)?parts[0]:parts[parts.length-2];
+            fileSourceEl.textContent=domain||'غير معروف';
+        } catch {
+            fileSourceEl.textContent='غير معروف';
+        }
+        btn.textContent='التحقق فشل — جرب الرابط يدوياً';
+        btn.classList.add('disabled');
+        tryAnywayLinkWrap.style.display='block';
+        tryAnywayAnchor.onclick=e=>{
+            e.preventDefault();
+            tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
+            setTimeout(()=>location.href=fileUrl,300);
+        };
+        fileSizeEl.textContent='—';
+    }
+})();
+async function getFileUploadDate(fileUrl) {
+    try {
+        const proxied = "https://corsproxy.io/?" + encodeURIComponent(fileUrl);
+        const response = await fetch(proxied, { method: "HEAD" });
+        const lastModified = response.headers.get("last-modified");
+        if (!lastModified) return "غير متوفر";
+        const date = new Date(lastModified);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        let hours = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const isPM = hours >= 12;
+        const period = isPM ? "م" : "ص";
+        hours = hours % 12;
+        if (hours === 0) hours = 12;
+        return `${year}/${month}/${day} - ${hours}:${minutes} ${period}`;
+    } catch (e) {
+        return "غير متوفر";
+    }
+}
+</script>
+<script>
+getFileUploadDate(fileUrl).then(date => {
+    document.getElementById("uploadDate").textContent = date;
+});
+</script>
+  
+<script>
+const style=document.createElement('style');
+style.textContent=`
+*{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none!important}
+:focus{outline:none!important;box-shadow:none!important;border-color:transparent!important}
+button,[role="button"],input[type="submit"],input[type="button"],.btn,.button-class{transition:transform .05s ease}
+button:active,[role="button"]:active,input[type="submit"]:active,input[type="button"]:active,.btn:active,.button-class:active{transform:translateY(2px)!important}
+a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!important}
+nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
+`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
