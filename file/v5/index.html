@@ -56,7 +56,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v5.4</b></div>
+<div class="header-title"><b>صفحة التحميل v5.5</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -69,16 +69,16 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 </div>
 
 <div class="info-inner" id="infoInner">
-<div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">—</div></div>
-<div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">—</div></div>
-<div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">—</div></div>
-<div class="info-row"><div class="info-label">تاريخ رفع الملف :</div><div class="info-value" id="uploadDate">—</div></div>
+<div class="info-row"><div class="info-label">اسم الملف :</div><div class="info-value" id="fileName">--</div></div>
+<div class="info-row"><div class="info-label">حجم الملف :</div><div class="info-value" id="fileSize">--</div></div>
+<div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">--</div></div>
+<div class="info-row"><div class="info-label">تاريخ رفع الملف :</div><div class="info-value" id="uploadDate">--</div></div>
 <div id="extraInfo" style="display:none">
-<div class="info-row"><div class="info-label">اسم الخادم :</div><div class="info-value" id="serverName">—</div></div>
-<div class="info-row"><div class="info-label">دعم الاستئناف :</div><div class="info-value" id="resumeSupport">—</div></div>
-<div class="info-row"><div class="info-label">التشفير النقل :</div><div class="info-value" id="transferEncoding">—</div></div>
-<div class="info-row"><div class="info-label">سرعة الاستجابة :</div><div class="info-value" id="responseTime">—</div></div>
-<div class="info-row"><div class="info-label">الحالة :</div><div class="info-value" id="statusCode">—</div></div>
+<div class="info-row"><div class="info-label">اسم الخادم :</div><div class="info-value" id="serverName">--</div></div>
+<div class="info-row"><div class="info-label">دعم الاستئناف :</div><div class="info-value" id="resumeSupport">--</div></div>
+<div class="info-row"><div class="info-label">التشفير النقل :</div><div class="info-value" id="transferEncoding">--</div></div>
+<div class="info-row"><div class="info-label">سرعة الاستجابة :</div><div class="info-value" id="responseTime">--</div></div>
+<div class="info-row"><div class="info-label">الحالة :</div><div class="info-value" id="statusCode">--</div></div>
 </div>
 
 </div>
@@ -216,7 +216,7 @@ document.getElementById("transferEncoding").textContent =
         } catch {
             fileSourceEl.textContent='غير معروف';
         }
-        btn.textContent='التحقق فشل — جرب الرابط يدوياً';
+        btn.textContent='التحقق فشل - جرب الرابط يدويا';
         btn.classList.add('disabled');
         tryAnywayLinkWrap.style.display='block';
         tryAnywayAnchor.onclick=e=>{
@@ -224,7 +224,7 @@ document.getElementById("transferEncoding").textContent =
             tryAnywayAnchor.innerHTML='<span class="loading-circle"></span> جارٍ الفتح...';
             setTimeout(()=>location.href=fileUrl,300);
         };
-        fileSizeEl.textContent='—';
+        fileSizeEl.textContent='--';
     }
 })();
 async function getFileUploadDate(fileUrl) {
@@ -245,7 +245,7 @@ async function getFileUploadDate(fileUrl) {
         if (hours === 0) hours = 12;
         return `${year}/${month}/${day} - ${hours}:${minutes} ${period}`;
     } catch (e) {
-        return "غير متوفر";
+        return "--";
     }
 }
 </script>
