@@ -149,19 +149,14 @@ fileSourceEl.textContent='جاري التعرّف...';
 (async ()=>{
     try {
         const res = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
-// حساب مدة الاستجابة
 const startTime = performance.now();
 const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
 const endTime = performance.now();
 document.getElementById("responseTime").textContent = Math.round(endTime - startTime) + "ms";
-// حالة الوصول
 document.getElementById("statusCode").textContent = response.status + " " + response.statusText;
-// اسم الخادم
 document.getElementById("serverName").textContent = response.headers.get("server") || "تم رفض الوصول";
-// دعم المستأنف
 const resume = response.headers.get("accept-ranges") === "bytes" ? "نعم" : "لا";
 document.getElementById("resumeSupport").textContent = resume;
-// تشفير النقل
 document.getElementById("transferEncoding").textContent =
     response.headers.get("transfer-encoding") || "تم رفض الوصول";
         loadingCatArea.style.display='none';
@@ -251,7 +246,6 @@ async function getFileUploadDate(fileUrl) {
 </script>
 <script>
 (function(){
-  // إعداد نبضة CSS مؤقتة — يمكن وضعها في ملف CSS المركزي إذا رغبت
   const pulseCss = document.createElement('style');
   pulseCss.textContent = `
   @keyframes pulseOnce {
@@ -261,8 +255,6 @@ async function getFileUploadDate(fileUrl) {
   }
   `;
   document.head.appendChild(pulseCss);
-
-  // ننتظر DOM جاهز (يضمن وجود العناصر)
   function ready(fn){
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       setTimeout(fn, 0);
@@ -270,41 +262,25 @@ async function getFileUploadDate(fileUrl) {
       document.addEventListener('DOMContentLoaded', fn);
     }
   }
-
   ready(function(){
     const infoInner = document.getElementById("infoInner");
     const extraInfo = document.getElementById("extraInfo");
-
-    if (!infoInner || !extraInfo) return; // عناصر غير موجودة — لا نفعل شيئاً
-
-    // حالة التوسيع
+    if (!infoInner || !extraInfo) return;
     let expanded = false;
-
-    // دالة للتوسيع
     function expand() {
       if (expanded) return;
-      // عرض القسم الإضافي وتعديل الستايل إن احتجنا
       extraInfo.style.display = "block";
-      // تأثير نبضة خفيف
       infoInner.style.animation = "pulseOnce 0.35s";
-      // إزالة الأنيميشن بعد انتهائه حتى لا يتكرر بلا داع
       setTimeout(()=> infoInner.style.animation = '', 400);
       expanded = true;
-
-      // لو أردت زيادة ارتفاع الصندوق تدريجياً يمكنك إضافة انتقال
       extraInfo.style.maxHeight = '1000px';
       extraInfo.style.overflow = 'hidden';
       extraInfo.style.transition = 'max-height 260ms ease';
     }
-
-    // 1) دعم dblclick للماوس (وسائل الإدخال التقليدية)
     infoInner.addEventListener('dblclick', (e) => {
       e.stopPropagation();
       expand();
     });
-
-    // 2) دعم اللمس: كشف ضربة مزدوجة (double-tap)
-    // نستخدم عتبة زمنية 300ms بين الضربتين
     let lastTap = 0;
     infoInner.addEventListener('touchend', (e) => {
       const now = Date.now();
@@ -315,11 +291,6 @@ async function getFileUploadDate(fileUrl) {
         expand();
       }
     });
-
-    // 3) خيار بديل: النقر الطويل لفتح (إذا رغبت لاحقًا)
-    // infoInner.addEventListener('longpress', expand); // غير معرف افتراضياً
-
-    // منع التداخل مع عناصر داخل infoInner (مثل محاولات اختيار النص)
     infoInner.style.cursor = 'default';
   });
 })();
@@ -340,12 +311,10 @@ async function measureResponseTime(url) {
         return "--";
     }
 }
-
-// تحديث مباشر كل نصف ثانية
 setInterval(async () => {
     const ms = await measureResponseTime(fileUrl);
     document.getElementById("responseTime").textContent = ms === "—" ? "—" : ms + " ms";
-}, 500);
+}, 1000);
 </script>
   
 <script>
