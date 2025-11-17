@@ -56,7 +56,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v5.5</b></div>
+<div class="header-title"><b>صفحة التحميل v5.6</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -157,13 +157,13 @@ document.getElementById("responseTime").textContent = Math.round(endTime - start
 // حالة الوصول
 document.getElementById("statusCode").textContent = response.status + " " + response.statusText;
 // اسم الخادم
-document.getElementById("serverName").textContent = response.headers.get("server") || "غير متوفر";
+document.getElementById("serverName").textContent = response.headers.get("server") || "تم رفض الوصول";
 // دعم المستأنف
 const resume = response.headers.get("accept-ranges") === "bytes" ? "نعم" : "لا";
 document.getElementById("resumeSupport").textContent = resume;
 // تشفير النقل
 document.getElementById("transferEncoding").textContent =
-    response.headers.get("transfer-encoding") || "غير متوفر";
+    response.headers.get("transfer-encoding") || "تم رفض الوصول";
         loadingCatArea.style.display='none';
         infoInner.style.display='block';
         fileNameEl.textContent = nameNoExt || 'غير معروف';
@@ -328,6 +328,24 @@ async function getFileUploadDate(fileUrl) {
 getFileUploadDate(fileUrl).then(date => {
     document.getElementById("uploadDate").textContent = date;
 });
+async function measureResponseTime(url) {
+    const proxied = "https://corsproxy.io/?" + encodeURIComponent(url);
+
+    const start = performance.now();
+    try {
+        await fetch(proxied, { method: "HEAD", cache: "no-store" });
+        const end = performance.now();
+        return Math.round(end - start);
+    } catch {
+        return "--";
+    }
+}
+
+// تحديث مباشر كل نصف ثانية
+setInterval(async () => {
+    const ms = await measureResponseTime(fileUrl);
+    document.getElementById("responseTime").textContent = ms === "—" ? "—" : ms + " ms";
+}, 500);
 </script>
   
 <script>
