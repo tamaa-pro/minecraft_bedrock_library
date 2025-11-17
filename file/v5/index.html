@@ -55,7 +55,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل</b></div>
+<div class="header-title"><b>صفحة التحميل v5.1</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -149,6 +149,21 @@ fileSourceEl.textContent='جاري التعرّف...';
 (async ()=>{
     try {
         const res = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
+// حساب مدة الاستجابة
+const startTime = performance.now();
+const response = await fetch("https://corsproxy.io/?" + encodeURIComponent(fileUrl), { method:"HEAD" });
+const endTime = performance.now();
+document.getElementById("responseTime").textContent = Math.round(endTime - startTime) + "ms";
+// حالة الوصول
+document.getElementById("statusCode").textContent = response.status + " " + response.statusText;
+// اسم الخادم
+document.getElementById("serverName").textContent = response.headers.get("server") || "غير متوفر";
+// دعم المستأنف
+const resume = response.headers.get("accept-ranges") === "bytes" ? "نعم" : "لا";
+document.getElementById("resumeSupport").textContent = resume;
+// تشفير النقل
+document.getElementById("transferEncoding").textContent =
+    response.headers.get("transfer-encoding") || "غير متوفر";
         loadingCatArea.style.display='none';
         infoInner.style.display='block';
         fileNameEl.textContent = nameNoExt || 'غير معروف';
@@ -238,6 +253,13 @@ async function getFileUploadDate(fileUrl) {
 getFileUploadDate(fileUrl).then(date => {
     document.getElementById("uploadDate").textContent = date;
 });
+const moreToggle = document.getElementById("moreInfoToggle");
+const extraInfo = document.getElementById("extraInfo");
+
+moreToggle.onclick = () => {
+    extraInfo.style.display = "block";
+    moreToggle.style.display = "none";
+};
 </script>
   
 <script>
