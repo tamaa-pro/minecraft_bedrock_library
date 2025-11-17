@@ -36,6 +36,7 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 #toggleNotesBtn{right:0;bottom:0}
 #tryAnywayLink{display:none;margin-top:8px;text-align:center}
 #tryAnywayLink a{color:#ccc;font-size:12px;text-decoration:underline;cursor:pointer}
+@keyframes pulseOnce {0% { background-color:#222; } 50% { background-color:#2c2c2c; } 100% { background-color:#222; }}
 </style>
 </head>
 
@@ -58,9 +59,9 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <div class="header-title"><b>صفحة التحميل v5.1</b></div>
 
 <div class="content-wrapper">
-<!--<div class="icon-box">
+<div class="icon-box">
 <img src="https://d.top4top.io/p_3585efanh1.jpg">
-</div>-->
+</div>
 
 <div class="info-box">
 <div id="loadingCatArea" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:20px">
@@ -253,13 +254,18 @@ async function getFileUploadDate(fileUrl) {
 getFileUploadDate(fileUrl).then(date => {
     document.getElementById("uploadDate").textContent = date;
 });
-const moreToggle = document.getElementById("moreInfoToggle");
+const infoInner = document.getElementById("infoInner");
 const extraInfo = document.getElementById("extraInfo");
 
-moreToggle.onclick = () => {
-    extraInfo.style.display = "block";
-    moreToggle.style.display = "none";
-};
+let expanded = false;
+
+infoInner.addEventListener("dblclick", () => {
+    if (!expanded) {
+        extraInfo.style.display = "block";
+        expanded = true;
+    }
+});
+infoInner.style.animation = "pulseOnce 0.4s";
 </script>
   
 <script>
