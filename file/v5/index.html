@@ -56,7 +56,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل v5.2</b></div>
+<div class="header-title"><b>صفحة التحميل v5.3</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -250,9 +250,6 @@ async function getFileUploadDate(fileUrl) {
 }
 </script>
 <script>
-getFileUploadDate(fileUrl).then(date => {
-    document.getElementById("uploadDate").textContent = date;
-});
 const infoInner = document.getElementById("infoInner");
 const extraInfo = document.getElementById("extraInfo");
 
@@ -265,6 +262,11 @@ infoInner.addEventListener("dblclick", () => {
     }
 });
 infoInner.style.animation = "pulseOnce 0.4s";
+</script>
+<script>
+getFileUploadDate(fileUrl).then(date => {
+    document.getElementById("uploadDate").textContent = date;
+});
 </script>
   
 <script>
