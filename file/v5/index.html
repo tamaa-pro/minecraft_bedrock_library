@@ -56,7 +56,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <button id="toggleNotesBtn" class="toggle-btn"><i class="fas fa-chevron-up"></i></button>
 
 <div class="container">
-<div class="header-title"><b>صفحة التحميل</b></div>
+<div class="header-title"><b>صفحة التحميل v5.7</b></div>
 
 <div class="content-wrapper">
 <div class="icon-box">
@@ -152,7 +152,7 @@ const endTime = performance.now();
 document.getElementById("responseTime").textContent = Math.round(endTime - startTime) + "ms";
 document.getElementById("statusCode").textContent = response.status + " " + response.statusText;
 document.getElementById("serverName").textContent = response.headers.get("server") || "تم رفض الوصول";
-const resume = response.headers.get("accept-ranges") === "bytes" ? "مدعوم" : "غير مدعوم ⚠︎";
+const resume = response.headers.get("accept-ranges") === "bytes" ? "نعم" : "لا";
 document.getElementById("resumeSupport").textContent = resume;
 document.getElementById("transferEncoding").textContent =
     response.headers.get("transfer-encoding") || "تم رفض الوصول";
