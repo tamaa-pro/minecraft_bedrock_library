@@ -33,6 +33,42 @@ html, body {margin: 0;padding: 0;background-color: #333;color: white;font-family
 .container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #444;border-radius: 15px;box-shadow: 0 0 10px #000;}
 a, h2, p, span {color: white;text-decoration: none;}
 </style>
+<style>
+* {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+}
+a, button, input, [role="button"] {
+    touch-action: manipulation !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+button, 
+[role="button"], 
+input[type="submit"], 
+input[type="button"],
+.btn,
+.button-class {
+    transition: transform 0.05s ease;
+}
+button:active, 
+[role="button"]:active, 
+input[type="submit"]:active, 
+input[type="button"]:active,
+.btn:active, 
+.button-class:active,
+.open-btn:active,
+.download-btn:active,
+.show-copies:active,
+.report-btn:active {
+    transform: translateY(2px) !important;
+}
+a:active, img:active,
+a:focus, img:focus {
+    transform: none !important;
+    opacity: 1 !important;
+}
+</style>
 </head>
 <body>
 <script>
@@ -205,56 +241,6 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 </div><br>
 <hr/>
 
-<script>
-const style = document.createElement('style');
-style.textContent = `
-    *{
-        -webkit-tap-highlight-color: transparent !important;
-        -webkit-touch-callout: none !important;
-    }
-    :focus {
-        outline: none !important;
-        box-shadow: none !important;
-        border-color: transparent !important;
-    }
-    button, 
-    [role="button"], 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .button-class
-    {
-        transition: transform 0.05s ease;
-    }
-    button:active, 
-    [role="button"]:active, 
-    input[type="submit"]:active, 
-    input[type="button"]:active,
-    .btn:active, 
-    .button-class:active,
-    .open-btn:active,
-    .download-btn:active,
-    .show-copies:active,
-    .report-btn:active
-    {
-        transform: translateY(2px) !important;
-    }
-    a:active, img:active,
-    a:focus, img:focus {
-        transform: none !important;
-        opacity: 1 !important;
-    }
-    nav a:active,
-    ul li a:active,
-    .sidebar a:active
-    {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-`;
-document.head.appendChild(style);
-</script>
-
 <div id="comments-container">
 
 <div class="comments-header">
@@ -296,7 +282,7 @@ document.head.appendChild(style);
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/18</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (17:10)-110</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (17:10)-110.2</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
