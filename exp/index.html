@@ -180,8 +180,8 @@ const images=[
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;img.src=src;
 img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});img.onload=()=>{img.style.display="block";spinner.remove();};img.onerror=()=>{const errorWrapper=document.createElement("div");errorWrapper.style.position="absolute";errorWrapper.style.display="flex";errorWrapper.style.flexDirection="column";errorWrapper.style.alignItems="center";errorWrapper.style.justifyContent="center";errorWrapper.style.width="100%";errorWrapper.style.height="100%";const errorIcon=document.createElement("div");errorIcon.innerHTML=`<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText=document.createElement("span");errorText.textContent="فشل التحميل";errorText.style.color="#FF0000";errorText.style.fontSize="12px";errorText.style.marginTop="5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);};});
 </script>
-<br /><hr />
-<div style="background:#222;padding:10px">
+<br />
+<div style="background:#222;padding:10px;border-radius:8px">
 <p style="line-height: 1.6;">
   ✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة للهواتف الضعيفة والقوية ، و كذلك أقسام متنوعة .
 </p>
@@ -201,14 +201,12 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
     • الإصدار 2.0 هو بديل للنسخة القديمة التي أغلقت في 2025/02/07 .<br/>
     • التحديثات داخلية ولا تتطلب تحميل التطبيق من جديد إلا في حالات خاصة .<br/>
 </p>
-</div>
-<hr/>
-<sifaw style="color: #cccccc; font-size: 14px;">
-    ⚠️ هذا التطبيق غير رسمي ولا يتبع Mojang أو Microsoft .
+<sifaw style="background:#111;border-radius:8px;color: #cccccc; font-size: 14px;">
+هذا التطبيق غير رسمي ولا يتبع Mojang أو Microsoft .
 <br/>
-    🧱 ماين كرافت هي علامة تجارية مملوكة لمايكروسوفت .
+ماين كرافت هي علامة تجارية مملوكة لمايكروسوفت .
 </sifaw>
-<hr/>
+</div>
 <div class="btn" style="margin-top: 25px; text-align: center;">
 <a href="https://www.facebook.com/minecraft.bedrock.library?mibextid=ZbWKwL" target="_blank" style="display: inline-block; background-color: #1877f2; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: Arial, sans-serif; transition: background-color 0.3s;">
 <i class="fab fa-facebook-f" style="margin-right: 8px;margin-lift: 7px;margin-top: 5px;"></i> صفحة التطبيق على الفيسبوك</a>
