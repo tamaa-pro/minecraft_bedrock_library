@@ -74,11 +74,8 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <div class="info-row"><div class="info-label">نطاق الملف :</div><div class="info-value" id="fileSource">--</div></div>
 <div class="info-row"><div class="info-label">تاريخ رفع الملف :</div><div class="info-value" id="uploadDate">--</div></div>
 <div id="extraInfo" style="display:none">
-<div class="info-row"><div class="info-label">اسم الخادم :</div><div class="info-value" id="serverName">--</div></div>
 <div class="info-row"><div class="info-label">دعم الاستئناف :</div><div class="info-value" id="resumeSupport">--</div></div>
-<div class="info-row"><div class="info-label">تشفير النقل :</div><div class="info-value" id="transferEncoding">--</div></div>
 <div class="info-row"><div class="info-label">سرعة الاستجابة :</div><div class="info-value" id="responseTime">--</div></div>
-<div class="info-row"><div class="info-label">الحالة :</div><div class="info-value" id="statusCode">--</div></div>
 </div>
 
 </div>
@@ -155,7 +152,7 @@ const endTime = performance.now();
 document.getElementById("responseTime").textContent = Math.round(endTime - startTime) + "ms";
 document.getElementById("statusCode").textContent = response.status + " " + response.statusText;
 document.getElementById("serverName").textContent = response.headers.get("server") || "تم رفض الوصول";
-const resume = response.headers.get("accept-ranges") === "bytes" ? "نعم" : "لا";
+const resume = response.headers.get("accept-ranges") === "bytes" ? "مدعوم" : "غير مدعوم ⚠︎";
 document.getElementById("resumeSupport").textContent = resume;
 document.getElementById("transferEncoding").textContent =
     response.headers.get("transfer-encoding") || "تم رفض الوصول";
