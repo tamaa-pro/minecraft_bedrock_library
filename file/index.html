@@ -326,6 +326,50 @@ nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shado
 `;
 document.head.appendChild(style);
 </script>
+<style>
+#cfErrorNotice {
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #b00000;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 99999;
+    transition: bottom 0.4s ease;
+    box-shadow: 0 0 10px #0006;
+}
+</style>
 
+<div id="cfErrorNotice">
+حدث عطل على مستوى خوادم Cloudflare ولا يمكن جلب الملف من موقع الأرشفة. يرجى العودة بعد بضع ساعات.
+</div>
+
+<script>
+async function checkCloudflareFailure(fileUrl) {
+    try {
+        const proxied = "https://corsproxy.io/?" + encodeURIComponent(fileUrl);
+        const res = await fetch(proxied, { method: "HEAD" });
+
+        const code = res.status;
+        if (code >= 500 && code < 600) {
+            showCFNotice();
+        }
+    } catch (e) {
+
+        showCFNotice();
+    }
+}
+
+function showCFNotice() {
+    const el = document.getElementById("cfErrorNotice");
+    el.style.bottom = "20px";  
+    setTimeout(() => {
+        el.style.bottom = "-80px"; 
+    }, -1);
+}
+</script>
 </body>
 </html>
