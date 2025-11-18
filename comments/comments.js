@@ -1,366 +1,114 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // العناصر الأساسية
-  const BIN_ID = '686249f38561e97a502ebca0';
-  const API_KEY = '$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q';
-  const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-  const COMMENTS_KEY = 'comments';
-  
-  // عناصر DOM
-  const elements = {
-    commentsList: document.getElementById('commentsList'),
-    loadingContainer: document.getElementById('loadingContainer'),
-    sendCommentBtn: document.getElementById('sendCommentBtn'),
-    sortBtn: document.getElementById('sortBtn'),
-    sortText: document.getElementById('sortText'),
-    averageRating: document.getElementById('averageRating'),
-    commentModal: document.getElementById('commentModal'),
-    closeModalBtn: document.getElementById('closeModalBtn'),
-    submitCommentBtn: document.getElementById('submitCommentBtn'),
-    deleteCommentBtn: document.getElementById('deleteCommentBtn'),
-    addRatingBtn: document.getElementById('addRatingBtn'),
-    modalHeader: document.getElementById('modalHeader'),
-    usernameInput: document.getElementById('username'),
-    commentInput: document.getElementById('comment'),
-    passwordInput: document.getElementById('password'),
-    togglePassword: document.getElementById('togglePassword'),
-    toggleEditPassword: document.getElementById('toggleEditPassword'),
-    passwordModal: document.getElementById('passwordModal'),
-    editPasswordInput: document.getElementById('editPassword'),
-    verifyPasswordBtn: document.getElementById('verifyPasswordBtn'),
-    closePasswordModalBtn: document.getElementById('closePasswordModalBtn'),
-    ratingContainer: document.getElementById('ratingContainer'),
-    usernameCounter: document.getElementById('usernameCounter'),
-    commentCounter: document.getElementById('commentCounter'),
-    passwordCounter: document.getElementById('passwordCounter')
-  };
-
-  // متغيرات الحالة
-  let currentEditId = null;
-  let isNewestFirst = true;
-  let showRating = false;
-
-  // وظائف المساعدة
-  function showError() {
-    elements.loadingContainer.innerHTML = '<div class="error-container">خطأ في تحميل التعليقات</div>';
-  }
-
-  function generateRandomId() {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
-  function formatDate(date) {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hours = String(d.getHours()).padStart(2, '0');
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    return `${year}/${month}/${day} ${hours}:${minutes}`;
-  }
-
-  function updateCharCounters() {
-    elements.usernameCounter.textContent = elements.usernameInput.value.length;
-    elements.commentCounter.textContent = elements.commentInput.value.length;
-    elements.passwordCounter.textContent = elements.passwordInput.value.length;
-    
-    // تغيير لون العداد عند الوصول للحد
-    elements.usernameCounter.classList.toggle('limit', elements.usernameInput.value.length >= 15);
-    elements.commentCounter.classList.toggle('limit', elements.commentInput.value.length >= 100);
-    elements.passwordCounter.classList.toggle('limit', elements.passwordInput.value.length >= 17);
-  }
-
-  function calculateAverageRating(comments) {
-    const ratedComments = comments.filter(c => c.rating);
-    if (ratedComments.length === 0) return 0;
-    
-    const sum = ratedComments.reduce((total, c) => total + parseInt(c.rating), 0);
-    return (sum / ratedComments.length).toFixed(1);
-  }
-
-  // عرض التعليقات
-  function renderComments(comments) {
-    elements.commentsList.innerHTML = '';
-    
-    if (comments.length === 0) {
-      elements.commentsList.innerHTML = '<div style="color:#bdc3c7;text-align:center;padding:20px">لا توجد تعليقات بعد</div>';
-      return;
-    }
-    
-    // ترتيب التعليقات
-    const sortedComments = [...comments].sort((a, b) => {
-      return isNewestFirst 
-        ? new Date(b.date) - new Date(a.date)
-        : new Date(a.date) - new Date(b.date);
-    });
-    
-    // حساب التقييم المتوسط
-    const avgRating = calculateAverageRating(comments);
-    elements.averageRating.textContent = avgRating;
-    
-    sortedComments.forEach(comment => {
-      const commentElement = document.createElement('div');
-      commentElement.className = 'comment-card';
-      
-      // إنشاء تقييم النجوم
-      let ratingStars = '';
-      if (comment.rating) {
-        ratingStars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
-      }
-      
-      commentElement.innerHTML = `
-        <div class="comment-header">
-          <div class="user-avatar"></div>
-          <div class="user-info">
-            <div class="username">${comment.username}</div>
-            ${comment.rating ? `<div class="rating">${ratingStars}</div>` : ''}
-          </div>
-        </div>
-        <div class="comment-body">${comment.comment}</div>
-        <div class="comment-footer">
-          <div>${formatDate(comment.date)}</div>
-          <button class="edit-btn" data-id="${comment.id}">
-            <i class="fas fa-edit"></i>
-          </button>
-        </div>
-      `;
-      elements.commentsList.appendChild(commentElement);
-    });
-    
-    // إضافة أحداث لأزرار التعديل
-    document.querySelectorAll('.edit-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        currentEditId = btn.getAttribute('data-id');
-        elements.passwordModal.style.display = 'flex';
-      });
-    });
-  }
-
-  // وظائف API
-  async function fetchComments() {
-    try {
-      const response = await fetch(API_URL, {
-        headers: {
-          'X-Master-Key': API_KEY
-        }
-      });
-      
-      if (!response.ok) throw new Error('Failed to fetch');
-      
-      const data = await response.json();
-      renderComments(data.record[COMMENTS_KEY] || []);
-    } catch (error) {
-      console.error('Error:', error);
-      showError();
-    }
-  }
-
-  async function saveComments(comments) {
-    try {
-      const response = await fetch(API_URL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
-        },
-        body: JSON.stringify({
-          [COMMENTS_KEY]: comments
-        })
-      });
-      
-      if (!response.ok) throw new Error('Failed to save');
-      
-      return await response.json();
-    } catch (error) {
-      console.error('Error:', error);
-      alert('حدث خطأ أثناء حفظ التعليق');
-    }
-  }
-
-  async function addComment(comment) {
-    const currentComments = await getCurrentComments();
-    currentComments.push(comment);
-    await saveComments(currentComments);
-    await fetchComments();
-  }
-
-  async function updateComment(id, updatedComment) {
-    const currentComments = await getCurrentComments();
-    const index = currentComments.findIndex(c => c.id === id);
-    
-    if (index !== -1) {
-      currentComments[index] = {
-        ...currentComments[index],
-        ...updatedComment,
-        date: new Date().toISOString()
-      };
-      
-      await saveComments(currentComments);
-      await fetchComments();
-    }
-  }
-
-  async function deleteComment(id) {
-    const currentComments = await getCurrentComments();
-    const filteredComments = currentComments.filter(c => c.id !== id);
-    await saveComments(filteredComments);
-    await fetchComments();
-  }
-
-  async function getCurrentComments() {
-    try {
-      const response = await fetch(API_URL, {
-        headers: {
-          'X-Master-Key': API_KEY
-        }
-      });
-      
-      if (!response.ok) throw new Error('Failed to fetch');
-      
-      const data = await response.json();
-      return data.record[COMMENTS_KEY] || [];
-    } catch (error) {
-      console.error('Error:', error);
-      return [];
-    }
-  }
-
-  // إعداد الأحداث
-  elements.sendCommentBtn.addEventListener('click', () => {
-    currentEditId = null;
-    elements.usernameInput.value = '';
-    elements.commentInput.value = '';
-    elements.passwordInput.value = '';
-    elements.modalHeader.textContent = 'إرسال تعليق جديد';
-    elements.submitCommentBtn.textContent = 'نشر التعليق';
-    elements.deleteCommentBtn.style.display = 'none';
-    elements.addRatingBtn.style.display = 'inline-block';
-    elements.ratingContainer.style.display = 'none';
-    document.querySelectorAll('input[name="rating"]').forEach(radio => {
-      radio.checked = false;
-    });
-    elements.commentModal.style.display = 'flex';
-  });
-
-  elements.sortBtn.addEventListener('click', () => {
-    isNewestFirst = !isNewestFirst;
-    elements.sortText.textContent = isNewestFirst ? 'الأحدث أولاً' : 'الأقدم أولاً';
-    fetchComments();
-  });
-
-  elements.closeModalBtn.addEventListener('click', () => {
-    elements.commentModal.style.display = 'none';
-  });
-
-  elements.closePasswordModalBtn.addEventListener('click', () => {
-    elements.passwordModal.style.display = 'none';
-  });
-
-  elements.addRatingBtn.addEventListener('click', () => {
-    elements.ratingContainer.style.display = 'block';
-    elements.addRatingBtn.style.display = 'none';
-  });
-
-  elements.togglePassword.addEventListener('click', function() {
-    const type = elements.passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    elements.passwordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye-slash');
-  });
-
-  elements.toggleEditPassword.addEventListener('click', function() {
-    const type = elements.editPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    elements.editPasswordInput.setAttribute('type', type);
-    this.classList.toggle('fa-eye-slash');
-  });
-
-  // عدادات الأحرف
-  elements.usernameInput.addEventListener('input', updateCharCounters);
-  elements.commentInput.addEventListener('input', updateCharCounters);
-  elements.passwordInput.addEventListener('input', updateCharCounters);
-
-  elements.submitCommentBtn.addEventListener('click', async () => {
-    const username = elements.usernameInput.value.trim();
-    const comment = elements.commentInput.value.trim();
-    const password = elements.passwordInput.value.trim();
-    
-    if (!username || !comment || !password) {
-      alert('الرجاء ملء جميع الحقول');
-      return;
-    }
-    
-    const ratingInput = document.querySelector('input[name="rating"]:checked');
-    const rating = ratingInput ? ratingInput.value : null;
-    
-    const newComment = {
-      id: generateRandomId(),
-      username,
-      comment,
-      password,
-      rating,
-      date: new Date().toISOString()
-    };
-    
-    if (currentEditId) {
-      await updateComment(currentEditId, { comment, rating });
-      elements.commentModal.style.display = 'none';
-    } else {
-      await addComment(newComment);
-      elements.commentModal.style.display = 'none';
-    }
-  });
-
-  elements.deleteCommentBtn.addEventListener('click', async () => {
-    if (!currentEditId) return;
-    if (confirm('هل أنت متأكد من حذف هذا التعليق؟')) {
-      await deleteComment(currentEditId);
-      elements.commentModal.style.display = 'none';
-    }
-  });
-
-  elements.verifyPasswordBtn.addEventListener('click', async () => {
-    const password = elements.editPasswordInput.value.trim();
-    
-    if (!password) {
-      alert('الرجاء إدخال كلمة السر');
-      return;
-    }
-    
-    const currentComments = await getCurrentComments();
-    const comment = currentComments.find(c => c.id === currentEditId);
-    
-    if (!comment) {
-      alert('التعليق غير موجود');
-      return;
-    }
-    
-    if (comment.password !== password) {
-      alert('كلمة السر غير صحيحة');
-      return;
-    }
-    
-    elements.passwordModal.style.display = 'none';
-    elements.editPasswordInput.value = '';
-    
-    const { username, comment: text, rating } = comment;
-    elements.usernameInput.value = username;
-    elements.commentInput.value = text;
-    elements.passwordInput.value = '';
-    
-    if (rating) {
-      document.getElementById(`star${rating}`).checked = true;
-      elements.ratingContainer.style.display = 'block';
-      elements.addRatingBtn.style.display = 'none';
-    } else {
-      elements.ratingContainer.style.display = 'none';
-      elements.addRatingBtn.style.display = 'inline-block';
-    }
-    
-    elements.modalHeader.textContent = 'تعديل التعليق';
-    elements.submitCommentBtn.textContent = 'نشر التعديل';
-    elements.deleteCommentBtn.style.display = 'inline-block';
-    elements.commentModal.style.display = 'flex';
-  });
-
-  // بدء التطبيق
-  updateCharCounters();
-  fetchComments();
-});
+const BIN_ID="686249f38561e97a502ebca0",API_KEY="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q",BASE_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`,commentsList=document.getElementById("comments-list"),addCommentBtn=document.getElementById("add-comment-btn"),sortCommentsBtn=document.getElementById("sort-comments-btn"),sortText=document.getElementById("sort-text");let comments=[],isNewestFirst=!0,editCommentId=null,replyCommentId=null,likedComments=JSON.parse(localStorage.getItem("liked_comments"))||[],likedReplies=JSON.parse(localStorage.getItem("liked_replies"))||[];const imageOptions=[
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/minecraft.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/bedrock.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/steve.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/end_dragon.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/enderman.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/snow_golem.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/villager.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/ghast.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/creeper.png",
+"https://raw.githubusercontent.com/tamaa-pro/minecraft_bedrock_library/refs/heads/main/data/users_icon/chicken_joke.png"];
+const CLOUD_NAME = 'tamaa';const API_KEY_CLOUDINARY = '299481434614369';const UPLOAD_PRESET = 'users_avatars';const VERIFICATION_KEY = 'ⴵ';let selectedImage = localStorage.getItem("comment_userImage") || imageOptions[0];let uploadedImages = JSON.parse(localStorage.getItem("uploaded_images")) || [];async function loadComments(){try{const e=await fetch(BASE_URL,{headers:{"X-Master-Key":API_KEY}});if(!e.ok)throw new Error("Failed to load comments");const t=await e.json();comments=t.record?.comments||[],renderComments(),updateAverageRating()}catch(e){console.error("Error loading comments:",e),showError()}}async function saveComments(){try{if(!(await fetch(BASE_URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":API_KEY},body:JSON.stringify({comments:comments})})).ok)throw new Error("Failed to save comments");return!0}catch(e){return console.error("Error saving comments:",e),!1}}function renderComments(){if(0===comments.length)return void(commentsList.innerHTML='<div style="text-align: center; color: #cbd5e0;">لا توجد تعليقات بعد</div>');const e=[...comments];e.sort(((e,t)=>{const n=new Date(e.date),a=new Date(t.date);return isNewestFirst?a-n:n-a})),commentsList.innerHTML="",e.forEach((e=>{const t=document.createElement("div");t.className="comment-card",t.dataset.id=e.id;const n=new Date(e.date),a=`${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,"0")}/${String(n.getDate()).padStart(2,"0")} ${String(n.getHours()).padStart(2,"0")}:${String(n.getMinutes()).padStart(2,"0")}`;let s="";e.rating&&(s="★".repeat(e.rating)+"☆".repeat(5-e.rating));const o=likedComments.includes(e.id);t.innerHTML=`\n          <div class="comment-header">\n            <img src="${e.userImage||imageOptions[0]}" alt="User" class="comment-user-image">\n            <span class="comment-user-name">${e.username}${e.verified?' <i class="fas fa-check-circle verified-badge" title="حساب موثوق"></i>':''}</span>\n            ${e.rating?`<span class="comment-rating">${s}</span>`:""}\n          </div>\n          <div class="comment-text">${e.text}</div>\n          <div class="comment-footer">\n            <span>${a}</span>\n            <div class="comment-actions">\n              <button class="like-btn ${o?"liked":""}" data-id="${e.id}">\n                <i class="fas fa-heart"></i>\n                <span class="likes-count">${e.likes||0}</span>\n              </button>\n              <button class="reply-btn" data-id="${e.id}">
+  <i class="fas fa-reply"></i>
+  ${e.replies && e.replies.length > 0 ? `<span class="reply-count">${e.replies.length}</span>` : ''}
+</button>\n              <button class="edit-btn" data-id="${e.id}">\n                <i class="fas fa-edit"></i>\n              </button>\n            </div>\n          </div>\n        `;const repliesSection = document.createElement('div');repliesSection.className = 'replies-section';repliesSection.style.display = 'none';const replyButton = document.createElement('button');replyButton.className = 'reply-btn';replyButton.innerHTML = '<i class="fas fa-reply"></i> رد على التعليق';replyButton.addEventListener('click', () => {replyCommentId = e.id;showReplyModal();});repliesSection.appendChild(replyButton);const repliesContainer = document.createElement('div');repliesContainer.className = 'replies-container';if (e.replies && e.replies.length > 0) {e.replies.forEach(reply => {const replyCard = createReplyCard(reply, e.id);repliesContainer.appendChild(replyCard);});} else {const noReplies = document.createElement('div');noReplies.className = 'no-replies';noReplies.textContent = 'لم يتم الرد على هذا التعليق حتى الآن';repliesContainer.appendChild(noReplies);} repliesSection.appendChild(repliesContainer);t.appendChild(repliesSection);commentsList.appendChild(t);t.querySelector(".like-btn").addEventListener("click",(()=>handleLike(e.id)));t.querySelector(".reply-btn").addEventListener("click",(()=>{const isExpanded = repliesSection.style.display === 'block';repliesSection.style.display = isExpanded ? 'none' : 'block';t.classList.toggle('expanded', !isExpanded);}));t.querySelector(".edit-btn").addEventListener("click",(()=>showEditPasswordModal(e.id)));}))}function createReplyCard(reply, commentId) {const replyCard = document.createElement('div');replyCard.className = 'reply-card';replyCard.dataset.id = reply.id;const replyDate = new Date(reply.date);const formattedDate = `${replyDate.getFullYear()}/${String(replyDate.getMonth()+1).padStart(2,"0")}/${String(replyDate.getDate()).padStart(2,"0")} ${String(replyDate.getHours()).padStart(2,"0")}:${String(replyDate.getMinutes()).padStart(2,"0")}`;const isLiked = likedReplies.includes(reply.id);replyCard.innerHTML = `
+<div class="reply-header">
+<img src="${reply.userImage||imageOptions[0]}" alt="User" class="reply-user-image">
+<span class="reply-user-name">${reply.username}${reply.verified?' <i class="fas fa-check-circle verified-badge" title="حساب موثوق"></i>':''}</span>
+</div>
+<div class="reply-text">${reply.text}</div>
+<div class="reply-footer">
+<span>${formattedDate}</span>
+<div class="reply-actions">
+<button class="like-reply-btn ${isLiked?"liked":""}" data-id="${reply.id}" data-comment="${commentId}">
+<i class="fas fa-heart"></i>
+<span class="likes-count">${reply.likes||0}</span>
+</button>
+<button class="edit-reply-btn" data-id="${reply.id}" data-comment="${commentId}">
+<i class="fas fa-edit"></i>
+</button>
+</div>
+</div>
+  `;replyCard.querySelector('.like-reply-btn').addEventListener('click', (event) => {event.stopPropagation();handleReplyLike(reply.id, commentId);});replyCard.querySelector('.edit-reply-btn').addEventListener('click', (event) => {event.stopPropagation();showEditReplyPasswordModal(reply.id, commentId);});return replyCard;} function showError(){commentsList.innerHTML='<div class="error-message">خطأ في تحميل التعليقات</div>'}function toggleSortOrder(){isNewestFirst=!isNewestFirst,sortText.textContent=isNewestFirst?"الأحدث أولاً":"الأقدم أولاً",renderComments()}function showAddCommentModal(){const e=localStorage.getItem("comment_username")||"",n=document.createElement("div");n.className="modal-overlay",n.innerHTML=`\n        <div class="modal-content">\n          <div class="modal-header">إرسال تعليق جديد</div>\n          <div class="modal-form-group">\n            <label for="comment-username">اسم المستخدم</label>\n            <input type="text" id="comment-username" maxlength="15" value="${e}">\n            <div class="char-counter"><span id="username-counter">0</span>/15</div>\n          </div>\n          \n          <button type="button" class="image-selector-btn" id="open-image-selector">\n            <i class="fas fa-image"></i> اختيار صورة الحساب\n            <img src="${selectedImage}" class="selected-image-preview">\n          </button>\n          \n          <div class="modal-form-group">\n            <label for="comment-text">التعليق</label>\n            <textarea id="comment-text" maxlength="200"></textarea>\n            <div class="char-counter"><span id="text-counter">0</span>/200</div>\n          </div>\n          \n          <div class="modal-form-group">\n            <label for="comment-password">كلمة المرور (لتعديل أو حذف التعليق لاحقًا)</label>\n            <input type="text" id="comment-password" maxlength="17">\n            <div class="char-counter"><span id="password-counter">0</span>/17</div>\n          </div>\n          \n          <div class="rating-stars">\n            <span class="rating-star" data-rating="5">✩</span>\n            <span class="rating-star" data-rating="4">✩</span>\n            <span class="rating-star" data-rating="3">✩</span>\n            <span class="rating-star" data-rating="2">✩</span>\n            <span class="rating-star" data-rating="1">✩</span>\n            <button id="toggle-rating-btn" style="background: none; border: none; color: #cbd5e0; cursor: pointer;">\n              <i class="fas fa-star"></i> أضف تقييم\n            </button>\n          </div>\n          \n          <div class="modal-actions">\n            <button class="cancel-btn" id="cancel-comment-btn">\n              <i class="fas fa-times"></i> إلغاء\n            </button>\n            <button class="submit-btn" id="submit-comment-btn">\n              <i class="fas fa-paper-plane"></i> نشر التعليق\n            </button>\n          </div>\n        </div>\n      `,document.body.appendChild(n),document.getElementById("comment-username").addEventListener("input",(e=>{document.getElementById("username-counter").textContent=e.target.value.length})),document.getElementById("comment-text").addEventListener("input",(e=>{document.getElementById("text-counter").textContent=e.target.value.length})),document.getElementById("comment-password").addEventListener("input",(e=>{document.getElementById("password-counter").textContent=e.target.value.length})),document.getElementById("username-counter").textContent=e.length,document.getElementById("text-counter").textContent=0,document.getElementById("password-counter").textContent=0,document.getElementById("cancel-comment-btn").addEventListener("click",(()=>{document.body.removeChild(n)})),document.getElementById("submit-comment-btn").addEventListener("click",submitComment),document.getElementById("open-image-selector").addEventListener("click",(()=>{showImageSelector(selectedImage)}));let a=0;const s=document.querySelectorAll(".rating-star");s.forEach((e=>{e.addEventListener("click",(()=>{const t=parseInt(e.dataset.rating);a=t,s.forEach(((e,n)=>{e.textContent=n<5-t?"✩":"★"}))}))}));const o=document.getElementById("toggle-rating-btn");document.querySelector(".rating-stars");let d=!1;o.addEventListener("click",(()=>{d=!d,s.forEach((e=>{e.style.display=d?"inline-block":"none"})),o.innerHTML=d?'<i class="fas fa-times"></i> إخفاء التقييم':'<i class="fas fa-star"></i> أضف تقييم'})),s.forEach((e=>{e.style.display="none"}))}function showImageSelector(e){const t=document.createElement("div");t.className="image-selector-modal",t.innerHTML=`\n        <div class="image-selector-content">\n          <div class="modal-header">اختر صورة الحساب</div>\n          <div class="image-options">\n            ${imageOptions.map(((t,n)=>`\n              <img src="${t}" class="image-option ${t===e?"selected":""}" \n                   data-img="${t}" alt="Option ${n+1}">\n            `)).join("")}\n            ${uploadedImages.map(((t,n)=>`\n              <img src="${t}" class="image-option ${t===e?"selected":""}" \n                   data-img="${t}" alt="Uploaded ${n+1}">\n            `)).join("")}\n          </div>\n          \n          <!-- زر رفع صورة جديد -->\n          <button type="button" class="upload-image-btn" id="upload-image-btn">\n            <i class="fas fa-upload"></i> اختيار صورة من الجهاز\n          </button>\n          <input type="file" id="image-upload-input" class="upload-input" accept="image/*">\n          <div id="upload-status" class="upload-status"></div>\n          \n          <div class="modal-actions">\n            <button class="cancel-btn" id="cancel-image-selector">\n              <i class="fas fa-times"></i> إلغاء\n            </button>\n            <button class="submit-btn" id="select-image-btn">\n              <i class="fas fa-check"></i> تأكيد الاختيار\n            </button>\n          </div>\n        </div>\n      `,document.body.appendChild(t);let n=e;document.querySelectorAll(".image-option").forEach((e=>{e.addEventListener("click",(()=>{document.querySelectorAll(".image-option").forEach((e=>e.classList.remove("selected"))),e.classList.add("selected"),n=e.dataset.img}))})),document.getElementById("cancel-image-selector").addEventListener("click",(()=>{document.body.removeChild(t)})),document.getElementById("select-image-btn").addEventListener("click",(()=>{selectedImage = n;const e=document.querySelector(".selected-image-preview");e&&(e.src=selectedImage),localStorage.setItem("comment_userImage", selectedImage),document.body.removeChild(t)}));document.getElementById('upload-image-btn').addEventListener('click', () => {document.getElementById('image-upload-input').click();});document.getElementById('image-upload-input').addEventListener('change', handleImageUpload);} async function handleImageUpload(event) {const file = event.target.files[0];if (!file) return;const statusElement = document.getElementById('upload-status');statusElement.innerHTML = '<i class="fas fa-spinner uploading"></i> جاري رفع الصورة...';try {const imageUrl = await uploadToCloudinary(file);statusElement.innerHTML = '<i class="fas fa-check" style="color: green;"></i> تم رفع الصورة بنجاح';selectedImage = imageUrl;const previewImage = document.querySelector(".selected-image-preview");if (previewImage) {previewImage.src = imageUrl;} localStorage.setItem("comment_userImage", imageUrl);if (!uploadedImages.includes(imageUrl)) {uploadedImages.push(imageUrl);localStorage.setItem("uploaded_images", JSON.stringify(uploadedImages));} const imageOptionsElements = document.querySelectorAll('.image-option');imageOptionsElements.forEach(option => option.classList.remove('selected'));const newImageOption = document.createElement('img');newImageOption.src = imageUrl;newImageOption.className = 'image-option selected';newImageOption.dataset.img = imageUrl;newImageOption.addEventListener('click', () => {document.querySelectorAll('.image-option').forEach(opt => opt.classList.remove('selected'));newImageOption.classList.add('selected');selectedImage = imageUrl;localStorage.setItem("comment_userImage", imageUrl);});document.querySelector('.image-options').appendChild(newImageOption);} catch (error) {console.error('Error uploading image:', error);statusElement.innerHTML = '<i class="fas fa-times" style="color: red;"></i> فشل في رفع الصورة: ' + error.message;}} async function uploadToCloudinary(file) {const formData = new FormData();formData.append('file', file);formData.append('upload_preset', UPLOAD_PRESET);formData.append('api_key', API_KEY_CLOUDINARY);try {const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {method: 'POST',body: formData});if (!response.ok) {throw new Error('فشل في رفع الصورة: ' + response.statusText);} const data = await response.json();return data.secure_url;} catch (error) {console.error('Error uploading image:', error);throw new Error('حدث خطأ أثناء رفع الصورة. يرجى المحاولة مرة أخرى.');
+}} function showReplyModal() {const username = localStorage.getItem("comment_username") || "";const modal = document.createElement("div");modal.className = "modal-overlay";modal.innerHTML = `
+<div class="modal-content">
+<div class="modal-header">رد على التعليق</div>
+<div class="modal-form-group">
+<label for="reply-username">اسم المستخدم</label>
+<input type="text" id="reply-username" maxlength="15" value="${username}">
+<div class="char-counter"><span id="reply-username-counter">0</span>/15</div>
+</div>
+<button type="button" class="image-selector-btn" id="open-reply-image-selector">
+<i class="fas fa-image"></i> اختيار صورة الحساب
+<img src="${selectedImage}" class="selected-image-preview">
+</button>
+<div class="modal-form-group">
+<label for="reply-text">الرد</label>
+<textarea id="reply-text" maxlength="200"></textarea>
+<div class="char-counter"><span id="reply-text-counter">0</span>/200</div>
+</div>
+<div class="modal-form-group">
+<label for="reply-password">كلمة المرور (لتعديل أو حذف الرد لاحقًا)</label>
+<input type="text" id="reply-password" maxlength="17">
+<div class="char-counter"><span id="reply-password-counter">0</span>/17</div>
+</div>
+<div class="modal-actions">
+<button class="cancel-btn" id="cancel-reply-btn">
+<i class="fas fa-times"></i> إلغاء
+</button>
+<button class="submit-btn" id="submit-reply-btn">
+<i class="fas fa-paper-plane"></i> نشر الرد
+</button>
+</div>
+</div>
+  `;document.body.appendChild(modal);document.getElementById("reply-username").addEventListener("input",(e=>{document.getElementById("reply-username-counter").textContent=e.target.value.length}));document.getElementById("reply-text").addEventListener("input",(e=>{document.getElementById("reply-text-counter").textContent=e.target.value.length}));document.getElementById("reply-password").addEventListener("input",(e=>{document.getElementById("reply-password-counter").textContent=e.target.value.length}));document.getElementById("reply-username-counter").textContent = username.length;document.getElementById("reply-text-counter").textContent = 0;document.getElementById("reply-password-counter").textContent = 0;document.getElementById("cancel-reply-btn").addEventListener("click",(()=>{document.body.removeChild(modal);replyCommentId = null;}));document.getElementById("submit-reply-btn").addEventListener("click", submitReply);document.getElementById("open-reply-image-selector").addEventListener("click",(()=>{showImageSelector(selectedImage);}));} async function submitReply() {const username = document.getElementById("reply-username")?.value.trim();const text = document.getElementById("reply-text")?.value.trim();const password = document.getElementById("reply-password")?.value.trim();if (!username || !text || !password) {return void alert("الرجاء ملء جميع الحقول المطلوبة");} if (username.length > 15) {return void alert("اسم المستخدم يجب أن لا يتجاوز 15 حرفًا");} if (text.length > 200) {return void alert("الرد يجب أن لا يتجاوز 200 حرف");}if (password.length > 17) {return void alert("كلمة المرور يجب أن لا تتجاوز 17 حرفًا");} let finalUsername = username;let verified = false;if (username.includes(VERIFICATION_KEY)) {finalUsername = username.replace(VERIFICATION_KEY, '').trim();verified = true;} const reply = {id: generateId(),username: finalUsername,text: text,password: password,date: (new Date()).toISOString(),userImage: selectedImage,likes: 0,verified: verified};const commentIndex = comments.findIndex(c => c.id === replyCommentId);if (commentIndex !== -1) {if (!comments[commentIndex].replies) {comments[commentIndex].replies = [];} comments[commentIndex].replies.unshift(reply);} localStorage.setItem("comment_username", finalUsername);localStorage.setItem("comment_userImage", selectedImage);if (await saveComments()) {document.querySelector(".modal-overlay")?.remove();renderComments();replyCommentId = null;} else {alert("حدث خطأ أثناء حفظ الرد");}} async function handleReplyLike(replyId, commentId) {const comment = comments.find(c => c.id === commentId);if (!comment || !comment.replies) return;const reply = comment.replies.find(r => r.id === replyId);if (!reply) return;const index = likedReplies.indexOf(replyId);if (index === -1) {reply.likes = (reply.likes || 0) + 1;likedReplies.push(replyId);} else {reply.likes = Math.max(0, (reply.likes || 0) - 1);likedReplies.splice(index, 1);} localStorage.setItem("liked_replies", JSON.stringify(likedReplies));if (await saveComments()) {renderComments();}} function showEditReplyPasswordModal(replyId, commentId) {const modal = document.createElement("div");modal.className = "modal-overlay";modal.innerHTML = `
+<div class="modal-content">
+<div class="modal-header">تعديل الرد</div>
+<div class="modal-form-group">
+<label for="edit-reply-password">كلمة المرور</label>
+<input type="text" id="edit-reply-password" placeholder="أدخل كلمة المرور المستخدمة عند النشر">
+</div>
+<div class="modal-actions">
+<button class="cancel-btn" id="cancel-edit-reply-btn">
+<i class="fas fa-times"></i> إلغاء
+</button>
+<button class="submit-btn" id="verify-edit-reply-btn" data-reply="${replyId}" data-comment="${commentId}">
+<i class="fas fa-check"></i> تأكيد
+</button>
+</div>
+</div>
+  `;document.body.appendChild(modal);document.getElementById("cancel-edit-reply-btn").addEventListener("click", (() => {document.body.removeChild(modal);}));document.getElementById("verify-edit-reply-btn").addEventListener("click", (() => {const password = document.getElementById("edit-reply-password").value.trim();verifyEditReplyPassword(replyId, commentId, password);}));} function verifyEditReplyPassword(replyId, commentId, password) {const comment = comments.find(c => c.id === commentId);if (!comment || !comment.replies) {alert("الرد غير موجود");return void document.querySelector(".modal-overlay")?.remove();} const reply = comment.replies.find(r => r.id === replyId);if (!reply) {alert("الرد غير موجود");return void document.querySelector(".modal-overlay")?.remove();} if (reply.password === password) {document.querySelector(".modal-overlay")?.remove();showEditReplyModal(reply, commentId);} else {alert("كلمة المرور غير صحيحة");}} function showEditReplyModal(reply, commentId) {const modal = document.createElement("div");modal.className = "modal-overlay";modal.innerHTML = `
+<div class="modal-content">
+<div class="modal-header">تعديل الرد</div>
+<div class="modal-form-group">
+<label for="edit-reply-username">اسم المستخدم</label>
+<input type="text" id="edit-reply-username" maxlength="15" value="${reply.username}${reply.verified ? VERIFICATION_KEY : ''}">
+<div class="char-counter"><span id="edit-reply-username-counter">${reply.username.length}</span>/15</div>
+<button type="button" class="image-selector-btn" id="open-edit-reply-image-selector">
+<i class="fas fa-image"></i> اختيار صورة الحساب
+<img src="${reply.userImage || imageOptions[0]}" class="selected-image-preview">
+</button>
+<div class="modal-form-group">
+<label for="edit-reply-text">الرد</label>
+<textarea id="edit-reply-text" maxlength="200">${reply.text}</textarea>
+<div class="char-counter"><span id="edit-reply-text-counter">${reply.text.length}</span>/200</div>
+</div>
+<div class="modal-form-group">
+<label for="edit-reply-password">كلمة المرور</label>
+<input type="text" id="edit-reply-password" maxlength="17" value="${reply.password}">
+<div class="char-counter"><span id="edit-reply-password-counter">${reply.password.length}</span>/17</div>
+</div>
+<div class="modal-actions">
+<button class="cancel-btn" id="cancel-edit-reply-comment-btn">
+<i class="fas fa-times"></i> إلغاء
+</button>
+<button class="delete-btn" id="delete-reply-btn" data-reply="${reply.id}" data-comment="${commentId}">
+<i class="fas fa-trash"></i> حذف الرد
+</button>
+<button class="submit-btn" id="submit-edit-reply-btn" data-reply="${reply.id}" data-comment="${commentId}">
+<i class="fas fa-save"></i> حفظ التعديلات
+</button>
+</div>
+</div>
+  `;document.body.appendChild(modal);document.getElementById("edit-reply-username").addEventListener("input",(e=>{document.getElementById("edit-reply-username-counter").textContent=e.target.value.length}));document.getElementById("edit-reply-text").addEventListener("input",(e=>{document.getElementById("edit-reply-text-counter").textContent=e.target.value.length}));document.getElementById("edit-reply-password").addEventListener("input",(e=>{document.getElementById("edit-reply-password-counter").textContent=e.target.value.length}));document.getElementById("cancel-edit-reply-comment-btn").addEventListener("click", (() => {document.body.removeChild(modal);}));document.getElementById("delete-reply-btn").addEventListener("click", (() => {if (confirm("هل أنت متأكد من حذف هذا الرد؟")) {deleteReply(reply.id, commentId);}}));document.getElementById("submit-edit-reply-btn").addEventListener("click", (() => {submitReplyEdit(reply.id, commentId);}));document.getElementById("open-edit-reply-image-selector").addEventListener("click",(() => {showImageSelector(document.querySelector("#open-edit-reply-image-selector .selected-image-preview").src);}));} async function submitReplyEdit(replyId, commentId) {const username = document.getElementById("edit-reply-username")?.value.trim();const text = document.getElementById("edit-reply-text")?.value.trim();const password = document.getElementById("edit-reply-password")?.value.trim();const userImage = selectedImage;if (!username || !text || !password) {return void alert("الرجاء ملء جميع الحقول المطلوبة");} if (username.length > 15) {return void alert("اسم المستخدم يجب أن لا يتجاوز 15 حرفًا");} if (text.length > 200) {return void alert("الرد يجب أن لا يتجاوز 200 حرف");} if (password.length > 17) {return void alert("كلمة المرور يجب أن لا تتجاوز 17 حرفًا");} let finalUsername = username;let verified = false;if (username.includes(VERIFICATION_KEY)) {finalUsername = username.replace(VERIFICATION_KEY, '').trim();verified = true;} const comment = comments.find(c => c.id === commentId);if (!comment || !comment.replies) {return void alert("التعليق غير موجود");} const replyIndex = comment.replies.findIndex(r => r.id === replyId);if (replyIndex === -1) {return void alert("الرد غير موجود");} comment.replies[replyIndex] = {...comment.replies[replyIndex],username: finalUsername,text: text,password: password,userImage: userImage,verified: verified};localStorage.setItem("comment_username", finalUsername);localStorage.setItem("comment_userImage", userImage);if (await saveComments()) {document.querySelector(".modal-overlay")?.remove();renderComments();} else {alert("حدث خطأ أثناء حفظ التعديلات");}} async function deleteReply(replyId, commentId) {const comment = comments.find(c => c.id === commentId);if (!comment || !comment.replies) return;comment.replies = comment.replies.filter(r => r.id !== replyId);if (await saveComments()) {document.querySelector(".modal-overlay")?.remove();renderComments();} else {alert("حدث خطأ أثناء حذف الرد");}} async function submitComment(){const e=document.getElementById("comment-username")?.value.trim()||document.getElementById("edit-username")?.value.trim(),t=document.getElementById("comment-text")?.value.trim()||document.getElementById("edit-text")?.value.trim(),n=document.getElementById("comment-password")?.value.trim()||document.getElementById("edit-password")?.value.trim();let a=selectedImage||imageOptions[0];let o=0;if(document.querySelectorAll(".rating-star").forEach((e=>{"★"===e.textContent&&(o=Math.max(o,parseInt(e.dataset.rating)))})),!e||!t||!n)return void alert("الرجاء ملء جميع الحقول المطلوبة");if(e.length>15)return void alert("اسم المستخدم يجب أن لا يتجاوز 15 حرفًا");if(t.length>200)return void alert("التعليق يجب أن لا يتجاوز 200 حرف");if(n.length>17)return void alert("كلمة المرور يجب أن لا تتجاوز 17 حرفًا");let username = e;let verified = false;if (username.includes(VERIFICATION_KEY)) {username = username.replace(VERIFICATION_KEY, '').trim();verified = true;} const d={id:editCommentId||generateId(),username:username,text:t,password:n,date:(new Date).toISOString(),userImage:a,likes:0,rating:o||void 0,verified:verified,replies: editCommentId ? comments.find(c => c.id === editCommentId)?.replies || [] : [] };if(editCommentId){const e=comments.findIndex((e=>e.id===editCommentId));-1!==e&&(d.likes=comments[e].likes,d.date=comments[e].date,comments[e]=d)}else{comments.unshift(d);} localStorage.setItem("comment_username",username);localStorage.setItem("comment_userImage",a);await saveComments()?(document.querySelector(".modal-overlay")?.remove(),renderComments(),updateAverageRating(),editCommentId=null):alert("حدث خطأ أثناء حفظ التعليق");} function showEditPasswordModal(e){const t=document.createElement("div");t.className="modal-overlay",t.innerHTML='\n        <div class="modal-content">\n          <div class="modal-header">تعديل التعليق</div>\n          <div class="modal-form-group">\n            <label for="edit-password">كلمة المرور</label>\n            <input type="text" id="edit-password" placeholder="أدخل كلمة المرور المستخدمة عند النشر">\n          </div>\n          <div class="modal-actions">\n            <button class="cancel-btn" id="cancel-edit-btn">\n              <i class="fas fa-times"></i> إلغاء\n            </button>\n            <button class="submit-btn" id="verify-edit-btn">\n              <i class="fas fa-check"></i> تأكيد\n            </button>\n          </div>\n        </div>\n      ',document.body.appendChild(t),document.getElementById("cancel-edit-btn").addEventListener("click",(()=>{document.body.removeChild(t)})),document.getElementById("verify-edit-btn").addEventListener("click",(()=>{verifyEditPassword(e)}))}async function verifyEditPassword(e){const t=document.getElementById("edit-password").value.trim(),n=comments.find((t=>t.id===e));if(!n)return alert("التعليق غير موجود"),void document.querySelector(".modal-overlay")?.remove();n.password===t?(document.querySelector(".modal-overlay")?.remove(),editCommentId=e,showEditCommentModal(n)):alert("كلمة المرور غير صحيحة")}function showEditCommentModal(e){const t=document.createElement("div");if(t.className="modal-overlay",t.innerHTML=`\n        <div class="modal-content">\n          <div class="modal-header">تعديل التعليق</div>\n          <div class="modal-form-group">\n            <label for="edit-username">اسم المستخدم</label>\n            <input type="text" id="edit-username" maxlength="15" value="${e.username}${e.verified?VERIFICATION_KEY:''}">\n            <div class="char-counter"><span id="edit-username-counter">${e.username.length}</span>/15</div>\n          </div>\n          \n          <button type="button" class="image-selector-btn" id="open-edit-image-selector">\n            <i class="fas fa-image"></i> اختيار صورة الحساب\n            <img src="${e.userImage||imageOptions[0]}" class="selected-image-preview">\n          </button>\n          \n          <div class="modal-form-group">\n            <label for="edit-text">التعليق</label>\n            <textarea id="edit-text" maxlength="200">${e.text}</textarea>\n            <div class="char-counter"><span id="edit-text-counter">${e.text.length}</span>/200</div>\n          </div>\n          \n          <div class="modal-form-group">\n            <label for="edit-password">كلمة المرور</label>\n            <input type="text" id="edit-password" maxlength="17" value="${e.password}">\n            <div class="char-counter"><span id="edit-password-counter">${e.password.length}</span>/17</div>\n          </div>\n          \n          ${e.rating?`\n            <div class="rating-stars">\n              <span class="rating-star" data-rating="5">${e.rating>=5?"★":"✩"}</span>\n              <span class="rating-star" data-rating="4">${e.rating>=4?"★":"✩"}</span>\n              <span class="rating-star" data-rating="3">${e.rating>=3?"★":"✩"}</span>\n              <span class="rating-star" data-rating="2">${e.rating>=2?"★":"✩"}</span>\n              <span class="rating-star" data-rating="1">${e.rating>=1?"★":"✩"}</span>\n            </div>\n          `:""}\n          \n          <div class="modal-actions">\n            <button class="cancel-btn" id="cancel-edit-comment-btn">\n              <i class="fas fa-times"></i> إلغاء\n            </button>\n            <button class="delete-btn" id="delete-comment-btn">\n              <i class="fas fa-trash"></i> حذف التعليق\n            </button>\n            <button class="submit-btn" id="submit-edit-btn">\n              <i class="fas fa-save"></i> حفظ التعديلات\n            </button>\n          </div>\n        </div>\n      `,document.body.appendChild(t),document.getElementById("edit-username").addEventListener("input",(e=>{document.getElementById("edit-username-counter").textContent=e.target.value.length})),document.getElementById("edit-text").addEventListener("input",(e=>{document.getElementById("edit-text-counter").textContent=e.target.value.length})),document.getElementById("edit-password").addEventListener("input",(e=>{document.getElementById("edit-password-counter").textContent=e.target.value.length})),document.getElementById("cancel-edit-comment-btn").addEventListener("click",(()=>{document.body.removeChild(t),editCommentId=null})),document.getElementById("delete-comment-btn").addEventListener("click",(()=>{confirm("هل أنت متأكد من حذف هذا التعليق؟")&&deleteComment(e.id)})),document.getElementById("submit-edit-btn").addEventListener("click",submitComment),document.getElementById("open-edit-image-selector").addEventListener("click",(()=>{showImageSelector(document.querySelector("#open-edit-image-selector .selected-image-preview").src)})),e.rating){let t=e.rating;const n=document.querySelectorAll(".rating-star");n.forEach((e=>{e.addEventListener("click",(()=>{const a=parseInt(e.dataset.rating);t=a,n.forEach(((e,t)=>{e.textContent=t<5-a?"✩":"★"}))}))}))}}async function deleteComment(e){comments=comments.filter((t=>t.id!==e));await saveComments()?(document.querySelector(".modal-overlay")?.remove(),renderComments(),updateAverageRating(),editCommentId=null):alert("حدث خطأ أثناء حذف التعليق")}async function handleLike(e){const t=comments.find((t=>t.id===e));if(!t)return;const n=likedComments.indexOf(e);-1===n?(t.likes=(t.likes||0)+1,likedComments.push(e)):(t.likes=Math.max(0,(t.likes||0)-1),likedComments.splice(n,1)),localStorage.setItem("liked_comments",JSON.stringify(likedComments));await saveComments()&&renderComments()}function updateAverageRating(){const e=comments.filter((e=>e.rating)),t=e.reduce(((e,t)=>e+t.rating),0),n=e.length>0?(t/e.length).toFixed(1):0;document.querySelector(".average-rating-value").textContent=n,document.querySelector(".average-rating span:last-child").textContent=`(${e.length} تقييم${1!==e.length?"ات":""})`}function generateId(){return Math.random().toString(36).substr(2,9)}document.addEventListener("DOMContentLoaded",(()=>{const e=document.createElement("script");e.src="https://kit.fontawesome.com/a076d05399.js",e.crossOrigin="anonymous",document.head.appendChild(e),loadComments(),addCommentBtn.addEventListener("click",showAddCommentModal),sortCommentsBtn.addEventListener("click",toggleSortOrder)}));
