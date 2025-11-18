@@ -63,7 +63,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <a class="btn" href="stats/" style="display: inline-block;background: #222;padding: 3px 5px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
 <i class="fas fa-chart-line" style="color: #007bff;font-size: 15px;transition: color 0.3s ease;"></i>
 </a>
-<div style="background-color: #444; border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 10px;">
+<div style="border-radius: 0px; color: white; font-family: sans-serif; margin: auto; max-width: 700px; padding: 10px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
 <div style="background: #000; border-radius: 15px; height: 80px; width: 80px; display: flex; align-items: center; justify-content: center;">
 <img alt="أيقونة التطبيق" src="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_icon.png" style="border-radius: 15px; height: 80px; width: 80px; object-fit: cover; display: block;" loading="eager" />
@@ -181,6 +181,7 @@ const images=[
 img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});img.onload=()=>{img.style.display="block";spinner.remove();};img.onerror=()=>{const errorWrapper=document.createElement("div");errorWrapper.style.position="absolute";errorWrapper.style.display="flex";errorWrapper.style.flexDirection="column";errorWrapper.style.alignItems="center";errorWrapper.style.justifyContent="center";errorWrapper.style.width="100%";errorWrapper.style.height="100%";const errorIcon=document.createElement("div");errorIcon.innerHTML=`<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText=document.createElement("span");errorText.textContent="فشل التحميل";errorText.style.color="#FF0000";errorText.style.fontSize="12px";errorText.style.marginTop="5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);};});
 </script>
 <br /><hr />
+<div style="background:#222;padding:10px">
 <p style="line-height: 1.6;">
   ✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة للهواتف الضعيفة والقوية ، و كذلك أقسام متنوعة .
 </p>
@@ -194,11 +195,13 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <li>قسم للدردشة .</li>
 <li>أقسام جانبية أخرى...</li>
 </ul>
+</p>
 <p style="line-height: 1.6;">
     • يتم تحديث الإصدار بعد بضع ساعات من صدوره (إلا في حالة تأجيل التحديثات) .<br/>
     • الإصدار 2.0 هو بديل للنسخة القديمة التي أغلقت في 2025/02/07 .<br/>
     • التحديثات داخلية ولا تتطلب تحميل التطبيق من جديد إلا في حالات خاصة .<br/>
 </p>
+</div>
 <hr/>
 <sifaw style="color: #cccccc; font-size: 14px;">
     ⚠️ هذا التطبيق غير رسمي ولا يتبع Mojang أو Microsoft .
@@ -253,7 +256,7 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/18</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (17:10)-110.2</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (17:10)-110.3</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
