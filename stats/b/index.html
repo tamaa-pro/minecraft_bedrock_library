@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
+<title>إحصائيات تطبيق المكتبة</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body {font-family: Arial, sans-serif;margin: 0;padding: 0;background-color: #222;color: #eee;}
+.header {background-color: #222;color: white;height: 70px;padding: 20px;text-align: center;margin-bottom: 20px;}
+.container {max-width: 1200px;margin: 0 auto;padding: 8px;background-color: #333;border-radius: 0px;box-shadow: 0 0 15px rgba(0,0,0,0.5);}
+.chart-container {position: relative;height: 250px;width: 100%;margin-bottom: 1px;}
+.month-selector {text-align: center;margin-bottom: 20px;}
+select {padding: 10px 15px;font-size: 16px;border-radius: 5px;border: 1px solid #555;background-color: #444;color: #eee;}
+table {width: 100%;border-collapse: collapse;margin-top: 30px;background-color: #444;}
+th, td {padding: 12px 15px;text-align: center;border: 1px solid #555;}
+th {background-color: #333;font-weight: bold;color: #fff;}
+tr:nth-child(even) {background-color: #3a3a3a;}
+tr:nth-child(odd) {background-color: #444;}
+.positive {color: #4CAF50;font-weight: bold;}
+.negative {color: #F44336;font-weight: bold;}
+.stats-title {font-size: 20px;font-weight: bold;margin: 30px 0 15px;text-align: center;color: #fff;}
+.chart-legend {display: flex;justify-content: center;margin-top: 15px;gap: 10px;}
+.legend-item {display: flex;نصف قطر 
+align-items: center;cursor: pointer;padding: 8px 15px;  border-radius: 3px;background-color: rgba(0, 0, 0, 0.3);transition: all 0.3s ease;}
+.legend-item:hover {background-color: rgba(0, 0, 0, 0.5);}
+.legend-color {width: 15px;height: 15px;margin-left: 0px;margin-top: 4px;margin-right: 5px;border-radius: 3px;}
+.legend-text {font-size: 14px;}
+button, img, a{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;user-select:none;-webkit-user-drag:none;touch-action:manipulation;outline:none;}
+.ripple-btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:ripple .55s linear;pointer-events:none;}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+footer {background: #222;padding: 2px 1px ;height: 18px;margin-top: 10px ;border-top: 3px solid var(--primary);}
+.footer-links {display: flex;justify-content: center;flex-wrap: wrap;gap: 15px;margin-bottom: 1rem;}
+.table-toggle {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #555;
+    transition: all 0.3s ease;
+}
+
+.table-toggle:hover {
+    background-color: #444;
+    border-color: #fff;
+}
+
+.table-toggle i {
+    font-size: 20px;
+    transition: color 0.3s ease;
+}
+
+.table-toggle:hover i {
+    color: #45a1ff;
+}
+</style>
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<body>
+<div class="header">
+<h1>إحصائيات تطبيق المكتبة</h1>
+</div>
+<a href="/minecraft_bedrock_library" style="display: inline-block;background: #222;z-index: 9999;padding: 3px 5px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
+<i class="fab fa-android" style="color: #45a1ff;font-size: 15px;transition: color 0.3s ease;"></i>
+</a>
+<a href="javascript:void(0);" id="table-toggle" class="table-toggle" style="position: fixed; right: 20px; top: 50%; background-color: #222; padding: 10px 15px; border-radius: 5px; color: #fff; z-index: 9999;">
+<i class="fas fa-table"></i>
+</a>
+<div class="container">
+<br>
+<div class="month-selector" class="ripple-btn">
+<select id="month-select">
+<optgroup label="بيانات النسخة الثالثة (v2.0+)">
+<option value="2025-11/2">نوفمبر 2025</option>
+<option value="2025-10/2">اكتوبر 2025</option>
+<option value="2025-09/2">شتتبر 2025</option>
+<option value="2025-08/2">غشت 2025</option>
+<option value="2025-07/2">يوليو 2025</option>
+<option value="2025-06/2">يونيو 2025</option>
+<option value="2025-05/2">مايو 2025</option>
+<option value="2025-04/2">أبريل 2025</option>
+<option value="2025-03/2">مارس 2025</option>
+<option value="2025-02/2">فبراير 2025</option>
+<optgroup label="بيانات النسخة الثانية (v1.0+)">
+<option value="2025-04/1">ابريل 2025</option>
+<option value="2025-03/1">مارس 2025</option>
+<option value="2025-02/1">فبراير 2025</option>
+<option value="2025-01/1">يناير 2025</option>
+<option value="2024-12/1">ديسمبر 2024</option>
+<option value="2024-11/1">نوفمبر 2024</option>
+<option value="2024-10/1">اكتوبر 2024</option>
+<option value="2024-09/1">شتتبر 2024</option>
+<option value="2024-08/1">غشت 2024</option>
+<option value="2024-07/1">يوليو 2024</option>
+<option value="2024-06/1">يونيو 2024</option>
+<optgroup label="بيانات النسخة الأولى (نسخة البيتا)">
+<option value="null">اعضاء تاما فقط</option>
+</select>
+</div>
+<div class="chart-container">
+<canvas id="stats-chart"></canvas>
+</div>
+<div class="chart-legend">
+<div class="legend-item" onclick="toggleDataset(0)">
+<span class="legend-text"> المستخدمون </span>
+<div class="legend-color" style="background-color: #45a1ff"></div>
+</div>
+<div class="legend-item" onclick="toggleDataset(1)">
+<span class="legend-text"> التحميلات </span>
+<div class="legend-color" style="background-color: #ff5252"></div>
+</div>
+</div>
+<br><hr>
+<div class="stats-title">ملخص إحصائيات الشهر</div>
+<table>
+<thead>
+<tr>
+<th>القياس</th>
+<th>المستخدمون</th>
+<th>التحميلات</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>أعلى قيمة</td>
+<td id="max-users">-</td>
+<td id="max-downloads">-</td>
+</tr>
+<tr>
+<td>أقل قيمة</td>
+<td id="min-users">-</td>
+<td id="min-downloads">-</td>
+</tr>
+<tr>
+<td>المجموع</td>
+<td id="total-users">-</td>
+<td id="total-downloads">-</td>
+</tr>
+<tr>
+<td>المتوسط</td>
+<td id="avg-users">-</td>
+<td id="avg-downloads">-</td>
+</tr>
+<tr>
+<td>النسبة المئوية للتغيير عن الشهر السابق</td>
+<td id="change-users">-</td>
+<td id="change-downloads">-</td>
+</tr>
+</tbody>
+</table>
+<br>
+</div>
+<script>
+// البيانات
+const data = {
+/* بيانات النسخة الثالثة */
+"2025-11/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [78,65,56,79,62,146,113,111,114,81,112,107,97,148,136,85,91,115,136,135,110,null,null,null,null,null,null,null,null,null],
+"downloads": [15,18,11,24,16,74,50,57,52,46,65,62,55,73,70,44,45,65,93,73,59,null,null,null,null,null,null,null,null,null]
+},
+"2025-10/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [90,93,105,82,68,55,61,59,64,72,64,58,69,61,76,62,96,99,65,62,75,62,66,96,74,58,56,66,91,71,79],
+"downloads": [24,43,40,31,18,16,22,15,20,19,19,29,25,16,19,18,34,31,19,16,27,20,24,41,30,23,16,12,21,22,21]
+},
+"2025-09/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [72,63,70,62,63,56,53,58,49,55,57,68,56,45,44,32,45,39,31,45,32,31,45,37,38,28,51,54,51,42,74],
+"downloads": [30,19,24,18,21,18,19,24,17,10,19,22,12,12,18,6,20,11,18,10,8,12,10,17,9,20,20,10,15,19]
+},
+"2025-08/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [48,53,51,62,93,90,77,72,67,75,63,83,95,72,69,63,60,56,35,51,50,64,52,39,36,58,71,66,77,54,64],
+"downloads": [13,17,15,24,23,21,16,18,22,25,19,26,21,22,18,15,15,17,10,16,16,22,14,13,8,20,27,26,21,16,19]
+},
+"2025-07/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [57,60,65,70,54,57,77,43,50,39,63,85,74,66,73,81,94,92,75,67,54,62,82,64,48,47,56,42,46,64,50],
+"downloads": [17,12,14,9,16,17,30,7,19,7,22,46,27,15,13,40,42,39,17,11,13,22,31,15,14,11,19,15,8,22,19]
+},
+"2025-06/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [21,25,19,28,18,28,32,22,22,21,16,18,26,30,35,31,33,24,51,62,69,61,51,56,52,51,60,67,63,50],
+"downloads": [7,11,7,14,10,12,15,8,4,5,6,6,13,14,16,8,8,8,20,28,41,30,12,27,19,15,19,28,23,14]
+},
+"2025-05/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [13,12,11,17,11,14,13,16,17,9,14,14,16,13,18,13,12,21,13,9,11,18,20,19,27,21,19,18,30,25,29],
+"downloads": [3,5,4,6,2,3,3,7,6,3,5,3,7,2,4,2,4,9,1,2,6,9,7,7,12,5,4,4,13,9,10]
+},
+"2025-04/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [4,3,3,4,2,0,2,2,2,3,2,0,2,6,4,9,6,10,6,2,9,9,9,14,18,12,6,11,13,9],
+"downloads": [2,2,0,2,0,0,1,1,0,1,1,0,0,1,0,8,1,7,2,1,5,3,6,9,5,4,4,4,5,2]
+},
+"2025-03/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [7,7,4,10,6,5,1,1,4,7,3,1,6,1,4,2,1,5,3,4,5,3,4,3,4,3,8,4,6,5,2],
+"downloads": [5,5,1,7,2,2,0,1,3,2,2,0,3,1,3,0,1,4,1,1,2,2,1,2,0,1,1,1,3,3,2]
+},
+"2025-02/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"],
+"users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,2],
+"downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,2]
+},
+/* بيانات النسخة الثانية */
+"2025-04/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [2,7,3,4,1,3,3,1,1,1,3,1,0,1,1,4,0,1,2,1,1,0,1,0,1,2,0,0,0,0],
+"downloads": [0,4,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+},
+"2025-03/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [17,9,5,12,7,4,2,3,9,6,7,2,5,3,5,2,2,3,6,1,3,3,3,3,3,2,3,2,6,8,3],
+"downloads": [2,1,3,1,0,1,1,1,0,0,0,1,1,0,0,2,0,0,2,0,0,1,0,1,1,1,2,1,2,0,1]
+},
+"2025-02/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"],
+"users":     [28,23,37,30,42,37,29,35,26,23,28,41,34,32,43,26,14,20,33,31,40,25,16,16,29,17,25,16],
+"downloads": [9,9,20,14,19,11,12,11,9,10,10,14,10,11,12,7,6,4,11,12,10,12,7,4,3,1,2,4]
+},
+"2025-01/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [16,16,20,10,19,20,15,20,17,26,29,16,10,14,23,30,24,21,20,10,22,21,25,21,14,25,27,20,19,22],
+"downloads": [5,5,9,4,8,6,6,8,5,12,10,3,2,5,12,6,8,5,3,4,8,8,12,7,4,12,11,6,4,6]
+},
+"2024-12/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [14,13,14,8,5,16,20,6,13,7,9,25,11,16,10,16,24,13,9,16,9,11,11,12,13,12,20,13,10,17,17],
+"downloads": [8,3,3,1,0,8,7,3,5,2,4,7,3,5,4,8,6,3,3,6,2,4,1,5,3,4,7,4,5,8,4]
+},
+"2024-11/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [3,4,5,5,5,6,9,7,5,13,4,5,17,13,19,12,13,13,6,14,9,17,12,21,12,6,8,12,7,14],
+"downloads": [0,0,3,3,3,3,3,2,4,8,0,2,12,6,7,4,6,4,1,9,1,7,1,12,3,1,3,5,2,7]
+},
+"2024-10/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [2,3,2,4,2,3,1,0,0,1,0,1,1,1,3,3,0,3,2,3,3,2,5,12,8,9,5,3,4,4,7],
+"downloads": [0,1,0,1,0,1,0,0,0,0,0,0,0,0,2,1,0,0,0,1,2,0,3,10,4,4,2,0,0,0,4]
+},
+"2024-09/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [0,0,2,0,0,2,0,2,2,1,1,4,5,6,1,1,3,0,0,1,2,2,5,2,1,1,1,2,2,1],
+"downloads": [0,0,0,0,0,1,0,0,0,0,0,2,3,4,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0]
+},
+"2024-08/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [0,2,2,1,2,2,1,2,2,2,1,3,0,2,1,2,1,0,0,0,1,1,0,0,1,0,1,1,0,1,1],
+"downloads": [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+},
+"2024-07/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+"users":     [1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,1,1,1,1,1,0,0,3,3,4],
+"downloads": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,2,2]
+},
+"2024-06/1": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+"downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+},
+"null": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
+"users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+"downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+}};
+
+// ترتيب الأشهر حسب التاريخ
+const monthOrder = [
+"2025-11/2","2025-10/2","2025-09/2","2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"
+];
+
+// إنشاء الرسم البياني
+let chart;
+function createChart(monthData) {
+const ctx = document.getElementById('stats-chart').getContext('2d');
+if (chart) {
+chart.destroy();}
+
+// تحديد خطوات المحور الرأسي بناءً على القيم القصوى
+const maxUsers = Math.max(...monthData.users.filter(val => val !== null));
+const maxDownloads = Math.max(...monthData.downloads.filter(val => val !== null));
+const usersStepSize = maxUsers <= 50 ? 10 :
+maxUsers <= 100 ? 20 :
+maxUsers <= 150 ? 30 : 50;
+const downloadsStepSize = maxDownloads <= 50 ? 10 :
+maxDownloads <= 100 ? 20 :
+maxDownloads <= 150 ? 30 : 50;
+
+chart = new Chart(ctx, {
+type: 'line',
+data: {
+labels: monthData.days,
+datasets: [{
+label: 'المستخدمون',
+data: monthData.users,
+borderColor: '#45a1ff',
+backgroundColor: 'rgba(75, 192, 192, 0.1)',
+tension: 0.1,
+yAxisID: 'y',
+borderWidth: 2,
+pointRadius: 3,
+pointHoverRadius: 5,
+fill: true},{
+label: 'التحميلات',
+data: monthData.downloads,
+borderColor: '#ff5252',
+backgroundColor: 'rgba(255, 99, 132, 0.1)',
+tension: 0.1,
+yAxisID: 'y1',
+borderWidth: 2,
+pointRadius: 3,
+pointHoverRadius: 5,
+fill: true}]},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+animation: {
+duration: 300,
+animations: {
+hide: {
+properties: ['opacity'],
+type: 'fade'},
+show: {
+properties: ['opacity'],
+type: 'fade'}}},
+interaction: {
+mode: 'index',
+intersect: false,},
+plugins: {
+title: {
+display: true,
+text: 'إحصائيات التحميلات والمستخدمين',
+color: '#eee',
+font: {
+size: 18}},
+legend: {
+display: false,
+labels: {
+color: '#eee'}},
+tooltip: {
+backgroundColor: 'rgba(0, 0, 0, 0.6)',
+titleColor: '#fff',
+bodyColor: '#fff',
+callbacks: {
+label: function(context) {
+let label = context.dataset.label || '';
+if (label) {
+label += ': ';}
+label += context.parsed.y;
+return label;}}}},
+scales: {
+x: {
+ticks: {
+color: '#aaa',
+maxRotation: 0,
+minRotation: 0,
+autoSkip: false,
+font: {
+size: 6}},
+grid: {
+color: 'rgba(255, 255, 255, 0.1)'}},
+y: {
+type: 'linear',
+display: true,
+position: 'left',
+title: {
+display: true,
+text: 'المستخدمون',
+color: '#eee'},
+ticks: {
+color: '#aaa',
+stepSize: usersStepSize},
+grid: {
+color: 'rgba(255, 255, 255, 0.1)'},
+min: 0,
+suggestedMax: Math.ceil(maxUsers / usersStepSize) * usersStepSize},
+y1: {
+type: 'linear',
+display: true,
+position: 'right',
+title: {
+display: true,
+text: 'التحميلات',
+color: '#eee'},
+ticks: {
+color: '#aaa',
+stepSize: downloadsStepSize},
+grid: {
+drawOnChartArea: false,
+color: 'rgba(255, 255, 255, 0.1)'},
+min: 0,
+suggestedMax: Math.ceil(maxDownloads / downloadsStepSize) * downloadsStepSize}}}});}
+
+// تبديل عرض/إخفاء مجموعة البيانات
+function toggleDataset(index) {
+const meta = chart.getDatasetMeta(index);
+meta.hidden = !meta.hidden;
+chart.update();}
+
+// حساب الإحصائيات
+function calculateStats(monthKey) {
+const monthIndex = monthOrder.indexOf(monthKey);
+const currentMonth = data[monthKey];
+const prevMonthKey = monthOrder[monthIndex + 1];
+const prevMonth = data[prevMonthKey];
+
+// حساب الإحصائيات الأساسية مع تجاهل القيم null
+const filteredUsers = currentMonth.users.filter(val => val !== null);
+const filteredDownloads = currentMonth.downloads.filter(val => val !== null);
+
+const maxUsers = filteredUsers.length > 0 ? Math.max(...filteredUsers) : 0;
+const minUsers = filteredUsers.length > 0 ? Math.min(...filteredUsers.filter(val => val !== 0)) : 0;
+const totalUsers = filteredUsers.reduce((a, b) => a + b, 0);
+const avgUsers = filteredUsers.length > 0 ? (totalUsers / filteredUsers.length).toFixed(1) : 0;
+
+const maxDownloads = filteredDownloads.length > 0 ? Math.max(...filteredDownloads) : 0;
+const minDownloads = filteredDownloads.length > 0 ? Math.min(...filteredDownloads.filter(val => val !== 0)) : 0;
+const totalDownloads = filteredDownloads.reduce((a, b) => a + b, 0);
+const avgDownloads = filteredDownloads.length > 0 ? (totalDownloads / filteredDownloads.length).toFixed(1) : 0;
+
+// حساب التغيير عن الشهر السابق
+let usersChange = 'N/A';
+let downloadsChange = 'N/A';
+if (prevMonth) {
+// التحقق مما إذا كان الشهر السابق من نفس النسخة (نفس الرقم بعد الشرطة المائلة)
+const currentVersion = monthKey.split('/')[1];
+const prevVersion = prevMonthKey.split('/')[1];
+    
+if (currentVersion === prevVersion) {
+const prevFilteredUsers = prevMonth.users.filter(val => val !== null);
+const prevFilteredDownloads = prevMonth.downloads.filter(val => val !== null);
+const prevTotalUsers = prevFilteredUsers.reduce((a, b) => a + b, 0);
+const prevTotalDownloads = prevFilteredDownloads.reduce((a, b) => a + b, 0);
+
+if (prevTotalUsers > 0) {const change = ((totalUsers - prevTotalUsers) / prevTotalUsers * 100).toFixed(1);usersChange = `${change}%`;}
+if (prevTotalDownloads > 0) {const change = ((totalDownloads - prevTotalDownloads) / prevTotalDownloads * 100).toFixed(1);downloadsChange = `${change}%`;}}}
+// تحديث الجدول
+document.getElementById('max-users').textContent = maxUsers;
+document.getElementById('min-users').textContent = minUsers;
+document.getElementById('total-users').textContent = totalUsers;
+document.getElementById('avg-users').textContent = avgUsers;
+document.getElementById('change-users').innerHTML = formatChange(usersChange);
+
+document.getElementById('max-downloads').textContent = maxDownloads;
+document.getElementById('min-downloads').textContent = minDownloads;
+document.getElementById('total-downloads').textContent = totalDownloads;
+document.getElementById('avg-downloads').textContent = avgDownloads;
+document.getElementById('change-downloads').innerHTML = formatChange(downloadsChange);}
+
+// تنسيق النسبة المئوية للتغيير
+function formatChange(change) {
+if (change === 'N/A') return change;
+const num = parseFloat(change);
+if (num > 0) {
+return `<span class="positive">+${change}</span>`;
+} else if (num < 0) {
+return `<span class="negative">${change}</span>`;
+} else {
+return change;}}
+
+// تحديث الصفحة عند تغيير الشهر
+document.getElementById('month-select').addEventListener('change', function() {
+const selectedMonth = this.value;
+const monthData = data[selectedMonth];
+createChart(monthData);
+calculateStats(selectedMonth);});
+
+// تهيئة الصفحة بالبيانات الأولية
+window.onload = function() {
+const initialMonth = "2025-10/2";
+document.getElementById('month-select').value = initialMonth;
+createChart(data[initialMonth]);
+calculateStats(initialMonth);};
+
+let chartContainer = document.querySelector('.chart-container');
+let statsTable = document.createElement('div');
+statsTable.style.display = 'none'; // إخفاء الجدول افتراضيًا
+
+// دالة لعرض الجدول
+function showTable(monthData) {
+    // إنشاء الجدول
+    let tableHtml = `
+        <table>
+            <thead>
+                <tr>
+                    <th>اليوم</th>
+                    <th>المستخدمون</th>
+                    <th>التحميلات</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    for (let i = 0; i < monthData.days.length; i++) {
+        tableHtml += `
+            <tr>
+                <td>${monthData.days[i]}</td>
+                <td>${monthData.users[i] !== null ? monthData.users[i] : '-'}</td>
+                <td>${monthData.downloads[i] !== null ? monthData.downloads[i] : '-'}</td>
+            </tr>`;
+    }
+
+    tableHtml += `</tbody></table>`;
+
+    statsTable.innerHTML = tableHtml;
+    chartContainer.style.display = 'none';  // إخفاء الرسم البياني
+    chartContainer.parentElement.appendChild(statsTable);
+    statsTable.style.display = 'block'; // عرض الجدول
+}
+
+// دالة لإعادة المبيان
+function showChart(monthData) {
+    statsTable.style.display = 'none';  // إخفاء الجدول
+    chartContainer.style.display = 'block'; // عرض الرسم البياني
+    createChart(monthData); // إعادة إنشاء الرسم البياني
+}
+
+// التبديل بين الجدول والرسم البياني
+document.getElementById('table-toggle').addEventListener('click', function() {
+    if (statsTable.style.display === 'none') {
+        showTable(data[selectedMonth]);
+    } else {
+        showChart(data[selectedMonth]);
+    }
+});
+</script>
+<script>
+document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
+document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &&
+(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
+lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+</script>
+<script>
+if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
+setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
+</script>
+</body>
+</html>
