@@ -176,7 +176,9 @@ const images=[
 ["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_community.png",
  "دردشة المجتمع"],
 ["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/youtube_channels.png",
-"قنوات ماين كرافت"]
+"قنوات ماين كرافت"],
+["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/fb.png",
+"صفحات ماين كرافت"]
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;img.src=src;
 img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});img.onload=()=>{img.style.display="block";spinner.remove();};img.onerror=()=>{const errorWrapper=document.createElement("div");errorWrapper.style.position="absolute";errorWrapper.style.display="flex";errorWrapper.style.flexDirection="column";errorWrapper.style.alignItems="center";errorWrapper.style.justifyContent="center";errorWrapper.style.width="100%";errorWrapper.style.height="100%";const errorIcon=document.createElement("div");errorIcon.innerHTML=`<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText=document.createElement("span");errorText.textContent="فشل التحميل";errorText.style.color="#FF0000";errorText.style.fontSize="12px";errorText.style.marginTop="5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);};});
 </script>
@@ -253,8 +255,8 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/18</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (09:00)-110</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/30</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (21:50)-111</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
