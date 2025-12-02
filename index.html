@@ -99,7 +99,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 ["fa-user-gear","صاحب التطبيق و أحد أعضاء الأستوديو ."]
 };let isShowing=!1,pendingTip=null;for(const id in tips){const el=document.getElementById(id);el&&el.addEventListener("click",e=>{e.stopPropagation(),isShowing?(pendingTip=tips[id],hideTip(!0)):showTip(...tips[id])})}function showTip(e,t){const i=document.getElementById("tip-toast"),n=document.getElementById("tip-icon"),o=document.getElementById("tip-text");n.className=e.includes("fab")?`fab ${e.split(" ")[1]}`:`fa-solid ${e}`,o.textContent=t,i.style.display="flex",requestAnimationFrame(()=>{i.style.opacity="1",i.style.transform="translateY(0)",isShowing=!0}),clearTimeout(window.toastTimer),window.toastTimer=setTimeout(()=>hideTip(!1),4e3)}function hideTip(e){const t=document.getElementById("tip-toast");t.style.opacity="0",t.style.transform="translateY(-150%)",isShowing=!1,clearTimeout(window.toastTimer),setTimeout(()=>{t.style.display="none",e&&pendingTip&&(showTip(...pendingTip),pendingTip=null)},400)}document.addEventListener("click",()=>{isShowing&&hideTip(!1)});</script>
 <div class="btn" style="margin: 20px auto; padding: 0px 10px; text-align: center;">
-<a href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk" id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
+<a id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
 <style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
 <div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
@@ -255,8 +255,8 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/30</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (21:50)-111</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/12/02</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (14:52)-112</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
