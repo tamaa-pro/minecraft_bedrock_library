@@ -48,6 +48,7 @@ footer {background: #222;padding: 2px 1px ;height: 18px;margin-top: 10px ;border
 <div class="month-selector" class="ripple-btn">
 <select id="month-select">
 <optgroup label="بيانات النسخة الثالثة (v2.0+)">
+<option value="2025-12/2">ديسمبر 2025</option>
 <option value="2025-11/2">نوفمبر 2025</option>
 <option value="2025-10/2">اكتوبر 2025</option>
 <option value="2025-09/2">شتتبر 2025</option>
@@ -132,8 +133,8 @@ const data = {
 /* بيانات النسخة الثالثة */
 "2025-12/2": {
 "days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
-"users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-"downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+"users":     [75,0,87,69,92,106,68,74,144,178,191,257,201,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+"downloads": [32,0,32,19,27,44,22,25,37,78,92,142,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
 },
 "2025-11/2": {
 "days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],
@@ -246,9 +247,7 @@ const data = {
 "users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 "downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
 }};
-const monthOrder = [
-"2025-11/2","2025-10/2","2025-09/2","2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"
-];
+const monthOrder = ["2025-12/2","2025-11/2","2025-10/2","2025-09/2","2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"];
 let chart;
 function createChart(monthData) {
 const ctx = document.getElementById('stats-chart').getContext('2d');
