@@ -1,47 +1,142 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<script>
-(function(){let m=navigator.userAgent;if(!localStorage.getItem("trusted"))setTimeout(()=>localStorage.setItem("trusted","yes"),3000);if(!/Android|iPhone|iPad|iPod|Mobile/i.test(m)&&!localStorage.getItem("trusted")){window.open("about:blank","_self");}})();
-</script>
+
+<!-- ==================== HEAD ==================== -->
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مكتبة ماين كرافت بيدروك</title>
+
 <meta name="description" content="تطبيق المكتبة يوفر سجل لجميع إصدارات ماين كرافت البيدروك (الجوال) . روابط مباشرة ، مع اضافات متنوعة .">
 <meta name="keywords" content="مايني كرافت, Minecraft , مكتبة ماين كرافت, تحميل مايني كرافت آخر إصدار , تحميل ماين كرافت, إصدارات ماين كرافت, تطبيق المكتبة , مكتبة ماين كرافت بيدروك , مكتبة ماين كرافت , المكتبة , ماين كرافت , مايني كرافت , تحميل مايني كرافت آخر إصدار للجوال , رابط تحميل مايني كرافت , TAMAA PRO , تحميل تطبيق المكتبة , تطبيق مكتبة ماين كرافت بيدروك , تحميل مايني كرافت الجوال,">
-<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+
 <meta name="google-site-verification" content="8Qxv5unoTh0CgGnKKBA_EpUnSAyP7PignahKPTm7Eao" />
+
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="comments/comments.css">
-<script>
-!function(){const e=new Date('2026-06-01T00:00:00+01:00');function t(){fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca').then(t=>t.json()).then(t=>{new Date(t.datetime)>=e&&(window.location.replace('https://tamaa-pro.github.io/minecraft_bedrock_library/error_103/'),document.body.innerHTML='')}).catch(()=>{new Date>=e&&window.location.replace('about:blank')})}setInterval(t,1e3),window.onload=t}();
-</script>
+
+<!-- ==================== CSS ==================== -->
+<style>
+html,body{
+margin:0;
+padding:0;
+background:#333;
+color:#fff;
+font-family:"Changa",sans-serif;
+overflow-y:auto
+}
+
+.container{
+max-width:800px;
+margin:40px auto;
+padding:20px;
+background:#333;
+border-radius:15px;
+box-shadow:0 0 10px #000
+}
+
+a,h2,p,span{color:#fff;text-decoration:none}
+
+*{
+-webkit-tap-highlight-color:transparent!important;
+-webkit-touch-callout:none!important
+}
+
+a,button,input,[role="button"]{
+touch-action:manipulation!important;
+user-select:none!important;
+-webkit-user-select:none!important
+}
+
+button,[role="button"],input[type="submit"],input[type="button"],.btn,.button-class{
+transition:transform .05s ease
+}
+
+button:active,[role="button"]:active,input[type="submit"]:active,input[type="button"]:active,.btn:active,.button-class:active,.open-btn:active,.download-btn:active{
+transform:translateY(2px)!important
+}
+
+a:active,img:active,a:focus,img:focus{
+transform:none!important;
+opacity:1!important
+}
+
+#toastUpdate{
+position:fixed;
+bottom:-100px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:600px;
+height:45px;
+line-height:45px;
+background:#222;
+color:#fff;
+padding:0 15px;
+border-radius:5px;
+font-family:sans-serif;
+font-size:12px;
+box-shadow:0 0 10px #000;
+z-index:9999;
+white-space:nowrap;
+overflow:hidden;
+text-align:center;
+transition:bottom .6s ease;
+display:none
+}
+
+.ss-track{display:flex;gap:10px;overflow-x:auto;margin-top:20px;padding-bottom:5px}
+.ss-item{width:91px;height:180px;background:#000;border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ss-item img{max-width:100%;max-height:100%;object-fit:contain;display:none}
+.ss-spinner{position:absolute;width:24px;height:24px;border:3px solid #555;border-top:3px solid lime;border-radius:50%;animation:spin 1s linear infinite}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes jump{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
+</style>
+
+<!-- ==================== SCRIPTS (HEAD) ==================== -->
 <script>
 (function(){
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  if (/FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua)) {
-    const url = window.location.href;
-    window.location.href = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end";
-    setTimeout(() => {
-      window.open(url, "_system") || window.open(url, "_blank");
-    }, 1000);
-  }
+let m=navigator.userAgent;
+if(!localStorage.getItem("trusted"))
+setTimeout(()=>localStorage.setItem("trusted","yes"),3000);
+if(!/Android|iPhone|iPad|iPod|Mobile/i.test(m)&&!localStorage.getItem("trusted")){
+window.open("about:blank","_self");
+}
 })();
 </script>
-<style>
-html, body {margin: 0;padding: 0;background-color: #333;color: white;font-family: "Changa" ,sans-serif;overflow-y: auto;}
-.container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #333;border-radius: 15px;box-shadow: 0 0 10px #000;}
-a, h2, p, span {color: white;text-decoration: none;}
-</style>
-<style>
-* {-webkit-tap-highlight-color: transparent !important;-webkit-touch-callout: none !important;}
-a, button, input, [role="button"] {touch-action: manipulation !important;user-select: none !important;-webkit-user-select: none !important;}
-button, [role="button"], input[type="submit"], input[type="button"],.btn,.button-class {transition: transform 0.05s ease;}
-button:active, [role="button"]:active, input[type="submit"]:active, input[type="button"]:active,.btn:active,  .button-class:active, .open-btn:active, .download-btn:active {transform: translateY(2px) !important;}
-a:active, img:active,a:focus, img:focus {transform: none !important;opacity: 1 !important;}
-</style>
+
+<script>
+!function(){
+const e=new Date('2026-06-01T00:00:00+01:00');
+function t(){
+fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca')
+.then(t=>t.json())
+.then(t=>{
+new Date(t.datetime)>=e&&(window.location.replace('https://tamaa-pro.github.io/minecraft_bedrock_library/error_103/'),document.body.innerHTML='')
+})
+.catch(()=>{new Date>=e&&window.location.replace('about:blank')})
+}
+setInterval(t,1e3);
+window.onload=t
+}();
+</script>
+
+<script>
+(function(){
+const ua=navigator.userAgent||navigator.vendor||window.opera;
+if(/FBAN|FBAV|FB_IAB|Instagram|Messenger/i.test(ua)){
+const url=location.href;
+location.href="intent://"+url.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+setTimeout(()=>{window.open(url,"_system")||window.open(url,"_blank")},1000)
+}
+})();
+</script>
+
 </head>
+<!-- ==================== BODY ==================== -->
 <body>
 <script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
@@ -257,7 +352,7 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/12/25</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (06:34)-116</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (07:01)-117</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
