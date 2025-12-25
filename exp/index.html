@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <script>
@@ -9,12 +10,12 @@
 <title>مكتبة ماين كرافت بيدروك</title>
 <meta name="description" content="تطبيق المكتبة يوفر سجل لجميع إصدارات ماين كرافت البيدروك (الجوال) . روابط مباشرة ، مع اضافات متنوعة .">
 <meta name="keywords" content="مايني كرافت, Minecraft , مكتبة ماين كرافت, تحميل مايني كرافت آخر إصدار , تحميل ماين كرافت, إصدارات ماين كرافت, تطبيق المكتبة , مكتبة ماين كرافت بيدروك , مكتبة ماين كرافت , المكتبة , ماين كرافت , مايني كرافت , تحميل مايني كرافت آخر إصدار للجوال , رابط تحميل مايني كرافت , TAMAA PRO , تحميل تطبيق المكتبة , تطبيق مكتبة ماين كرافت بيدروك , تحميل مايني كرافت الجوال,">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
 <meta name="google-site-verification" content="8Qxv5unoTh0CgGnKKBA_EpUnSAyP7PignahKPTm7Eao" />
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
-
 <link rel="stylesheet" href="comments/comments.css">
 <script>
-!function(){const e=new Date('2026-01-01T00:00:00+01:00');function t(){fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca').then(t=>t.json()).then(t=>{new Date(t.datetime)>=e&&(window.location.replace('about:blank'),document.body.innerHTML='')}).catch(()=>{new Date>=e&&window.location.replace('about:blank')})}setInterval(t,1e3),window.onload=t}();
+!function(){const e=new Date('2026-06-01T00:00:00+01:00');function t(){fetch('https://worldtimeapi.org/api/timezone/Africa/Casablanca').then(t=>t.json()).then(t=>{new Date(t.datetime)>=e&&(window.location.replace('https://tamaa-pro.github.io/minecraft_bedrock_library/error_103/'),document.body.innerHTML='')}).catch(()=>{new Date>=e&&window.location.replace('about:blank')})}setInterval(t,1e3),window.onload=t}();
 </script>
 <script>
 (function(){
@@ -29,7 +30,7 @@
 })();
 </script>
 <style>
-html, body {margin: 0;padding: 0;background-color: #333;color: white;font-family: sans-serif;overflow-y: auto;}
+html, body {margin: 0;padding: 0;background-color: #333;color: white;font-family: "Changa" ,sans-serif;overflow-y: auto;}
 .container {max-width: 800px;margin: 40px auto;padding: 20px;background-color: #333;border-radius: 15px;box-shadow: 0 0 10px #000;}
 a, h2, p, span {color: white;text-decoration: none;}
 </style>
@@ -99,7 +100,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 ["fa-user-gear","صاحب التطبيق و أحد أعضاء الأستوديو ."]
 };let isShowing=!1,pendingTip=null;for(const id in tips){const el=document.getElementById(id);el&&el.addEventListener("click",e=>{e.stopPropagation(),isShowing?(pendingTip=tips[id],hideTip(!0)):showTip(...tips[id])})}function showTip(e,t){const i=document.getElementById("tip-toast"),n=document.getElementById("tip-icon"),o=document.getElementById("tip-text");n.className=e.includes("fab")?`fab ${e.split(" ")[1]}`:`fa-solid ${e}`,o.textContent=t,i.style.display="flex",requestAnimationFrame(()=>{i.style.opacity="1",i.style.transform="translateY(0)",isShowing=!0}),clearTimeout(window.toastTimer),window.toastTimer=setTimeout(()=>hideTip(!1),4e3)}function hideTip(e){const t=document.getElementById("tip-toast");t.style.opacity="0",t.style.transform="translateY(-150%)",isShowing=!1,clearTimeout(window.toastTimer),setTimeout(()=>{t.style.display="none",e&&pendingTip&&(showTip(...pendingTip),pendingTip=null)},400)}document.addEventListener("click",()=>{isShowing&&hideTip(!1)});</script>
 <div class="btn" style="margin: 20px auto; padding: 0px 10px; text-align: center;">
-<a href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk" id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
+<a id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
 <style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-family:sans-serif;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
 <div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
@@ -128,7 +129,7 @@ warning.innerHTML =
 document.body.insertBefore(warning, document.body.firstChild);}
 </script>
 <script>
-function startDownload(event) {const btn = event.currentTarget;btn.innerHTML = '<span style="display:inline-block; width:16px; height:16px; border:2px solid white; border-top:2px solid transparent; border-radius:50%; margin-right:8px; vertical-align:middle; animation: spin 1s linear infinite;"></span> جاري التحميل';btn.removeAttribute('id');btn.removeAttribute('href');btn.removeAttribute('onclick');btn.style.pointerEvents = 'none';btn.style.opacity = '0.7';setTimeout(() => {window.location.href = "https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.5/library.apk";}, 500);event.preventDefault();}
+function startDownload(event) {const btn = event.currentTarget;btn.innerHTML = '<span style="display:inline-block; width:16px; height:16px; border:2px solid white; border-top:2px solid transparent; border-radius:50%; margin-right:8px; vertical-align:middle; animation: spin 1s linear infinite;"></span> جاري التحميل';btn.removeAttribute('id');btn.removeAttribute('href');btn.removeAttribute('onclick');btn.style.pointerEvents = 'none';btn.style.opacity = '0.7';setTimeout(() => {window.location.href = "https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk";}, 500);event.preventDefault();}
 const style = document.createElement('style');style.textContent = `@keyframes spin {0% { transform: rotate(0deg); }100% { transform: rotate(360deg); }}a:focus {outline: none !important;box-shadow: none !important;}`;document.head.appendChild(style);
 </script>
 <script>
@@ -176,7 +177,9 @@ const images=[
 ["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_community.png",
  "دردشة المجتمع"],
 ["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/youtube_channels.png",
-"قنوات ماين كرافت"]
+"قنوات ماين كرافت"],
+["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/fb.png",
+"صفحات ماين كرافت"]
 ];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;img.src=src;
 img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});img.onload=()=>{img.style.display="block";spinner.remove();};img.onerror=()=>{const errorWrapper=document.createElement("div");errorWrapper.style.position="absolute";errorWrapper.style.display="flex";errorWrapper.style.flexDirection="column";errorWrapper.style.alignItems="center";errorWrapper.style.justifyContent="center";errorWrapper.style.width="100%";errorWrapper.style.height="100%";const errorIcon=document.createElement("div");errorIcon.innerHTML=`<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText=document.createElement("span");errorText.textContent="فشل التحميل";errorText.style.color="#FF0000";errorText.style.fontSize="12px";errorText.style.marginTop="5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);};});
 </script>
@@ -253,8 +256,8 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:18px;">حول صفحة التحميل :</info><br>
 <sifaw style="font-size:13px;">تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/11/18</sifaw><br>
-<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (09:00)-110</sifaw><br>
+<sifaw style="font-size:13px;">تاريخ آخر تحديث للصفحة : 2025/12/25</sifaw><br>
+<sifaw style="font-size:13px;">رمز آخر تعديل للصفحة : (06:34)-116</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
 <sifaw style="font-size:13px;">تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
@@ -268,7 +271,7 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <div class="owner-label">تابع لطرف:<br>TAMAA PRO STUDIO</div>
 </div>
 <div class="owner-card">
-<div class="owner-circle owner-circle-sifaw" onclick="window.open('https://www.facebook.com/sifaw.tinsti.div?mibextid=kFxxJD','_blank')">
+<div class="owner-circle owner-circle-sifaw" onclick="window.open('https://tamaa-pro.github.io/minecraft_bedrock_library/error_103')">
 <img class="loading-spinner" src="https://raw.githubusercontent.com/tamaa-pro/azro/refs/heads/main/data/pictures/loading/gybr_1.gif" alt="Loading">
 <img id="sifawImage" src="" alt="">
 </div>
