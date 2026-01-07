@@ -60,7 +60,7 @@ setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<a class="btn" href="stats/" style="display: inline-block;background: #222;padding: 5px 3px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
+<a class="btn" href="stats/" style="display: inline-block;background: #222;padding: 3px 3px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
 <i class="fas fa-chart-line" style="color: #007bff;font-size: 15px;transition: color 0.3s ease;"></i>
 </a>
 <div style="border-radius: 0px; color: white; margin: auto; max-width: 700px; padding: 10px;">
