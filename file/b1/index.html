@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>صفحة التحميل</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
+<script data-goatcounter="https://tamaa-pro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#333;font-family:"Changa",sans-serif;user-select:none;touch-action:none;overflow-x:hidden}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:15px;position:relative}
+.container{width:100%;max-width:400px}
+.header-title{text-align:center;font-size:20px;color:#fff;margin-bottom:10px}
+.content-box{background:#222;border-radius:6px;padding:10px;margin:10px 0}
+.content-wrapper{display:flex;gap:10px;width:100%}
+.info-box{flex:1;border-radius:8px;padding:5px;color:#ccc;font-size:9px;min-height:90px}
+.info-inner{display:none;width:100%}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0}
+.info-label{color:#aaa;min-width:30px;text-align:right}
+.info-value{color:#fff;flex:1;text-align:left;word-break:break-all}
+.loading-cat{font-size:20px;animation:jump .8s ease-in-out infinite;display:inline-block}
+@keyframes jump{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#downloadBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:15px;padding:12px;background:#00FF00;color:#000;text-align:center;font-weight:bold;border-radius:8px;text-decoration:none;font-size:14px;transition:.12s;cursor:pointer;border:0}
+#downloadBtn.disabled{background:#555;color:#222;pointer-events:none}
+#downloadBtn.error{background:#8B0000;color:#fff;pointer-events:none}
+.loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#222;border-radius:6px 6px 0 0;padding:10px;display:flex;justify-content:center;z-index:999;margin:0 10px;border:1px solid #333}
+.bottom-btn{background:#333;color:#ccc;border:none;border-radius:6px;padding:8px 15px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s}
+.bottom-btn:hover{background:#444}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center}
+.modal-container{background:#111;border-radius:8px;width:90%;max-width:350px;max-height:70vh;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:15px;background:#222;color:#fff;text-align:center;font-weight:bold;border-bottom:1px solid #333}
+.modal-content{padding:15px;color:#ccc;font-size:12px;overflow-y:auto;flex:1}
+.modal-footer{padding:10px;background:#222;border-top:1px solid #333;text-align:center}
+.modal-close{background:#333;color:#ccc;border:none;border-radius:6px;padding:8px 25px;cursor:pointer;transition:background .2s}
+.modal-close:hover{background:#444}
+body.modal-open{overflow:hidden}
+</style>
+</head>
+
+<script>
+document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("dragstart", e=>e.preventDefault());
+</script>
+ 
+<body>
+
+<div class="container">
+<div class="header-title"><b>صفحة التحميل</b></div>
+
+<div class="content-box">
+<div class="content-wrapper">
+<div class="info-box">
+
+<div id="loadingCatArea" style="display:flex;justify-content:center;align-items:center;margin-top:20px">
+<span class="loading-cat">🐈‍⬛</span>
+</div>
+
+<div class="info-inner" id="infoInner">
+<div class="info-row">
+  <div class="info-label">اسم الملف :</div>
+  <div class="info-value" id="fileName">--</div>
+</div>
+<div class="info-row">
+  <div class="info-label">نطاق الملف :</div>
+  <div class="info-value" id="fileSource">--</div>
+</div>
+</div>
+<a id="downloadBtn" class="btn disabled">جاري الإعداد</a>
+<div id="tryAnywayLink">
+<a href="#" id="tryAnywayAnchor">تجربة الرابط على أي حال؟</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bottom-bar">
+<button class="bottom-btn" id="problemsBtn">
+<i class="fas fa-exclamation-triangle"></i> المشاكل الشائعة
+</button>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal-container">
+<div class="modal-header">المشاكل الشائعة</div>
+<div class="modal-content">
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● ملف التحميل لا يعمل</h4>
+<p style="margin:0">تأكد من أن الملف مخصص لإصدارك من التطبيق وأن ذاكرة الهاتف كافية.</p>
+</div>
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● ظهور خطأ 404</h4>
+<p style="margin:0">الملف قد يكون محذوفاً من المصدر. قم بالإبلاغ عن المشكلة.</p>
+</div>
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● التحميل يتوقف فجأة</h4>
+<p style="margin:0">تأكد من اتصال الإنترنت واستقرار الشبكة أثناء التحميل.</p>
+</div>
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● لا يمكن تثبيت الملف</h4>
+<p style="margin:0">قد تحتاج إلى تفعيل خيار "مصادر غير معروفة" في إعدادات التثبيت.</p>
+</div>
+<div>
+<h4 style="color:#fff;margin:0 0 5px 0">● الملف تالف بعد التحميل</h4>
+<p style="margin:0">حاول إعادة التحميل مرة أخرى من مصدر موثوق.</p>
+</div>
+</div>
+<div class="modal-footer">
+<button class="modal-close" id="modalClose">حسنا</button>
+</div>
+</div>
+</div>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+const btn = document.getElementById('downloadBtn');
+const fileNameEl = document.getElementById('fileName');
+const fileSourceEl = document.getElementById('fileSource');
+const infoInner = document.getElementById('infoInner');
+const loadingCatArea = document.getElementById('loadingCatArea');
+const tryAnywayLinkWrap = document.getElementById('tryAnywayLink');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const problemsBtn = document.getElementById('problemsBtn');
+problemsBtn.onclick = () => {
+  modalOverlay.style.display = 'flex';
+  document.body.classList.add('modal-open');
+};
+modalClose.onclick = () => {
+  modalOverlay.style.display = 'none';
+  document.body.classList.remove('modal-open');
+};
+modalOverlay.onclick = (e) => {
+  if (e.target === modalOverlay) e.stopPropagation();
+};
+let fileUrl = sessionStorage.getItem("fileUrl");
+if (!fileUrl) {
+  const raw = location.search.replace("?", "");
+  if (raw && raw.startsWith("http")) {
+    fileUrl = raw;
+    sessionStorage.setItem("fileUrl", fileUrl);
+    history.replaceState({}, "", location.pathname);
+  }
+}
+if (!fileUrl) {
+  btn.classList.add('disabled');
+  btn.textContent = 'رابط غير صالح';
+  loadingCatArea.style.display = 'none';
+  infoInner.style.display = 'block';
+  fileNameEl.textContent = 'رابط غير صالح';
+  fileSourceEl.textContent = '--';
+  tryAnywayLinkWrap.style.display = 'none';
+  throw new Error("No file URL");
+}
+if (fileUrl.endsWith('/')) fileUrl = fileUrl.slice(0, -1);
+const rawName = fileUrl.split('/').pop() || '';
+const nameNoExt = rawName.replace(/\.[^.]+$/, '');
+loadingCatArea.style.display = 'none';
+infoInner.style.display = 'block';
+fileNameEl.textContent = nameNoExt || 'غير معروف';
+try {
+  const host = new URL(fileUrl).hostname;
+  const parts = host.split('.');
+  const domain = (parts.length <= 2) ? parts[0] : parts[parts.length - 2];
+  fileSourceEl.textContent = domain || 'غير معروف';
+} catch {
+  fileSourceEl.textContent = 'غير معروف';
+}
+tryAnywayLinkWrap.style.display = 'none';
+btn.classList.remove('disabled', 'error');
+btn.textContent = 'تحميل الملف';
+btn.onclick = e => {
+  e.preventDefault();
+  btn.innerHTML = '<span class="loading-circle"></span><span>جاري التحميل</span>';
+  btn.style.background = '#0c0';
+  btn.style.color = '#000';
+  btn.onclick = null;
+  setTimeout(() => location.href = fileUrl, 300);
+};
+</script>
+
+<script>
+(function(){
+  const pulseCss = document.createElement('style');
+  pulseCss.textContent = `
+  @keyframes pulseOnce {
+    0% { background-color: #222; }
+    50% { background-color: #2c2c2c; }
+    100% { background-color: #222; }
+  }
+  `;
+  document.head.appendChild(pulseCss);
+  function ready(fn){
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(fn, 0);
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+  ready(function(){
+    const infoInner = document.getElementById("infoInner");
+    if (!infoInner) return;
+    let expanded = false;
+    function expand() {
+      if (expanded) return;
+      infoInner.style.animation = "pulseOnce 0.35s";
+      setTimeout(()=> infoInner.style.animation = '', 400);
+      expanded = true;
+    }
+    infoInner.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      expand();
+    });
+    let lastTap = 0;
+    infoInner.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      const dt = now - lastTap;
+      lastTap = now;
+      if (dt > 0 && dt <= 350) {
+        e.preventDefault();
+        expand();
+      }
+    });
+    infoInner.style.cursor = 'default';
+  });
+})();
+</script>
+
+<script>
+const style=document.createElement('style');
+style.textContent=`
+*{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none!important}
+:focus{outline:none!important;box-shadow:none!important;border-color:transparent!important}
+button,[role="button"],input[type="submit"],input[type="button"],.btn,.button-class{transition:transform .05s ease}
+button:active,[role="button"]:active,input[type="submit"]:active,input[type="button"]:active,.btn:active,.button-class:active{transform:translateY(2px)!important}
+a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!important}
+nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
+`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
