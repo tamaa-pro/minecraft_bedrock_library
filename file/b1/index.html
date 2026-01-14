@@ -10,7 +10,7 @@
 <script data-goatcounter="https://tamaa-pro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:#333;font-family:"Changa",sans-serif;user-select:none;touch-action:none;overflow-x:hidden}
+html,body{height:100%;margin:0;background:#111;font-family:"Changa",sans-serif;user-select:none;touch-action:none;overflow-x:hidden}
 body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:15px;position:relative}
 .container{width:100%;max-width:400px}
 .header-title{text-align:center;font-size:20px;color:#fff;margin-bottom:10px}
@@ -32,11 +32,11 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 .bottom-btn{background:#333;color:#ccc;border:none;border-radius:6px;padding:8px 15px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s}
 .bottom-btn:hover{background:#444}
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center}
-.modal-container{background:#111;border-radius:8px;width:90%;max-width:350px;max-height:70vh;display:flex;flex-direction:column;overflow:hidden}
-.modal-header{padding:15px;background:#222;color:#fff;text-align:center;font-weight:bold;border-bottom:1px solid #333}
+.modal-container{background:#111;border-radius:8px;width:90%;height:55%;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:5px;background:#222;color:#fff;text-align:center;font-weight:bold;border-bottom:1px solid #333}
 .modal-content{padding:15px;color:#ccc;font-size:12px;overflow-y:auto;flex:1}
-.modal-footer{padding:10px;background:#222;border-top:1px solid #333;text-align:center}
-.modal-close{background:#333;color:#ccc;border:none;border-radius:6px;padding:8px 25px;cursor:pointer;transition:background .2s}
+.modal-footer{padding:5px;background:#222;border-top:1px solid #333;text-align:center}
+.modal-close{background:#333;color:#ccc;border:none;border-radius:6px;padding:5px 15px;cursor:pointer;transition:background .2s}
 .modal-close:hover{background:#444}
 body.modal-open{overflow:hidden}
 </style>
@@ -62,8 +62,8 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 
 <div class="info-inner" id="infoInner">
 <div class="info-row">
-  <div class="info-label">اسم الملف :</div>
-  <div class="info-value" id="fileName">--</div>
+ <div class="info-label">اسم الملف :</div>
+ <div class="info-value" id="fileName">--</div>
 </div>
 <div class="info-row">
   <div class="info-label">نطاق الملف :</div>
@@ -81,7 +81,7 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 
 <div class="bottom-bar">
 <button class="bottom-btn" id="problemsBtn">
-<i class="fas fa-exclamation-triangle"></i> المشاكل الشائعة
+ المشاكل الشائعة
 </button>
 </div>
 
@@ -89,26 +89,74 @@ document.addEventListener("dragstart", e=>e.preventDefault());
 <div class="modal-container">
 <div class="modal-header">المشاكل الشائعة</div>
 <div class="modal-content">
+<!-- ====================================== -->
+<hr>
 <div style="margin-bottom:15px">
-<h4 style="color:#fff;margin:0 0 5px 0">● ملف التحميل لا يعمل</h4>
-<p style="margin:0">تأكد من أن الملف مخصص لإصدارك من التطبيق وأن ذاكرة الهاتف كافية.</p>
+<h4 style="color:red;margin:0 0 5px 0">ملاحظة مهمة ⚠︎</h4>
+<p style="margin:0">بمجرد ان تظهر عبارة "جاري تنزيل الملف..." فقد بلغت حدود التطبيق و اي مشاكل تحصل بعدها لا دخل لها بالتطبيق ، و إن كانت مشاكل متعلقة بالملف فالمشكلة من المتصفح او الشبكة و إن كانت متعلقة بالثبيت او اللعبة فالمشكلة من الجهاز او الملف و الذي يعود لمواقع الأرشفة او موجانغ (اما تطبيق المكتبة فهو مجرد تطبيق لجمع روابط تحميل جميع الإصدارات في مكان واحد بشكل منظم)</p>
 </div>
+<hr><br>
+<!-- ====================================== -->
 <div style="margin-bottom:15px">
-<h4 style="color:#fff;margin:0 0 5px 0">● ظهور خطأ 404</h4>
-<p style="margin:0">الملف قد يكون محذوفاً من المصدر. قم بالإبلاغ عن المشكلة.</p>
+<h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تحميل و تظهر رسالة خطأ 404 :</h4>
+<p style="margin:0">رابط الملف غير صحيح او الملف محذوف من مصدره او تم نقل موقعه ، قم بالإبلاغ عن الرابط .</p>
 </div>
+<!-- ====================================== -->
 <div style="margin-bottom:15px">
-<h4 style="color:#fff;margin:0 0 5px 0">● التحميل يتوقف فجأة</h4>
-<p style="margin:0">تأكد من اتصال الإنترنت واستقرار الشبكة أثناء التحميل.</p>
+<h4 style="color:#fff;margin:0 0 5px 0">● اضغط على الملف و تظهر رسالة "حدث خطأ اثناء تحليل الحزمة" :</h4>
+<p style="margin:0">يعني ان الملف تالف ، و المشكلة من المتصفح او الشبكة فيحمل الملف ناقصا ، عليك التحقق دائما من حجم الملف ، و اعد التحميل عدة مرات و بطرق متعددة...</p>
 </div>
+<!-- ====================================== -->
 <div style="margin-bottom:15px">
-<h4 style="color:#fff;margin:0 0 5px 0">● لا يمكن تثبيت الملف</h4>
-<p style="margin:0">قد تحتاج إلى تفعيل خيار "مصادر غير معروفة" في إعدادات التثبيت.</p>
+<h4 style="color:#fff;margin:0 0 5px 0">●يظهر زر تحديث و عند ضغطه تظهر رسالة "حزمة التثبيت تتعارض مع حزمة حالية" :</h4>
+<p style="margin:0">السبب من الرسالة و هو ان هناك اصدار مثبت بالفعل لكن بتوقيع مختلف (و غالبا تظهر كلمة تحديث بدل تثبيت) لذا علك البحث عن ذلك الإصدار و إلغاء تثبيته ، و اذا لم يكن هناك اي اصدار مثبت فقم بحذف الملفات الباقية للعبة (في data)، لكن إن لم تثبت اللعبة من قبل (و إذا ظهر زر تثبيت بدل تحديث) فابحث ما إذا كنت ثبتت نسخة معدلة و قم بحذفها ، او قد يكون بسبب خطأ في حذف اللعبة سابقا فبحث عن ما إذا كانت موجودة في قائمة التطبيقات في الإعدادات (مشاكل الأندرويد) ، و إن لم تنجح اي طريقة حمل النسخة المستنسخة .</p>
 </div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">●يظهر لي زر التحميل الرمادي "رابط غير صالح" :</h4>
+<p style="margin:0">يعني ان صفحة التحميل لا تحتوي على رابط الملف ، طبعا لن تصادفه من داخل التطبيق إلا نادرا ، و إن صادفته في اصدار يفترض انه متوفر عليك الإبلاغ عنه (لكن تأكد اكثر من مرة إذا كانت الصفحة تظهر رابط غير صالح في كل مرة) .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● يتوقف التحميل قبل ان يكتمل :</h4>
+<p style="margin:0">ببساطة لأن الشبكة ضعيفة او غير مستقرة ، تحقق من النت و اعد المحاولة لكن في النسخة المخففة و ليس الكاملة (كلتاهما نفس اللعبة فلا تخدعك مسمى "النسخة الكاملة") .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● يتخطى التحميل حجم الملف المعروض :</h4>
+<p style="margin:0">مشكلة غريبة و لا نعرف سببها لكن هي عكس حالة تحميل الملف ناقص و غالبا المشكلة ايضا من المتصفح او الشبكة ، لذا تحقق من النت و اعد المحاولة (في النسخة المخففة) .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● قبل اكتمال التحميل بنقطة يعيد من جديد :</h4>
+<p style="margin:0">واضح ان المشكلة من الشبكة (غير مستقرة او ضعيفة) .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● (يختفي رمز التنزيلات و لا اعرف كيفية فتحه) اين اجد الملف :</h4>
+<p style="margin:0">حقا ؟... موجود في ملف التنزيلات في ملفات الجهاز / سيظهر في اي تطبيق "مدير الملفات" / موجود في الإشعارات (اثناء و بعد انتهاء التنزيل) / موجود في التنزيلات داخل المتصفح (اخرج فقط من المكتبة و افتح التنزيلات في تطبيق المتصفح و ستجد الملف)...</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● عند الضغط على "تثبيت" تظهر رسالة مثل "فشل التثبيت"... فقط :</h4>
+<p style="margin:0">هذه المشكلة قد تكون من ذاكرة تخزين الجهاز (يجب ان تكون هناك على الأقل 4 جيغا فارغة) ، او سبب آخر لكنه غير واضح ، مثلا تدخل بلاي ستور في التثبيت و يقوم بتعطيله ، او الملف قد يكون تالفا ، او قد يكون الجهاز لا غير متوافق مع هذا الإصدار (اي هذه الحالة لها عدة اسباب على حسب الأجهزة و احيانا يفشل التثبيت بلا سبب) .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● رسالة "هذا الإصدار غير متوافق مع جهازك" :</h4>
+<p style="margin:0">الرسالة واضحة ، الإصدار غير متوافق مع الجهاز (و ذلك لا يعني بالضرورة ان الجهاز ضعيف بل فقط غير متوافق مع الجهاز و هذا من احد سلبيات تعدد انواع انظمة الاندرويد) - (لكن على ما نظن فانه غالبا يشير الى ان الإصدار يدعم نظام اندرويد اعلى من الموجود في الجهاز) ، جرب تحميل نفس الإصدار لكن من نطاق/موقع ثاني فإن لم تعمل نسخة mcpedl جرب نسخة mcpe-planet و العكس كذلك .</p>
+</div>
+<!-- ====================================== -->
+<div style="margin-bottom:15px">
+<h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تثبيت و يكتمل التثبيت لكن لا اجد اللعبة في واجهة الجهاز :</h4>
+<p style="margin:0">هذا مجرد خطأ عشوائي نادر في الجهاز اثناء التثبيت ، ادخل الى الإعدادات ثم خيار التطبيقات او إدارة التطبيق (او مهما كان اسمه) ثم ابحث عن ماين كرافت و قم بحذفها و إعادة تثبيتها (لكن إن لم تجدها في قائمة التطبيقات فإما ان التثبيت لم يكتمل كما ظننت او ان التثبيت لم ينجح من الأساس لكن تختفي نافذة التثبيت) .</p>
+</div>
+<!-- ====================================== -->
 <div>
-<h4 style="color:#fff;margin:0 0 5px 0">● الملف تالف بعد التحميل</h4>
-<p style="margin:0">حاول إعادة التحميل مرة أخرى من مصدر موثوق.</p>
+<h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تثبيت و لكن شريط التثبيت يتوقف عند حد ما و يبقى على تلك الحال :</h4>
+<p style="margin:0">غالبا من مساحة التخزين منخفظة او خلل في تثبيت ملف معين .</p>
 </div>
+<!-- ====================================== -->
 </div>
 <div class="modal-footer">
 <button class="modal-close" id="modalClose">حسنا</button>
