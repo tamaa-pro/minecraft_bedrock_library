@@ -8,45 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <script data-goatcounter="https://tamaa-pro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script>
-function requestFullScreen() {
-    const el = document.documentElement;
-    if (el.requestFullscreen) {
-        el.requestFullscreen().catch(()=>{});
-    } else if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen();
-    } else if (el.msRequestFullscreen) {
-        el.msRequestFullscreen();
-    }
-}
-
-// نحاول تشغيل الفول سكرين عند تحميل الصفحة
-window.addEventListener('load', () => {
-    // إنشاء عنصر وهمي للتفاعل الافتراضي
-    const clicker = document.createElement('div');
-    clicker.style.position = 'fixed';
-    clicker.style.top = '0';
-    clicker.style.left = '0';
-    clicker.style.width = '100vw';
-    clicker.style.height = '100vh';
-    clicker.style.zIndex = '9999';
-    clicker.style.cursor = 'pointer';
-    clicker.style.background = 'transparent';
-    document.body.appendChild(clicker);
-
-    // عند النقر (أو افتراضيًا بعد التحميل) نطلب الفول سكرين
-    clicker.addEventListener('click', () => {
-        requestFullScreen();
-        document.body.removeChild(clicker); // إزالة العنصر بعد النجاح
-    });
-
-    // محاولة النقر تلقائيًا بعد قليل (لتجاوز القيود قدر الإمكان)
-    setTimeout(() => {
-        clicker.click();
-    }, 100);
-});
-</script>
-
 <style>
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:#111;font-family:"Changa",sans-serif;user-select:none;touch-action:none;overflow-x:hidden}
