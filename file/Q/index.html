@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>صفحة التحميل</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
+<script data-goatcounter="https://tamaa-pro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#111;font-family:"Changa",sans-serif;user-select:none;touch-action:none;overflow-x:hidden}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:15px;position:relative}
+.container{width:100%;max-width:400px}
+.header-title{text-align:center;font-size:20px;color:#fff;margin-bottom:10px}
+.content-box{background:#222;border-radius:6px;padding:10px;margin:10px 0}
+.content-wrapper{display:flex;gap:10px;width:100%}
+.info-box{flex:1;border-radius:8px;padding:5px;color:#ccc;font-size:12px;min-height:90px}
+.info-inner{width:100%}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0}
+.info-label{color:#aaa;min-width:30px;text-align:right}
+.info-value{color:#fff;flex:1;text-align:left;word-break:break-all}
+#downloadBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:15px;padding:12px;background:#00FF00;color:#000;text-align:center;font-weight:bold;border-radius:8px;text-decoration:none;font-size:14px;transition:.12s;cursor:pointer;border:0}
+#downloadBtn.disabled{background:#555;color:#222;pointer-events:none}
+#downloadBtn.error{background:#8B0000;color:#fff;pointer-events:none}
+.loading-circle{width:14px;height:14px;border:2px solid #000;border-top:2px solid lime;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#222;border-radius:6px 6px 0 0;padding:10px;display:flex;justify-content:center;z-index:999;margin:0 10px;border:1px solid #333}
+.bottom-btn{background:#333;color:#ccc;border:none;border-radius:6px;padding:8px 15px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s}
+.bottom-btn:hover{background:#444}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center}
+.modal-container{background:#111;border-radius:8px;width:90%;height:55%;display:flex;flex-direction:column;overflow:hidden}
+.modal-header{padding:5px;background:#222;color:#fff;text-align:center;font-weight:bold;border-bottom:1px solid #333}
+.modal-content{padding:15px;color:#ccc;font-size:12px;overflow-y:auto;flex:1}
+.modal-footer{padding:5px;background:#222;border-top:1px solid #333;text-align:center}
+.modal-close{background:#333;color:#ccc;border:none;border-radius:6px;padding:5px 15px;cursor:pointer;transition:background .2s}
+.modal-close:hover{background:#444}
+body.modal-open{overflow:hidden}
+*{-webkit-tap-highlight-color:transparent!important;-webkit-touch-callout:none!important}
+:focus{outline:none!important;box-shadow:none!important;border-color:transparent!important}
+button,[role="button"],input[type="submit"],input[type="button"],.btn,.button-class{transition:transform .05s ease}
+button:active,[role="button"]:active,input[type="submit"]:active,input[type="button"]:active,.btn:active,.button-class:active{transform:translateY(2px)!important}
+a:active,img:active,a:focus,img:focus{transform:none!important;opacity:1!important}
+nav a:active,ul li a:active,.sidebar a:active{transform:none!important;box-shadow:none!important}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="header-title"><b>صفحة التحميل</b></div>
+
+  <div class="content-box">
+    <div class="content-wrapper">
+      <div class="info-box">
+
+        <div class="info-inner" id="infoInner">
+          <div class="info-row">
+            <div class="info-label">اسم الملف :</div>
+            <div class="info-value" id="fileName">--</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">نطاق الملف :</div>
+            <div class="info-value" id="fileSource">--</div>
+          </div>
+        </div>
+
+        <a id="downloadBtn" class="btn disabled">جاري الفحص</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-bar">
+  <button class="bottom-btn" id="problemsBtn">
+    المشاكل الشائعة
+  </button>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-container">
+    <div class="modal-header">المشاكل الشائعة</div>
+    <div class="modal-content">
+      <hr>
+      <div style="margin-bottom:15px">
+        <h4 style="color:red;margin:0 0 5px 0">ملاحظة مهمة</h4>
+        <p style="margin:0">بمجرد ان تظهر عبارة "جاري تنزيل الملف..." فقد بلغت حدود التطبيق و اي مشاكل تحصل بعدها لا دخل لها بالتطبيق ، و إن كانت مشاكل متعلقة بالملف فالمشكلة من المتصفح او الشبكة و إن كانت متعلقة بالثبيت او اللعبة فالمشكلة من الجهاز او الملف و الذي يعود لمواقع الأرشفة او موجانغ (اما تطبيق المكتبة فهو مجرد تطبيق لجمع روابط تحميل جميع الإصدارات في مكان واحد بشكل منظم)</p>
+      </div>
+      <hr><br>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تحميل و تظهر رسالة خطأ 404 :</h4>
+        <p style="margin:0">رابط الملف غير صحيح او الملف محذوف من مصدره او تم نقل موقعه ، قم بالإبلاغ عن الرابط .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● اضغط على الملف و تظهر رسالة "حدث خطأ اثناء تحليل الحزمة" :</h4>
+        <p style="margin:0">يعني ان الملف تالف ، و المشكلة من المتصفح او الشبكة فيحمل الملف ناقصا ، عليك التحقق دائما من حجم الملف ، و اعد التحميل عدة مرات و بطرق متعددة...</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">●يظهر زر تحديث و عند ضغطه تظهر رسالة "حزمة التثبيت تتعارض مع حزمة حالية" :</h4>
+        <p style="margin:0">السبب من الرسالة و هو ان هناك اصدار مثبت بالفعل لكن بتوقيع مختلف (و غالبا تظهر كلمة تحديث بدل تثبيت) لذا علك البحث عن ذلك الإصدار و إلغاء تثبيته ، و اذا لم يكن هناك اي اصدار مثبت فقم بحذف الملفات الباقية للعبة (في data)، لكن إن لم تثبت اللعبة من قبل (و إذا ظهر زر تثبيت بدل تحديث) فابحث ما إذا كنت ثبتت نسخة معدلة و قم بحذفها ، او قد يكون بسبب خطأ في حذف اللعبة سابقا فبحث عن ما إذا كانت موجودة في قائمة التطبيقات في الإعدادات (مشاكل الأندرويد) ، و إن لم تنجح اي طريقة حمل النسخة المستنسخة .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">●يظهر لي زر التحميل الرمادي "رابط غير صالح" :</h4>
+        <p style="margin:0">يعني ان صفحة التحميل لا تحتوي على رابط الملف ، طبعا لن تصادفه من داخل التطبيق إلا نادرا ، و إن صادفته في اصدار يفترض انه متوفر عليك الإبلاغ عنه (لكن تأكد اكثر من مرة إذا كانت الصفحة تظهر رابط غير صالح في كل مرة) .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● يتوقف التحميل قبل ان يكتمل :</h4>
+        <p style="margin:0">ببساطة لأن الشبكة ضعيفة او غير مستقرة ، تحقق من النت و اعد المحاولة لكن في النسخة المخففة و ليس الكاملة (كلتاهما نفس اللعبة فلا تخدعك مسمى "النسخة الكاملة") .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● يتخطى التحميل حجم الملف المعروض :</h4>
+        <p style="margin:0">مشكلة غريبة و لا نعرف سببها لكن هي عكس حالة تحميل الملف ناقص و غالبا المشكلة ايضا من المتصفح او الشبكة ، لذا تحقق من النت و اعد المحاولة (في النسخة المخففة) .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● قبل اكتمال التحميل بنقطة يعيد من جديد :</h4>
+        <p style="margin:0">واضح ان المشكلة من الشبكة (غير مستقرة او ضعيفة) .</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● (يختفي رمز التنزيلات و لا اعرف كيفية فتحه) اين اجد الملف :</h4>
+        <p style="margin:0">موجود في ملف التنزيلات في ملفات الجهاز / سيظهر في اي تطبيق "مدير الملفات" / موجود في الإشعارات (اثناء و بعد انتهاء التنزيل) / موجود في التنزيلات داخل المتصفح.</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● عند الضغط على "تثبيت" تظهر رسالة مثل "فشل التثبيت"... فقط :</h4>
+        <p style="margin:0">قد تكون هذه المشكلة من ذاكرة التخزين او ملف تالف او عدم توافق الجهاز مع الاصدار.</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● رسالة "هذا الإصدار غير متوافق مع جهازك" :</h4>
+        <p style="margin:0">يعني ان الاصدار لا يتوافق مع نظام جهازك. جرِّب نسخة من نطاق مختلف او نسخة اخرى.</p>
+      </div>
+
+      <div style="margin-bottom:15px">
+        <h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تثبيت و يكتمل التثبيت لكن لا اجد اللعبة في واجهة الجهاز :</h4>
+        <p style="margin:0">ادخل إلى الإعدادات ثم التطبيقات وابحث عن ماين كرافت و قم بحذفها و إعادة تثبيتها.</p>
+      </div>
+
+      <div>
+        <h4 style="color:#fff;margin:0 0 5px 0">● اضغط على تثبيت و لكن شريط التثبيت يتوقف عند حد ما و يبقى على تلك الحال :</h4>
+        <p style="margin:0">غالبا من مساحة التخزين المنخفضة او خلل في تثبيت ملف معين.</p>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close" id="modalClose">حسنا</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
+const btn = document.getElementById('downloadBtn');
+const fileNameEl = document.getElementById('fileName');
+const fileSourceEl = document.getElementById('fileSource');
+const infoInner = document.getElementById('infoInner');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const problemsBtn = document.getElementById('problemsBtn');
+
+problemsBtn.onclick = () => {
+  modalOverlay.style.display = 'flex';
+  document.body.classList.add('modal-open');
+};
+modalClose.onclick = () => {
+  modalOverlay.style.display = 'none';
+  document.body.classList.remove('modal-open');
+};
+modalOverlay.onclick = (e) => {
+  if (e.target === modalOverlay) e.stopPropagation();
+};
+
+let fileUrl = sessionStorage.getItem("fileUrl");
+if (!fileUrl) {
+  const raw = location.search.replace("?", "");
+  if (raw && raw.startsWith("http")) {
+    fileUrl = raw;
+    sessionStorage.setItem("fileUrl", fileUrl);
+    history.replaceState({}, "", location.pathname);
+  }
+}
+
+if (!fileUrl) {
+  btn.classList.add('disabled');
+  btn.textContent = 'رابط غير صالح';
+  infoInner.style.display = 'block';
+  fileNameEl.textContent = 'رابط غير صالح';
+  fileSourceEl.textContent = '--';
+  throw new Error("No file URL");
+}
+
+if (fileUrl.endsWith('/')) fileUrl = fileUrl.slice(0, -1);
+const rawName = fileUrl.split('/').pop() || '';
+const nameNoExt = rawName.replace(/\.[^.]+$/, '');
+
+infoInner.style.display = 'block';
+fileNameEl.textContent = nameNoExt || 'غير معروف';
+
+try {
+  const host = new URL(fileUrl).hostname;
+  const parts = host.split('.');
+  const domain = (parts.length <= 2) ? parts[0] : parts[parts.length - 2];
+  fileSourceEl.textContent = domain || 'غير معروف';
+} catch {
+  fileSourceEl.textContent = 'غير معروف';
+}
+
+btn.classList.remove('disabled', 'error');
+btn.textContent = 'تحميل الملف';
+btn.onclick = e => {
+  e.preventDefault();
+  btn.innerHTML = '<span class="loading-circle"></span><span>جاري التحميل</span>';
+  btn.style.background = '#0c0';
+  btn.style.color = '#000';
+  btn.onclick = null;
+  setTimeout(() => location.href = fileUrl, 300);
+};
+</script>
+
+</body>
+</html>
