@@ -51,10 +51,10 @@ document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &
 (e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
 lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 </script>
-<script>
+<!--<script>
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
 setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
-</script>
+</script>-->
 <script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
@@ -186,7 +186,7 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 
 <div style="background:#222;padding:10px;border-radius:8px;font-size:12px">
 <p style="line-height: 1.6;">
-  ✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة للهواتف الضعيفة والقوية ، و كذلك أقسام متنوعة .
+  ✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة ، و كذلك أقسام متنوعة .
 </p>
 <ul style="line-height: 1.6;">
 <li>قسم للإصدارات الأساسية .</li>
@@ -204,11 +204,9 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
     • الإصدار 2.0 هو بديل للنسخة القديمة التي أغلقت في 2025/02/07 .<br/>
     • التحديثات داخلية ولا تتطلب تحميل التطبيق من جديد إلا في حالات تحديث الحزمة .<br/>
 </p>
-<sifaw style="background:#111;color: #cccccc">
-[ هذا التطبيق غير رسمي ولا يتبع Mojang أو Microsoft ]
-<br/>
-[ ماين كرافت هي علامة تجارية مملوكة لمايكروسوفت ]
-</sifaw>
+<div style="margin-top:10px; background:rgb(15,15,15);padding:10px;border-radius:8px;font-size:10px">
+هدف التطبيق ببساطة هو جمع كل الإصدارات بجميع نسخها المتاحة و تنظيمها في مكان واحد (الا و هو التطبيق) مع اضافات جانبية بسيطة لجعل التطبيق اكثر تنوعا ، و طبعا روابط التحميل خاصة بمواقع الارشفة المعروفة (مثل mcpedl و mcpe-planet)  .
+</div>
 </div>
 <div style="margin-top:10px;background:#8B0000;padding:10px;border-radius:8px;font-size:10px">
 <b>تنبيه مهم عند تسجيل الدخول ⚠︎</b>
@@ -260,13 +258,27 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 </style>
 <div id="infoPanel">
 <info style="color: #9933CC;font-size:15px;"><b>حول صفحة التحميل :</b></info><br>
-<sifaw style="font-size:10px;">_ تاريخ إنشاء الصفحة : 2025/06/01</sifaw><br>
-<sifaw style="font-size:10px;">_ تاريخ آخر تحديث للصفحة : 2026/01/21</sifaw><br>
-<sifaw style="font-size:10px;">_ رمز آخر تعديل للصفحة : (20:30)-120</sifaw><br>
-<sifaw style="font-size:10px;">_ تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27</sifaw><br>
-<sifaw style="font-size:10px;">_ اريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07</sifaw><br>
-<sifaw style="font-size:10px;">_ تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16</sifaw><br>
-<sifaw style="font-size:10px;">_ تاريخ الإصدار الأول (نسخة البيتا) : 2024/01/07</sifaw><br>
+<sifaw style="font-size:10px;">
+_ تاريخ إنشاء الصفحة : 2025/06/01
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ تاريخ آخر تحديث للصفحة : 2026/01/25
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ رمز آخر تعديل للصفحة : (21:30)-121
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ اريخ الإصدار الأول لحزمة التطبيق (2.0) : 2025/02/07
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ تاريخ الإصدار الأول للنسخة السابقة (1.0) : 2024/06/16
+</sifaw><br>
+<sifaw style="font-size:10px;">
+_ تاريخ الإصدار الأول (نسخة البيتا) : 2024/01/07
+</sifaw><br>
 <div class="owner-container">
 <div class="owner-card">
 <div class="owner-circle owner-circle-tamaa" onclick="window.open('https://tamaa-pro.github.io/minecraft_bedrock_library/error_103','_self')">
