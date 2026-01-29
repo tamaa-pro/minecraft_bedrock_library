@@ -52,10 +52,10 @@ document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &
 (e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
 lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
 </script>
-<!--<script>
+<script>
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
 setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("reloaded");}
-</script>-->
+</script>
 <script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
