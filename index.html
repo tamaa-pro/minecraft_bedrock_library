@@ -11,6 +11,7 @@
 <meta name="google-site-verification" content="8Qxv5unoTh0CgGnKKBA_EpUnSAyP7PignahKPTm7Eao" />
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
 <link rel="stylesheet" href="comments/comments.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script>(function(){var _0="sifaw-2",_1="tz-access",_2=2592e6,_3=["Africa/","Asia/","Indian/"],_4=["Casablanca","Algiers","Tunis","Tripoli","Cairo","Khartoum","Nouakchott","Mogadishu","Djibouti","Comoro","Riyadh","Kuwait","Qatar","Dubai","Bahrain","Muscat","Aden","Sanaa","Baghdad","Amman","Damascus","Beirut","Gaza","Jerusalem"],_5=[0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1];function _6(m){document.documentElement.innerHTML="";document.documentElement.style.cssText="margin:0;height:100%;background:#000;overflow:hidden";document.body=document.createElement("body");document.body.style.cssText="margin:0;height:100%;background:#000;overflow:hidden;pointer-events:none;-webkit-user-select:none;user-select:none";var t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:sans-serif;font-size:13px;line-height:1.6;text-align:center;z-index:2147483647;pointer-events:none";document.body.appendChild(t);document.documentElement.appendChild(document.body);["scroll","touchmove","wheel","keydown","mousedown","mouseup","click","contextmenu","selectstart"].forEach(function(e){window.addEventListener(e,function(i){i.preventDefault();i.stopPropagation()},{passive:false})})}function _7(v){localStorage.setItem(_1,JSON.stringify({v:_0,s:v,e:Date.now()+_2}))}function _8(){try{return JSON.parse(localStorage.getItem(_1)||"")}catch(e){return{}}}function _9(z){for(var i=0;i<_4.length;i++)if(_3[_5[i]]+_4[i]===z)return 1;return 0}var D=_8();if(D.v===_0&&D.e>Date.now()){if(!D.s)_6("This application is only available in Arab countries.");return}var tz=null;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){}if(!tz){_7(0);_6("Unable to determine your device time zone.");return}if(!_9(tz)){_7(0);_6("This application is only available in Arab countries.");return}_7(1)})();
 </script>
 <script>
@@ -60,9 +61,7 @@ setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<a class="btn" href="stats/" style="display: inline-block;background: #222;padding: 3px 3px;border-radius: 5px;margin-top: 5px;margin-left: 5px;text-decoration: none;float: left;" onmousedown="this.querySelector('i').style.color='red'" onmouseup="this.querySelector('i').style.color='#007bff'">
-<i class="fas fa-chart-line" style="color: #007bff;font-size: 15px;transition: color 0.3s ease;"></i>
-</a>
+<!----------------------------------------->
 <div style="border-radius: 0px; color: white; margin: auto; max-width: 700px; padding: 10px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
 <div style="background: #000; border-radius: 15px; height: 80px; width: 80px; display: flex; align-items: center; justify-content: center;">
@@ -73,6 +72,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <p style="color: #cccccc; font-size: 14px; margin: 3px 0px;">TAMAA PRO STUDIO</p>
 </div>
 </div>
+<!----------------------------------------->
 <div style="background-color: #222; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
 <span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>
@@ -82,11 +82,23 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <span id="platform" style="margin-right: 20px;">[ Android ]</span>
 <span id="author" style="margin-right: 20px;"></span>
 </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<script>
+const BIN_ID="683f23508960c979a5a4d239",API_KEY="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";
+async function loadDownloads(){
+const e=document.getElementById("downloads");
+try{
+const r=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest?ts=${Date.now()}`,{headers:{"X-Master-Key":API_KEY,"Cache-Control":"no-store"}}),j=await r.json();
+e.textContent=`[ التحميلات: ${Number(j.record.count)||0} ]`
+}catch{e.textContent="[ التحميلات: غير متوفرة ]"}
+}
+loadDownloads();
+window.addEventListener("downloads:update",loadDownloads);
+</script>
 <div id="tip-toast" style="align-items: center; background: rgb(46, 46, 46); border-radius: 10px; box-shadow: rgb(0, 0, 0) 0px 0px 10px; color: white; display: flex; font-size: 13px; gap: 10px; max-width: 320px; opacity: 0; padding: 10px 15px; position: fixed; right: 20px; top: 20px; transform: translateY(-150%); transition: transform 0.4s, opacity 0.4s; z-index: 9999;"><i class="fa-solid fa-circle-info" id="tip-icon" style="font-size: 16px;"></i><span id="tip-text"></span></div><style>#counter,#tip-size,#tip-version,#tip-date,#tip-platform,#tip-author{cursor:pointer;outline:none;user-select:none}</style><script>const tips={downloads:
 ["fa-chart-column","عدد مرات الضغط على زر التحميل ."],
 "ratings":
-["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],                                                                           "size":
+["fas fa-star","التقييم العام للتطبيق (من التعليقات) ."],
+"size":
 ["fa-box-archive","حجم التطبيق الكامل قبل التثبيت (30.66MB) ."],
 "version":
 ["fa-code-branch","رقم آخر إصدار للتطبيق (2.6) ."],
@@ -98,6 +110,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 "author":
 ["fa-user-gear","صاحب التطبيق و أحد أعضاء الأستوديو ."]
 };let isShowing=!1,pendingTip=null;for(const id in tips){const el=document.getElementById(id);el&&el.addEventListener("click",e=>{e.stopPropagation(),isShowing?(pendingTip=tips[id],hideTip(!0)):showTip(...tips[id])})}function showTip(e,t){const i=document.getElementById("tip-toast"),n=document.getElementById("tip-icon"),o=document.getElementById("tip-text");n.className=e.includes("fab")?`fab ${e.split(" ")[1]}`:`fa-solid ${e}`,o.textContent=t,i.style.display="flex",requestAnimationFrame(()=>{i.style.opacity="1",i.style.transform="translateY(0)",isShowing=!0}),clearTimeout(window.toastTimer),window.toastTimer=setTimeout(()=>hideTip(!1),4e3)}function hideTip(e){const t=document.getElementById("tip-toast");t.style.opacity="0",t.style.transform="translateY(-150%)",isShowing=!1,clearTimeout(window.toastTimer),setTimeout(()=>{t.style.display="none",e&&pendingTip&&(showTip(...pendingTip),pendingTip=null)},400)}document.addEventListener("click",()=>{isShowing&&hideTip(!1)});</script>
+<!----------------------------------------->
 <div class="btn" style="margin: 20px auto; padding: 0px 10px; text-align: center;">
 <a id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
@@ -115,63 +128,35 @@ document.getElementById("downloadBtn").addEventListener("click",function(){
 });
 </script>
 <script>
-function startDownload(event) {const btn = event.currentTarget;btn.innerHTML = '<span style="display:inline-block; width:16px; height:16px; border:2px solid white; border-top:2px solid transparent; border-radius:50%; margin-right:8px; vertical-align:middle; animation: spin 1s linear infinite;"></span> جاري التحميل';btn.removeAttribute('id');btn.removeAttribute('href');btn.removeAttribute('onclick');btn.style.pointerEvents = 'none';btn.style.opacity = '0.7';setTimeout(() => {window.location.href = "https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk";}, 500);event.preventDefault();}
-const style = document.createElement('style');style.textContent = `@keyframes spin {0% { transform: rotate(0deg); }100% { transform: rotate(360deg); }}a:focus {outline: none !important;box-shadow: none !important;}`;document.head.appendChild(style);
+async function incrementDownloads(){
+if(sessionStorage.getItem("alreadyDownloaded"))return;
+const h={"X-Master-Key":API_KEY,"Cache-Control":"no-store","Content-Type":"application/json","X-Bin-Versioning":"false"};
+const r1=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest?ts=${Date.now()}`,{headers:h}),j1=await r1.json(),c=Number(j1.record.count)||0;
+const r2=await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest?ts=${Date.now()}`,{headers:h}),j2=await r2.json(),v=Number(j2.record.count)||0;
+await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`,{method:"PUT",headers:h,body:JSON.stringify({count:Math.max(c+1,v)})});
+sessionStorage.setItem("alreadyDownloaded","1");
+window.dispatchEvent(new Event("downloads:update"))
+}
 </script>
 <script>
-(function(){const a=document.getElementById("downloads"),b=document.getElementById("downloadBtn"),c="683f23508960c979a5a4d239",d="$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";async function e(){try{const f=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),g=await f.json(),h=g.record.count||0;a.textContent=`[ التحميلات: ${h} ]`}catch(i){a.textContent="[ التحميلات: غير متوفرة ]",console.error(i)}}async function j(){try{if(sessionStorage.getItem("alreadyDownloaded"))return;const k=await fetch(`https://api.jsonbin.io/v3/b/${c}/latest`,{headers:{"X-Master-Key":d}}),l=await k.json();let m=l.record.count||0;m++;await fetch(`https://api.jsonbin.io/v3/b/${c}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":d,"X-Bin-Versioning":"false"},body:JSON.stringify({count:m})});a.textContent=`[ التحميلات: ${m} ]`;sessionStorage.setItem("alreadyDownloaded","true")}catch(n){alert("[ فشل تحديث عدد التحميلات ]"),console.error(n)}}e(),b.addEventListener("click",j)})();
+function startDownload(e){e.preventDefault();incrementDownloads();
+const b=e.currentTarget;
+b.innerHTML='<span style="display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top:2px solid transparent;border-radius:50%;margin-right:8px;vertical-align:middle;animation:spin 1s linear infinite"></span> جاري التحميل';
+b.removeAttribute("id");b.removeAttribute("href");b.removeAttribute("onclick");
+b.style.pointerEvents="none";b.style.opacity=".7";
+setTimeout(()=>{location.href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.6/library.apk"},500)
+}
+const s=document.createElement("style");
+s.textContent='@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}a:focus{outline:none!important;box-shadow:none!important}';
+document.head.appendChild(s);
 </script>
+<!----------------------------------------->
 <txt style="color:#00F500">لقطات من التطبيق :</txt>
-<style>
-.ss-track{display:flex;gap:10px;overflow-x:auto;margin-top:20px;padding-bottom:5px}
-.ss-item{width:91px;height:180px;background:#000;border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.ss-item img{max-width:100%;max-height:100%;object-fit:contain;display:none}
-.ss-spinner{position:absolute;width:24px;height:24px;border:3px solid #555;border-top:3px solid lime;border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-</style>
+<style>.ss-track{display:flex;gap:10px;overflow-x:auto;margin-top:20px;padding-bottom:5px}.ss-item{width:91px;height:180px;background:#000;border-radius:10px;position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}.ss-item img{max-width:100%;max-height:100%;object-fit:contain;display:none;position:relative;z-index:2}.ss-spinner{position:absolute;width:25px;height:25px;border:4px solid #222;border-top:4px solid #00F500;border-radius:50%;animation:spin 1s linear infinite;z-index:1}.ss-disk{position:absolute;width:48px;height:48px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;z-index:3;cursor:pointer}.ss-download svg{width:20px;height:20px;fill:#00F500}.ss-error{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;z-index:4}.ss-error span{color:#FF0000;font-size:12px;margin-top:5px}@keyframes spin{to{transform:rotate(360deg)}}</style>
 <div class="ss-track" id="ssContainer"></div>
-<script>
-const images=[
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/tamaa_pro.png",
- "شعار الأستوديو"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/log_in.png",
- "تسجيل الدخول"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/home.png",
- "الصفحة الرئيسية"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/side_menu.png",
- "القائمة الجانبية"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/last_version.png",
- "آخر إصدار"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/download_page.png",
- "صفحة التحميل"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/basic_versions.png",
- "الإصدارات الأساسية"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/1.21_1.19.png",
- "إصدارات 21-20-19"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/1.18_1.16.png",
- "إصدارات 18-17-16"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/1.14_1.0.png",
- "إصدارات أقدم من 1.16"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/patch.png",
- "باتش"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/commands.png",
- "أوامر ماين كرافت"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/suggested_programs.png",
- "برامج مقترحة"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/suggested_sites.png",
- "مواقع مقترحة"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_community.png",
- "دردشة المجتمع"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/youtube_channels.png",
-"قنوات ماين كرافت"],
-["https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/fb.png",
-"صفحات ماين كرافت"]
-];const container=document.getElementById("ssContainer");const elements=[];images.forEach(([src,alt])=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;img.src=src;
-img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);elements.push({img,spinner,src});img.onload=()=>{img.style.display="block";spinner.remove();};img.onerror=()=>{const errorWrapper=document.createElement("div");errorWrapper.style.position="absolute";errorWrapper.style.display="flex";errorWrapper.style.flexDirection="column";errorWrapper.style.alignItems="center";errorWrapper.style.justifyContent="center";errorWrapper.style.width="100%";errorWrapper.style.height="100%";const errorIcon=document.createElement("div");errorIcon.innerHTML=`<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg>`;const errorText=document.createElement("span");errorText.textContent="فشل التحميل";errorText.style.color="#FF0000";errorText.style.fontSize="12px";errorText.style.marginTop="5px";errorWrapper.appendChild(errorIcon);errorWrapper.appendChild(errorText);spinner.remove();img.parentNode.appendChild(errorWrapper);};});
-</script>
+<script>const BASE="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/";const preloadCount=5;const LS_PREFIX="ss_img_";const EXPIRY_MS=24*60*60*1000;const images=[["tamaa_pro.png","شعار الأستوديو"],["log_in.png","تسجيل الدخول"],["home.png","الصفحة الرئيسية"],["side_menu.png","القائمة الجانبية"],["last_version.png","آخر إصدار"],["download_page.png","صفحة التحميل"],["basic_versions.png","الإصدارات الأساسية"],["1.21_1.19.png","إصدارات 21-20-19"],["1.18_1.16.png","إصدارات 18-17-16"],["1.14_1.0.png","إصدارات أقدم من 1.16"],["patch.png","باتش"],["commands.png","أوامر ماين كرافت"],["suggested_programs.png","برامج مقترحة"],["suggested_sites.png","مواقع مقترحة"],["library_community.png","دردشة المجتمع"],["youtube_channels.png","قنوات ماين كرافت"],["fb.png","صفحات ماين كرافت"]];const container=document.getElementById("ssContainer");function lsGet(name){try{return JSON.parse(localStorage.getItem(LS_PREFIX+name))}catch(e){return null}}function lsSet(name,data){try{localStorage.setItem(LS_PREFIX+name,JSON.stringify({ts:Date.now(),data}))}catch(e){}}function isFresh(entry){return entry&&Date.now()-entry.ts<EXPIRY_MS}function fetchToDataURL(url){return fetch(url).then(r=>{if(!r.ok)throw 0;return r.blob()}).then(b=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=()=>rej();fr.readAsDataURL(b)}))}images.forEach(([name,alt],i)=>{const wrap=document.createElement("div");wrap.className="ss-item";const spinner=document.createElement("div");spinner.className="ss-spinner";const img=document.createElement("img");img.alt=alt;img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);container.appendChild(wrap);const key=name;const stored=lsGet(key);if(isFresh(stored)){img.src=stored.data;img.onload=()=>{img.style.display="block";spinner.style.display="none"};img.onerror=()=>{spinner.style.display="none";showError(wrap)};return}if(i<preloadCount){spinner.style.display="block";fetchToDataURL(BASE+name).then(data=>{img.src=data;lsSet(key,data);img.onload=()=>{img.style.display="block";spinner.style.display="none"}}).catch(()=>{showError(wrap);spinner.style.display="none"});return}spinner.style.display="none";const disk=document.createElement("div");disk.className="ss-disk";disk.innerHTML='<div class="ss-download"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 20h14v-2H5v2z"/><path d="M11 16h2V8h3l-4-5-4 5h3z"/></svg></div>';disk.addEventListener("click",()=>{disk.style.display="none";spinner.style.display="block";fetchToDataURL(BASE+name).then(data=>{img.src=data;lsSet(key,data);img.onload=()=>{img.style.display="block";spinner.style.display="none"}}).catch(()=>{showError(wrap);spinner.style.display="none"})});wrap.appendChild(disk);function showError(w){const ew=document.createElement("div");ew.className="ss-error";ew.innerHTML='<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#FF0000" stroke-width="2"/><path d="M12 8V12" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/><path d="M12 16H12.01" stroke="#FF0000" stroke-width="2" stroke-linecap="round"/></svg><span>فشل التحميل</span>';const existingDisk=w.querySelector(".ss-disk");if(existingDisk)existingDisk.remove();const s=w.querySelector(".ss-spinner");if(s)s.remove();w.appendChild(ew)}});</script>
+<!----------------------------------------->
 <br />
-
-
 <div style="background:#222;padding:10px;border-radius:8px;font-size:12px">
 <p style="line-height: 1.6;">
   ✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة ، و كذلك أقسام متنوعة .
@@ -200,15 +185,13 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 <b>تنبيه مهم عند تسجيل الدخول ⚠︎</b>
 <br>يرجى عدم ادخال الإسم الحقيقي (او على الأقل كاملا) ، و عدم ارفاق صورة شخصية ، فهدف الحسابات في التطبيق اعطاء هوية خاصة لكل مستخدم في حال التواصل في الدردشة او اي اقسام تواصل في التطبيق ، و كذلك في حال اضافة اي عبارات ممنوعة لبيانات الحساب او صورة مخالفة لقواعد التطبيق و نفس الأمر في اقسام التواصل كالدردشة العام فسيتم حظر المستخدم من التطبيق بشكل كلي و دائم .
 </div>
-
+<!----------------------------------------->
 <div class="btn" style="margin-top: 25px; text-align: center;">
 <a href="https://www.facebook.com/minecraft.bedrock.library?mibextid=ZbWKwL" target="_blank" style="display: inline-block; background-color: #1877f2; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s;">
 <i class="fab fa-facebook-f" style="margin-right: 8px;margin-lift: 7px;margin-top: 5px;"></i> صفحة التطبيق على الفيسبوك</a>
 </div><br>
-
-
+<!----------------------------------------->
 <div id="comments-container">
-
 <div class="comments-header">
 <button id="sort-comments-btn">
 <i class="fas fa-sort"></i>
@@ -229,9 +212,10 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 </div>
 </div>
 <script src="comments/comments.js"></script>
-
 </div>
-  
+<script src="comments/comments_media.js"></script>
+<script src="comments/comments_rating.js"></script>
+<!----------------------------------------->
 <hr/>
 <style>
 #infoPanel{max-height:800px;overflow:hidden;transition:max-height .4s ease;background:#1e1e1e;color:#ddd;font-size:10px;padding:10px 10px;border-top:1px solid #444}
@@ -250,10 +234,10 @@ img.style.display="none";wrap.appendChild(spinner);wrap.appendChild(img);contain
 _ تاريخ إنشاء الصفحة : 2025/06/01
 </sifaw><br>
 <sifaw style="font-size:10px;">
-_ تاريخ آخر تحديث للصفحة : 2026/01/25
+_ تاريخ آخر تحديث للصفحة : 2026/01/31
 </sifaw><br>
 <sifaw style="font-size:10px;">
-_ رمز آخر تعديل للصفحة : (21:30)-121
+_ رمز آخر تعديل للصفحة : (08:45)-122
 </sifaw><br>
 <sifaw style="font-size:10px;">
 _ تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27
@@ -297,9 +281,6 @@ window.addEventListener('DOMContentLoaded', loadSifawImage);
 <hr/>
 </div>
 </div>
-
-<script src="comments/comments_media.js"></script>
-<script src="comments/comments_rating.js"></script>
 
 </body>
 </html>
