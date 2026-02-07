@@ -185,6 +185,55 @@ document.head.appendChild(s);
 <div style="margin-top:10px; background:rgb(15,15,15);padding:10px;border-radius:8px;font-size:10px">
 هدف التطبيق ببساطة هو جمع كل الإصدارات بجميع نسخها المتاحة و تنظيمها في مكان واحد (الا و هو التطبيق) مع اضافات جانبية بسيطة لجعل التطبيق اكثر تنوعا ، و طبعا روابط التحميل خاصة بمواقع الارشفة المعروفة (مثل mcpedl و mcpe-planet)  .
 </div>
+<div id="bedrock-card" style="background:#111;border-radius:6px;border:1px solid #fff;color:#fff;font-family:Arial;direction:rtl;max-width:520px">
+<div style="padding:12px;display:flex;align-items:center;justify-content:space-between">
+<j style="font-size:10">نافذة التحقق من آخر إصدار من موقع ماين كرافت الرسمي (يمكن الضغط عليه):</j>
+<div style="height:1px;background:#fff"></div>
+<div><span>آخر إصدار رسمي : </span><span id="stable-text" style="cursor:default;color:#e6d97a">جارٍ البحث...</span></div>
+<span id="stable-refresh" style="cursor:pointer;opacity:.8">⌕</span>
+</div>
+<div style="height:1px;background:#fff"></div>
+<div style="padding:12px;display:flex;align-items:center;justify-content:space-between">
+<div><span>آخر إصدار بيتا : </span><span id="beta-text" style="cursor:default;color:#e6d97a">جارٍ البحث...</span></div>
+<span id="beta-refresh" style="cursor:pointer;opacity:.8">⌕</span>
+</div>
+</div>
+
+<script>
+(()=>{const p="https://corsproxy.io/?",
+f=async u=>{try{let r=await fetch(p+encodeURIComponent(u));if(!r.ok)throw 0;return await r.text()}catch{throw{code:101}}},
+v=t=>(t.match(/\d+(?:\.\d+)+(?:\/\d+)?/)||[])[0]||null,
+s=async()=>{let d=new DOMParser().parseFromString(await f("https://feedback.minecraft.net/hc/en-us/sections/360001186971-Release-Changelogs"),"text/html"),
+i=d.querySelectorAll(".article-list-item a");if(!i.length)throw{code:103};
+for(let a of i){let t=a.textContent.trim();
+if(/java/i.test(t)||!/bedrock|android/i.test(t))continue;
+let ver=v(t);if(!ver)throw{code:102};
+return{version:ver,url:"https://feedback.minecraft.net"+a.getAttribute("href")}}
+throw{code:103}},
+b=async()=>{let d=new DOMParser().parseFromString(await f("https://feedback.minecraft.net/hc/en-us/sections/360001185332-Beta-and-Preview-Information-and-Changelogs"),"text/html"),
+a=d.querySelector(".article-list-item a");if(!a)throw{code:103};
+let ver=v(a.textContent.trim());if(!ver)throw{code:102};
+return{version:ver,url:"https://feedback.minecraft.net"+a.getAttribute("href")}},
+L=(e,d)=>{e.textContent=d.version;e.style.cssText="color:#ccc;cursor:pointer";
+e.onmouseenter=()=>e.style.color="#fff";
+e.onmouseleave=()=>e.style.color="#ccc";
+e.onmousedown=()=>e.style.color="#aaa";
+e.onmouseup=()=>e.style.color="#fff";
+e.onclick=()=>location.href=d.url},
+E=(e,c,r)=>{e.textContent=`[فشل استخراج الترقيم ${c}]`;e.style.color="#c77";e.onclick=null;
+r.style.display=c===104?"inline":"none"},
+U=async(e,g,r)=>{e.textContent="جارٍ البحث...";e.style.color="#e6d97a";r.style.display="none";
+try{L(e,await g())}catch(x){E(e,x.code||104,r)}},
+se=document.getElementById("stable-text"),
+be=document.getElementById("beta-text"),
+sr=document.getElementById("stable-refresh"),
+br=document.getElementById("beta-refresh");
+sr.style.display=br.style.display="none";
+sr.onclick=()=>U(se,s,sr);
+br.onclick=()=>U(be,b,br);
+U(se,s,sr);U(be,b,br);
+})();
+</script>
 </div>
 <div style="margin-top:10px;background:#8B0000;padding:10px;border-radius:8px;font-size:10px">
 <b>تنبيه مهم عند تسجيل الدخول ⚠︎</b>
@@ -237,10 +286,10 @@ document.head.appendChild(s);
 _ تاريخ إنشاء الصفحة : 2025/06/01
 </sifaw><br>
 <sifaw style="font-size:10px;">
-_ تاريخ آخر تحديث للصفحة : 2026/01/31
+_ تاريخ آخر تحديث للصفحة : 2026/02/07
 </sifaw><br>
 <sifaw style="font-size:10px;">
-_ رمز آخر تعديل للصفحة : (19:02)-124
+_ رمز آخر تعديل للصفحة : (21:09)-125
 </sifaw><br>
 <sifaw style="font-size:10px;">
 _ تاريخ آخر تحديث لحزمة التطبيق (2.6) : 2025/10/27
