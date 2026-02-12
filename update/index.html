@@ -21,6 +21,51 @@ a:active{transform:scale(.97)}
 <h1>المكتبة</h1>
 <p>v2.7</p>
 <p>2026/02/10</p>
-<a href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.7/library.apk">تحميل التحديث</a>
+<a class="btn" href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.7/library.apk">تحميل التحديث</a>
 </div>
+<script>
+const style = document.createElement('style');
+style.textContent = `
+    *{
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+    }
+    :focus {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+    button, 
+    [role="button"], 
+    input[type="submit"], 
+    input[type="button"],
+    .btn,
+    .button-class
+    {
+        transition: transform 0.05s ease;
+    }
+    button:active, 
+    [role="button"]:active, 
+    input[type="submit"]:active, 
+    input[type="button"]:active,
+    .btn:active, 
+    .button-class:active
+    {
+        transform: translateY(2px) !important;
+    }
+    a:active, img:active,
+    a:focus, img:focus {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+    nav a:active,
+    ul li a:active,
+    .sidebar a:active
+    {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+`;
+document.head.appendChild(style);
+</script>
 </body></html>
