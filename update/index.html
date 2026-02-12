@@ -1,71 +1,89 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>صفحة التحديث</title>
-<script>(function(){var k=atob("Y3lu"),q=location.search.replace("?","");if(sessionStorage.getItem("k")===k)history.replaceState(null,null,location.pathname);else if(q===k){sessionStorage.setItem("k",k);history.replaceState(null,null,location.pathname);}else location.replace("about:blank");})();</script>
-<style>
-*{-webkit-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
-html,body{margin:0;padding:0;background:rgb(30,30,30);font-family:Arial;color:#fff;overflow:hidden}
-body{display:flex;align-items:center;justify-content:center;height:100vh}
-#c{background:#1b1b1b;border:1px solid #333;border-radius:10px;padding:20px;margin:0 10px;max-width:400px;width:100%;text-align:center;box-shadow:0 0 20px #000}
-img{width:100px;height:100px;border-radius:20px;margin-bottom:15px;pointer-events:none}
-h1{margin:5px 0 10px 0;font-size:20px}
-p{margin:5px 0;color:#aaa;font-size:14px}
-a{display:inline-block;margin-top:15px;padding:10px 20px;background:#16a34a;color:#fff;text-decoration:none;border-radius:6px;font-size:14px;transition:.2s;pointer-events:auto}
-a:active{transform:scale(.97)}
-</style>
-</head>
-<body onclick="event.preventDefault()">
-<div id="c">
-<img src="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_icon.png" draggable="false">
-<h1>المكتبة</h1>
-<p>v2.7</p>
-<p>2026/02/10</p>
-<a class="btn" href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.7/library.apk">تحميل التحديث</a>
-</div>
-<script>
-const style = document.createElement('style');
-style.textContent = `
-    *{
-        -webkit-tap-highlight-color: transparent !important;
-        -webkit-touch-callout: none !important;
-    }
-    :focus {
-        outline: none !important;
-        box-shadow: none !important;
-        border-color: transparent !important;
-    }
-    button, 
-    [role="button"], 
-    input[type="submit"], 
-    input[type="button"],
-    .btn,
-    .button-class
-    {
-        transition: transform 0.05s ease;
-    }
-    button:active, 
-    [role="button"]:active, 
-    input[type="submit"]:active, 
-    input[type="button"]:active,
-    .btn:active, 
-    .button-class:active
-    {
-        transform: translateY(2px) !important;
-    }
-    a:active, img:active,
-    a:focus, img:focus {
-        transform: none !important;
-        opacity: 1 !important;
-    }
-    nav a:active,
-    ul li a:active,
-    .sidebar a:active
-    {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-`;
-document.head.appendChild(style);
-</script>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>      
+<meta charset="utf-8">      
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">      
+<title>صفحة التحديث</title>      
+<script>(function(){var k=atob("Y3lu"),q=location.search.replace("?","");if(sessionStorage.getItem("k")===k)history.replaceState(null,null,location.pathname);else if(q===k){sessionStorage.setItem("k",k);history.replaceState(null,null,location.pathname);}else location.replace("about:blank");})();</script>      
+<style>      
+*{-webkit-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}      
+html,body{margin:0;padding:0;background:rgb(30,30,30);font-family:Arial;color:#fff;overflow:hidden}      
+body{display:flex;align-items:center;justify-content:center;height:100vh}      
+#c{background:#1b1b1b;border:1px solid #333;border-radius:10px;padding:20px;margin:0 10px;max-width:400px;width:100%;text-align:center;box-shadow:0 0 20px #000}      
+img{width:100px;height:100px;border-radius:20px;margin-bottom:15px;pointer-events:none}      
+h1{margin:5px 0 10px 0;font-size:20px}      
+p{margin:5px 0;color:#aaa;font-size:14px}      
+a{display:inline-block;margin-top:15px;padding:10px 20px;background:#16a34a;color:#fff;text-decoration:none;border-radius:6px;font-size:14px;transition:.2s;pointer-events:auto}      
+a:active{transform:scale(.97)}      
+</style>      
+</head>      
+<body onclick="event.preventDefault()">      
+<div id="c">      
+<img src="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/library_icon.png" draggable="false">      
+<h1>المكتبة</h1>      
+<p>v2.7</p>      
+<p>2026/02/10</p>      
+<a class="btn" id="downloadBtn" href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.7/library.apk" draggable="false">تحميل التحديث</a>      
+</div>      
+<script>      
+const style = document.createElement('style');      
+style.textContent = `      
+    *{      
+        -webkit-tap-highlight-color: transparent !important;      
+        -webkit-touch-callout: none !important;      
+    }      
+    :focus {      
+        outline: none !important;      
+        box-shadow: none !important;      
+        border-color: transparent !important;      
+    }      
+    button,       
+    [role="button"],       
+    input[type="submit"],       
+    input[type="button"],      
+    .btn,      
+    .button-class      
+    {      
+        transition: transform 0.05s ease;      
+    }      
+    button:active,       
+    [role="button"]:active,       
+    input[type="submit"]:active,       
+    input[type="button"]:active,      
+    .btn:active,       
+    .button-class:active      
+    {      
+        transform: translateY(2px) !important;      
+    }      
+    a:active, img:active,      
+    a:focus, img:focus {      
+        transform: none !important;      
+        opacity: 1 !important;      
+    }      
+    nav a:active,      
+    ul li a:active,      
+    .sidebar a:active      
+    {      
+        transform: none !important;      
+        box-shadow: none !important;      
+    }      
+`;      
+document.head.appendChild(style);      
+
+const btn=document.getElementById("downloadBtn");
+
+btn.addEventListener("contextmenu",e=>e.preventDefault());
+btn.addEventListener("dragstart",e=>e.preventDefault());
+btn.addEventListener("touchstart",()=>{btn.style.background="#15803d";});
+btn.addEventListener("click",function(e){
+    e.preventDefault();
+    btn.textContent="جاري التحميل...";
+    btn.style.pointerEvents="none";
+    const a=document.createElement("a");
+    a.href=btn.href;
+    a.download="";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>{btn.textContent="تحميل التحديث";btn.style.pointerEvents="auto";btn.style.background="#16a34a";},3000);
+});
+</script>      
 </body></html>
