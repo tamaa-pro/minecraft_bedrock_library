@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>صفحة التحميل [v8.1]</title>
 <script>
+(function(){
+var ua=navigator.userAgent||"";
+if(/FBAN|FBAV|FB_IAB|FB4A|FBIOS/i.test(ua)){
+document.documentElement.innerHTML="";
+var u="https://tamaa-pro.github.io/minecraft_bedrock_library";
+if(/Android/i.test(ua)){
+location.replace("intent://tamaa-pro.github.io/minecraft_bedrock_library#Intent;scheme=https;package=com.android.chrome;end;");
+setTimeout(function(){location.replace(u)},1200);
+}else{
+location.replace(u);
+}
+throw new Error("Stop");
+}
+})();
+</script>
+<script>
 (function () {
   try {
     if (sessionStorage.getItem("fileUrl")) return;
