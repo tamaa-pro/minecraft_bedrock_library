@@ -67,7 +67,6 @@ setTimeout(() => {location.reload();}, 1000);} else {sessionStorage.removeItem("
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
 window.addEventListener('pageshow', function (event) {if (event.persisted) {window.location.reload();}});
 </script>
-<script src="comments/comments.js"></script>
 <!----------------------------------------->
 <div style="border-radius: 0px; color: white; margin: auto; max-width: 700px; padding: 10px;">
 <div style="align-items: center; display: flex; gap: 15px; margin-bottom: 20px;">
@@ -82,7 +81,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <!----------------------------------------->
 <div style="background-color: #222; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
-<span id="ratings" style="margin-right: 20px;">[ التقييم: ⌕ ]</span>
+<!--<span id="ratings" style="margin-right: 20px;">[ التقييم: ⌕ ]</span>-->
 <span id="size" style="margin-right: 20px;">[ 31MB ]</span>
 <span id="version" style="margin-right: 20px;">[ v2.7 ]</span>
 <span id="date" style="margin-right: 20px;">[ 2026/02/10 ]</span>
@@ -280,7 +279,7 @@ U(se,s,sr);U(be,b,br);
 <i class="fab fa-facebook-f" style="margin-right: 8px;margin-lift: 7px;margin-top: 5px;"></i> صفحة التطبيق على الفيسبوك</a>
 </div><br>
 <!----------------------------------------->
-<div id="comments-container">
+<!--<div id="comments-container">
 <div class="comments-header">
 <button id="sort-comments-btn">
 <i class="fas fa-sort"></i>
@@ -300,7 +299,7 @@ U(se,s,sr);U(be,b,br);
 <span class="loading-cat">🐈‍⬛</span>جاري تحميل التعليقات...
 </div>
 </div>
-</div>
+</div>-->
 <!----------------------------------------->
 <hr/>
 <style>
@@ -368,7 +367,7 @@ window.addEventListener('DOMContentLoaded', loadSifawImage);
 </div>
 </div>
 <!----------------------------------------->
-
+<script src="comments/comments.js"></script>
 <script src="comments/comments_media.js"></script>
 <script src="comments/comments_rating.js"></script>
 <!----------------------------------------->
