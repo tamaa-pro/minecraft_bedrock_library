@@ -45,7 +45,6 @@ button:active, [role="button"]:active, input[type="submit"]:active, input[type="
 a:active, img:active,a:focus, img:focus {transform: none !important;opacity: 1 !important;}
 </style>
 </head>
-<script src="comments/comments.js"></script>
 <body>
 <script>
 if ('serviceWorker' in navigator) {navigator.serviceWorker.getRegistrations().then(function(registrations) {for(let registration of registrations) {registration.unregister();}});}
@@ -297,7 +296,6 @@ U(se,s,sr);U(be,b,br);
 <span class="loading-cat">🐈‍⬛</span>جاري تحميل التعليقات...
 </div>
 </div>
-
 </div>
 <!----------------------------------------->
 <hr/>
@@ -366,6 +364,7 @@ window.addEventListener('DOMContentLoaded', loadSifawImage);
 </div>
 </div>
 <!----------------------------------------->
+<script src="comments/comments.js"></script>
 <script src="comments/comments_media.js"></script>
 <script src="comments/comments_rating.js"></script>
 <!----------------------------------------->
