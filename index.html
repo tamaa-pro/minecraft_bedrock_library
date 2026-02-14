@@ -78,7 +78,7 @@ window.addEventListener('pageshow', function (event) {if (event.persisted) {wind
 <!----------------------------------------->
 <div style="background-color: #222; border-radius: 8px; font-size: 14px; margin-bottom: 15px; overflow-x: auto; padding: 10px; white-space: nowrap;">
 <span id="downloads" style="margin-right: 20px;">[ التحميلات: ⌕ ]</span>
-<!--<span id="ratings" style="margin-right: 20px;">[ التقييم: 0.0 ]</span>-->
+<span id="ratings" style="margin-right: 20px;">[ التقييم: ⌕ ]</span>
 <span id="size" style="margin-right: 20px;">[ 31MB ]</span>
 <span id="version" style="margin-right: 20px;">[ v2.7 ]</span>
 <span id="date" style="margin-right: 20px;">[ 2026/02/10 ]</span>
@@ -117,19 +117,6 @@ window.addEventListener("downloads:update",loadDownloads);
 <div class="btn" style="margin: 20px auto; padding: 0px 10px; text-align: center;">
 <a id="downloadBtn" onclick="startDownload(event)" style="background-color: #4caf50; border-radius: 8px; color: white; cursor: pointer; display: inline-block; font-size: 14px; max-width: 450px; padding: 14px 0px; text-decoration: none; width: 100%;">تحميل التطبيق</a>
 </div>
-<style>#toastUpdate{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);width:90%;max-width:600px;height:45px;line-height:45px;background:#222;color:#fff;padding:0 15px;border-radius:5px;font-size:12px;box-shadow:0 0 10px #000;z-index:9999;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:center;transition:bottom 0.6s ease;display:none}</style>
-<div id="toastUpdate">يتم تحديث التطبيق و رفعه للموقع في الوقت الحالي، يرجى العودة في وقت لاحق...</div>
-<script>let updateInProgress=false;if(updateInProgress){window.addEventListener("DOMContentLoaded",()=>{const b=document.getElementById("downloadBtn"),t=document.getElementById("toastUpdate");if(b){b.disabled=true;b.style.pointerEvents="none";b.style.backgroundColor="#8B0000";b.innerText="في انتظار التحديث..."}t.style.display="block";setTimeout(()=>{t.style.bottom="25px"},100);});}</script>
-<style>
-@keyframes jump{0%{transform:translateY(0)}100%{transform:translateY(-6px)}}
-</style>
-<script>
-document.getElementById("downloadBtn").addEventListener("click",function(){
-  const t=document.getElementById("toastMessage");
-  t.style.bottom="30px";
-  setTimeout(()=>{t.style.bottom="-100px"},8500);
-});
-</script>
 <script>
 async function incrementDownloads(){
 if(sessionStorage.getItem("alreadyDownloaded"))return;
