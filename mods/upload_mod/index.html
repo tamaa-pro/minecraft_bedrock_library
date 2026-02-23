@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>رفع مود</title>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+</head>
+<body>
+
+<h2>رفع مود (اختبار)</h2>
+
+<input id="title" placeholder="اسم المود"><br><br>
+<input id="publisher" placeholder="اسم الناشر"><br><br>
+<input id="cover" placeholder="رابط الصورة"><br><br>
+<input id="file" placeholder="رابط الملف"><br><br>
+<input id="type" placeholder="النوع"><br><br>
+<input id="short" placeholder="وصف قصير"><br><br>
+<textarea id="long" placeholder="وصف طويل"></textarea><br><br>
+
+<button onclick="uploadMod()">رفع</button>
+
+<script>
+const { Client, Databases, ID } = Appwrite;
+
+const client = new Client()
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
+    .setProject('69922bf4002571605f460');
+
+const databases = new Databases(client);
+
+const DATABASE_ID = "YOUR_DATABASE_ID";
+const COLLECTION_ID = "mods";
+
+async function uploadMod() {
+
+    const data = {
+        title: document.getElementById("title").value,
+        publisher_username: document.getElementById("publisher").value,
+        cover_url: document.getElementById("cover").value,
+        file_url: document.getElementById("file").value,
+        type: document.getElementById("type").value,
+        short_description: document.getElementById("short").value,
+        long_description: document.getElementById("long").value,
+        likes: 0,
+        dislikes: 0,
+        views: 0
+    };
+
+    try {
+        await databases.createDocument(
+            DATABASE_ID,
+            COLLECTION_ID,
+            ID.unique(),
+            data
+        );
+
+        alert("تم الرفع بنجاح");
+
+    } catch (err) {
+        console.error(err);
+        alert("خطأ");
+    }
+}
+</script>
+
+</body>
+</html>
