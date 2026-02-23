@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>قائمة المودات</title>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+</head>
+<body>
+
+<h2>قائمة المودات</h2>
+<div id="mods"></div>
+<br>
+<button onclick="prevPage()">السابق</button>
+<button onclick="nextPage()">التالي</button>
+
+<script>
+const { Client, Databases, Query } = Appwrite;
+
+const client = new Client()
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
+    .setProject('69922bf4002571605f460');
+
+const databases = new Databases(client);
+
+const DATABASE_ID = "YOUR_DATABASE_ID";
+const COLLECTION_ID = "mods";
+
+let offset = 0;
+const limit = 20;
+
+async function loadMods() {
+
+    try {
+
+        const response = await databases.listDocuments(
+            DATABASE_ID,
+            COLLECTION_ID,
+            [
+                Query.limit(limit),
+                Query.offset(offset),
+                Query.orderDesc("$createdAt")
+            ]
+        );
+
+        const container = document.getElementById("mods");
+        container.innerHTML = "";
+
+        response.documents.forEach(mod => {
+
+            const div = document.createElement("div");
+
+            div.innerHTML = `
+                <h3><a href="mod.html#${mod.$id}">${mod.title}</a></h3>
+                <p>${mod.short_description}</p>
+                <hr>
+            `;
+
+            container.appendChild(div);
+        });
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function nextPage() {
+    offset += limit;
+    loadMods();
+}
+
+function prevPage() {
+    if (offset >= limit) {
+        offset -= limit;
+        loadMods();
+    }
+}
+
+loadMods();
+</script>
+
+</body>
+</html>
