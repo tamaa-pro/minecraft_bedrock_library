@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>عرض مود</title>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+const { Client, Databases } = Appwrite;
+
+const client = new Client()
+    .setEndpoint('https://fra.cloud.appwrite.io/v1')
+    .setProject('69922bf4002571605f460');
+
+const databases = new Databases(client);
+
+const DATABASE_ID = "YOUR_DATABASE_ID";
+const COLLECTION_ID = "mods";
+
+const modId = window.location.hash.substring(1);
+
+async function loadMod() {
+
+    if (!modId) {
+        document.getElementById("content").innerText = "لا يوجد معرف";
+        return;
+    }
+
+    try {
+
+        const mod = await databases.getDocument(
+            DATABASE_ID,
+            COLLECTION_ID,
+            modId
+        );
+
+        document.getElementById("content").innerHTML = `
+            <h2>${mod.title}</h2>
+            <img src="${mod.cover_url}" width="200"><br><br>
+            <p>${mod.long_description}</p>
+            <a href="${mod.file_url}">تحميل</a>
+        `;
+
+        // زيادة المشاهدات
+        await databases.updateDocument(
+            DATABASE_ID,
+            COLLECTION_ID,
+            modId,
+            { views: mod.views + 1 }
+        );
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+loadMod();
+</script>
+
+</body>
+</html>
