@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="https://k.top4top.io/p_3439brqf60.png" type="image/png">
-<title>إحصائيات المكتبة [2026/02/01]</title>
+<title>إحصائيات المكتبة [2026/03/01]</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
@@ -49,6 +49,7 @@ footer {background: #222;padding: 2px 1px ;height: 18px;margin-top: 10px ;border
 <div class="month-selector" class="ripple-btn">
 <select id="month-select">
 <optgroup label="بيانات النسخة الثالثة (v2.0+)">
+<option value="2026-03/2">مارس 2026</option>
 <option value="2026-02/2">فبراير 2026</option>
 <option value="2026-01/2">يناير 2026</option>
 <option value="2025-12/2">ديسمبر 2025</option>
@@ -134,10 +135,15 @@ footer {background: #222;padding: 2px 1px ;height: 18px;margin-top: 10px ;border
 <script>
 const data = {
 /* بيانات النسخة الثالثة */
-"2026-02/2": {
+"2026-03/2": {
 "days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
 "users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 "downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+},
+"2026-02/2": {
+"days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"],
+"users":     [153,143,147,160,157,184,157,130,118,128,150,228,203,215,170,145,158,156,171,220,185,168,178,169,189,193,196,219],
+"downloads": [49,53,58,56,49,66,58,43,44,55,54,88,83,80,73,39,51,64,67,85,67,53,63,60,47,66,73,86]
 },
 "2026-01/2": {
 "days":      ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
@@ -260,7 +266,7 @@ const data = {
 "users":     [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
 "downloads": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
 }};
-const monthOrder = ["2025-12/2","2025-11/2","2025-10/2","2025-09/2","2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"];
+const monthOrder = ["2026-02/2","2026-01/2","2025-12/2","2025-11/2","2025-10/2","2025-09/2","2025-08/2","2025-07/2","2025-06/2","2025-05/2","2025-04/2","2025-03/2","2025-02/2","2025-04/1","2025-03/1","2025-02/1","2025-01/1","2024-12/1","2024-11/1","2024-10/1","2024-09/1","2024-08/1","2024-07/1","2024-06/1"];
 let chart;
 function createChart(monthData) {
 const ctx = document.getElementById('stats-chart').getContext('2d');
@@ -434,16 +440,15 @@ const monthData = data[selectedMonth];
 createChart(monthData);
 calculateStats(selectedMonth);});
 window.onload = function() {
-const initialMonth = "2026-01/2";
+const initialMonth = "2026-02/2";
 document.getElementById('month-select').value = initialMonth;
 createChart(data[initialMonth]);
 calculateStats(initialMonth);};
 </script>
-<script>
-document.addEventListener('wheel', function(e) {if (e.ctrlKey) e.preventDefault();}, { passive: false });document.addEventListener('keydown', function(e) {if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=')) || e.key === 'Meta') {e.preventDefault();}});document.addEventListener('contextmenu', e => e.preventDefault());document.addEventListener('selectstart', function(e) {e.preventDefault();});document.addEventListener('copy', function(e) {e.preventDefault();});
-document.addEventListener('keydown', function(e) {if ((e.ctrlKey || e.metaKey) &&
-(e.key === '+' || e.key === '-' || e.key === '0' || e.keyCode === 187 || e.keyCode === 189 || e.keyCode === 48)) {e.preventDefault();}});document.addEventListener('wheel', function(e) {if (e.ctrlKey) {e.preventDefault();}}, { passive: false });let lastTouchEnd = 0;document.addEventListener('touchstart', function(e) {if (e.touches.length > 1) {e.preventDefault();}});document.addEventListener('touchend', function(e) {const now = Date.now();if (now - lastTouchEnd <= 300) {e.preventDefault();}
-lastTouchEnd = now;}, { passive: false });document.addEventListener('touchmove', function(e) {if (e.touches.length > 1) {e.preventDefault();}}, { passive: false });document.addEventListener('dblclick', function(e) {e.preventDefault();}, { passive: false });const viewportMeta = document.querySelector('meta[name="viewport"]');viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+​<script>
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
 </script>
 <script>
 if (performance.navigation.type !== 1 && !sessionStorage.getItem("reloaded")) {sessionStorage.setItem("reloaded", "true");
