@@ -1,65 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>عرض مود</title>
-<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.0"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تحميل المود | Minecraft Library</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:20px;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.container{max-width:650px;margin:0 auto}.main-card{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;margin-bottom:20px;position:relative}.cover-wrapper{position:relative;width:100%;height:250px;background:#000}.cover-img{width:100%;height:100%;object-fit:cover}.mod-title-overlay{position:absolute;bottom:15px;right:15px;background:rgba(40,40,40,0.7);backdrop-filter:blur(4px);padding:6px 12px;border-radius:8px;font-size:13px;color:#fff;max-width:80%}.meta-section{padding:20px}.publisher-line{display:flex;align-items:center;gap:12px;margin-bottom:15px;cursor:pointer}.pub-avatar{width:40px;height:40px;border-radius:50%;border:2px solid var(--accent);object-fit:cover}.pub-name{font-weight:700;font-size:0.95rem;color:var(--text)}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}.info-item{font-size:0.75rem;color:var(--text-sub);display:flex;align-items:center;gap:6px}.info-item i{color:var(--accent);width:14px}.interaction-bar{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:20px}.stat-btn{background:transparent;border:none;color:var(--text);display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.75rem;cursor:pointer;transition:0.2s}.stat-btn i{font-size:1.1rem;color:var(--text-sub)}.stat-btn.active-like i{color:var(--success)}.stat-btn.active-dislike i{color:var(--error)}.dl-button{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-weight:700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}.desc-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}.desc-card h3{margin-top:0;font-size:1rem;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:10px}.desc-content{font-size:0.9rem;color:var(--text-sub);white-space:pre-wrap}.action-float{position:fixed;top:20px;left:20px;display:flex;gap:10px;z-index:100}.mini-btn{width:40px;height:40px;border-radius:12px;background:rgba(24,24,27,0.8);backdrop-filter:blur(8px);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.toast{position:fixed;bottom:25px;right:25px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:1000;font-size:0.85rem}.skeleton{background:linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+</style>
 </head>
 <body>
 
-<div id="content"></div>
+<div class="action-float">
+<div class="mini-btn" onclick="copyPageLink()" title="نسخ الرابط"><i class="fas fa-link"></i></div>
+<div class="mini-btn" onclick="sharePage()" title="مشاركة"><i class="fas fa-share-alt"></i></div>
+</div>
 
+<div class="container" id="mainContent">
+<div id="loading" class="hidden">
+<div class="main-card skeleton" style="height:400px"></div>
+<div class="desc-card skeleton" style="height:200px"></div>
+</div>
+
+<div id="modDetails" class="hidden">
+<div class="main-card">
+<div class="cover-wrapper">
+<img id="m_cover" class="cover-img" src="">
+<div id="m_title" class="mod-title-overlay">جاري التحميل...</div>
+</div>
+<div class="meta-section">
+<div class="publisher-line" id="publisherAction">
+<img id="u_avatar" class="pub-avatar" src="https://placehold.co/40">
+<span id="u_name" class="pub-name">...</span>
+</div>
+<div class="info-grid">
+<div class="info-item"><i class="fas fa-calendar-alt"></i> نُشر: <span id="m_date">--/--/----</span></div>
+<div class="info-item" id="edit_date_box"><i class="fas fa-edit"></i> تعديل: <span id="m_edit">--/--/----</span></div>
+<div class="info-item" id="ver_box"><i class="fas fa-code-branch"></i> إصدار: <span id="m_ver"></span></div>
+<div class="info-item" id="mc_box"><i class="fas fa-gamepad"></i> تحديث: <span id="m_mc"></span></div>
+<div class="info-item"><i class="fas fa-tags"></i> النوع: <span id="m_type"></span></div>
+</div>
+<div class="interaction-bar">
+<button class="stat-btn" onclick="handleVote('like')"><i class="fas fa-thumbs-up"></i><span id="count_likes">0</span></button>
+<button class="stat-btn" onclick="handleVote('dislike')"><i class="fas fa-thumbs-down"></i><span id="count_dis">0</span></button>
+<button class="stat-btn"><i class="fas fa-eye"></i><span id="count_views">0</span></button>
+<button class="stat-btn"><i class="fas fa-download"></i><span id="count_dl">0</span></button>
+</div>
+<button class="dl-button" id="dlAction"><i class="fas fa-external-link-alt"></i> فتح رابط التحميل</button>
+</div>
+</div>
+<div class="desc-card">
+<h3>وصف العنصر</h3>
+<div id="m_long" class="desc-content"></div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 <script>
+const AW_CONF = { p: '69922bf4002571605f46', d: '69922c8e001dbb613d69', c: 'mods' };
 const { Client, Databases } = Appwrite;
-
-const client = new Client()
-    .setEndpoint('https://fra.cloud.appwrite.io/v1')
-    .setProject('69922bf4002571605f460');
-
-const databases = new Databases(client);
-
-const DATABASE_ID = "YOUR_DATABASE_ID";
-const COLLECTION_ID = "mods";
+const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
+const db = new Databases(sdk);
 
 const modId = window.location.hash.substring(1);
+let currentModData = null;
 
-async function loadMod() {
+function showToast(m) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = m;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 2500);
+}
 
-    if (!modId) {
-        document.getElementById("content").innerText = "لا يوجد معرف";
-        return;
-    }
+function formatDT(str) {
+    return new Date(str).toLocaleString('en-US', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
 
+async function loadModData() {
+    if(!modId) return alert("معرف المود غير صحيح");
+    document.getElementById('loading').classList.remove('hidden');
     try {
-
-        const mod = await databases.getDocument(
-            DATABASE_ID,
-            COLLECTION_ID,
-            modId
-        );
-
-        document.getElementById("content").innerHTML = `
-            <h2>${mod.title}</h2>
-            <img src="${mod.cover_url}" width="200"><br><br>
-            <p>${mod.long_description}</p>
-            <a href="${mod.file_url}">تحميل</a>
-        `;
-
-        // زيادة المشاهدات
-        await databases.updateDocument(
-            DATABASE_ID,
-            COLLECTION_ID,
-            modId,
-            { views: mod.views + 1 }
-        );
-
-    } catch (err) {
-        console.error(err);
+        const mod = await db.getDocument(AW_CONF.d, AW_CONF.c, modId);
+        currentModData = mod;
+        renderData(mod);
+        updateViews(mod);
+        fetchPublisherInfo(mod.author_handle);
+    } catch(e) {
+        alert("تعذر العثور على المود المطلوب");
+    } finally {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('modDetails').classList.remove('hidden');
     }
 }
 
-loadMod();
-</script>
+function renderData(m) {
+    document.getElementById('m_cover').src = m.cover_url;
+    document.getElementById('m_title').innerText = m.title;
+    document.getElementById('m_date').innerText = formatDT(m.$createdAt);
+    if(m.$updatedAt !== m.$createdAt) {
+        document.getElementById('m_edit').innerText = formatDT(m.$updatedAt);
+    } else {
+        document.getElementById('edit_date_box').classList.add('hidden');
+    }
+    if(m.mod_version) document.getElementById('m_ver').innerText = m.mod_version; else document.getElementById('ver_box').classList.add('hidden');
+    if(m.target_mc) document.getElementById('m_mc').innerText = m.target_mc; else document.getElementById('mc_box').classList.add('hidden');
+    document.getElementById('m_type').innerText = m.item_type.toUpperCase();
+    document.getElementById('count_likes').innerText = m.likes;
+    document.getElementById('count_dis').innerText = m.dislikes;
+    document.getElementById('count_views').innerText = m.views;
+    document.getElementById('count_dl').innerText = m.downloads || 0;
+    document.getElementById('m_long').innerHTML = m.long_desc;
+    document.getElementById('dlAction').onclick = () => {
+        updateDownloads(m);
+        window.open(m.download_url, '_blank');
+    };
+}
 
+async function fetchPublisherInfo(handle) {
+    try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`, { headers: {"X-Master-Key": "$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"} });
+        const bin = (await res.json()).record;
+        const user = bin.us.find(u => "@" + u.username === handle);
+        if(user) {
+            document.getElementById('u_avatar').src = user.avatar;
+            document.getElementById('u_name').innerText = user.full_name;
+            document.getElementById('publisherAction').onclick = () => {
+                window.location.href = `https://tamaa-pro.github.io/minecraft_bedrock_library/mods/user#${user.username}`;
+            };
+        }
+    } catch(e) { console.error("User fetch error"); }
+}
+
+async function updateViews(m) {
+    await db.updateDocument(AW_CONF.d, AW_CONF.c, m.$id, { views: (m.views || 0) + 1 });
+}
+
+async function updateDownloads(m) {
+    await db.updateDocument(AW_CONF.d, AW_CONF.c, m.$id, { downloads: (m.downloads || 0) + 1 });
+    document.getElementById('count_dl').innerText = (m.downloads || 0) + 1;
+}
+
+async function handleVote(type) {
+    const key = `vote_${modId}`;
+    if(localStorage.getItem(key)) return showToast("لقد قمت بالتصويت بالفعل");
+    const update = type === 'like' ? { likes: (currentModData.likes || 0) + 1 } : { dislikes: (currentModData.dislikes || 0) + 1 };
+    try {
+        await db.updateDocument(AW_CONF.d, AW_CONF.c, modId, update);
+        localStorage.setItem(key, type);
+        document.getElementById(type === 'like' ? 'count_likes' : 'count_dis').innerText = (type === 'like' ? currentModData.likes : currentModData.dislikes) + 1;
+        showToast("شكراً لتصويتك!");
+    } catch(e) { showToast("فشل في تسجيل التصويت"); }
+}
+
+function copyPageLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => showToast("تم نسخ رابط الصفحة"));
+}
+
+function sharePage() {
+    if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
+    } else {
+        copyPageLink();
+    }
+}
+
+window.onload = loadModData;
+document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
 </body>
 </html>
