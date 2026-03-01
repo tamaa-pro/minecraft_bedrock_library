@@ -6,7 +6,7 @@
 <title>المكتبة | Minecraft Bedrock</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,select{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.header-tools{background:var(--card);border-bottom:1px solid var(--border);padding:8px;position:sticky;top:0;z-index:1000;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.tool-input{background:var(--input);border:1px solid var(--border);color:#fff;padding:8px;border-radius:8px;font-size:0.75rem;outline:none;flex:1;min-width:110px;max-width:180px}.btn-icon{background:var(--input);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-size:0.75rem}.btn-icon:active{transform:scale(0.96);background:#222}.main-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:12px;max-width:1400px;margin:0 auto}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;display:flex;flex-direction:column}.cover-wrapper{position:relative;padding:5px;width:100%}.mod-img{width:100%;height:auto;display:block;border-radius:10px;background:#000;object-fit:cover}.mod-title-overlay{position:absolute;bottom:12px;right:12px;background:rgba(24,24,27,0.8);backdrop-filter:blur(4px);padding:4px 8px;border-radius:6px;font-size:11px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stats-bar{padding:8px;background:rgba(255,255,255,0.01);display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border)}.stat-item{font-size:0.6rem;color:var(--text-sub);display:flex;align-items:center;gap:3px}.stat-item i{color:var(--accent);font-size:0.7rem}.action-bar{padding:8px;display:grid;grid-template-columns:1fr 40px 40px;gap:6px}.action-btn{background:var(--input);border:1px solid var(--border);color:#fff;padding:8px;border-radius:8px;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}.action-btn:active{transform:scale(0.95);opacity:0.8}.action-btn.saved{color:#f59e0b;border-color:#f59e0b}.pagination{display:flex;justify-content:center;gap:8px;padding:20px;margin-bottom:30px}.page-btn{background:var(--card);border:1px solid var(--border);color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem}.page-btn.active{background:var(--accent);border-color:var(--accent)}.saved-overlay{position:fixed;inset:0;background:rgba(9,9,11,0.96);backdrop-filter:blur(8px);z-index:2000;padding:15px;overflow-y:auto}.saved-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,select{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.header-tools{background:var(--card);border-bottom:1px solid var(--border);padding:8px;position:sticky;top:0;z-index:1000;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}.tool-input{background:var(--input);border:1px solid var(--border);color:#fff;padding:8px;border-radius:8px;font-size:0.75rem;outline:none;flex:1;min-width:100px;max-width:150px}.btn-icon{background:var(--input);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-size:0.75rem}.btn-icon:active{transform:scale(0.96);background:#222}.main-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:12px;max-width:1400px;margin:0 auto}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;display:flex;flex-direction:column}.img-container{padding:5px;width:100%;position:relative}.mod-img{width:100%;height:auto;display:block;border-radius:10px;background:#000;object-fit:cover}.mod-title-badge{position:absolute;bottom:12px;right:12px;background:rgba(24,24,27,0.75);backdrop-filter:blur(4px);padding:4px 8px;border-radius:6px;font-size:11px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stats-bar{padding:8px;background:rgba(255,255,255,0.01);display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--border)}.stat-item{font-size:0.6rem;color:var(--text-sub);display:flex;align-items:center;gap:3px}.stat-item i{color:var(--accent);font-size:0.7rem}.action-bar{padding:8px;display:grid;grid-template-columns:1fr 40px 40px;gap:6px}.action-btn{background:var(--input);border:1px solid var(--border);color:#fff;padding:8px;border-radius:8px;font-size:0.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}.action-btn:active{transform:scale(0.95);opacity:0.8}.action-btn.saved{color:#f59e0b;border-color:#f59e0b}.pagination{display:flex;justify-content:center;gap:8px;padding:20px;margin-bottom:30px}.page-btn{background:var(--card);border:1px solid var(--border);color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem}.saved-overlay{position:fixed;inset:0;background:rgba(9,9,11,0.96);backdrop-filter:blur(8px);z-index:2000;padding:15px;overflow-y:auto}
 </style>
 </head>
 <body>
@@ -28,7 +28,7 @@
 <div id="modGrid" class="main-grid"></div>
 <div id="paginationBar" class="pagination hidden"></div>
 <div id="savedUI" class="saved-overlay hidden">
-<div class="saved-header">
+<div class="saved-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;border-bottom:1px solid var(--border);padding-bottom:10px">
 <h3><i class="fas fa-bookmark"></i> المحفوظات</h3>
 <button class="btn-icon" onclick="toggleSavedUI()"><i class="fas fa-times"></i></button>
 </div>
@@ -46,89 +46,99 @@ let currentPage=0;
 let itemsPerPage=50;
 let currentSort='desc';
 let allSavedIds=JSON.parse(localStorage.getItem('lib_saved')||'[]');
+
 async function fetchMods(){
-const grid=document.getElementById('modGrid');
-grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-sub)">جاري التحميل...</div>';
-let queries=[Query.limit(itemsPerPage),Query.offset(currentPage*itemsPerPage),currentSort==='desc'?Query.orderDesc('$createdAt'):Query.orderAsc('$createdAt')];
-const nameVal=document.getElementById('searchName').value;
-const verVal=document.getElementById('filterVersion').value;
-const typeVal=document.getElementById('filterType').value;
-if(nameVal)queries.push(Query.search('title',nameVal));
-if(verVal)queries.push(Query.equal('target_mc',verVal));
-if(typeVal!=='all')queries.push(Query.equal('item_type',typeVal));
-try{
-const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,queries);
-renderMods(res.documents,'modGrid');
-renderPagination(res.total);
-}catch(e){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--error)">فشل جلب البيانات</div>';}
+    const grid=document.getElementById('modGrid');
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-sub)">جاري التحميل...</div>';
+    let queries=[Query.limit(itemsPerPage),Query.offset(currentPage*itemsPerPage),currentSort==='desc'?Query.orderDesc('$createdAt'):Query.orderAsc('$createdAt')];
+    const nameVal=document.getElementById('searchName').value;
+    const verVal=document.getElementById('filterVersion').value;
+    const typeVal=document.getElementById('filterType').value;
+    if(nameVal)queries.push(Query.search('title',nameVal));
+    if(verVal)queries.push(Query.equal('target_mc',verVal));
+    if(typeVal!=='all')queries.push(Query.equal('item_type',typeVal));
+    try{
+        const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,queries);
+        renderMods(res.documents,'modGrid');
+        renderPagination(res.total);
+    }catch(e){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--error)">فشل جلب البيانات</div>';}
 }
+
 function renderMods(mods,containerId){
-const container=document.getElementById(containerId);
-if(mods.length===0){container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-sub)">لا توجد نتائج</div>';return;}
-container.innerHTML=mods.map(m=>{
-const isSaved=allSavedIds.includes(m.$id);
-return `
-<div class="mod-card">
-<div class="cover-wrapper">
-<img src="${m.cover_url}" class="mod-img" onerror="this.src='https://placehold.co/400x200?text=No+Image'">
-<div class="mod-title-overlay">${m.title}</div>
-</div>
-<div class="stats-bar">
-<div class="stat-item"><i class="fas fa-thumbs-up"></i> ${m.likes||0}</div>
-<div class="stat-item"><i class="fas fa-thumbs-down"></i> ${m.dislikes||0}</div>
-<div class="stat-item"><i class="fas fa-eye"></i> ${m.views||0}</div>
-<div class="stat-item"><i class="fas fa-download"></i> ${m.downloads||0}</div>
-<div class="stat-item"><i class="fas fa-clock"></i> ${new Date(m.$createdAt).toLocaleDateString('en-GB')}</div>
-<div class="stat-item" onclick="window.location.href='${USER_URL}#${m.author_handle.replace('@','')}'" style="cursor:pointer;color:var(--accent)"><i class="fas fa-user"></i> ${m.author_handle}</div>
-</div>
-<div class="action-bar">
-<button class="action-btn" onclick="openMod('${m.$id}')"><i class="fas fa-external-link-alt"></i> فتح</button>
-<button class="action-btn ${isSaved?'saved':''}" id="save-${m.$id}" onclick="toggleSave('${m.$id}')"><i class="fa${isSaved?'s':'r'} fa-bookmark"></i></button>
-<button class="action-btn" onclick="shareMod('${m.$id}','${m.title}')"><i class="fas fa-share-alt"></i></button>
-</div>
-</div>`;
-}).join('');
+    const container=document.getElementById(containerId);
+    if(mods.length===0){container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--text-sub)">لا توجد نتائج</div>';return;}
+    container.innerHTML=mods.map(m=>{
+        const isSaved=allSavedIds.includes(m.$id);
+        const versionStr = m.mod_version ? ` v${m.mod_version}` : '';
+        return `
+        <div class="mod-card">
+            <div class="img-container">
+                <img src="${m.cover_url}" class="mod-img" onerror="this.src='https://placehold.co/400x200?text=No+Image'">
+                <div class="mod-title-badge">${m.title}${versionStr}</div>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-item"><i class="fas fa-thumbs-up"></i> ${m.likes||0}</div>
+                <div class="stat-item"><i class="fas fa-thumbs-down"></i> ${m.dislikes||0}</div>
+                <div class="stat-item"><i class="fas fa-eye"></i> ${m.views||0}</div>
+                <div class="stat-item"><i class="fas fa-download"></i> ${m.downloads||0}</div>
+                <div class="stat-item"><i class="fas fa-clock"></i> ${new Date(m.$createdAt).toLocaleDateString('en-GB')}</div>
+                <div class="stat-item" onclick="window.location.href='${USER_URL}#${m.author_handle.replace('@','')}'" style="cursor:pointer;color:var(--accent)"><i class="fas fa-user"></i> ${m.author_handle}</div>
+            </div>
+            <div class="action-bar">
+                <button class="action-btn" onclick="openMod('${m.$id}')"><i class="fas fa-external-link-alt"></i> فتح</button>
+                <button class="action-btn ${isSaved?'saved':''}" id="save-${containerId}-${m.$id}" onclick="toggleSave('${m.$id}','${containerId}')"><i class="fa${isSaved?'s':'r'} fa-bookmark"></i></button>
+                <button class="action-btn" onclick="shareMod('${m.$id}','${m.title}')"><i class="fas fa-share-alt"></i></button>
+            </div>
+        </div>`;
+    }).join('');
 }
+
 function renderPagination(total){
-const bar=document.getElementById('paginationBar');
-if(total<=itemsPerPage){bar.classList.add('hidden');return;}
-bar.classList.remove('hidden');
-const pages=Math.ceil(total/itemsPerPage);
-let html='';
-for(let i=0;i<pages;i++){html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i+1}</button>`;}
-bar.innerHTML=html;
+    const bar=document.getElementById('paginationBar');
+    if(total<=itemsPerPage){bar.classList.add('hidden');return;}
+    bar.classList.remove('hidden');
+    const pages=Math.ceil(total/itemsPerPage);
+    let html='';
+    for(let i=0;i<pages;i++){html+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i+1}</button>`;}
+    bar.innerHTML=html;
 }
+
 function handleFilterChange(){currentPage=0;fetchMods();}
 function goToPage(p){currentPage=p;fetchMods();window.scrollTo(0,0);}
 function toggleSort(){currentSort=currentSort==='desc'?'asc':'desc';document.getElementById('sortText').innerText=currentSort==='desc'?'الأحدث':'الأقدم';fetchMods();}
-function toggleSave(id){
-let saved=JSON.parse(localStorage.getItem('lib_saved')||'[]');
-const idx=saved.indexOf(id);
-if(idx===-1)saved.push(id);else saved.splice(idx,1);
-localStorage.setItem('lib_saved',JSON.stringify(saved));
-allSavedIds=saved;
-const btn=document.getElementById(`save-${id}`);
-if(btn){btn.classList.toggle('saved');btn.querySelector('i').className=saved.includes(id)?'fas fa-bookmark':'far fa-bookmark';}
-if(!document.getElementById('savedUI').classList.contains('hidden'))loadSavedItems();
+
+function toggleSave(id, source){
+    let saved=JSON.parse(localStorage.getItem('lib_saved')||'[]');
+    const idx=saved.indexOf(id);
+    if(idx===-1)saved.push(id);else saved.splice(idx,1);
+    localStorage.setItem('lib_saved',JSON.stringify(saved));
+    allSavedIds=saved;
+    const btn=document.getElementById(`save-${source}-${id}`);
+    if(btn){btn.classList.toggle('saved');btn.querySelector('i').className=saved.includes(id)?'fas fa-bookmark':'far fa-bookmark';}
+    if(!document.getElementById('savedUI').classList.contains('hidden'))loadSavedItems();
 }
+
 async function loadSavedItems(){
-const grid=document.getElementById('savedGrid');
-if(allSavedIds.length===0){grid.innerHTML='<p style="text-align:center;grid-column:1/-1">فارغ</p>';return;}
-try{
-const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,[Query.equal('$id',allSavedIds)]);
-renderMods(res.documents,'savedGrid');
-}catch(e){grid.innerHTML='<p>خطأ في التحميل</p>';}
+    const grid=document.getElementById('savedGrid');
+    if(allSavedIds.length===0){grid.innerHTML='<p style="text-align:center;grid-column:1/-1">فارغ</p>';return;}
+    try{
+        const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,[Query.equal('$id',allSavedIds)]);
+        renderMods(res.documents,'savedGrid');
+    }catch(e){grid.innerHTML='<p>خطأ في التحميل</p>';}
 }
+
 function toggleSavedUI(){
-const ui=document.getElementById('savedUI');
-ui.classList.toggle('hidden');
-if(!ui.classList.contains('hidden'))loadSavedItems();
+    const ui=document.getElementById('savedUI');
+    ui.classList.toggle('hidden');
+    if(!ui.classList.contains('hidden'))loadSavedItems();
 }
+
 function openMod(id){window.location.href=`${DOWNLOAD_URL}#${id}`;}
 function shareMod(id,title){
-const url=`${DOWNLOAD_URL}#${id}`;
-if(navigator.share)navigator.share({title:title,url:url});else{navigator.clipboard.writeText(url);alert("تم نسخ الرابط");}
+    const url=`${DOWNLOAD_URL}#${id}`;
+    if(navigator.share)navigator.share({title:title,url:url});else{navigator.clipboard.writeText(url);alert("تم نسخ الرابط");}
 }
+
 window.onload=fetchMods;
 document.addEventListener('contextmenu',e=>e.preventDefault());
 </script>
