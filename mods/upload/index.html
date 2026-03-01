@@ -6,15 +6,13 @@
 <title>إدارة المنصة | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:450px;margin:60px auto;padding:30px;background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5)}.main-panel{max-width:900px;margin:0 auto;padding-bottom:100px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0;position:fixed;top:0;left:0;right:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:12px;border-radius:12px;transition:0.2s;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.75rem;width:85px;outline:none!important}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.3rem}.view-content{margin-top:100px;padding:20px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:25px;margin-bottom:20px}.form-group{margin-bottom:20px;position:relative}label{display:block;margin-bottom:8px;font-weight:600;font-size:0.9rem}input,select,textarea{width:100%;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;transition:0.2s;font-size:1rem}input:focus,textarea:focus{border-color:var(--accent)}textarea{width:100%!important;resize:vertical;min-height:160px}.char-counter{position:absolute;top:0;left:0;font-size:0.75rem;color:var(--accent);font-weight:700}.hint{font-size:0.75rem;color:var(--text-sub);margin-top:6px;display:block;background:rgba(255,255,255,0.03);padding:8px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:220px;object-fit:contain;border-radius:12px;margin-bottom:15px;background:#000;border:1px dashed var(--border)}.profile-circle{width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto 15px;display:block;border:3px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:16px;border:none;border-radius:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:0.2s;font-size:1rem;outline:none!important}.btn:active{transform:scale(0.96)}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:25px;right:25px;background:#18181b;padding:15px 25px;border-radius:12px;border-right:5px solid var(--accent);box-shadow:0 15px 30px rgba(0,0,0,0.4);display:flex;align-items:center;gap:12px;z-index:2000;transition:0.4s}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:15px;margin-bottom:15px;overflow:hidden}.mod-card-main{display:flex;gap:12px;padding:12px}.mod-thumb{width:85px;height:85px;border-radius:10px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 5px;font-size:1rem}.mod-stats{display:flex;flex-wrap:wrap;gap:10px;font-size:0.7rem;color:var(--text-sub);margin-bottom:5px}.mod-date{font-size:0.65rem;color:#666;display:block}.mod-actions{padding:8px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4, 1fr);gap:5px}.btn-sm{padding:10px 5px;font-size:0.75rem;border-radius:8px;background:#222;color:#fff}.skeleton{background:linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;height:120px;border-radius:15px;margin-bottom:15px}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:3000}.modal-card{background:var(--card);padding:25px;border-radius:20px;width:90%;max-width:400px;text-align:center;border:1px solid var(--border)}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px}.main-panel{max-width:800px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.95rem}input:focus,textarea:focus{border-color:var(--accent)}textarea{min-height:140px;line-height:1.5}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.9rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:2000;transition:0.3s;font-size:0.85rem;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.7rem;border-radius:6px;cursor:pointer;outline:none}.btn-sm:active{transform:scale(0.95);background:#222}
 </style>
 </head>
 <body>
-
 <div id="modalContainer" class="hidden"></div>
-
 <div id="authSection" class="auth-container">
-<h2 id="authTitle" style="text-align:center;margin-bottom:20px"><i class="fas fa-shield-alt"></i> الدخول للمنصة</h2>
+<h2 id="authTitle" style="text-align:center;margin-bottom:15px"><i class="fas fa-shield-alt"></i> الدخول للمنصة</h2>
 <div id="registerFields" class="hidden">
 <img id="regPrev" class="profile-circle" src="https://placehold.co/100?text=Avatar">
 <div class="form-group"><label>الاسم العام</label><input type="text" id="regFullName"></div>
@@ -23,11 +21,11 @@
 <div class="form-group">
 <label>اسم المستخدم @</label><span class="char-counter" id="c_auth_user">30</span>
 <input type="text" id="authUsername" maxlength="30" oninput="updateCounter(this, 'c_auth_user'); validateUser(this)">
-<small class="hint">حروف لاتينية صغيرة، أرقام، والرموز ( - _ . & ) فقط.</small>
+<small class="hint" id="userHint">حروف لاتينية صغيرة، أرقام، والرموز ( - _ . & ) فقط.</small>
 </div>
 <div class="form-group"><label>كلمة السر</label><input type="password" id="authPassword"></div>
 <button class="btn btn-primary" onclick="processAuth()">تأكيد العملية</button>
-<p style="text-align:center;font-size:0.85rem;margin-top:20px;cursor:pointer;color:var(--accent)" id="toggleAuth">إنشاء حساب جديد</p>
+<p style="text-align:center;font-size:0.8rem;margin-top:15px;cursor:pointer;color:var(--accent)" id="toggleAuth">إنشاء حساب جديد</p>
 </div>
 
 <div id="mainSection" class="main-panel hidden">
@@ -38,11 +36,11 @@
 <button class="nav-btn" id="btn-profile" onclick="showTab('profile')"><i class="fas fa-user-circle"></i>حسابي</button>
 </nav>
 
-<div id="tab-home" class="view-content home-info hidden">
-<h2 id="welcomeMsg" style="color:var(--accent)"></h2>
-<div class="info-box">
-<p>مرحباً بك مجدداً. يمكنك الآن إدارة ملفاتك الشخصية ومحتوى موداتك من مكان واحد بكل سهولة.</p>
-<button class="btn btn-primary" style="max-width:300px;margin:20px auto" onclick="window.open('https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc_list', '_blank')">
+<div id="tab-home" class="view-content hidden">
+<h3 id="welcomeMsg" style="color:var(--accent);margin-bottom:10px"></h3>
+<div class="section-card">
+<p style="font-size:0.9rem">مرحباً بك مجدداً. يمكنك الآن إدارة ملفاتك الشخصية ومحتوى موداتك من مكان واحد بكل سهولة.</p>
+<button class="btn btn-primary" style="margin-top:15px" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'">
 <i class="fas fa-list"></i> فتح القائمة العامة
 </button>
 </div>
@@ -50,13 +48,13 @@
 
 <div id="tab-publish" class="view-content hidden">
 <div class="section-card">
-<h3 id="formTitle"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
+<h3 id="formTitle" style="font-size:1.1rem;margin-bottom:15px"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
 <img id="pubPrev" class="preview-box hidden">
-<div class="form-group"><label>رابط غلاف المود</label><input type="url" id="p_cover" oninput="updatePreview(this.value, 'pubPrev')"></div>
+<div class="form-group"><label>رابط الغلاف</label><input type="url" id="p_cover" oninput="updatePreview(this.value, 'pubPrev')"></div>
 <div class="form-group"><label>عنوان المود</label><input type="text" id="p_title" maxlength="100"></div>
 <div class="form-group"><label>رابط التحميل</label><input type="url" id="p_dl"></div>
 <div class="form-group"><label>النوع</label><select id="p_type"><option value="mod">Mod</option><option value="map">Map</option><option value="data_pack">Data Pack</option><option value="texture_pack">Texture Pack</option></select></div>
-<div class="form-group" style="display:flex;gap:10px">
+<div class="form-group" style="display:flex;gap:8px">
 <div style="flex:1"><label>الإصدار</label><input type="text" id="p_ver" maxlength="30"></div>
 <div style="flex:1"><label>التحديث</label><input type="text" id="p_mc" maxlength="30"></div>
 </div>
@@ -70,10 +68,9 @@
 </div>
 
 <div id="tab-edit" class="view-content hidden">
-<div style="display:flex;gap:10px;margin-bottom:15px">
-<input type="text" id="searchMod" placeholder="بحث باسم المود..." oninput="renderMyMods()" style="flex:2;padding:10px">
-<select id="filterType" onchange="renderMyMods()" style="flex:1;padding:10px"><option value="all">الكل</option><option value="mod">Mods</option><option value="map">Maps</option></select>
-<select id="sortOrder" onchange="renderMyMods()" style="flex:1;padding:10px"><option value="new">الأحدث</option><option value="old">الأقدم</option></select>
+<div style="display:flex;gap:8px;margin-bottom:12px">
+<input type="text" id="searchMod" placeholder="بحث..." oninput="renderMyMods()" style="flex:2">
+<select id="filterType" onchange="renderMyMods()" style="flex:1"><option value="all">الكل</option><option value="mod">Mods</option><option value="map">Maps</option></select>
 </div>
 <div id="myModsList"></div>
 </div>
@@ -83,9 +80,12 @@
 <img id="profPrev" class="profile-circle">
 <div class="form-group"><label>اسم المستخدم (ثابت)</label><input type="text" id="pr_user" readonly style="opacity:0.5"></div>
 <div class="form-group"><label>رابط الصورة</label><input type="url" id="pr_avatar" oninput="updatePreview(this.value, 'profPrev')"></div>
-<div class="form-group"><label>الاسم العام</label><input type="text" id="pr_name"></div>
+<div class="form-group"><label>الالاسم العام</label><input type="text" id="pr_name"></div>
 <div class="form-group"><label>كلمة السر الجديدة</label><input type="password" id="pr_pass"></div>
-<button class="btn btn-primary" onclick="updateProfile()">تحديث الحساب</button>
+<div style="display:flex;gap:10px">
+<button class="btn btn-primary" style="flex:1" onclick="updateProfile()">تحديث الحساب</button>
+<button class="btn btn-danger" style="flex:1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+</div>
 </div>
 </div>
 </div>
@@ -104,12 +104,11 @@ let myModsList = [];
 let editingModId = null;
 
 function showToast(m, type='success') {
-    const t = document.createElement('div');
-    t.className = 'toast';
-    t.style.borderRight = `5px solid ${type==='success'?'var(--success)':'var(--error)'}`;
+    const t = document.createElement('div'); t.className = 'toast';
+    t.style.borderRight = `4px solid ${type==='success'?'var(--success)':'var(--error)'}`;
     t.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-triangle'}"></i> ${m}`;
     document.body.appendChild(t);
-    setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 3000);
+    setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 2500);
 }
 
 function updateCounter(el, id) { document.getElementById(id).innerText = el.maxLength - el.value.length; }
@@ -117,14 +116,12 @@ function validateUser(el) { el.value = el.value.toLowerCase().replace(/[^a-z0-9-
 function adjustHeight(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
 function updatePreview(url, id) { const img = document.getElementById(id); if(url) { img.src = url; img.classList.remove('hidden'); } else { img.classList.add('hidden'); } }
 
-function showTab(tabId) {
-    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tabId).classList.remove('hidden');
-    const btn = document.getElementById('btn-' + tabId);
-    if(btn) btn.classList.add('active');
-    if(tabId === 'edit') fetchMyMods();
-    window.scrollTo(0,0);
+async function checkSession() {
+    const saved = localStorage.getItem('mc_session');
+    if(!saved) return;
+    const session = JSON.parse(saved);
+    if(Date.now() < session.expiry) login(session.user, false);
+    else localStorage.removeItem('mc_session');
 }
 
 async function processAuth() {
@@ -140,16 +137,20 @@ async function processAuth() {
             const newUser = { full_name: document.getElementById('regFullName').value, avatar: document.getElementById('regAvatar').value || "https://placehold.co/100", username: uVal, password: pVal };
             bin.us.push(newUser);
             await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
-            login(newUser);
+            login(newUser, true);
         } else {
             const found = bin.us.find(u => u.username === uVal && u.password === pVal);
-            if(found) login(found); else showToast("بيانات خاطئة", 'error');
+            if(found) login(found, true); else showToast("بيانات خاطئة", 'error');
         }
     } catch(e) { showToast("فشل في الاتصال", 'error'); }
 }
 
-function login(u) {
+function login(u, save) {
     currentUser = u;
+    if(save) {
+        const session = { user: u, expiry: Date.now() + (24 * 60 * 60 * 1000) };
+        localStorage.setItem('mc_session', JSON.stringify(session));
+    }
     document.getElementById('authSection').classList.add('hidden');
     document.getElementById('mainSection').classList.remove('hidden');
     document.getElementById('welcomeMsg').innerText = "أهلاً بك، " + u.full_name;
@@ -160,25 +161,20 @@ function login(u) {
     showTab('home');
 }
 
-async function updateProfile() {
-    try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-        let bin = (await res.json()).record;
-        const idx = bin.us.findIndex(u => u.username === currentUser.username);
-        if(idx !== -1) {
-            bin.us[idx].full_name = document.getElementById('pr_name').value;
-            bin.us[idx].avatar = document.getElementById('pr_avatar').value;
-            if(document.getElementById('pr_pass').value) bin.us[idx].password = document.getElementById('pr_pass').value;
-            await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
-            currentUser = bin.us[idx];
-            showToast("تم تحديث الحساب");
-        }
-    } catch(e) { showToast("خطأ في التحديث", 'error'); }
+function logout() { localStorage.removeItem('mc_session'); window.location.reload(); }
+
+function showTab(tabId) {
+    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.remove('hidden');
+    const btn = document.getElementById('btn-' + tabId);
+    if(btn) btn.classList.add('active');
+    if(tabId === 'edit') fetchMyMods();
 }
 
 async function fetchMyMods() {
     const container = document.getElementById('myModsList');
-    container.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div>';
+    container.innerHTML = '<p style="text-align:center;padding:20px;color:var(--text-sub)">جاري التحميل...</p>';
     try {
         const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, [Query.equal('author_handle', "@" + currentUser.username)]);
         myModsList = res.documents;
@@ -186,10 +182,7 @@ async function fetchMyMods() {
     } catch(e) { container.innerHTML = '<p style="text-align:center">فشل جلب البيانات</p>'; }
 }
 
-function formatDT(str) {
-    const d = new Date(str);
-    return d.toLocaleString('en-US', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
-}
+function formatDT(str) { return new Date(str).toLocaleString('en-US', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }); }
 
 function renderMyMods() {
     const q = document.getElementById('searchMod').value.toLowerCase();
@@ -204,18 +197,17 @@ function renderMyMods() {
                     <div class="mod-stats">
                         <span><i class="fas fa-eye"></i> ${m.views}</span>
                         <span><i class="fas fa-thumbs-up"></i> ${m.likes}</span>
-                        <span><i class="fas fa-thumbs-down"></i> ${m.dislikes}</span>
                         <span><i class="fas fa-download"></i> ${m.downloads || 0}</span>
                     </div>
                     <span class="mod-date">نُشر: ${formatDT(m.$createdAt)}</span>
-                    <span class="mod-date">تعديل: ${formatDT(m.$updatedAt)}</span>
+                    <span class="mod-date">تعديل: ${formatDT(m.updated_at || m.$createdAt)}</span>
                 </div>
             </div>
             <div class="mod-actions">
-                <button class="btn-sm" onclick="startEdit('${m.$id}')"><i class="fas fa-edit"></i> تعديل</button>
-                <button class="btn-sm" style="color:var(--error)" onclick="confirmDelete('${m.$id}')"><i class="fas fa-trash"></i> حذف</button>
-                <button class="btn-sm" onclick="copyL('${m.$id}')"><i class="fas fa-copy"></i> نسخ</button>
-                <button class="btn-sm" onclick="window.open('https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}','_blank')"><i class="fas fa-external-link-alt"></i> فتح</button>
+                <button class="btn-sm" onclick="startEdit('${m.$id}')"><i class="fas fa-edit"></i></button>
+                <button class="btn-sm" style="color:var(--error)" onclick="confirmDelete('${m.$id}')"><i class="fas fa-trash"></i></button>
+                <button class="btn-sm" onclick="copyL('${m.$id}')"><i class="fas fa-copy"></i></button>
+                <button class="btn-sm" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}'"><i class="fas fa-external-link-alt"></i></button>
             </div>
         </div>
     `).join('');
@@ -223,28 +215,15 @@ function renderMyMods() {
 
 function confirmDelete(id) {
     const modal = document.getElementById('modalContainer');
-    modal.innerHTML = `
-        <div class="modal-overlay">
-            <div class="modal-card">
-                <h3>تأكيد الحذف</h3>
-                <p>هل أنت متأكد من رغبتك في حذف هذا المود نهائياً؟ لا يمكن التراجع عن هذا الإجراء.</p>
-                <div style="display:flex;gap:10px;margin-top:20px">
-                    <button class="btn btn-primary" style="background:var(--error);flex:1" onclick="deleteM('${id}')">نعم، احذف</button>
-                    <button class="btn btn-primary" style="background:#444;flex:1" onclick="closeModal()">إلغاء</button>
-                </div>
-            </div>
-        </div>`;
+    modal.innerHTML = `<div class="modal-overlay"><div class="modal-card" style="background:var(--card);padding:20px;border-radius:15px;width:90%;max-width:350px;text-align:center;border:1px solid var(--border)"><h3>حذف؟</h3><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-primary" style="background:var(--error);flex:1" onclick="deleteM('${id}')">حذف</button><button class="btn btn-primary" style="background:#444;flex:1" onclick="closeModal()">إلغاء</button></div></div></div>`;
     modal.classList.remove('hidden');
 }
-
 function closeModal() { document.getElementById('modalContainer').classList.add('hidden'); }
 
-async function deleteM(id) {
-    try { await db.deleteDocument(AW_CONF.d, AW_CONF.c, id); showToast("تم الحذف"); closeModal(); fetchMyMods(); } 
-    catch(e) { showToast("فشل الحذف", 'error'); }
-}
+async function deleteM(id) { try { await db.deleteDocument(AW_CONF.d, AW_CONF.c, id); showToast("تم الحذف"); closeModal(); fetchMyMods(); } catch(e) { showToast("فشل الحذف", 'error'); } }
 
 async function submitMod() {
+    const now = new Date().toISOString();
     const data = {
         title: document.getElementById('p_title').value,
         cover_url: document.getElementById('p_cover').value,
@@ -254,7 +233,8 @@ async function submitMod() {
         target_mc: document.getElementById('p_mc').value,
         short_desc: document.getElementById('p_short').value,
         long_desc: document.getElementById('p_long').value,
-        author_handle: "@" + currentUser.username
+        author_handle: "@" + currentUser.username,
+        updated_at: now
     };
     if(!data.title || !data.cover_url || !data.download_url) return showToast("أكمل البيانات", 'error');
     try {
@@ -287,10 +267,33 @@ function copyL(id) { navigator.clipboard.writeText(`https://tamaa-pro.github.io/
 document.getElementById('toggleAuth').onclick = function() {
     const isL = document.getElementById('authTitle').innerText.includes('الدخول');
     document.getElementById('authTitle').innerText = isL ? 'إنشاء حساب جديد' : 'الدخول للمنصة';
+    document.getElementById('toggleAuth').innerText = isL ? 'لديك حساب؟ تسجيل الدخول' : 'إنشاء حساب جديد';
+    document.getElementById('userHint').classList.toggle('hidden', !isL);
     document.getElementById('registerFields').classList.toggle('hidden');
 };
+
+async function updateProfile() {
+    try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
+        let bin = (await res.json()).record;
+        const idx = bin.us.findIndex(u => u.username === currentUser.username);
+        if(idx !== -1) {
+            bin.us[idx].full_name = document.getElementById('pr_name').value;
+            bin.us[idx].avatar = document.getElementById('pr_avatar').value;
+            if(document.getElementById('pr_pass').value) bin.us[idx].password = document.getElementById('pr_pass').value;
+            await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
+            currentUser = bin.us[idx];
+            showToast("تم تحديث الحساب");
+            const session = JSON.parse(localStorage.getItem('mc_session'));
+            session.user = currentUser;
+            localStorage.setItem('mc_session', JSON.stringify(session));
+        }
+    } catch(e) { showToast("خطأ في التحديث", 'error'); }
+}
+
+window.onload = checkSession;
 document.addEventListener('contextmenu', e => e.preventDefault());
-document.onselectstart = e => { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') return false; };
+document.onselectstart = e => { if (['INPUT','TEXTAREA'].includes(e.target.tagName)) return true; return false; };
 </script>
 </body>
 </html>
