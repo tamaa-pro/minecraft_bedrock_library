@@ -6,7 +6,7 @@
 <title>إدارة المنصة | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px}.main-panel{max-width:800px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.95rem}input:focus,textarea:focus{border-color:var(--accent)}textarea{min-height:140px;line-height:1.5}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.9rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:2000;transition:0.3s;font-size:0.85rem;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.7rem;border-radius:6px;cursor:pointer;outline:none}.btn-sm:active{transform:scale(0.95);background:#222}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px}.main-panel{max-width:850px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.9rem}textarea{min-height:120px}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:9999;transition:0.3s;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem;display:flex;align-items:center;gap:5px}.badge{font-size:0.6rem;padding:2px 5px;border-radius:4px;background:var(--card);border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.75rem;border-radius:6px;cursor:pointer}.btn-sm:active{transform:scale(0.92);background:var(--accent);color:#fff}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px}.modal-card{background:var(--card);padding:20px;border-radius:20px;width:100%;max-width:380px;border:1px solid var(--border);text-align:center}.stat-row{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border);font-size:0.9rem}
 </style>
 </head>
 <body>
@@ -21,7 +21,7 @@
 <div class="form-group">
 <label>اسم المستخدم @</label><span class="char-counter" id="c_auth_user">30</span>
 <input type="text" id="authUsername" maxlength="30" oninput="updateCounter(this, 'c_auth_user'); validateUser(this)">
-<small class="hint" id="userHint">حروف لاتينية صغيرة، أرقام، والرموز ( - _ . & ) فقط.</small>
+<small class="hint hidden" id="userHint">حروف لاتينية صغيرة، أرقام، والرموز ( - _ . & ) فقط.</small>
 </div>
 <div class="form-group"><label>كلمة السر</label><input type="password" id="authPassword"></div>
 <button class="btn btn-primary" onclick="processAuth()">تأكيد العملية</button>
@@ -37,10 +37,10 @@
 </nav>
 
 <div id="tab-home" class="view-content hidden">
-<h3 id="welcomeMsg" style="color:var(--accent);margin-bottom:10px"></h3>
+<h3 id="welcomeMsg" style="color:var(--accent)"></h3>
 <div class="section-card">
-<p style="font-size:0.9rem">مرحباً بك مجدداً. يمكنك الآن إدارة ملفاتك الشخصية ومحتوى موداتك من مكان واحد بكل سهولة.</p>
-<button class="btn btn-primary" style="margin-top:15px" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'">
+<p>مرحباً بك مجدداً. يمكنك إدارة ملفاتك ومحتواك من هنا.</p>
+<button class="btn btn-primary" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'">
 <i class="fas fa-list"></i> فتح القائمة العامة
 </button>
 </div>
@@ -48,15 +48,19 @@
 
 <div id="tab-publish" class="view-content hidden">
 <div class="section-card">
-<h3 id="formTitle" style="font-size:1.1rem;margin-bottom:15px"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
+<h3 id="formTitle"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
 <img id="pubPrev" class="preview-box hidden">
-<div class="form-group"><label>رابط الغلاف</label><input type="url" id="p_cover" oninput="updatePreview(this.value, 'pubPrev')"></div>
-<div class="form-group"><label>عنوان المود</label><input type="text" id="p_title" maxlength="100"></div>
-<div class="form-group"><label>رابط التحميل</label><input type="url" id="p_dl"></div>
+<div class="form-group">
+<label>رابط الغلاف</label>
+<input type="url" id="p_cover" oninput="updatePreview(this.value, 'pubPrev')">
+<small class="hint">استخدم روابط مباشرة فقط. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
+</div>
+<div class="form-group"><label>عنوان المود</label><input type="text" id="p_title" maxlength="100"><small class="hint">اختر اسماً جذاباً وواضحاً للمود.</small></div>
+<div class="form-group"><label>رابط التحميل</label><input type="url" id="p_dl"><small class="hint">رابط ميديا فاير أو ميجا المباشر.</small></div>
 <div class="form-group"><label>النوع</label><select id="p_type"><option value="mod">Mod</option><option value="map">Map</option><option value="data_pack">Data Pack</option><option value="texture_pack">Texture Pack</option></select></div>
 <div class="form-group" style="display:flex;gap:8px">
-<div style="flex:1"><label>الإصدار</label><input type="text" id="p_ver" maxlength="30"></div>
-<div style="flex:1"><label>التحديث</label><input type="text" id="p_mc" maxlength="30"></div>
+<div style="flex:1"><label>الإصدار</label><input type="text" id="p_ver" placeholder="1.0.0"></div>
+<div style="flex:1"><label>التحديث</label><input type="text" id="p_mc" placeholder="1.21"></div>
 </div>
 <div class="form-group"><label>وصف قصير</label><span class="char-counter" id="c_p_short">50</span><input type="text" id="p_short" maxlength="50" oninput="updateCounter(this, 'c_p_short')"></div>
 <div class="form-group"><label>وصف مفصل</label><span class="char-counter" id="c_p_long">1000</span><textarea id="p_long" maxlength="1000" oninput="updateCounter(this, 'c_p_long'); adjustHeight(this)"></textarea></div>
@@ -68,9 +72,11 @@
 </div>
 
 <div id="tab-edit" class="view-content hidden">
-<div style="display:flex;gap:8px;margin-bottom:12px">
-<input type="text" id="searchMod" placeholder="بحث..." oninput="renderMyMods()" style="flex:2">
-<select id="filterType" onchange="renderMyMods()" style="flex:1"><option value="all">الكل</option><option value="mod">Mods</option><option value="map">Maps</option></select>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+<input type="text" id="searchMod" placeholder="بحث باسم المود..." oninput="renderMyMods()" style="flex:1;min-width:150px">
+<select id="f_type" onchange="renderMyMods()" style="width:100px"><option value="all">الكل</option><option value="mod">Mods</option><option value="map">Maps</option><option value="data_pack">Data</option><option value="texture_pack">Texture</option></select>
+<button class="btn-sm" style="width:45px" onclick="toggleEditSort()"><i class="fas fa-sort"></i></button>
+<button class="btn-sm" style="width:45px;color:var(--accent)" onclick="showMyStats()"><i class="fas fa-chart-bar"></i></button>
 </div>
 <div id="myModsList"></div>
 </div>
@@ -79,12 +85,16 @@
 <div class="section-card">
 <img id="profPrev" class="profile-circle">
 <div class="form-group"><label>اسم المستخدم (ثابت)</label><input type="text" id="pr_user" readonly style="opacity:0.5"></div>
+<div class="form-group"><label>الاسم العام</label><input type="text" id="pr_name"></div>
 <div class="form-group"><label>رابط الصورة</label><input type="url" id="pr_avatar" oninput="updatePreview(this.value, 'profPrev')"></div>
-<div class="form-group"><label>الالاسم العام</label><input type="text" id="pr_name"></div>
+<div class="form-group"><label>وصف الحساب</label><span class="char-counter" id="c_pr_bio">50</span><input type="text" id="pr_bio" maxlength="50" oninput="updateCounter(this, 'c_pr_bio')"></div>
+<div class="form-group"><label>رابط التواصل (Social)</label><input type="url" id="pr_social" placeholder="https://facebook.com/yourid"></div>
 <div class="form-group"><label>كلمة السر الجديدة</label><input type="password" id="pr_pass"></div>
-<div style="display:flex;gap:10px">
-<button class="btn btn-primary" style="flex:1" onclick="updateProfile()">تحديث الحساب</button>
-<button class="btn btn-danger" style="flex:1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+<div style="display:flex;gap:5px">
+<button class="btn-sm" style="flex:1" onclick="updateProfile()"><i class="fas fa-save"></i> حفظ</button>
+<button class="btn-sm" style="flex:1" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/user#'+currentUser.username"><i class="fas fa-user"></i> حسابي</button>
+<button class="btn-sm" style="flex:1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+<button class="btn-sm" style="flex:1;color:var(--error)" onclick="confirmAccountDelete()"><i class="fas fa-user-slash"></i> حذف</button>
 </div>
 </div>
 </div>
@@ -99,9 +109,7 @@ const { Client, Databases, ID, Query } = Appwrite;
 const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
 const db = new Databases(sdk);
 
-let currentUser = null;
-let myModsList = [];
-let editingModId = null;
+let currentUser = null, myModsList = [], editingModId = null, editSort = 'desc';
 
 function showToast(m, type='success') {
     const t = document.createElement('div'); t.className = 'toast';
@@ -125,152 +133,41 @@ async function checkSession() {
 }
 
 async function processAuth() {
-    const uVal = document.getElementById('authUsername').value.trim();
-    const pVal = document.getElementById('authPassword').value;
+    const uVal = document.getElementById('authUsername').value.trim(), pVal = document.getElementById('authPassword').value;
     const isReg = !document.getElementById('registerFields').classList.contains('hidden');
-    if(!uVal || !pVal) return showToast("يرجى ملء كافة الخانات", 'error');
+    if(!uVal || !pVal) return showToast("أكمل الخانات", 'error');
     try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
         let bin = (await res.json()).record;
         if(isReg) {
-            if(bin.us.find(u => u.username === uVal)) return showToast("المستخدم موجود بالفعل", 'error');
-            const newUser = { full_name: document.getElementById('regFullName').value, avatar: document.getElementById('regAvatar').value || "https://placehold.co/100", username: uVal, password: pVal };
+            if(bin.us.find(u => u.username === uVal)) return showToast("موجود مسبقاً", 'error');
+            const newUser = { full_name: document.getElementById('regFullName').value, avatar: document.getElementById('regAvatar').value || "https://placehold.co/100", username: uVal, password: pVal, bio: '', social: '' };
             bin.us.push(newUser);
             await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
             login(newUser, true);
         } else {
-            const found = bin.us.find(u => u.username === uVal && u.password === pVal);
-            if(found) login(found, true); else showToast("بيانات خاطئة", 'error');
+            const f = bin.us.find(u => u.username === uVal && u.password === pVal);
+            if(f) login(f, true); else showToast("بيانات خاطئة", 'error');
         }
-    } catch(e) { showToast("فشل في الاتصال", 'error'); }
+    } catch(e) { showToast("خطأ اتصال", 'error'); }
 }
 
 function login(u, save) {
     currentUser = u;
-    if(save) {
-        const session = { user: u, expiry: Date.now() + (24 * 60 * 60 * 1000) };
-        localStorage.setItem('mc_session', JSON.stringify(session));
-    }
+    if(save) localStorage.setItem('mc_session', JSON.stringify({ user: u, expiry: Date.now() + 86400000 }));
     document.getElementById('authSection').classList.add('hidden');
     document.getElementById('mainSection').classList.remove('hidden');
-    document.getElementById('welcomeMsg').innerText = "أهلاً بك، " + u.full_name;
+    document.getElementById('welcomeMsg').innerText = "أهلاً، " + u.full_name;
     document.getElementById('pr_user').value = "@" + u.username;
     document.getElementById('pr_name').value = u.full_name;
     document.getElementById('pr_avatar').value = u.avatar;
+    document.getElementById('pr_bio').value = u.bio || '';
+    document.getElementById('pr_social').value = u.social || '';
     updatePreview(u.avatar, 'profPrev');
     showTab('home');
 }
 
 function logout() { localStorage.removeItem('mc_session'); window.location.reload(); }
-
-function showTab(tabId) {
-    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tabId).classList.remove('hidden');
-    const btn = document.getElementById('btn-' + tabId);
-    if(btn) btn.classList.add('active');
-    if(tabId === 'edit') fetchMyMods();
-}
-
-async function fetchMyMods() {
-    const container = document.getElementById('myModsList');
-    container.innerHTML = '<p style="text-align:center;padding:20px;color:var(--text-sub)">جاري التحميل...</p>';
-    try {
-        const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, [Query.equal('author_handle', "@" + currentUser.username)]);
-        myModsList = res.documents;
-        renderMyMods();
-    } catch(e) { container.innerHTML = '<p style="text-align:center">فشل جلب البيانات</p>'; }
-}
-
-function formatDT(str) { return new Date(str).toLocaleString('en-US', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }); }
-
-function renderMyMods() {
-    const q = document.getElementById('searchMod').value.toLowerCase();
-    let mods = myModsList.filter(m => m.title.toLowerCase().includes(q));
-    const container = document.getElementById('myModsList');
-    container.innerHTML = mods.map(m => `
-        <div class="mod-card">
-            <div class="mod-card-main">
-                <img src="${m.cover_url}" class="mod-thumb" onerror="this.src='https://placehold.co/85'">
-                <div class="mod-info">
-                    <h4>${m.title}</h4>
-                    <div class="mod-stats">
-                        <span><i class="fas fa-eye"></i> ${m.views}</span>
-                        <span><i class="fas fa-thumbs-up"></i> ${m.likes}</span>
-                        <span><i class="fas fa-download"></i> ${m.downloads || 0}</span>
-                    </div>
-                    <span class="mod-date">نُشر: ${formatDT(m.$createdAt)}</span>
-                    <span class="mod-date">تعديل: ${formatDT(m.updated_at || m.$createdAt)}</span>
-                </div>
-            </div>
-            <div class="mod-actions">
-                <button class="btn-sm" onclick="startEdit('${m.$id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-sm" style="color:var(--error)" onclick="confirmDelete('${m.$id}')"><i class="fas fa-trash"></i></button>
-                <button class="btn-sm" onclick="copyL('${m.$id}')"><i class="fas fa-copy"></i></button>
-                <button class="btn-sm" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}'"><i class="fas fa-external-link-alt"></i></button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function confirmDelete(id) {
-    const modal = document.getElementById('modalContainer');
-    modal.innerHTML = `<div class="modal-overlay"><div class="modal-card" style="background:var(--card);padding:20px;border-radius:15px;width:90%;max-width:350px;text-align:center;border:1px solid var(--border)"><h3>حذف؟</h3><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-primary" style="background:var(--error);flex:1" onclick="deleteM('${id}')">حذف</button><button class="btn btn-primary" style="background:#444;flex:1" onclick="closeModal()">إلغاء</button></div></div></div>`;
-    modal.classList.remove('hidden');
-}
-function closeModal() { document.getElementById('modalContainer').classList.add('hidden'); }
-
-async function deleteM(id) { try { await db.deleteDocument(AW_CONF.d, AW_CONF.c, id); showToast("تم الحذف"); closeModal(); fetchMyMods(); } catch(e) { showToast("فشل الحذف", 'error'); } }
-
-async function submitMod() {
-    const now = new Date().toISOString();
-    const data = {
-        title: document.getElementById('p_title').value,
-        cover_url: document.getElementById('p_cover').value,
-        download_url: document.getElementById('p_dl').value,
-        item_type: document.getElementById('p_type').value,
-        mod_version: document.getElementById('p_ver').value,
-        target_mc: document.getElementById('p_mc').value,
-        short_desc: document.getElementById('p_short').value,
-        long_desc: document.getElementById('p_long').value,
-        author_handle: "@" + currentUser.username,
-        updated_at: now
-    };
-    if(!data.title || !data.cover_url || !data.download_url) return showToast("أكمل البيانات", 'error');
-    try {
-        if(editingModId) { await db.updateDocument(AW_CONF.d, AW_CONF.c, editingModId, data); showToast("تم التحديث"); cancelEditMode(); }
-        else { data.likes=0; data.dislikes=0; data.views=0; data.downloads=0; await db.createDocument(AW_CONF.d, AW_CONF.c, ID.unique(), data); showToast("تم النشر"); resetF(); }
-    } catch(e) { showToast("خطأ في الحفظ", 'error'); }
-}
-
-function startEdit(id) {
-    const m = myModsList.find(x => x.$id === id);
-    editingModId = id;
-    document.getElementById('p_title').value = m.title;
-    document.getElementById('p_cover').value = m.cover_url;
-    document.getElementById('p_dl').value = m.download_url;
-    document.getElementById('p_type').value = m.item_type;
-    document.getElementById('p_ver').value = m.mod_version;
-    document.getElementById('p_mc').value = m.target_mc;
-    document.getElementById('p_short').value = m.short_desc;
-    document.getElementById('p_long').value = m.long_desc;
-    updatePreview(m.cover_url, 'pubPrev');
-    document.getElementById('formTitle').innerText = "تعديل المود";
-    document.getElementById('cancelEdit').classList.remove('hidden');
-    showTab('publish');
-}
-
-function cancelEditMode() { editingModId = null; resetF(); document.getElementById('formTitle').innerText = "نشر عنصر جديد"; document.getElementById('cancelEdit').classList.add('hidden'); showTab('edit'); }
-function resetF() { document.querySelectorAll('#tab-publish input, #tab-publish textarea').forEach(i => i.value = ''); document.getElementById('pubPrev').classList.add('hidden'); }
-function copyL(id) { navigator.clipboard.writeText(`https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${id}`).then(()=>showToast("تم النسخ")); }
-
-document.getElementById('toggleAuth').onclick = function() {
-    const isL = document.getElementById('authTitle').innerText.includes('الدخول');
-    document.getElementById('authTitle').innerText = isL ? 'إنشاء حساب جديد' : 'الدخول للمنصة';
-    document.getElementById('toggleAuth').innerText = isL ? 'لديك حساب؟ تسجيل الدخول' : 'إنشاء حساب جديد';
-    document.getElementById('userHint').classList.toggle('hidden', !isL);
-    document.getElementById('registerFields').classList.toggle('hidden');
-};
 
 async function updateProfile() {
     try {
@@ -280,16 +177,130 @@ async function updateProfile() {
         if(idx !== -1) {
             bin.us[idx].full_name = document.getElementById('pr_name').value;
             bin.us[idx].avatar = document.getElementById('pr_avatar').value;
+            bin.us[idx].bio = document.getElementById('pr_bio').value;
+            bin.us[idx].social = document.getElementById('pr_social').value;
             if(document.getElementById('pr_pass').value) bin.us[idx].password = document.getElementById('pr_pass').value;
             await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
             currentUser = bin.us[idx];
-            showToast("تم تحديث الحساب");
-            const session = JSON.parse(localStorage.getItem('mc_session'));
-            session.user = currentUser;
-            localStorage.setItem('mc_session', JSON.stringify(session));
+            login(currentUser, true); showToast("تم التحديث");
         }
-    } catch(e) { showToast("خطأ في التحديث", 'error'); }
+    } catch(e) { showToast("فشل التحديث", 'error'); }
 }
+
+function showTab(t) {
+    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-'+t).classList.remove('hidden');
+    document.getElementById('btn-'+t).classList.add('active');
+    if(t === 'edit') fetchMyMods();
+}
+
+async function fetchMyMods() {
+    const c = document.getElementById('myModsList');
+    c.innerHTML = '<p style="text-align:center;padding:20px">جاري جلب بياناتك...</p>';
+    try {
+        const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, [Query.equal('author_handle', "@"+currentUser.username)]);
+        myModsList = res.documents; renderMyMods();
+    } catch(e) { c.innerHTML = '<p>حدث خطأ</p>'; }
+}
+
+function renderMyMods() {
+    const q = document.getElementById('searchMod').value.toLowerCase();
+    const type = document.getElementById('f_type').value;
+    let mods = myModsList.filter(m => m.title.toLowerCase().includes(q) && (type==='all' || m.item_type === type));
+    mods.sort((a,b) => editSort==='desc' ? new Date(b.$createdAt) - new Date(a.$createdAt) : new Date(a.$createdAt) - new Date(b.$createdAt));
+    document.getElementById('myModsList').innerHTML = mods.map(m => `
+        <div class="mod-card">
+            <div class="mod-card-main">
+                <img src="${m.cover_url}" class="mod-thumb" onerror="this.src='https://placehold.co/85'">
+                <div class="mod-info">
+                    <h4>${m.title} ${m.mod_version?`<span class="badge">${m.mod_version}</span>`:''} <span class="badge">${m.item_type}</span></h4>
+                    <div class="mod-stats">
+                        <span><i class="fas fa-eye"></i> ${m.views}</span>
+                        <span><i class="fas fa-thumbs-up"></i> ${m.likes}</span>
+                        <span><i class="fas fa-thumbs-down"></i> ${m.dislikes}</span>
+                        <span><i class="fas fa-download"></i> ${m.downloads}</span>
+                    </div>
+                    <span class="mod-date">نشر: ${new Date(m.$createdAt).toLocaleDateString()}</span>
+                    <span class="mod-date">تعديل: ${new Date(m.updated_at || m.$updatedAt).toLocaleDateString()}</span>
+                </div>
+            </div>
+            <div class="mod-actions">
+                <button class="btn-sm" onclick="startEdit('${m.$id}')"><i class="fas fa-edit"></i></button>
+                <button class="btn-sm" style="color:var(--error)" onclick="confirmDelete('${m.$id}')"><i class="fas fa-trash"></i></button>
+                <button class="btn-sm" onclick="copyL('${m.$id}')"><i class="fas fa-copy"></i></button>
+                <button class="btn-sm" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}'"><i class="fas fa-external-link-alt"></i></button>
+            </div>
+        </div>`).join('');
+}
+
+function toggleEditSort() { editSort = editSort==='desc'?'asc':'desc'; renderMyMods(); }
+
+function showMyStats() {
+    const s = myModsList.reduce((acc, m) => {
+        acc.v += (m.views||0); acc.l += (m.likes||0); acc.d += (m.downloads||0); return acc;
+    }, {v:0, l:0, d:0});
+    const mc = document.getElementById('modalContainer');
+    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>إحصائيات حسابك</h3><div class="stat-row"><span>إجمالي المنشورات:</span><b>${myModsList.length}</b></div><div class="stat-row"><span>إجمالي المشاهدات:</span><b>${s.v}</b></div><div class="stat-row"><span>إجمالي الإعجابات:</span><b>${s.l}</b></div><div class="stat-row"><span>إجمالي التحميلات:</span><b>${s.d}</b></div><button class="btn btn-primary" style="margin-top:15px" onclick="closeModal()">إغلاق</button></div></div>`;
+    mc.classList.remove('hidden');
+}
+
+function confirmDelete(id) {
+    const mc = document.getElementById('modalContainer');
+    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف المود؟</h3><p>لا يمكن استرجاع المود بعد الحذف.</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteM('${id}')">حذف</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
+    mc.classList.remove('hidden');
+}
+
+async function deleteM(id) { try { await db.deleteDocument(AW_CONF.d, AW_CONF.c, id); showToast("تم الحذف"); closeModal(); fetchMyMods(); } catch(e) { showToast("خطأ في الحذف", 'error'); } }
+function closeModal() { document.getElementById('modalContainer').classList.add('hidden'); }
+
+async function submitMod() {
+    const data = { title: document.getElementById('p_title').value, cover_url: document.getElementById('p_cover').value, download_url: document.getElementById('p_dl').value, item_type: document.getElementById('p_type').value, mod_version: document.getElementById('p_ver').value, target_mc: document.getElementById('p_mc').value, short_desc: document.getElementById('p_short').value, long_desc: document.getElementById('p_long').value, author_handle: "@"+currentUser.username, updated_at: new Date().toISOString() };
+    if(!data.title || !data.cover_url || !data.download_url) return showToast("أكمل البيانات الأساسية", 'error');
+    try {
+        if(editingModId) { await db.updateDocument(AW_CONF.d, AW_CONF.c, editingModId, data); showToast("تم التحديث"); cancelEditMode(); }
+        else { data.likes=0; data.dislikes=0; data.views=0; data.downloads=0; await db.createDocument(AW_CONF.d, AW_CONF.c, ID.unique(), data); showToast("تم النشر"); resetF(); }
+    } catch(e) { showToast("فشل الحفظ", 'error'); }
+}
+
+function startEdit(id) {
+    const m = myModsList.find(x => x.$id === id); editingModId = id;
+    document.getElementById('p_title').value = m.title; document.getElementById('p_cover').value = m.cover_url;
+    document.getElementById('p_dl').value = m.download_url; document.getElementById('p_type').value = m.item_type;
+    document.getElementById('p_ver').value = m.mod_version; document.getElementById('p_mc').value = m.target_mc;
+    document.getElementById('p_short').value = m.short_desc; document.getElementById('p_long').value = m.long_desc;
+    updatePreview(m.cover_url, 'pubPrev'); document.getElementById('formTitle').innerText = "تعديل المود";
+    document.getElementById('cancelEdit').classList.remove('hidden'); showTab('publish');
+}
+
+function cancelEditMode() { editingModId = null; resetF(); document.getElementById('formTitle').innerText = "نشر عنصر جديد"; document.getElementById('cancelEdit').classList.add('hidden'); showTab('edit'); }
+function resetF() { document.querySelectorAll('#tab-publish input, #tab-publish textarea').forEach(i => i.value = ''); document.getElementById('pubPrev').classList.add('hidden'); }
+function copyL(id) { navigator.clipboard.writeText(`https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${id}`).then(()=>showToast("تم النسخ")); }
+
+function confirmAccountDelete() {
+    const mc = document.getElementById('modalContainer');
+    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف الحساب نهائياً؟</h3><p>سيتم حذف حسابك وجميع المودات (${myModsList.length}) التي نشرتها للأبد!</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteAccountFinal()">نعم، احذف الكل</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
+    mc.classList.remove('hidden');
+}
+
+async function deleteAccountFinal() {
+    try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
+        let bin = (await res.json()).record;
+        bin.us = bin.us.filter(u => u.username !== currentUser.username);
+        await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
+        for(let m of myModsList) { await db.deleteDocument(AW_CONF.d, AW_CONF.c, m.$id); }
+        logout();
+    } catch(e) { showToast("فشل الحذف الشامل", 'error'); }
+}
+
+document.getElementById('toggleAuth').onclick = function() {
+    const isL = document.getElementById('authTitle').innerText.includes('الدخول');
+    document.getElementById('authTitle').innerText = isL ? 'إنشاء حساب جديد' : 'الدخول للمنصة';
+    document.getElementById('toggleAuth').innerText = isL ? 'لديك حساب؟ دخول' : 'إنشاء حساب جديد';
+    document.getElementById('userHint').classList.toggle('hidden', !isL);
+    document.getElementById('registerFields').classList.toggle('hidden');
+};
 
 window.onload = checkSession;
 document.addEventListener('contextmenu', e => e.preventDefault());
