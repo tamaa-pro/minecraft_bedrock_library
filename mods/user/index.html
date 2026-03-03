@@ -1,1 +1,147 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>ملف المستخدم | Minecraft Library</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden}#loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}.cover-area{width:100%;height:180px;background:#000;position:relative;border-bottom:1px solid var(--border)}.cover-img{width:100%;height:100%;object-fit:cover}.profile-header{text-align:center;position:relative;margin-top:-60px;padding:0 15px;margin-bottom:20px}.avatar-wrapper{width:120px;height:120px;border-radius:50%;background:#000;border:5px solid var(--bg);margin:0 auto;overflow:hidden;position:relative;z-index:2}.avatar-img{width:100%;height:100%;object-fit:cover}.user-meta{margin-top:10px}.user-meta h1{margin:0;font-size:1.4rem;display:flex;align-items:center;justify-content:center;gap:6px}.verify-badge{color:var(--accent);font-size:1.1rem}.info-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:15px;margin:10px auto;max-width:500px;font-size:0.85rem}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.info-item{background:var(--input);padding:8px;border-radius:8px;border:1px solid var(--border)}.info-item small{display:block;color:var(--text-sub);font-size:0.7rem}.bio-box{background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;border-right:3px solid var(--accent);margin-bottom:15px;text-align:right}.social-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}.filter-bar{background:var(--card);padding:10px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;display:flex;gap:8px;margin-bottom:15px}.filter-bar input{flex:1;padding:8px;background:var(--input);border:1px solid var(--border);border-radius:8px;color:#fff;outline:none;font-size:0.85rem}.filter-bar select{padding:8px;background:var(--input);border:1px solid var(--border);border-radius:8px;color:#fff;outline:none;font-size:0.85rem}.mods-container{padding:0 10px 80px;max-width:800px;margin:0 auto}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;display:flex;flex-direction:column}.mod-top{display:flex;padding:10px;gap:10px}.mod-thumb{width:80px;height:80px;border-radius:8px;object-fit:cover;background:#000}.mod-details{flex:1}.mod-details h3{margin:0 0 5px;font-size:0.95rem}.mod-tags{display:flex;gap:5px;flex-wrap:wrap}.badge{font-size:0.65rem;padding:2px 6px;background:var(--input);border:1px solid var(--border);border-radius:4px;color:var(--accent)}.mod-stats{display:flex;gap:10px;margin-top:8px;font-size:0.7rem;color:var(--text-sub)}.mod-footer{background:rgba(255,255,255,0.02);padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;border-top:1px solid var(--border)}.btn-sm{padding:8px;border:none;border-radius:6px;background:var(--border);color:var(--text);font-size:0.75rem;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px}.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="loading"><i class="fas fa-circle-notch fa-spin fa-2x" style="color:var(--accent)"></i></div>
+<div id="mainContent" class="hidden">
+<div class="cover-area" id="coverContainer"></div>
+<div class="profile-header">
+<div class="avatar-wrapper"><img id="userAvatar" class="avatar-img" src=""></div>
+<div class="user-meta">
+<h1 id="userFullName"></h1>
+<div id="userHandle" style="color:var(--text-sub);font-size:0.9rem"></div>
+</div>
+</div>
+<div class="info-card">
+<div class="info-grid">
+<div class="info-item"><small>تاريخ الانضمام</small><b id="joinDate">-</b></div>
+<div class="info-item"><small>إجمالي المنشورات</small><b id="totalPosts">0</b></div>
+<div class="info-item"><small>آخر نشاط</small><b id="lastActive">-</b></div>
+<div class="info-item"><small>اسم المستخدم</small><b id="staticUser">-</b></div>
+</div>
+<div id="userBio" class="bio-box hidden"></div>
+<a id="socialLink" class="social-btn hidden" target="_blank"></a>
+</div>
+<div class="filter-bar">
+<input type="text" id="searchMod" placeholder="بحث في أعمال المستخدم..." oninput="filterMods()">
+<select id="typeFilter" onchange="filterMods()">
+<option value="all">الكل</option>
+<option value="mod">Mods</option>
+<option value="map">Maps</option>
+<option value="texture_pack">Texture</option>
+</select>
+</div>
+<div id="modsList" class="mods-container"></div>
+<div id="loadMore" style="text-align:center;padding:20px" class="hidden">
+<button class="btn-sm" style="width:150px;margin:0 auto" onclick="fetchMods(true)">تحميل المزيد</button>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+<script>
+const JB_ID = "69a3f2b1d0ea881f40e41d45";
+const AW_CONF = { p: '69922bf4002571605f46', d: '69922c8e001dbb613d69', c: 'mods' };
+const { Client, Databases, Query } = Appwrite;
+const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
+const db = new Databases(sdk);
+let allMods = [], offset = 0, userHandle = "";
+async function init(){
+userHandle = window.location.hash.substring(1).toLowerCase();
+if(!userHandle) return document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px'>المستخدم غير موجود</h2>";
+try {
+const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, {headers:{"X-Master-Key":"$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
+const users = (await res.json()).record.us;
+const user = users.find(u => u.username.toLowerCase() === userHandle);
+if(!user) throw new Error();
+renderUser(user);
+fetchMods();
+} catch(e) { document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px'>خطأ في تحميل بيانات المستخدم</h2>"; }
+}
+function renderUser(u){
+document.getElementById('userFullName').innerHTML = u.full_name + (u.vf === "true" ? ' <i class="fas fa-check-circle verify-badge"></i>' : '');
+document.getElementById('userHandle').innerText = "@" + u.username;
+document.getElementById('staticUser').innerText = u.username;
+document.getElementById('userAvatar').src = u.avatar || "https://placehold.co/120?text=User";
+document.getElementById('joinDate').innerText = u.createdat || "قديم";
+if(u.cover) document.getElementById('coverContainer').innerHTML = `<img src="${u.cover}" class="cover-img">`;
+if(u.bio){ const b = document.getElementById('userBio'); b.innerText = u.bio; b.classList.remove('hidden'); }
+if(u.social) setupSocial(u.social);
+document.getElementById('loading').classList.add('hidden');
+document.getElementById('mainContent').classList.remove('hidden');
+}
+function setupSocial(url){
+const btn = document.getElementById('socialLink');
+let icon = "fa-globe", text = "زيارة الموقع";
+if(url.includes("facebook.com")) { icon = "fa-brands fa-facebook"; text = "فتح فيسبوك"; }
+else if(url.includes("youtube.com") || url.includes("youtu.be")) { icon = "fa-brands fa-youtube"; text = "فتح يوتيوب"; }
+else if(url.includes("wa.me") || url.includes("whatsapp.com")) { icon = "fa-brands fa-whatsapp"; text = "فتح واتساب"; }
+else if(url.includes("t.me")) { icon = "fa-brands fa-telegram"; text = "فتح تلجرام"; }
+else if(url.includes("twitter.com") || url.includes("x.com")) { icon = "fa-brands fa-x-twitter"; text = "فتح X (تويتر)"; }
+btn.innerHTML = `<i class="${icon}"></i> ${text}`;
+btn.href = url;
+btn.classList.remove('hidden');
+}
+async function fetchMods(more = false){
+if(!more) { offset = 0; allMods = []; }
+try {
+const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, [
+Query.equal('author_handle', "@"+userHandle),
+Query.limit(20),
+Query.offset(offset),
+Query.orderDesc('$createdAt')
+]);
+allMods = more ? [...allMods, ...res.documents] : res.documents;
+document.getElementById('totalPosts').innerText = res.total;
+if(allMods.length > 0) document.getElementById('lastActive').innerText = new Date(allMods[0].updated_at || allMods[0].$createdAt).toLocaleDateString('ar-EG');
+renderMods(allMods);
+offset += 20;
+document.getElementById('loadMore').classList.toggle('hidden', allMods.length >= res.total);
+} catch(e) { console.error(e); }
+}
+function renderMods(list){
+const container = document.getElementById('modsList');
+container.innerHTML = list.map(m => `
+<div class="mod-card">
+<div class="mod-top">
+<img src="${m.cover_url}" class="mod-thumb" onerror="this.src='https://placehold.co/80'">
+<div class="mod-details">
+<h3>${m.title}</h3>
+<div class="mod-tags">
+<span class="badge">${m.item_type}</span>
+${m.mod_version ? `<span class="badge">V ${m.mod_version}</span>` : ''}
+</div>
+<div class="mod-stats">
+<span><i class="fas fa-eye"></i> ${m.views}</span>
+<span><i class="fas fa-download"></i> ${m.downloads}</span>
+<span><i class="fas fa-thumbs-up"></i> ${m.likes}</span>
+</div>
+</div>
+</div>
+<div class="mod-footer">
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}" class="btn-sm" style="background:var(--accent);color:#fff"><i class="fas fa-download"></i> تحميل</a>
+<button class="btn-sm" onclick="shareMod('${m.$id}','${m.title}')"><i class="fas fa-share"></i> مشاركة</button>
+</div>
+</div>`).join('');
+}
+function filterMods(){
+const q = document.getElementById('searchMod').value.toLowerCase();
+const type = document.getElementById('typeFilter').value;
+const filtered = allMods.filter(m => m.title.toLowerCase().includes(q) && (type === 'all' || m.item_type === type));
+renderMods(filtered);
+}
+function shareMod(id,title){
+const url = `https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${id}`;
+if(navigator.share) navigator.share({title:title, url:url});
+else { navigator.clipboard.writeText(url); alert("تم نسخ رابط المود"); }
+}
+window.onload = init;
+</script>
+</body>
+</html>
