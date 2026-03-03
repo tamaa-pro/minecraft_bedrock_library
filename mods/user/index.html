@@ -59,7 +59,7 @@ const { Client, Databases, Query } = Appwrite;
 const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
 const db = new Databases(sdk);
 
-let targetUser = window.location.hash.substring(1);
+let targetUser = decodeURIComponent(window.location.hash.substring(1)).replace(/\/$/, '').trim();
 let currentFilter = 'all';
 let offset = 0;
 const limit = 20;
@@ -67,128 +67,88 @@ let isFetching = false;
 let totalViews = 0;
 
 function getSocialInfo(url) {
-    if(!url) return null;
-    let u = url.toLowerCase();
-    if(u.includes('facebook.com')) return {i: 'fa-facebook', t: 'فتح رابط فيسبوك'};
-    if(u.includes('youtube.com') || u.includes('youtu.be')) return {i: 'fa-youtube', t: 'فتح رابط يوتيوب'};
-    if(u.includes('wa.me') || u.includes('whatsapp.com')) return {i: 'fa-whatsapp', t: 'فتح رابط واتساب'};
-    if(u.includes('t.me') || u.includes('telegram.org')) return {i: 'fa-telegram', t: 'فتح رابط تلجرام'};
-    if(u.includes('twitter.com') || u.includes('x.com')) return {i: 'fa-twitter', t: 'فتح رابط تويتر'};
-    return {i: 'fa-globe', t: 'فتح رابط ويب'};
+if(!url) return null;
+let u = url.toLowerCase();
+if(u.includes('facebook.com')) return {c: 'fab', i: 'fa-facebook', t: 'فتح صفحة فيسبوك'};
+if(u.includes('youtube.com') || u.includes('youtu.be')) return {c: 'fab', i: 'fa-youtube', t: 'فتح قناة يوتيوب'};
+if(u.includes('wa.me') || u.includes('whatsapp.com')) return {c: 'fab', i: 'fa-whatsapp', t: 'فتح واتساب'};
+if(u.includes('t.me') || u.includes('telegram.org')) return {c: 'fab', i: 'fa-telegram', t: 'فتح تلجرام'};
+if(u.includes('twitter.com') || u.includes('x.com')) return {c: 'fab', i: 'fa-twitter', t: 'فتح تويتر'};
+return {c: 'fas', i: 'fa-globe', t: 'زيارة الرابط'};
 }
 
 async function initProfile() {
-    if(!targetUser) return showError();
-    try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-        const bin = (await res.json()).record;
-        const user = bin.us.find(u => u.username === targetUser);
-        if(!user) return showError();
-        
-        if(user.cover) document.getElementById('uCover').src = user.cover;
-        if(user.avatar) document.getElementById('uAvatar').src = user.avatar;
-        document.getElementById('uName').innerText = user.full_name;
-        if(user.vf === "true") document.getElementById('uBadge').classList.remove('hidden');
-        document.getElementById('uHandle').innerText = "@" + user.username;
-        if(user.bio) document.getElementById('uBio').innerText = user.bio;
-        if(user.createdat) document.getElementById('sJoined').innerText = user.createdat;
-        
-        if(user.social) {
-            const sBtn = document.getElementById('uSocial');
-            const sInfo = getSocialInfo(user.social);
-            sBtn.href = user.social;
-            document.getElementById('socialIcon').className = `fab ${sInfo.i}`;
-            document.getElementById('socialText').innerText = sInfo.t;
-            sBtn.classList.remove('hidden');
-        }
-        
-        await loadUserMods(true);
-        
-        document.getElementById('loader').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('loader').classList.add('hidden');
-            document.getElementById('mainContent').classList.remove('hidden');
-        }, 300);
-        
-    } catch(e) { showError(); }
+if(!targetUser) return showError();
+try {
+const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
+const data = await res.json();
+if(!data.record || !data.record.us) throw new Error("بيانات الخادم غير صالحة");
+const user = data.record.us.find(u => u.username.toLowerCase() === targetUser.toLowerCase());
+if(!user) return showError();
+targetUser = user.username;
+if(user.cover) document.getElementById('uCover').src = user.cover;
+if(user.avatar) document.getElementById('uAvatar').src = user.avatar;
+document.getElementById('uName').innerText = user.full_name;
+if(user.vf === "true") document.getElementById('uBadge').classList.remove('hidden');
+document.getElementById('uHandle').innerText = "@" + user.username;
+if(user.bio) document.getElementById('uBio').innerText = user.bio;
+if(user.createdat) document.getElementById('sJoined').innerText = user.createdat;
+if(user.social) {
+const sBtn = document.getElementById('uSocial');
+const sInfo = getSocialInfo(user.social);
+sBtn.href = user.social;
+document.getElementById('socialIcon').className = `${sInfo.c} ${sInfo.i}`;
+document.getElementById('socialText').innerText = sInfo.t;
+sBtn.classList.remove('hidden');
+}
+await loadUserMods(true);
+document.getElementById('loader').style.opacity = '0';
+setTimeout(() => {
+document.getElementById('loader').classList.add('hidden');
+document.getElementById('mainContent').classList.remove('hidden');
+}, 300);
+} catch(e) { console.error("Profile Error:", e); showError(); }
 }
 
 async function loadUserMods(reset = false) {
-    if(isFetching) return;
-    isFetching = true;
-    if(reset) { offset = 0; document.getElementById('modsContainer').innerHTML = ''; totalViews = 0; }
-    
-    try {
-        let q = [
-            Query.equal('author_handle', '@'+targetUser),
-            Query.orderDesc('$createdAt'),
-            Query.limit(limit),
-            Query.offset(offset)
-        ];
-        if(currentFilter !== 'all') q.push(Query.equal('item_type', currentFilter));
-        
-        const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, q);
-        
-        if(reset && currentFilter === 'all') {
-            document.getElementById('sTotal').innerText = res.total;
-            if(res.documents.length > 0) {
-                const lastD = new Date(res.documents[0].$createdAt);
-                document.getElementById('sLast').innerText = `${lastD.getFullYear()}/${lastD.getMonth()+1}/${lastD.getDate()}`;
-            }
-        }
-        
-        let html = '';
-        res.documents.forEach(m => {
-            totalViews += (m.views || 0);
-            html += `
-            <a href="https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}" class="mod-card">
-                <img src="${m.cover_url}" class="mod-thumb" loading="lazy">
-                <div class="mod-content">
-                    <h3 class="mod-title">${m.title}</h3>
-                    <div class="mod-badges">
-                        <span class="badge">${m.item_type}</span>
-                        ${m.mod_version ? `<span class="badge">${m.mod_version}</span>` : ''}
-                    </div>
-                    <div class="mod-metrics">
-                        <div class="metrics-group">
-                            <span><i class="fas fa-eye"></i> ${m.views||0}</span>
-                            <span><i class="fas fa-download"></i> ${m.downloads||0}</span>
-                        </div>
-                        <div class="metrics-group">
-                            <span style="color:var(--accent)"><i class="fas fa-thumbs-up"></i> ${m.likes||0}</span>
-                        </div>
-                    </div>
-                </div>
-            </a>`;
-        });
-        
-        document.getElementById('modsContainer').insertAdjacentHTML('beforeend', html);
-        
-        if(currentFilter === 'all' && reset) {
-            document.getElementById('sViews').innerText = totalViews;
-        }
-        
-        offset += limit;
-        document.getElementById('loadMoreBtn').classList.toggle('hidden', res.documents.length < limit);
-        
-    } catch(e) { console.error(e); }
-    isFetching = false;
+if(isFetching) return;
+isFetching = true;
+if(reset) { offset = 0; document.getElementById('modsContainer').innerHTML = ''; totalViews = 0; }
+try {
+let q = [Query.equal('author_handle', '@'+targetUser), Query.orderDesc('$createdAt'), Query.limit(limit), Query.offset(offset)];
+if(currentFilter !== 'all') q.push(Query.equal('item_type', currentFilter));
+const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, q);
+if(reset && currentFilter === 'all') {
+document.getElementById('sTotal').innerText = res.total;
+if(res.documents.length > 0) {
+const lastD = new Date(res.documents[0].$createdAt);
+document.getElementById('sLast').innerText = `${lastD.getFullYear()}/${lastD.getMonth()+1}/${lastD.getDate()}`;
+}
+}
+let html = '';
+res.documents.forEach(m => {
+totalViews += (m.views || 0);
+html += `<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}" class="mod-card"><img src="${m.cover_url}" class="mod-thumb" loading="lazy"><div class="mod-content"><h3 class="mod-title">${m.title}</h3><div class="mod-badges"><span class="badge">${m.item_type}</span>${m.mod_version ? `<span class="badge">${m.mod_version}</span>` : ''}</div><div class="mod-metrics"><div class="metrics-group"><span><i class="fas fa-eye"></i> ${m.views||0}</span><span><i class="fas fa-download"></i> ${m.downloads||0}</span></div><div class="metrics-group"><span style="color:var(--accent)"><i class="fas fa-thumbs-up"></i> ${m.likes||0}</span></div></div></div></a>`;
+});
+document.getElementById('modsContainer').insertAdjacentHTML('beforeend', html);
+if(currentFilter === 'all' && reset) document.getElementById('sViews').innerText = totalViews;
+offset += limit;
+document.getElementById('loadMoreBtn').classList.toggle('hidden', res.documents.length < limit);
+} catch(e) { console.error("Load Mods Error:", e); }
+isFetching = false;
 }
 
-function showError() {
-    document.getElementById('loader').innerHTML = '<h2 style="color:var(--error)">المستخدم غير موجود أو حدث خطأ</h2>';
-}
+function showError() { document.getElementById('loader').innerHTML = '<h2 style="color:var(--error)">المستخدم غير موجود أو حدث خطأ</h2>'; }
 
 document.getElementById('filterOpts').addEventListener('click', (e) => {
-    if(e.target.classList.contains('filter-btn')) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        currentFilter = e.target.getAttribute('data-type');
-        loadUserMods(true);
-    }
+if(e.target.classList.contains('filter-btn')) {
+document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+e.target.classList.add('active'); currentFilter = e.target.getAttribute('data-type'); loadUserMods(true);
+}
 });
 
 window.onload = initProfile;
 </script>
+
 </body>
 </html>
