@@ -3,152 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>حساب المستخدم | Minecraft Library</title>
+<title>الملف الشخصي | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--verify:#38bdf8}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s}.spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.main-container{max-width:800px;margin:0 auto;padding-bottom:40px}.header-area{position:relative;margin-bottom:60px;width:100%}.cover-img{width:100%;height:200px;object-fit:cover;background:#000;display:block}.avatar-img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:6px solid var(--bg);background:#000;position:absolute;bottom:-55px;left:50%;transform:translateX(-50%);z-index:5}.user-title-area{text-align:center;margin-top:10px;padding:0 15px}.user-name{font-size:1.4rem;margin:0;display:flex;align-items:center;justify-content:center;gap:6px}.verified-badge{color:var(--verify);font-size:1.1rem}.user-handle{color:var(--text-sub);font-size:0.9rem;margin:2px 0 15px}.card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:15px;margin:0 15px 15px}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px;font-size:0.85rem}.stat-box{background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center}.stat-val{display:block;font-weight:700;color:var(--accent);font-size:1rem;margin-bottom:2px}.stat-lbl{color:var(--text-sub);font-size:0.75rem}.bio-box{background:var(--bg);border:1px solid var(--border);padding:12px;border-radius:10px;font-size:0.85rem;color:var(--text);text-align:center;margin-bottom:15px}.social-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--bg);color:var(--text);border:1px solid var(--border);font-family:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none}.social-btn:active{transform:scale(0.98)}.filter-scroll{display:flex;overflow-x:auto;gap:8px;padding-bottom:5px;scrollbar-width:none}.filter-scroll::-webkit-scrollbar{display:none}.filter-btn{background:var(--bg);border:1px solid var(--border);color:var(--text-sub);padding:8px 16px;border-radius:20px;white-space:nowrap;font-size:0.85rem;cursor:pointer}.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.mods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:0 15px}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column}.mod-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border-bottom:1px solid var(--border)}.mod-content{padding:10px;flex:1;display:flex;flex-direction:column}.mod-title{margin:0 0 6px;font-size:0.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.mod-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.badge{font-size:0.6rem;padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--accent)}.mod-metrics{display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-sub);margin-top:auto}.metrics-group{display:flex;gap:8px}.load-more{width:calc(100% - 30px);margin:15px auto;display:block;padding:12px;background:var(--card);border:1px solid var(--border);color:var(--accent);border-radius:10px;font-weight:600;cursor:pointer}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}#loadingScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px}#loadingScreen i{font-size:2.5rem;color:var(--accent);animation:fa-spin 2s linear infinite}#errorScreen{padding:40px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh}#errorScreen i{font-size:4rem;color:var(--error);margin-bottom:15px}.profile-header{position:relative;margin-bottom:60px}.cover-box{width:100%;height:180px;background:#000;object-fit:cover;border-bottom:1px solid var(--border)}.avatar-wrapper{position:absolute;bottom:-45px;right:20px;display:flex;align-items:flex-end;gap:15px}.avatar-img{width:100px;height:100px;border-radius:50%;border:4px solid var(--bg);background:#000;object-fit:cover}.user-meta-top{margin-bottom:10px}.user-meta-top h1{margin:0;font-size:1.3rem;display:flex;align-items:center;gap:6px}.verified-badge{color:var(--accent);font-size:1.1rem}.main-container{max-width:600px;margin:0 auto;padding:0 15px}.info-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:15px}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}.stat-box{background:var(--input);padding:10px;border-radius:12px;border:1px solid var(--border)}.stat-box label{display:block;font-size:0.65rem;color:var(--text-sub);margin-bottom:2px}.stat-box span{font-size:0.8rem;font-weight:600;color:var(--text)}.bio-box{background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;font-size:0.85rem;color:var(--text-sub);margin-bottom:12px;border-right:3px solid var(--accent)}.social-btn{width:100%;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:0.2s}.social-btn:active{transform:scale(0.97)}.filters-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:8px;margin-bottom:15px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.filters-card::-webkit-scrollbar{display:none}.filter-opt{padding:6px 15px;background:var(--input);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;white-space:nowrap;color:var(--text-sub)}.filter-opt.active{background:var(--accent);color:#fff;border-color:var(--accent)}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:18px;margin-bottom:12px;overflow:hidden;display:flex;height:110px}.mod-img{width:110px;height:110px;object-fit:cover;background:#000}.mod-body{flex:1;padding:10px;display:flex;flex-direction:column;justify-content:space-between}.mod-body h3{margin:0;font-size:0.9rem;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}.mod-tags{display:flex;gap:5px}.tag{font-size:0.6rem;background:var(--input);padding:2px 6px;border-radius:4px;border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;gap:10px;font-size:0.7rem;color:var(--text-sub)}
 </style>
 </head>
 <body>
-<div id="loader"><div class="spinner"></div></div>
-
-<div class="main-container hidden" id="mainContent">
-<div class="header-area">
-<img id="uCover" class="cover-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-<img id="uAvatar" class="avatar-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<div id="loadingScreen">
+<i class="fas fa-circle-notch"></i>
+<span>جاري تحميل بيانات الحساب</span>
 </div>
-
-<div class="user-title-area">
-<h1 class="user-name" id="uName">... <i id="uBadge" class="fas fa-check-circle verified-badge hidden"></i></h1>
-<div class="user-handle" id="uHandle">@...</div>
+<div id="errorScreen" class="hidden">
+<i class="fas fa-user-slash"></i>
+<h2>Error Code 103</h2>
+<p>لم يتم العثور على الحساب ، ربما قد ورد خطأ في اسم المستخدم في الرابط او ان الحساب قد تمت إزالته</p>
+<button class="social-btn" style="width:auto;padding:10px 30px;margin-top:20px" onclick="window.location.href='index.html'">العودة للرئيسية</button>
 </div>
-
-<div class="card">
-<div class="stats-grid">
-<div class="stat-box"><span class="stat-val" id="sTotal">0</span><span class="stat-lbl">المنشورات</span></div>
-<div class="stat-box"><span class="stat-val" id="sLast">--</span><span class="stat-lbl">آخر نشاط</span></div>
-<div class="stat-box"><span class="stat-val" id="sJoined">--</span><span class="stat-lbl">تاريخ الانضمام</span></div>
-<div class="stat-box"><span class="stat-val" id="sViews">0</span><span class="stat-lbl">إجمالي المشاهدات</span></div>
-</div>
-<div class="bio-box" id="uBio">لا يوجد وصف متاح.</div>
-<a id="uSocial" class="social-btn hidden" target="_blank">
-<i id="socialIcon" class="fas fa-globe"></i> <span id="socialText">فتح الرابط</span>
-</a>
-</div>
-
-<div class="card" style="padding:10px 15px">
-<div class="filter-scroll" id="filterOpts">
-<button class="filter-btn active" data-type="all">الكل</button>
-<button class="filter-btn" data-type="mod">Mods</button>
-<button class="filter-btn" data-type="map">Maps</button>
-<button class="filter-btn" data-type="data_pack">Data Packs</button>
-<button class="filter-btn" data-type="texture_pack">Texture</button>
+<div id="profileContent" class="hidden">
+<div class="profile-header">
+<img id="u_cover" class="cover-box">
+<div class="avatar-wrapper">
+<img id="u_avatar" class="avatar-img">
+<div class="user-meta-top">
+<h1 id="u_full_name"></h1>
 </div>
 </div>
-
-<div class="mods-grid" id="modsContainer"></div>
-<button id="loadMoreBtn" class="load-more hidden" onclick="loadUserMods()">عرض المزيد</button>
 </div>
-
+<div class="main-container">
+<div class="info-card">
+<div class="info-grid">
+<div class="stat-box"><label>اسم المستخدم</label><span id="u_handle"></span></div>
+<div class="stat-box"><label>تاريخ الانضمام</label><span id="u_date">--/--/----</span></div>
+<div class="stat-box"><label>المنشورات</label><span id="u_count">0</span></div>
+<div class="stat-box"><label>آخر نشاط</label><span id="u_last">---</span></div>
+</div>
+<div id="u_bio" class="bio-box"></div>
+<button id="u_social_btn" class="social-btn hidden"></button>
+</div>
+<div class="filters-card" id="typeFilters">
+<div class="filter-opt active" data-type="all">الكل</div>
+<div class="filter-opt" data-type="mod">Mods</div>
+<div class="filter-opt" data-type="map">Maps</div>
+<div class="filter-opt" data-type="data_pack">Data Packs</div>
+<div class="filter-opt" data-type="texture_pack">Texture</div>
+<div class="filter-opt" data-type="shader">Shaders</div>
+</div>
+<div id="userModsList"></div>
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 <script>
-const JB_KEY = "$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";
-const JB_ID = "69a3f2b1d0ea881f40e41d45";
-const AW_CONF = { p: '69922bf4002571605f46', d: '69922c8e001dbb613d69', c: 'mods' };
-const { Client, Databases, Query } = Appwrite;
-const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
-const db = new Databases(sdk);
+const AW_CONF={p:'69922bf4002571605f46',d:'69922c8e001dbb613d69',c:'mods'};
+const {Client,Databases,Query}=Appwrite;
+const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
+const db=new Databases(sdk);
+const userHandle=window.location.hash.substring(1);
+let allMods=[], currentType='all';
 
-let targetUser = decodeURIComponent(window.location.hash.substring(1)).replace(/\/$/, '').trim();
-let currentFilter = 'all';
-let offset = 0;
-const limit = 20;
-let isFetching = false;
-let totalViews = 0;
-
-function getSocialInfo(url) {
-if(!url) return null;
-let u = url.toLowerCase();
-if(u.includes('facebook.com')) return {c: 'fab', i: 'fa-facebook', t: 'فتح صفحة فيسبوك'};
-if(u.includes('youtube.com') || u.includes('youtu.be')) return {c: 'fab', i: 'fa-youtube', t: 'فتح قناة يوتيوب'};
-if(u.includes('wa.me') || u.includes('whatsapp.com')) return {c: 'fab', i: 'fa-whatsapp', t: 'فتح واتساب'};
-if(u.includes('t.me') || u.includes('telegram.org')) return {c: 'fab', i: 'fa-telegram', t: 'فتح تلجرام'};
-if(u.includes('twitter.com') || u.includes('x.com')) return {c: 'fab', i: 'fa-twitter', t: 'فتح تويتر'};
-return {c: 'fas', i: 'fa-globe', t: 'زيارة الرابط'};
+async function init(){
+if(!userHandle) return showErr();
+try{
+const res=await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`,{headers:{"X-Master-Key":"$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
+const user=(await res.json()).record.us.find(u=>u.username===userHandle);
+if(!user) return showErr();
+renderProfile(user);
+await fetchUserMods(user.username);
+}catch(e){showErr();}
+finally{document.getElementById('loadingScreen').classList.add('hidden');}
 }
 
-async function initProfile() {
-if(!targetUser) return showError();
-try {
-const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-const data = await res.json();
-if(!data.record || !data.record.us) throw new Error("بيانات الخادم غير صالحة");
-const user = data.record.us.find(u => u.username.toLowerCase() === targetUser.toLowerCase());
-if(!user) return showError();
-targetUser = user.username;
-if(user.cover) document.getElementById('uCover').src = user.cover;
-if(user.avatar) document.getElementById('uAvatar').src = user.avatar;
-document.getElementById('uName').innerText = user.full_name;
-if(user.vf === "true") document.getElementById('uBadge').classList.remove('hidden');
-document.getElementById('uHandle').innerText = "@" + user.username;
-if(user.bio) document.getElementById('uBio').innerText = user.bio;
-if(user.createdat) document.getElementById('sJoined').innerText = user.createdat;
-if(user.social) {
-const sBtn = document.getElementById('uSocial');
-const sInfo = getSocialInfo(user.social);
-sBtn.href = user.social;
-document.getElementById('socialIcon').className = `${sInfo.c} ${sInfo.i}`;
-document.getElementById('socialText').innerText = sInfo.t;
-sBtn.classList.remove('hidden');
-}
-await loadUserMods(true);
-document.getElementById('loader').style.opacity = '0';
-setTimeout(() => {
-document.getElementById('loader').classList.add('hidden');
-document.getElementById('mainContent').classList.remove('hidden');
-}, 300);
-} catch(e) { console.error("Profile Error:", e); showError(); }
+function renderProfile(u){
+document.getElementById('profileContent').classList.remove('hidden');
+document.getElementById('u_cover').src=u.cover || '';
+document.getElementById('u_avatar').src=u.avatar;
+document.getElementById('u_full_name').innerHTML=`${u.full_name} ${u.vf==='true'?'<i class="fas fa-check-circle verified-badge"></i>':''}`;
+document.getElementById('u_handle').innerText='@'+u.username;
+document.getElementById('u_date').innerText=u.createdat || 'قديماً';
+document.getElementById('u_bio').innerText=u.bio || 'لا يوجد وصف متاح لهذا الحساب حالياً.';
+if(u.social) setupSocialBtn(u.social);
 }
 
-async function loadUserMods(reset = false) {
-if(isFetching) return;
-isFetching = true;
-if(reset) { offset = 0; document.getElementById('modsContainer').innerHTML = ''; totalViews = 0; }
-try {
-let q = [Query.equal('author_handle', '@'+targetUser), Query.orderDesc('$createdAt'), Query.limit(limit), Query.offset(offset)];
-if(currentFilter !== 'all') q.push(Query.equal('item_type', currentFilter));
-const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, q);
-if(reset && currentFilter === 'all') {
-document.getElementById('sTotal').innerText = res.total;
-if(res.documents.length > 0) {
-const lastD = new Date(res.documents[0].$createdAt);
-document.getElementById('sLast').innerText = `${lastD.getFullYear()}/${lastD.getMonth()+1}/${lastD.getDate()}`;
-}
-}
-let html = '';
-res.documents.forEach(m => {
-totalViews += (m.views || 0);
-html += `<a href="https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}" class="mod-card"><img src="${m.cover_url}" class="mod-thumb" loading="lazy"><div class="mod-content"><h3 class="mod-title">${m.title}</h3><div class="mod-badges"><span class="badge">${m.item_type}</span>${m.mod_version ? `<span class="badge">${m.mod_version}</span>` : ''}</div><div class="mod-metrics"><div class="metrics-group"><span><i class="fas fa-eye"></i> ${m.views||0}</span><span><i class="fas fa-download"></i> ${m.downloads||0}</span></div><div class="metrics-group"><span style="color:var(--accent)"><i class="fas fa-thumbs-up"></i> ${m.likes||0}</span></div></div></div></a>`;
-});
-document.getElementById('modsContainer').insertAdjacentHTML('beforeend', html);
-if(currentFilter === 'all' && reset) document.getElementById('sViews').innerText = totalViews;
-offset += limit;
-document.getElementById('loadMoreBtn').classList.toggle('hidden', res.documents.length < limit);
-} catch(e) { console.error("Load Mods Error:", e); }
-isFetching = false;
+function setupSocialBtn(url){
+const btn=document.getElementById('u_social_btn');
+btn.classList.remove('hidden');
+let icon='fa-globe', text='فتح الرابط الاجتماعي';
+const l=url.toLowerCase();
+if(l.includes('youtube.com')||l.includes('youtu.be')){icon='fa-youtube'; text='فتح قناة يوتيوب';}
+else if(l.includes('facebook.com')||l.includes('fb.watch')){icon='fa-facebook'; text='فتح صفحة/مجموعة فيسبوك';}
+else if(l.includes('t.me')){icon='fa-telegram'; text='فتح قناة تلجرام';}
+else if(l.includes('wa.me')||l.includes('whatsapp.com')){icon='fa-whatsapp'; text='تواصل عبر واتساب';}
+else if(l.includes('twitter.com')||l.includes('x.com')){icon='fa-x-twitter'; text='فتح حساب X';}
+btn.innerHTML=`<i class="fab ${icon}"></i> ${text}`;
+btn.onclick=()=>window.location.href=url;
 }
 
-function showError() { document.getElementById('loader').innerHTML = '<h2 style="color:var(--error)">المستخدم غير موجود أو حدث خطأ</h2>'; }
-
-document.getElementById('filterOpts').addEventListener('click', (e) => {
-if(e.target.classList.contains('filter-btn')) {
-document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-e.target.classList.add('active'); currentFilter = e.target.getAttribute('data-type'); loadUserMods(true);
+async function fetchUserMods(username){
+try{
+const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,[Query.equal('author_handle','@'+username),Query.limit(20),Query.orderDesc('$createdAt')]);
+allMods=res.documents;
+document.getElementById('u_count').innerText=res.total;
+if(allMods.length>0) document.getElementById('u_last').innerText=new Date(allMods[0].$createdAt).toLocaleDateString('ar-EG');
+renderMods();
+}catch(e){}
 }
-});
 
-window.onload = initProfile;
+function renderMods(){
+const list=document.getElementById('userModsList');
+const filtered=allMods.filter(m=>currentType==='all' || m.item_type===currentType);
+if(filtered.length===0){list.innerHTML='<p style="text-align:center;padding:20px;color:var(--text-sub)">لا توجد منشورات ضمن هذا التصنيف</p>'; return;}
+list.innerHTML=filtered.map(m=>`
+<div class="mod-card" onclick="window.location.href='download.html#${m.$id}'">
+<img src="${m.cover_url}" class="mod-img" onerror="this.src='https://placehold.co/110'">
+<div class="mod-body">
+<div>
+<h3>${m.title}</h3>
+<div class="mod-tags">
+<span class="tag">${m.item_type}</span>
+${m.mod_version?`<span class="tag">${m.mod_version}</span>`:''}
+</div>
+</div>
+<div class="mod-stats">
+<span><i class="fas fa-eye"></i> ${m.views||0}</span>
+<span><i class="fas fa-download"></i> ${m.downloads||0}</span>
+<span><i class="fas fa-thumbs-up"></i> ${m.likes||0}</span>
+</div>
+</div>
+</div>`).join('');
+}
+
+document.getElementById('typeFilters').onclick=(e)=>{
+if(e.target.classList.contains('filter-opt')){
+document.querySelectorAll('.filter-opt').forEach(o=>o.classList.remove('active'));
+e.target.classList.add('active');
+currentType=e.target.dataset.type;
+renderMods();
+}
+};
+
+function showErr(){
+document.getElementById('loadingScreen').classList.add('hidden');
+document.getElementById('errorScreen').classList.remove('hidden');
+}
+
+window.onload=init;
 </script>
-
 </body>
 </html>
