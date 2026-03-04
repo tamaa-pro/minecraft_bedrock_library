@@ -3,365 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>إدارة المنصة | Minecraft Library</title>
+<title>تحميل | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:none}.main-panel{max-width:850px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.9rem}textarea{min-height:120px}input[type="url"],input[type="password"]{direction:ltr;text-align:left}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:9999;transition:0.3s;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem;display:flex;align-items:center;gap:5px}.badge{font-size:0.6rem;padding:2px 5px;border-radius:4px;background:var(--card);border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.75rem;border-radius:6px;cursor:pointer}.btn-sm:active{transform:scale(0.92);background:var(--accent);color:#fff}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px}.modal-card{background:var(--card);padding:20px;border-radius:20px;width:100%;max-width:380px;border:1px solid var(--border);text-align:center}.stat-row{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border);font-size:0.9rem}.prof-preview-area{position:relative;margin-bottom:25px;text-align:center;width:100%}.prof-cover-img{width:100%;height:140px;object-fit:cover;border-radius:15px;border:1px solid var(--border);display:none}.prof-cover-img.active{display:block}.prof-avatar-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:5px solid var(--card);background:var(--bg);margin:0 auto 10px;position:relative;z-index:5;transition:margin 0.3s}.has-cover .prof-avatar-img{margin-top:-45px}.filter-container{display:flex;overflow-x:auto;gap:8px;padding:5px 0;scrollbar-width:none}.filter-container::-webkit-scrollbar{display:none}.filter-item{background:var(--card);border:1px solid var(--border);color:var(--text-sub);padding:8px 16px;border-radius:20px;white-space:nowrap;font-size:0.8rem;cursor:pointer}.filter-item.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:15px;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}.container{max-width:480px;margin:0 auto}.main-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:15px;position:relative}.cover-wrapper{position:relative;width:100%;background:#000;min-height:200px;display:flex;align-items:center;justify-content:center}.cover-img{width:100%;height:auto;display:block}.img-error-box{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--error);font-size:0.9rem}.mod-title-overlay{position:absolute;bottom:10px;right:10px;background:rgba(24,24,27,0.75);backdrop-filter:blur(4px);padding:5px 10px;border-radius:8px;font-size:13px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1)}.meta-section{padding:15px;background:rgba(0,0,0,0.3)}.publisher-line{display:flex;align-items:center;gap:10px;margin-bottom:15px;cursor:pointer}.pub-avatar{width:35px;height:35px;border-radius:50%;border:2px solid var(--accent);object-fit:cover}.pub-name{font-weight:700;font-size:0.9rem}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}.info-item{font-size:0.7rem;color:var(--text-sub);display:flex;align-items:center;gap:5px}.info-item i{color:var(--accent);width:12px}.interaction-bar{display:flex;justify-content:space-between;padding:12px 5px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:15px}.stat-btn{background:transparent;border:none;color:var(--text-sub);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:0.7rem;cursor:pointer;transition:0.2s;outline:none}.stat-btn i{font-size:1.1rem}.stat-btn.active-like{color:var(--success)}.stat-btn.active-dislike{color:var(--error)}.dl-button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;outline:none;transition:transform 0.1s}.dl-button:active{transform:scale(0.96)}.dl-site-tag{font-size:0.6rem;opacity:0.8;font-weight:400;margin-top:2px;letter-spacing:0.5px}.desc-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px}.desc-card h3{margin:0 0 10px;font-size:0.9rem;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:8px}.desc-content{font-size:0.85rem;color:var(--text-sub);white-space:pre-wrap}.action-float{position:fixed;top:15px;left:15px;display:flex;gap:8px;z-index:100}.mini-btn{width:38px;height:38px;border-radius:10px;background:rgba(24,24,27,0.8);backdrop-filter:blur(8px);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.1s}.mini-btn:active{transform:scale(0.85)}.skeleton{background:linear-gradient(90deg,#18181b 25%,#27272a 50%,#18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 20px;border-radius:20px;font-size:0.8rem;z-index:1000;box-shadow:0 4px 15px rgba(0,0,0,0.5)}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 </style>
 </head>
 <body>
-<div id="modalContainer" class="hidden"></div>
-<div id="authSection" class="auth-container">
-<h2 id="authTitle" style="text-align:center;margin-bottom:15px"><i class="fas fa-user-circle"></i> تسجيل الدخول</h2>
-<div id="registerFields" class="hidden">
-<img id="regPrev" class="profile-circle" src="https://placehold.co/100?text=Avatar">
-<div class="form-group"><label>الاسم العام</label><span class="char-counter" id="c_reg_name">30</span><input type="text" id="regFullName" maxlength="30" oninput="updateCounter(this, 'c_reg_name')"></div>
-<div class="form-group">
-<label>رابط الصورة (إلزامي)</label><input type="url" id="regAvatar" oninput="updatePreview(this.value, 'regPrev')">
-<small class="hint">يجب وضع رابط مباشر لصورتك. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
+<div class="action-float">
+<div class="mini-btn" onclick="copyPageLink()"><i class="fas fa-link"></i></div>
+<div class="mini-btn" onclick="sharePage()"><i class="fas fa-share-alt"></i></div>
 </div>
+<div class="container" id="mainContent">
+<div id="loading"><div class="main-card skeleton" style="height:350px"></div></div>
+<div id="modDetails" class="hidden">
+<div class="main-card">
+<div class="cover-wrapper" id="coverContainer">
+<img id="m_cover" class="cover-img" onerror="handleImgError()">
+<div id="m_title" class="mod-title-overlay"></div>
 </div>
-<div class="form-group">
-<label>اسم المستخدم @</label><span class="char-counter" id="c_auth_user">30</span>
-<input type="text" id="authUsername" maxlength="30" oninput="updateCounter(this, 'c_auth_user'); validateUser(this)">
-<small class="hint hidden" id="userHint">حروف، أرقام، (._-) فقط. <b>تنبيه: لا يمكن تغيير الاسم لاحقاً.</b></small>
+<div class="meta-section">
+<div class="publisher-line" id="publisherAction"><img id="u_avatar" class="pub-avatar"><span id="u_name" class="pub-name"></span></div>
+<div class="info-grid">
+<div class="info-item"><i class="fas fa-calendar-plus"></i> <span id="m_date"></span></div>
+<div class="info-item" id="edit_box"><i class="fas fa-history"></i> <span id="m_edit"></span></div>
+<div class="info-item" id="ver_box"><i class="fas fa-layer-group"></i> <span id="m_ver"></span></div>
+<div class="info-item" id="mc_box"><i class="fas fa-cube"></i> <span id="m_mc"></span></div>
+<div class="info-item"><i class="fas fa-folder"></i> <span id="m_type"></span></div>
 </div>
-<div class="form-group"><label>كلمة السر</label><input type="password" id="authPassword" placeholder="A-Z, 0-9, رموز فقط"></div>
-<button class="btn btn-primary" onclick="processAuth()">تأكيد العملية</button>
-<p style="text-align:center;font-size:0.8rem;margin-top:15px;cursor:pointer;color:var(--accent)" id="toggleAuth">إنشاء حساب جديد</p>
+<div class="interaction-bar">
+<button class="stat-btn" id="btnLike" onclick="handleVote('like')"><i class="fas fa-thumbs-up"></i><span id="c_likes">0</span></button>
+<button class="stat-btn" id="btnDis" onclick="handleVote('dislike')"><i class="fas fa-thumbs-down"></i><span id="c_dis">0</span></button>
+<button class="stat-btn"><i class="fas fa-eye"></i><span id="c_views">0</span></button>
+<button class="stat-btn"><i class="fas fa-download"></i><span id="c_dl">0</span></button>
 </div>
-<div id="mainSection" class="main-panel hidden">
-<nav class="nav-card">
-<button class="nav-btn" id="btn-home" onclick="showTab('home')"><i class="fas fa-house"></i>الرئيسية</button>
-<button class="nav-btn" id="btn-publish" onclick="showTab('publish')"><i class="fas fa-plus-square"></i>نشر</button>
-<button class="nav-btn" id="btn-edit" onclick="showTab('edit')"><i class="fas fa-folder-open"></i>أعمالي</button>
-<button class="nav-btn" id="btn-profile" onclick="showTab('profile')"><i class="fas fa-user-circle"></i>حسابي</button>
-</nav>
-<div id="tab-home" class="view-content hidden">
-<h3 id="welcomeMsg" style="color:var(--accent)"></h3>
-<div class="section-card">
-<p>مرحباً بك مجدداً. يمكنك إدارة ملفاتك ومحتواك من هنا.</p>
-<button class="btn btn-primary" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'">
-<i class="fas fa-list"></i> فتح القائمة العامة
+<button class="dl-button" id="dlAction">
+<span><i class="fas fa-external-link-alt"></i> فتح رابط التحميل</span>
+<span id="dl_site" class="dl-site-tag">جارِ التحقق...</span>
 </button>
 </div>
 </div>
-<div id="tab-publish" class="view-content hidden">
-<div class="section-card">
-<h3 id="formTitle"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
-<img id="pubPrev" class="preview-box hidden">
-<div class="form-group">
-<label>رابط الغلاف</label>
-<input type="url" id="p_cover" oninput="updatePreview(this.value, 'pubPrev')">
-<small class="hint">استخدم روابط مباشرة فقط. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
-</div>
-<div class="form-group"><label>عنوان المود</label><input type="text" id="p_title" maxlength="100"><small class="hint">اختر اسماً جذاباً وواضحاً للمود.</small></div>
-<div class="form-group"><label>رابط التحميل</label><input type="url" id="p_dl"><small class="hint">رابط ميديا فاير أو ميجا المباشر.</small></div>
-<div class="form-group"><label>النوع</label><select id="p_type"><option value="mod">Mod</option><option value="map">Map</option><option value="data_pack">Data Pack</option><option value="texture_pack">Texture Pack</option><option value="shader">Shader</option></select></div>
-<div class="form-group" style="display:flex;gap:8px">
-<div style="flex:1"><label>الإصدار</label><input type="text" id="p_ver" placeholder="1.0.0"></div>
-<div style="flex:1"><label>التحديث</label><input type="text" id="p_mc" placeholder="1.21"></div>
-</div>
-<div class="form-group"><label>وصف قصير</label><span class="char-counter" id="c_p_short">50</span><input type="text" id="p_short" maxlength="50" oninput="updateCounter(this, 'c_p_short')"></div>
-<div class="form-group"><label>وصف مفصل</label><span class="char-counter" id="c_p_long">1000</span><textarea id="p_long" maxlength="1000" oninput="updateCounter(this, 'c_p_long'); adjustHeight(this)"></textarea></div>
-<div style="display:flex;gap:10px">
-<button class="btn btn-primary" id="saveBtn" style="flex:1" onclick="submitMod()"><i class="fas fa-check"></i> حفظ</button>
-<button class="btn btn-danger hidden" id="cancelEdit" style="flex:1" onclick="cancelEditMode()"><i class="fas fa-times"></i> إلغاء</button>
-</div>
-</div>
-</div>
-<div id="tab-edit" class="view-content hidden">
-<div class="form-group" style="margin-bottom:10px">
-<div style="display:flex;gap:8px">
-<input type="text" id="searchMod" placeholder="بحث باسم المود..." oninput="renderMyMods()" style="flex:1">
-<button class="btn-sm" style="width:45px" onclick="toggleSort()"><i id="sortIcon" class="fas fa-sort-amount-down"></i></button>
-<button class="btn-sm" style="width:45px;color:var(--accent)" onclick="showMyStats()"><i class="fas fa-chart-bar"></i></button>
-</div>
-</div>
-<div class="filter-container" id="editFilters">
-<div class="filter-item active" data-type="all">الكل</div>
-<div class="filter-item" data-type="mod">Mods</div>
-<div class="filter-item" data-type="map">Maps</div>
-<div class="filter-item" data-type="data_pack">Data</div>
-<div class="filter-item" data-type="texture_pack">Texture</div>
-<div class="filter-item" data-type="shader">Shader</div>
-</div>
-<div id="myModsList" style="margin-top:15px"></div>
-</div>
-<div id="tab-profile" class="view-content hidden">
-<div class="section-card">
-<div class="prof-preview-area" id="profArea">
-<img id="profCoverPrev" class="prof-cover-img">
-<img id="profAvatarPrev" class="prof-avatar-img">
-</div>
-<div class="form-group"><label>اسم المستخدم (ثابت)</label><input type="text" id="pr_user" readonly style="opacity:0.5"></div>
-<div class="form-group"><label>الاسم العام</label><span class="char-counter" id="c_pr_name">30</span><input type="text" id="pr_name" maxlength="30" oninput="updateCounter(this, 'c_pr_name')"></div>
-<div class="form-group"><label>رابط غلاف الحساب (اختياري)</label><input type="url" id="pr_cover" oninput="syncProfilePreview()"></div>
-<div class="form-group">
-<label>رابط الصورة</label><input type="url" id="pr_avatar" oninput="syncProfilePreview()">
-<small class="hint">استخدم روابط مباشرة فقط.</small>
-</div>
-<div class="form-group"><label>وصف الحساب</label><span class="char-counter" id="c_pr_bio">50</span><input type="text" id="pr_bio" maxlength="50" oninput="updateCounter(this, 'c_pr_bio')"></div>
-<div class="form-group"><label>رابط التواصل (Social)</label><input type="url" id="pr_social" placeholder="https://facebook.com/yourid"></div>
-<div class="form-group"><label>كلمة السر الجديدة</label><input type="password" id="pr_pass" placeholder="اتركها فارغة لعدم التغيير"></div>
-<div style="display:flex;gap:5px">
-<button class="btn-sm" style="flex:1" onclick="updateProfile()"><i class="fas fa-save"></i> حفظ</button>
-<button class="btn-sm" style="flex:1" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/user#'+currentUser.username"><i class="fas fa-user"></i> حسابي</button>
-<button class="btn-sm" style="flex:1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
-<button class="btn-sm" style="flex:1;color:var(--error)" onclick="confirmAccountDelete()"><i class="fas fa-user-slash"></i> حذف</button>
-</div>
-</div>
+<div class="desc-card"><h3>وصف المود</h3><div id="m_long" class="desc-content"></div></div>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 <script>
-const JB_KEY = "$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";
-const JB_ID = "69a3f2b1d0ea881f40e41d45";
-const AW_CONF = { p: '69922bf4002571605f46', d: '69922c8e001dbb613d69', c: 'mods' };
-const { Client, Databases, ID, Query } = Appwrite;
-const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
-const db = new Databases(sdk);
-let currentUser = null, myModsList = [], editingModId = null, currentType = 'all', sortOrder = 'desc';
+const AW_CONF={p:'69922bf4002571605f46',d:'69922c8e001dbb613d69',c:'mods'};
+const {Client,Databases}=Appwrite;
+const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
+const db=new Databases(sdk);
+const modId=window.location.hash.substring(1);
+let modData=null;
 
-function showToast(m, type='success') {
-    const t = document.createElement('div'); t.className = 'toast';
-    t.style.borderRight = `4px solid ${type==='success'?'var(--success)':'var(--error)'}`;
-    t.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-triangle'}"></i> ${m}`;
-    document.body.appendChild(t);
-    setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 2500);
-}
-
-function updateCounter(el, id) { document.getElementById(id).innerText = el.maxLength - el.value.length; }
-function validateUser(el) { el.value = el.value.toLowerCase().replace(/[^a-z0-9._-]/g, ''); }
-function adjustHeight(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-function updatePreview(url, id) { const img = document.getElementById(id); if(url && isValidURL(url)) { img.src = url; img.classList.remove('hidden'); } else { img.classList.add('hidden'); } }
-
-function syncProfilePreview() {
-    const cUrl = document.getElementById('pr_cover').value, aUrl = document.getElementById('pr_avatar').value;
-    const cp = document.getElementById('profCoverPrev'), ap = document.getElementById('profAvatarPrev'), area = document.getElementById('profArea');
-    if(cUrl && isValidURL(cUrl)) { cp.src = cUrl; cp.classList.add('active'); area.classList.add('has-cover'); } 
-    else { cp.classList.remove('active'); area.classList.remove('has-cover'); }
-    ap.src = (aUrl && isValidURL(aUrl)) ? aUrl : "https://placehold.co/100?text=User";
-}
-
-async function checkSession() {
-    const saved = localStorage.getItem('mc_session');
-    if(!saved) { document.getElementById('authSection').style.display = 'block'; return; }
-    const session = JSON.parse(saved);
-    if(Date.now() < session.expiry) login(session.user, false);
-    else { localStorage.removeItem('mc_session'); document.getElementById('authSection').style.display = 'block'; }
-}
-
-function isValidURL(string) { try { new URL(string); return true; } catch (_) { return false; } }
-
-async function processAuth() {
-    const uVal = document.getElementById('authUsername').value.trim(), pVal = document.getElementById('authPassword').value;
-    const isReg = !document.getElementById('registerFields').classList.contains('hidden');
-    const passRegex = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{4,}$/;
-    if(!uVal || !pVal) return showToast("أكمل الخانات الأساسية", 'error');
-    if(!passRegex.test(pVal)) return showToast("كلمة السر: 4 خانات على الأقل، أحرف لاتينية/أرقام/رموز فقط بدون فراغ", 'error');
-    if(isReg) {
-        const avUrl = document.getElementById('regAvatar').value;
-        if(!avUrl || !isValidURL(avUrl)) return showToast("رابط صورة الحساب مطلوب ويجب أن يكون رابطاً صحيحاً", 'error');
-    }
-    try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-        let bin = (await res.json()).record;
-        if(isReg) {
-            const safeU = uVal.replace(/[^a-z0-9]/g, '');
-            if(bin.us.find(u => u.username.replace(/[^a-z0-9]/g, '') === safeU)) return showToast("هذا الاسم محجوز بالفعل", 'error');
-            const now = new Date();
-            const newUser = { 
-                full_name: document.getElementById('regFullName').value || uVal, 
-                avatar: document.getElementById('regAvatar').value, 
-                username: uVal, password: pVal, bio: '', social: '', cover: '',
-                createdat: `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`
-            };
-            bin.us.push(newUser);
-            await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
-            login(newUser, true);
+function checkFB() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    if (ua.indexOf("FBAN") > -1 || ua.indexOf("FBAV") > -1 || ua.indexOf("Instagram") > -1) {
+        if (ua.indexOf("Android") > -1) {
+            window.location.href = "intent://" + window.location.href.replace(/^https?:\/\//, "") + "#Intent;scheme=https;package=com.android.chrome;end";
         } else {
-            const f = bin.us.find(u => u.username === uVal && u.password === pVal);
-            if(f) login(f, true); else showToast("بيانات الدخول غير صحيحة", 'error');
+            const a = document.createElement('a');
+            a.href = window.location.href;
+            a.download = "open_in_safari";
+            a.click();
         }
-    } catch(e) { showToast("فشل الاتصال بالخادم", 'error'); }
-}
-
-function login(u, save) {
-    currentUser = u;
-    if(save) localStorage.setItem('mc_session', JSON.stringify({ user: u, expiry: Date.now() + 86400000 }));
-    document.getElementById('authSection').style.display = 'none';
-    document.getElementById('mainSection').classList.remove('hidden');
-    document.getElementById('welcomeMsg').innerText = "أهلاً، " + u.full_name;
-    document.getElementById('pr_user').value = "@" + u.username;
-    document.getElementById('pr_name').value = u.full_name;
-    document.getElementById('pr_avatar').value = u.avatar;
-    document.getElementById('pr_cover').value = u.cover || '';
-    document.getElementById('pr_bio').value = u.bio || '';
-    document.getElementById('pr_social').value = u.social || '';
-    syncProfilePreview(); showTab('home');
-}
-
-function logout() { localStorage.removeItem('mc_session'); window.location.reload(); }
-
-async function updateProfile() {
-    const passVal = document.getElementById('pr_pass').value;
-    const av = document.getElementById('pr_avatar').value;
-    const co = document.getElementById('pr_cover').value;
-    const so = document.getElementById('pr_social').value;
-    if(av && !isValidURL(av)) return showToast("رابط الصورة غير صحيح", 'error');
-    if(co && !isValidURL(co)) return showToast("رابط الغلاف غير صحيح", 'error');
-    if(so && !isValidURL(so)) return showToast("رابط التواصل غير صحيح", 'error');
-    try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-        let bin = (await res.json()).record;
-        const idx = bin.us.findIndex(u => u.username === currentUser.username);
-        if(idx !== -1) {
-            bin.us[idx].full_name = document.getElementById('pr_name').value;
-            bin.us[idx].avatar = av; bin.us[idx].cover = co;
-            bin.us[idx].bio = document.getElementById('pr_bio').value;
-            bin.us[idx].social = so;
-            if(passVal) bin.us[idx].password = passVal;
-            await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
-            currentUser = bin.us[idx]; login(currentUser, true); showToast("تم تحديث الحساب");
-        }
-    } catch(e) { showToast("فشل التحديث", 'error'); }
-}
-
-function showTab(t) {
-    document.querySelectorAll('.view-content').forEach(v => v.classList.add('hidden'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-'+t).classList.remove('hidden');
-    document.getElementById('btn-'+t).classList.add('active');
-    if(t === 'edit') fetchMyMods();
-}
-
-async function fetchMyMods() {
-    const c = document.getElementById('myModsList');
-    c.innerHTML = '<p style="text-align:center;padding:20px">جاري جلب بياناتك...</p>';
-    try {
-        const res = await db.listDocuments(AW_CONF.d, AW_CONF.c, [Query.equal('author_handle', "@"+currentUser.username)]);
-        myModsList = res.documents; renderMyMods();
-    } catch(e) { c.innerHTML = '<p>حدث خطأ في جلب البيانات</p>'; }
-}
-
-function renderMyMods() {
-    const q = document.getElementById('searchMod').value.toLowerCase();
-    let mods = myModsList.filter(m => m.title.toLowerCase().includes(q) && (currentType==='all' || m.item_type === currentType));
-    mods.sort((a,b) => sortOrder==='desc' ? new Date(b.$createdAt) - new Date(a.$createdAt) : new Date(a.$createdAt) - new Date(b.$createdAt));
-    document.getElementById('myModsList').innerHTML = mods.map(m => `
-        <div class="mod-card">
-            <div class="mod-card-main">
-                <img src="${m.cover_url}" class="mod-thumb" onerror="this.src='https://placehold.co/85'">
-                <div class="mod-info">
-                    <h4>${m.title} ${m.mod_version?`<span class="badge">${m.mod_version}</span>`:''} <span class="badge">${m.item_type}</span></h4>
-                    <div class="mod-stats">
-                        <span><i class="fas fa-eye"></i> ${m.views}</span>
-                        <span><i class="fas fa-thumbs-up"></i> ${m.likes}</span>
-                        <span><i class="fas fa-thumbs-down"></i> ${m.dislikes}</span>
-                        <span><i class="fas fa-download"></i> ${m.downloads}</span>
-                    </div>
-                    <span class="mod-date">نشر: ${new Date(m.$createdAt).toLocaleString()}</span>
-                    <span class="mod-date">تعديل: ${new Date(m.updated_at || m.$updatedAt).toLocaleString()}</span>
-                </div>
-            </div>
-            <div class="mod-actions">
-                <button class="btn-sm" onclick="startEdit('${m.$id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-sm" style="color:var(--error)" onclick="confirmDelete('${m.$id}')"><i class="fas fa-trash"></i></button>
-                <button class="btn-sm" onclick="copyL('${m.$id}')"><i class="fas fa-copy"></i></button>
-                <button class="btn-sm" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}'"><i class="fas fa-external-link-alt"></i></button>
-            </div>
-        </div>`).join('');
-}
-
-function toggleSort() {
-    sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
-    document.getElementById('sortIcon').className = sortOrder === 'desc' ? 'fas fa-sort-amount-down' : 'fas fa-sort-amount-up';
-    renderMyMods();
-}
-
-document.getElementById('editFilters').addEventListener('click', (e) => {
-    if(e.target.classList.contains('filter-item')) {
-        document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
-        e.target.classList.add('active');
-        currentType = e.target.getAttribute('data-type');
-        renderMyMods();
     }
-});
-
-function showMyStats() {
-    const s = myModsList.reduce((acc, m) => {
-        acc.v += (m.views||0); acc.l += (m.likes||0); acc.d += (m.downloads||0); return acc;
-    }, {v:0, l:0, d:0});
-    const mc = document.getElementById('modalContainer');
-    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>إحصائيات حسابك</h3><div class="stat-row"><span>إجمالي المنشورات:</span><b>${myModsList.length}</b></div><div class="stat-row"><span>إجمالي المشاهدات:</span><b>${s.v}</b></div><div class="stat-row"><span>إجمالي الإعجابات:</span><b>${s.l}</b></div><div class="stat-row"><span>إجمالي التحميلات:</span><b>${s.d}</b></div><button class="btn btn-primary" style="margin-top:15px" onclick="closeModal()">إغلاق</button></div></div>`;
-    mc.classList.remove('hidden');
 }
 
-function confirmDelete(id) {
-    const mc = document.getElementById('modalContainer');
-    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف المود؟</h3><p>لا يمكن استرجاع المود بعد الحذف.</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteM('${id}')">حذف</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
-    mc.classList.remove('hidden');
+function formatDT(s){return new Date(s).toLocaleString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
+
+function handleImgError() {
+    const container = document.getElementById('coverContainer');
+    const img = document.getElementById('m_cover');
+    img.style.display = 'none';
+    const errHtml = `<div class="img-error-box"><i class="fas fa-exclamation-circle fa-2x"></i><span>فشل تحميل الصورة</span></div>`;
+    container.insertAdjacentHTML('afterbegin', errHtml);
 }
 
-async function deleteM(id) { try { await db.deleteDocument(AW_CONF.d, AW_CONF.c, id); showToast("تم الحذف بنجاح"); closeModal(); fetchMyMods(); } catch(e) { showToast("فشل الحذف", 'error'); } }
-function closeModal() { document.getElementById('modalContainer').classList.add('hidden'); }
+async function loadPage(){
+    checkFB();
+    if(!modId)return;
+    try{
+        modData=await db.getDocument(AW_CONF.d,AW_CONF.c,modId);
+        render();
+        trackStat('view','v_seen_');
+        fetchUser(modData.author_handle);
+    }catch(e){document.body.innerHTML="Error 404";}
+    finally{if(document.getElementById('loading'))document.getElementById('loading').remove();document.getElementById('modDetails').classList.remove('hidden');}
+}
 
-async function submitMod() {
-    const data = { title: document.getElementById('p_title').value, cover_url: document.getElementById('p_cover').value, download_url: document.getElementById('p_dl').value, item_type: document.getElementById('p_type').value, mod_version: document.getElementById('p_ver').value, target_mc: document.getElementById('p_mc').value, short_desc: document.getElementById('p_short').value, long_desc: document.getElementById('p_long').value, author_handle: "@"+currentUser.username, updated_at: new Date().toISOString() };
-    if(!data.title || !data.cover_url || !data.download_url) return showToast("أكمل البيانات الأساسية", 'error');
-    if(!isValidURL(data.cover_url)) return showToast("رابط الغلاف غير صحيح", 'error');
-    if(!isValidURL(data.download_url)) return showToast("رابط التحميل غير صحيح", 'error');
-    if(data.short_desc.length < 5) return showToast("الوصف القصير يجب أن يكون 5 حروف على الأقل", 'error');
-    if(data.long_desc.length < 40) return showToast("الوصف المفصل يجب أن يكون 40 حرفاً على الأقل", 'error');
+function render(){
+    document.getElementById('m_cover').src=modData.cover_url;
+    document.getElementById('m_title').innerText=modData.title;
+    document.getElementById('m_date').innerText=formatDT(modData.$createdAt);
+    if(modData.updated_at && modData.updated_at !== modData.$createdAt){
+        document.getElementById('m_edit').innerText=formatDT(modData.updated_at);
+        document.getElementById('edit_box').classList.remove('hidden');
+    }else{
+        document.getElementById('edit_box').classList.add('hidden');
+    }
+    if(modData.mod_version)document.getElementById('m_ver').innerText=modData.mod_version;else document.getElementById('ver_box').classList.add('hidden');
+    if(modData.target_mc)document.getElementById('m_mc').innerText=modData.target_mc;else document.getElementById('mc_box').classList.add('hidden');
+    document.getElementById('m_type').innerText=modData.item_type;
+    updateCountersUI();
+    document.getElementById('m_long').innerHTML=modData.long_desc;
     try {
-        if(editingModId) { await db.updateDocument(AW_CONF.d, AW_CONF.c, editingModId, data); showToast("تم تحديث المود"); cancelEditMode(); }
-        else { data.likes=0; data.dislikes=0; data.views=0; data.downloads=0; await db.createDocument(AW_CONF.d, AW_CONF.c, ID.unique(), data); showToast("تم النشر بنجاح"); resetF(); }
-    } catch(e) { showToast("فشل في عملية الحفظ", 'error'); }
+        const url = new URL(modData.download_url);
+        document.getElementById('dl_site').innerText = url.hostname.replace('www.', '');
+    } catch(e) {
+        document.getElementById('dl_site').innerText = "رابط خارجي";
+    }
+    document.getElementById('dlAction').onclick=()=>{trackStat('download','v_dl_');window.location.href=modData.download_url;};
+    applyVoteStyles();
 }
 
-function startEdit(id) {
-    const m = myModsList.find(x => x.$id === id); editingModId = id;
-    document.getElementById('p_title').value = m.title; document.getElementById('p_cover').value = m.cover_url;
-    document.getElementById('p_dl').value = m.download_url; document.getElementById('p_type').value = m.item_type;
-    document.getElementById('p_ver').value = m.mod_version; document.getElementById('p_mc').value = m.target_mc;
-    document.getElementById('p_short').value = m.short_desc; document.getElementById('p_long').value = m.long_desc;
-    updatePreview(m.cover_url, 'pubPrev'); document.getElementById('formTitle').innerText = "تعديل محتوى المود";
-    document.getElementById('cancelEdit').classList.remove('hidden'); showTab('publish');
+function updateCountersUI(){
+    document.getElementById('c_likes').innerText=modData.likes||0;
+    document.getElementById('c_dis').innerText=modData.dislikes||0;
+    document.getElementById('c_views').innerText=modData.views||0;
+    document.getElementById('c_dl').innerText=modData.downloads||0;
 }
 
-function cancelEditMode() { editingModId = null; resetF(); document.getElementById('formTitle').innerText = "نشر عنصر جديد"; document.getElementById('cancelEdit').classList.add('hidden'); showTab('edit'); }
-function resetF() { document.querySelectorAll('#tab-publish input, #tab-publish textarea').forEach(i => i.value = ''); document.getElementById('pubPrev').classList.add('hidden'); }
-function copyL(id) { navigator.clipboard.writeText(`https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${id}`).then(()=>showToast("تم نسخ رابط التحميل")); }
-
-function confirmAccountDelete() {
-    const mc = document.getElementById('modalContainer');
-    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف الحساب نهائياً؟</h3><p>سيتم حذف بياناتك وكل منشوراتك للأبد.</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteAccountFinal()">نعم، احذف</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
-    mc.classList.remove('hidden');
+async function trackStat(type,prefix){
+    const key=prefix+modId;
+    const last=localStorage.getItem(key);
+    const now=Date.now();
+    if(last&&(now-last<86400000))return;
+    const upd={};
+    upd[type==='view'?'views':'downloads']=(modData[type==='view'?'views':'downloads']||0)+1;
+    await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);
+    localStorage.setItem(key,now);
 }
 
-async function deleteAccountFinal() {
-    try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
-        let bin = (await res.json()).record;
-        bin.us = bin.us.filter(u => u.username !== currentUser.username);
-        await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
-        for(let m of myModsList) { await db.deleteDocument(AW_CONF.d, AW_CONF.c, m.$id); }
-        logout();
-    } catch(e) { showToast("فشل الحذف الكلي للحساب", 'error'); }
+async function handleVote(v){
+    const key='v_vote_'+modId;
+    const old=localStorage.getItem(key);
+    let upd={likes:modData.likes,dislikes:modData.dislikes};
+    if(old===v){
+        upd[v==='like'?'likes':'dislikes']--;
+        localStorage.removeItem(key);
+    }else{
+        if(old)upd[old==='like'?'likes':'dislikes']--;
+        upd[v==='like'?'likes':'dislikes']++;
+        localStorage.setItem(key,v);
+    }
+    await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);
+    modData.likes=upd.likes;modData.dislikes=upd.dislikes;
+    updateCountersUI();applyVoteStyles();
 }
 
-document.getElementById('toggleAuth').onclick = function() {
-    const isL = document.getElementById('authTitle').innerText.includes('الدخول');
-    document.getElementById('authTitle').innerHTML = isL ? '<i class="fas fa-user-plus"></i> إنشاء حساب جديد' : '<i class="fas fa-user-circle"></i> تسجيل الدخول';
-    document.getElementById('toggleAuth').innerText = isL ? 'لديك حساب بالفعل؟ ادخل الآن' : 'لا تملك حساباً؟ سجل هنا';
-    document.getElementById('userHint').classList.toggle('hidden', !isL);
-    document.getElementById('registerFields').classList.toggle('hidden');
-};
+function applyVoteStyles(){
+    const v=localStorage.getItem('v_vote_'+modId);
+    document.getElementById('btnLike').className='stat-btn'+(v==='like'?' active-like':'');
+    document.getElementById('btnDis').className='stat-btn'+(v==='dislike'?' active-dislike':'');
+}
 
-window.onload = checkSession;
-document.addEventListener('contextmenu', e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return; e.preventDefault(); });
-document.onselectstart = e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return true; return false; };
+async function fetchUser(h){
+    try{
+        const res=await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`,{headers:{"X-Master-Key":"$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
+        const user=(await res.json()).record.us.find(u=>"@"+u.username===h);
+        if(user){
+            document.getElementById('u_avatar').src=user.avatar;
+            document.getElementById('u_name').innerText=user.full_name;
+            document.getElementById('publisherAction').onclick=()=>window.location.href=`user.html#${user.username}`;
+        }
+    }catch(e){}
+}
+
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerText = msg;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 2000);
+}
+
+function copyPageLink(){
+    navigator.clipboard.writeText(window.location.href).then(() => showToast("تم نسخ الرابط بنجاح"));
+}
+
+function sharePage(){if(navigator.share)navigator.share({url:window.location.href});}
+window.onload=loadPage;
 </script>
 </body>
 </html>
