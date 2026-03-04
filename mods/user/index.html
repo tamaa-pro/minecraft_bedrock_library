@@ -6,48 +6,37 @@
 <title>الملف الشخصي | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}#loadingScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px}#loadingScreen i{font-size:2.5rem;color:var(--accent);animation:fa-spin 2s linear infinite}#errorScreen{padding:40px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh}#errorScreen i{font-size:4rem;color:var(--error);margin-bottom:15px}.profile-header{position:relative;margin-bottom:60px}.cover-box{width:100%;height:180px;background:#000;object-fit:cover;border-bottom:1px solid var(--border)}.avatar-wrapper{position:absolute;bottom:-45px;right:20px;display:flex;align-items:flex-end;gap:15px}.avatar-img{width:100px;height:100px;border-radius:50%;border:4px solid var(--bg);background:#000;object-fit:cover}.user-meta-top{margin-bottom:10px}.user-meta-top h1{margin:0;font-size:1.3rem;display:flex;align-items:center;gap:6px}.verified-badge{color:var(--accent);font-size:1.1rem}.main-container{max-width:600px;margin:0 auto;padding:0 15px}.info-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:15px}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}.stat-box{background:var(--input);padding:10px;border-radius:12px;border:1px solid var(--border)}.stat-box label{display:block;font-size:0.65rem;color:var(--text-sub);margin-bottom:2px}.stat-box span{font-size:0.8rem;font-weight:600;color:var(--text)}.bio-box{background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;font-size:0.85rem;color:var(--text-sub);margin-bottom:12px;border-right:3px solid var(--accent)}.social-btn{width:100%;padding:12px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:0.2s}.social-btn:active{transform:scale(0.97)}.filters-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:8px;margin-bottom:15px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.filters-card::-webkit-scrollbar{display:none}.filter-opt{padding:6px 15px;background:var(--input);border:1px solid var(--border);border-radius:20px;font-size:0.75rem;white-space:nowrap;color:var(--text-sub)}.filter-opt.active{background:var(--accent);color:#fff;border-color:var(--accent)}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:18px;margin-bottom:12px;overflow:hidden;display:flex;height:110px}.mod-img{width:110px;height:110px;object-fit:cover;background:#000}.mod-body{flex:1;padding:10px;display:flex;flex-direction:column;justify-content:space-between}.mod-body h3{margin:0;font-size:0.9rem;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}.mod-tags{display:flex;gap:5px}.tag{font-size:0.6rem;background:var(--input);padding:2px 6px;border-radius:4px;border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;gap:10px;font-size:0.7rem;color:var(--text-sub)}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}#loadingScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px}#loadingScreen i{font-size:2.5rem;color:var(--accent);animation:fa-spin 2s linear infinite}.profile-header{position:relative;margin-bottom:60px;height:180px;background:#000}.cover-box{width:100%;height:100%;object-fit:cover;border-bottom:1px solid var(--border);display:none}.cover-box.active{display:block}#typingGreet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.8);transition:opacity 0.8s}.avatar-wrapper{position:absolute;bottom:-45px;right:20px;display:flex;align-items:flex-end;gap:15px}.avatar-img{width:100px;height:100px;border-radius:50%;border:4px solid var(--bg);background:#000;object-fit:cover}.user-meta-top h1{margin:0;font-size:1.3rem;display:flex;align-items:center;gap:6px}.verified-badge{color:var(--accent);font-size:1.1rem}.main-container{max-width:600px;margin:0 auto;padding:0 15px}.info-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:12px;margin-bottom:12px}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}.stat-box{background:var(--input);padding:8px 10px;border-radius:10px;border:1px solid var(--border)}.stat-box label{display:block;font-size:0.6rem;color:var(--text-sub);margin-bottom:2px}.stat-box span{font-size:0.75rem;font-weight:600;color:var(--text)}.bio-box{background:rgba(255,255,255,0.03);padding:10px;border-radius:10px;font-size:0.8rem;color:var(--text-sub);margin-bottom:10px;border-right:3px solid var(--accent)}.social-btn{width:100%;padding:10px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:0.85rem;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.social-btn:active{transform:scale(0.97)}.filter-bar{display:flex;gap:8px;margin-bottom:12px}.action-btn{background:var(--card);border:1px solid var(--border);color:var(--text);height:40px;padding:0 15px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.8rem;cursor:pointer}.action-btn:active{transform:scale(0.95);background:var(--accent)}.mod-card{background:var(--card);border:1px solid var(--border);border-radius:15px;margin-bottom:10px;overflow:hidden;display:flex;height:95px}.mod-img{width:95px;height:95px;object-fit:cover;background:#000}.mod-body{flex:1;padding:8px 12px;display:flex;flex-direction:column;justify-content:space-between}.mod-body h3{margin:0;font-size:0.85rem;display:flex;align-items:center;gap:5px}.badge{font-size:0.6rem;padding:2px 5px;border-radius:4px;background:var(--input);border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;gap:12px;font-size:0.7rem;color:var(--text-sub)}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}.modal-card{background:var(--card);width:100%;max-width:300px;border-radius:20px;border:1px solid var(--border);padding:15px}.modal-item{padding:12px;border-bottom:1px solid var(--border);cursor:pointer;text-align:center;font-size:0.9rem}.modal-item:last-child{border:0}.modal-item.active{color:var(--accent);font-weight:700}#errorScreen{text-align:center;padding:50px 20px}#errorScreen i{font-size:4rem;color:var(--error);margin-bottom:15px}
 </style>
 </head>
 <body>
-<div id="loadingScreen">
-<i class="fas fa-circle-notch"></i>
-<span>جاري تحميل بيانات الحساب</span>
-</div>
-<div id="errorScreen" class="hidden">
-<i class="fas fa-user-slash"></i>
-<h2>Error Code 103</h2>
-<p>لم يتم العثور على الحساب ، ربما قد ورد خطأ في اسم المستخدم في الرابط او ان الحساب قد تمت إزالته</p>
-<button class="social-btn" style="width:auto;padding:10px 30px;margin-top:20px" onclick="window.location.href='index.html'">العودة للرئيسية</button>
-</div>
+<div id="loadingScreen"><i class="fas fa-circle-notch"></i><span>جاري تحميل بيانات الحساب</span></div>
+<div id="modalLayer" class="hidden"></div>
+<div id="errorScreen" class="hidden"><i class="fas fa-user-slash"></i><h2>Error Code 103</h2><p>لم يتم العثور على الحساب ، ربما قد ورد خطأ في اسم المستخدم في الرابط او ان الحساب قد تمت إزالته</p><button class="action-btn" style="margin:20px auto" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'">العودة للقائمة العامة</button></div>
 <div id="profileContent" class="hidden">
 <div class="profile-header">
 <img id="u_cover" class="cover-box">
+<div id="typingGreet"></div>
 <div class="avatar-wrapper">
 <img id="u_avatar" class="avatar-img">
-<div class="user-meta-top">
-<h1 id="u_full_name"></h1>
+<div class="user-meta-top"><h1 id="u_full_name"></h1></div>
 </div>
 </div>
-</div>
-<div class="main-container">
+<div class="main-container" style="margin-top:20px">
 <div class="info-card">
 <div class="info-grid">
 <div class="stat-box"><label>اسم المستخدم</label><span id="u_handle"></span></div>
-<div class="stat-box"><label>تاريخ الانضمام</label><span id="u_date">--/--/----</span></div>
-<div class="stat-box"><label>المنشورات</label><span id="u_count">0</span></div>
-<div class="stat-box"><label>آخر نشاط</label><span id="u_last">---</span></div>
+<div class="stat-box"><label>تاريخ الانضمام</label><span id="u_date"></span></div>
+<div class="stat-box"><label>مجموع المنشورات</label><span id="u_count">0</span></div>
+<div class="stat-box"><label>آخر نشاط</label><span id="u_last"></span></div>
 </div>
-<div id="u_bio" class="bio-box"></div>
+<div id="u_bio" class="bio-box hidden"></div>
 <button id="u_social_btn" class="social-btn hidden"></button>
 </div>
-<div class="filters-card" id="typeFilters">
-<div class="filter-opt active" data-type="all">الكل</div>
-<div class="filter-opt" data-type="mod">Mods</div>
-<div class="filter-opt" data-type="map">Maps</div>
-<div class="filter-opt" data-type="data_pack">Data Packs</div>
-<div class="filter-opt" data-type="texture_pack">Texture</div>
-<div class="filter-opt" data-type="shader">Shaders</div>
+<div class="filter-bar">
+<button class="action-btn" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/mc-list'"><i class="fas fa-list"></i></button>
+<button class="action-btn" style="flex:1" onclick="openFilterModal()"><i class="fas fa-filter"></i> <span id="currentTypeText">الكل</span></button>
+<button class="action-btn" onclick="toggleSort()"><i id="sortIcon" class="fas fa-sort-amount-down"></i></button>
 </div>
 <div id="userModsList"></div>
 </div>
@@ -59,7 +48,9 @@ const {Client,Databases,Query}=Appwrite;
 const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
 const db=new Databases(sdk);
 const userHandle=window.location.hash.substring(1);
-let allMods=[], currentType='all';
+let allMods=[], currentType='all', sortOrder='desc';
+
+function formatDT(s){return new Date(s).toLocaleString('ar-EG',{year:'numeric',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 
 async function init(){
 if(!userHandle) return showErr();
@@ -75,27 +66,37 @@ finally{document.getElementById('loadingScreen').classList.add('hidden');}
 
 function renderProfile(u){
 document.getElementById('profileContent').classList.remove('hidden');
-document.getElementById('u_cover').src=u.cover || '';
+const cv=document.getElementById('u_cover');
+if(u.cover){cv.src=u.cover; cv.classList.add('active');} 
+else { startGreetingAnimation(u.full_name); }
 document.getElementById('u_avatar').src=u.avatar;
 document.getElementById('u_full_name').innerHTML=`${u.full_name} ${u.vf==='true'?'<i class="fas fa-check-circle verified-badge"></i>':''}`;
 document.getElementById('u_handle').innerText='@'+u.username;
-document.getElementById('u_date').innerText=u.createdat || 'قديماً';
-document.getElementById('u_bio').innerText=u.bio || 'لا يوجد وصف متاح لهذا الحساب حالياً.';
+document.getElementById('u_date').innerText=u.createdat || '---';
+if(u.bio){const b=document.getElementById('u_bio'); b.innerText=u.bio; b.classList.remove('hidden');}
 if(u.social) setupSocialBtn(u.social);
 }
 
+function startGreetingAnimation(name){
+setTimeout(()=>{
+const text=`أهلاً بك في حساب ${name}`; let i=0;
+const el=document.getElementById('typingGreet');
+const timer=setInterval(()=>{
+if(i<text.length){el.innerHTML+=text.charAt(i); i++;}
+else{clearInterval(timer); setTimeout(()=>{el.style.opacity='0'},3000);}
+},100);
+},2000);
+}
+
 function setupSocialBtn(url){
-const btn=document.getElementById('u_social_btn');
-btn.classList.remove('hidden');
-let icon='fa-globe', text='فتح الرابط الاجتماعي';
-const l=url.toLowerCase();
+const btn=document.getElementById('u_social_btn'); btn.classList.remove('hidden');
+let icon='fa-globe', text='فتح صفحة ويب'; const l=url.toLowerCase();
 if(l.includes('youtube.com')||l.includes('youtu.be')){icon='fa-youtube'; text='فتح قناة يوتيوب';}
-else if(l.includes('facebook.com')||l.includes('fb.watch')){icon='fa-facebook'; text='فتح صفحة/مجموعة فيسبوك';}
+else if(l.includes('facebook.com')){icon='fa-facebook'; text='فتح صفحة فيسبوك';}
 else if(l.includes('t.me')){icon='fa-telegram'; text='فتح قناة تلجرام';}
-else if(l.includes('wa.me')||l.includes('whatsapp.com')){icon='fa-whatsapp'; text='تواصل عبر واتساب';}
+else if(l.includes('wa.me')||l.includes('whatsapp.com')){icon='fa-whatsapp'; text='فتح قناة/مجموعة واتساب';}
 else if(l.includes('twitter.com')||l.includes('x.com')){icon='fa-x-twitter'; text='فتح حساب X';}
-btn.innerHTML=`<i class="fab ${icon}"></i> ${text}`;
-btn.onclick=()=>window.location.href=url;
+btn.innerHTML=`<i class="fab ${icon}"></i> ${text}`; btn.onclick=()=>window.location.href=url;
 }
 
 async function fetchUserMods(username){
@@ -103,49 +104,55 @@ try{
 const res=await db.listDocuments(AW_CONF.d,AW_CONF.c,[Query.equal('author_handle','@'+username),Query.limit(20),Query.orderDesc('$createdAt')]);
 allMods=res.documents;
 document.getElementById('u_count').innerText=res.total;
-if(allMods.length>0) document.getElementById('u_last').innerText=new Date(allMods[0].$createdAt).toLocaleDateString('ar-EG');
+if(allMods.length>0) document.getElementById('u_last').innerText=formatDT(allMods[0].updated_at || allMods[0].$createdAt);
 renderMods();
 }catch(e){}
 }
 
 function renderMods(){
 const list=document.getElementById('userModsList');
-const filtered=allMods.filter(m=>currentType==='all' || m.item_type===currentType);
-if(filtered.length===0){list.innerHTML='<p style="text-align:center;padding:20px;color:var(--text-sub)">لا توجد منشورات ضمن هذا التصنيف</p>'; return;}
+let filtered=allMods.filter(m=>currentType==='all' || m.item_type===currentType);
+filtered.sort((a,b)=>sortOrder==='desc' ? new Date(b.$createdAt)-new Date(a.$createdAt) : new Date(a.$createdAt)-new Date(b.$createdAt));
+if(filtered.length===0){list.innerHTML='<p style="text-align:center;padding:30px;color:var(--text-sub);font-size:0.8rem">لا يوجد محتوى لهذا التصنيف</p>'; return;}
 list.innerHTML=filtered.map(m=>`
-<div class="mod-card" onclick="window.location.href='download.html#${m.$id}'">
-<img src="${m.cover_url}" class="mod-img" onerror="this.src='https://placehold.co/110'">
+<div class="mod-card" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/download#${m.$id}'">
+<img src="${m.cover_url}" class="mod-img" onerror="this.src='https://placehold.co/95'">
 <div class="mod-body">
 <div>
-<h3>${m.title}</h3>
-<div class="mod-tags">
-<span class="tag">${m.item_type}</span>
-${m.mod_version?`<span class="tag">${m.mod_version}</span>`:''}
-</div>
+<h3>${m.title} ${m.mod_version?`<span class="badge">${m.mod_version}</span>`:''}</h3>
+<span class="badge" style="margin-top:4px">${m.item_type}</span>
 </div>
 <div class="mod-stats">
 <span><i class="fas fa-eye"></i> ${m.views||0}</span>
-<span><i class="fas fa-download"></i> ${m.downloads||0}</span>
 <span><i class="fas fa-thumbs-up"></i> ${m.likes||0}</span>
+<span><i class="fas fa-download"></i> ${m.downloads||0}</span>
 </div>
 </div>
 </div>`).join('');
 }
 
-document.getElementById('typeFilters').onclick=(e)=>{
-if(e.target.classList.contains('filter-opt')){
-document.querySelectorAll('.filter-opt').forEach(o=>o.classList.remove('active'));
-e.target.classList.add('active');
-currentType=e.target.dataset.type;
+function toggleSort(){
+sortOrder=sortOrder==='desc'?'asc':'desc';
+document.getElementById('sortIcon').className=sortOrder==='desc'?'fas fa-sort-amount-down':'fas fa-sort-amount-up';
 renderMods();
 }
-};
 
-function showErr(){
-document.getElementById('loadingScreen').classList.add('hidden');
-document.getElementById('errorScreen').classList.remove('hidden');
+function openFilterModal(){
+const types=[{id:'all',n:'الكل'},{id:'mod',n:'Mods'},{id:'map',n:'Maps'},{id:'data_pack',n:'Data Packs'},{id:'texture_pack',n:'Texture'},{id:'shader',n:'Shaders'}];
+const layer=document.getElementById('modalLayer');
+layer.innerHTML=`<div class="modal-overlay" onclick="closeModal()"><div class="modal-card" onclick="event.stopPropagation()">
+${types.map(t=>`<div class="modal-item ${currentType===t.id?'active':''}" onclick="applyFilter('${t.id}','${t.n}')">${t.n}</div>`).join('')}
+</div></div>`;
+layer.classList.remove('hidden');
 }
 
+function applyFilter(id,name){
+currentType=id; document.getElementById('currentTypeText').innerText=name;
+closeModal(); renderMods();
+}
+
+function closeModal(){document.getElementById('modalLayer').classList.add('hidden');}
+function showErr(){document.getElementById('loadingScreen').classList.add('hidden'); document.getElementById('errorScreen').classList.remove('hidden');}
 window.onload=init;
 </script>
 </body>
