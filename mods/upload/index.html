@@ -6,12 +6,7 @@
 <title>إدارة المنصة | Minecraft Library</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px}.main-panel{max-width:850px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.9rem}textarea{min-height:120px}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:9999;transition:0.3s;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem;display:flex;align-items:center;gap:5px}.badge{font-size:0.6rem;padding:2px 5px;border-radius:4px;background:var(--card);border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.75rem;border-radius:6px;cursor:pointer}.btn-sm:active{transform:scale(0.92);background:var(--accent);color:#fff}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px}.modal-card{background:var(--card);padding:20px;border-radius:20px;width:100%;max-width:380px;border:1px solid var(--border);text-align:center}.stat-row{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border);font-size:0.9rem}
-.prof-preview-area{position:relative;margin-bottom:25px;text-align:center;width:100%}
-.prof-cover-img{width:100%;height:140px;object-fit:cover;border-radius:15px;border:1px solid var(--border);display:none}
-.prof-cover-img.active{display:block}
-.prof-avatar-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:5px solid var(--card);background:var(--bg);margin:0 auto 10px;position:relative;z-index:5;transition:margin 0.3s}
-.has-cover .prof-avatar-img{margin-top:-45px}
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:0;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}input,textarea,select,input::placeholder,textarea::placeholder{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.auth-container{max-width:400px;margin:40px auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:none}.main-panel{max-width:850px;margin:0 auto;padding-bottom:80px}.nav-card{background:rgba(24,24,27,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-around;padding:5px 0;position:sticky;top:0;z-index:1000}.nav-btn{background:transparent;border:none;color:var(--text-sub);cursor:pointer;padding:10px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:0.7rem;width:75px;outline:none}.nav-btn.active{color:var(--accent);background:rgba(59,130,246,0.1)}.nav-btn i{font-size:1.2rem}.view-content{padding:15px}.section-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;margin-bottom:15px}.form-group{margin-bottom:15px;position:relative}label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}input,select,textarea{width:100%;padding:12px;background:var(--input);border:1px solid var(--border);border-radius:10px;color:#fff;outline:none;font-size:0.9rem}textarea{min-height:120px}input[type="url"],input[type="password"]{direction:ltr;text-align:left}.char-counter{position:absolute;top:0;left:0;font-size:0.7rem;color:var(--accent)}.hint{font-size:0.7rem;color:var(--text-sub);margin-top:4px;display:block;background:rgba(255,255,255,0.03);padding:6px;border-radius:6px;border-right:3px solid var(--accent)}img.preview-box{width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:12px;background:#000;border:1px dashed var(--border)}.profile-circle{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;border:2.5px solid var(--accent);background:var(--bg)}.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;outline:none}.btn:active{transform:scale(0.97);opacity:0.8}.btn-primary{background:var(--accent);color:#fff}.btn-danger{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid var(--error)}.toast{position:fixed;bottom:20px;right:20px;background:#18181b;padding:12px 20px;border-radius:10px;border-right:4px solid var(--accent);z-index:9999;transition:0.3s;display:flex;align-items:center;gap:10px}.mod-card{background:var(--input);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}.mod-card-main{display:flex;gap:10px;padding:10px}.mod-thumb{width:75px;height:75px;border-radius:8px;object-fit:cover;background:#000}.mod-info{flex:1}.mod-info h4{margin:0 0 4px;font-size:0.9rem;display:flex;align-items:center;gap:5px}.badge{font-size:0.6rem;padding:2px 5px;border-radius:4px;background:var(--card);border:1px solid var(--border);color:var(--accent)}.mod-stats{display:flex;flex-wrap:wrap;gap:8px;font-size:0.65rem;color:var(--text-sub);margin-bottom:4px}.mod-date{font-size:0.6rem;color:#666;display:block}.mod-actions{padding:6px;background:rgba(255,255,255,0.02);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.btn-sm{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 0;font-size:0.75rem;border-radius:6px;cursor:pointer}.btn-sm:active{transform:scale(0.92);background:var(--accent);color:#fff}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px}.modal-card{background:var(--card);padding:20px;border-radius:20px;width:100%;max-width:380px;border:1px solid var(--border);text-align:center}.stat-row{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border);font-size:0.9rem}.prof-preview-area{position:relative;margin-bottom:25px;text-align:center;width:100%}.prof-cover-img{width:100%;height:140px;object-fit:cover;border-radius:15px;border:1px solid var(--border);display:none}.prof-cover-img.active{display:block}.prof-avatar-img{width:90px;height:90px;border-radius:50%;object-fit:cover;border:5px solid var(--card);background:var(--bg);margin:0 auto 10px;position:relative;z-index:5;transition:margin 0.3s}.has-cover .prof-avatar-img{margin-top:-45px}.filter-container{display:flex;overflow-x:auto;gap:8px;padding:5px 0;scrollbar-width:none}.filter-container::-webkit-scrollbar{display:none}.filter-item{background:var(--card);border:1px solid var(--border);color:var(--text-sub);padding:8px 16px;border-radius:20px;white-space:nowrap;font-size:0.8rem;cursor:pointer}.filter-item.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -22,8 +17,8 @@
 <img id="regPrev" class="profile-circle" src="https://placehold.co/100?text=Avatar">
 <div class="form-group"><label>الاسم العام</label><span class="char-counter" id="c_reg_name">30</span><input type="text" id="regFullName" maxlength="30" oninput="updateCounter(this, 'c_reg_name')"></div>
 <div class="form-group">
-<label>رابط الصورة</label><input type="url" id="regAvatar" oninput="updatePreview(this.value, 'regPrev')">
-<small class="hint">يمكنك تركها فارغة، ولكن يفضل استخدام رابط مباشر. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
+<label>رابط الصورة (إلزامي)</label><input type="url" id="regAvatar" oninput="updatePreview(this.value, 'regPrev')">
+<small class="hint">يجب وضع رابط مباشر لصورتك. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
 </div>
 </div>
 <div class="form-group">
@@ -31,11 +26,10 @@
 <input type="text" id="authUsername" maxlength="30" oninput="updateCounter(this, 'c_auth_user'); validateUser(this)">
 <small class="hint hidden" id="userHint">حروف، أرقام، (._-) فقط. <b>تنبيه: لا يمكن تغيير الاسم لاحقاً.</b></small>
 </div>
-<div class="form-group"><label>كلمة السر</label><input type="password" id="authPassword"></div>
+<div class="form-group"><label>كلمة السر</label><input type="password" id="authPassword" placeholder="A-Z, 0-9, رموز فقط"></div>
 <button class="btn btn-primary" onclick="processAuth()">تأكيد العملية</button>
 <p style="text-align:center;font-size:0.8rem;margin-top:15px;cursor:pointer;color:var(--accent)" id="toggleAuth">إنشاء حساب جديد</p>
 </div>
-
 <div id="mainSection" class="main-panel hidden">
 <nav class="nav-card">
 <button class="nav-btn" id="btn-home" onclick="showTab('home')"><i class="fas fa-house"></i>الرئيسية</button>
@@ -43,7 +37,6 @@
 <button class="nav-btn" id="btn-edit" onclick="showTab('edit')"><i class="fas fa-folder-open"></i>أعمالي</button>
 <button class="nav-btn" id="btn-profile" onclick="showTab('profile')"><i class="fas fa-user-circle"></i>حسابي</button>
 </nav>
-
 <div id="tab-home" class="view-content hidden">
 <h3 id="welcomeMsg" style="color:var(--accent)"></h3>
 <div class="section-card">
@@ -53,7 +46,6 @@
 </button>
 </div>
 </div>
-
 <div id="tab-publish" class="view-content hidden">
 <div class="section-card">
 <h3 id="formTitle"><i class="fas fa-upload"></i> نشر عنصر جديد</h3>
@@ -65,7 +57,7 @@
 </div>
 <div class="form-group"><label>عنوان المود</label><input type="text" id="p_title" maxlength="100"><small class="hint">اختر اسماً جذاباً وواضحاً للمود.</small></div>
 <div class="form-group"><label>رابط التحميل</label><input type="url" id="p_dl"><small class="hint">رابط ميديا فاير أو ميجا المباشر.</small></div>
-<div class="form-group"><label>النوع</label><select id="p_type"><option value="mod">Mod</option><option value="map">Map</option><option value="data_pack">Data Pack</option><option value="texture_pack">Texture Pack</option></select></div>
+<div class="form-group"><label>النوع</label><select id="p_type"><option value="mod">Mod</option><option value="map">Map</option><option value="data_pack">Data Pack</option><option value="texture_pack">Texture Pack</option><option value="shader">Shader</option></select></div>
 <div class="form-group" style="display:flex;gap:8px">
 <div style="flex:1"><label>الإصدار</label><input type="text" id="p_ver" placeholder="1.0.0"></div>
 <div style="flex:1"><label>التحديث</label><input type="text" id="p_mc" placeholder="1.21"></div>
@@ -78,17 +70,24 @@
 </div>
 </div>
 </div>
-
 <div id="tab-edit" class="view-content hidden">
-<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-<input type="text" id="searchMod" placeholder="بحث باسم المود..." oninput="renderMyMods()" style="flex:1;min-width:150px">
-<select id="f_type" onchange="renderMyMods()" style="width:100px"><option value="all">الكل</option><option value="mod">Mods</option><option value="map">Maps</option><option value="data_pack">Data</option><option value="texture_pack">Texture</option></select>
-<button class="btn-sm" style="width:45px" onclick="toggleEditSort()"><i class="fas fa-sort"></i></button>
+<div class="form-group" style="margin-bottom:10px">
+<div style="display:flex;gap:8px">
+<input type="text" id="searchMod" placeholder="بحث باسم المود..." oninput="renderMyMods()" style="flex:1">
+<button class="btn-sm" style="width:45px" onclick="toggleSort()"><i id="sortIcon" class="fas fa-sort-amount-down"></i></button>
 <button class="btn-sm" style="width:45px;color:var(--accent)" onclick="showMyStats()"><i class="fas fa-chart-bar"></i></button>
 </div>
-<div id="myModsList"></div>
 </div>
-
+<div class="filter-container" id="editFilters">
+<div class="filter-item active" data-type="all">الكل</div>
+<div class="filter-item" data-type="mod">Mods</div>
+<div class="filter-item" data-type="map">Maps</div>
+<div class="filter-item" data-type="data_pack">Data</div>
+<div class="filter-item" data-type="texture_pack">Texture</div>
+<div class="filter-item" data-type="shader">Shader</div>
+</div>
+<div id="myModsList" style="margin-top:15px"></div>
+</div>
 <div id="tab-profile" class="view-content hidden">
 <div class="section-card">
 <div class="prof-preview-area" id="profArea">
@@ -100,11 +99,11 @@
 <div class="form-group"><label>رابط غلاف الحساب (اختياري)</label><input type="url" id="pr_cover" oninput="syncProfilePreview()"></div>
 <div class="form-group">
 <label>رابط الصورة</label><input type="url" id="pr_avatar" oninput="syncProfilePreview()">
-<small class="hint">استخدم روابط مباشرة فقط. <button class="btn-sm" style="display:inline;padding:2px 8px;width:auto" onclick="window.location.href='https://top4top.io/'">فتح top4top</button></small>
+<small class="hint">استخدم روابط مباشرة فقط.</small>
 </div>
 <div class="form-group"><label>وصف الحساب</label><span class="char-counter" id="c_pr_bio">50</span><input type="text" id="pr_bio" maxlength="50" oninput="updateCounter(this, 'c_pr_bio')"></div>
 <div class="form-group"><label>رابط التواصل (Social)</label><input type="url" id="pr_social" placeholder="https://facebook.com/yourid"></div>
-<div class="form-group"><label>كلمة السر الجديدة</label><input type="password" id="pr_pass"></div>
+<div class="form-group"><label>كلمة السر الجديدة</label><input type="password" id="pr_pass" placeholder="اتركها فارغة لعدم التغيير"></div>
 <div style="display:flex;gap:5px">
 <button class="btn-sm" style="flex:1" onclick="updateProfile()"><i class="fas fa-save"></i> حفظ</button>
 <button class="btn-sm" style="flex:1" onclick="window.location.href='https://tamaa-pro.github.io/minecraft_bedrock_library/mods/user#'+currentUser.username"><i class="fas fa-user"></i> حسابي</button>
@@ -114,7 +113,6 @@
 </div>
 </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
 <script>
 const JB_KEY = "$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q";
@@ -123,8 +121,7 @@ const AW_CONF = { p: '69922bf4002571605f46', d: '69922c8e001dbb613d69', c: 'mods
 const { Client, Databases, ID, Query } = Appwrite;
 const sdk = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
 const db = new Databases(sdk);
-
-let currentUser = null, myModsList = [], editingModId = null, editSort = 'desc';
+let currentUser = null, myModsList = [], editingModId = null, currentType = 'all', sortOrder = 'desc';
 
 function showToast(m, type='success') {
     const t = document.createElement('div'); t.className = 'toast';
@@ -137,35 +134,49 @@ function showToast(m, type='success') {
 function updateCounter(el, id) { document.getElementById(id).innerText = el.maxLength - el.value.length; }
 function validateUser(el) { el.value = el.value.toLowerCase().replace(/[^a-z0-9._-]/g, ''); }
 function adjustHeight(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-function updatePreview(url, id) { const img = document.getElementById(id); if(url) { img.src = url; img.classList.remove('hidden'); } else { img.classList.add('hidden'); } }
+function updatePreview(url, id) { const img = document.getElementById(id); if(url && isValidURL(url)) { img.src = url; img.classList.remove('hidden'); } else { img.classList.add('hidden'); } }
 
 function syncProfilePreview() {
     const cUrl = document.getElementById('pr_cover').value, aUrl = document.getElementById('pr_avatar').value;
     const cp = document.getElementById('profCoverPrev'), ap = document.getElementById('profAvatarPrev'), area = document.getElementById('profArea');
-    if(cUrl) { cp.src = cUrl; cp.classList.add('active'); area.classList.add('has-cover'); } 
+    if(cUrl && isValidURL(cUrl)) { cp.src = cUrl; cp.classList.add('active'); area.classList.add('has-cover'); } 
     else { cp.classList.remove('active'); area.classList.remove('has-cover'); }
-    ap.src = aUrl || "https://placehold.co/100?text=User";
+    ap.src = (aUrl && isValidURL(aUrl)) ? aUrl : "https://placehold.co/100?text=User";
 }
 
 async function checkSession() {
     const saved = localStorage.getItem('mc_session');
-    if(!saved) return;
+    if(!saved) { document.getElementById('authSection').style.display = 'block'; return; }
     const session = JSON.parse(saved);
     if(Date.now() < session.expiry) login(session.user, false);
-    else localStorage.removeItem('mc_session');
+    else { localStorage.removeItem('mc_session'); document.getElementById('authSection').style.display = 'block'; }
 }
+
+function isValidURL(string) { try { new URL(string); return true; } catch (_) { return false; } }
 
 async function processAuth() {
     const uVal = document.getElementById('authUsername').value.trim(), pVal = document.getElementById('authPassword').value;
     const isReg = !document.getElementById('registerFields').classList.contains('hidden');
+    const passRegex = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{4,}$/;
     if(!uVal || !pVal) return showToast("أكمل الخانات الأساسية", 'error');
+    if(!passRegex.test(pVal)) return showToast("كلمة السر: 4 خانات على الأقل، أحرف لاتينية/أرقام/رموز فقط بدون فراغ", 'error');
+    if(isReg) {
+        const avUrl = document.getElementById('regAvatar').value;
+        if(!avUrl || !isValidURL(avUrl)) return showToast("رابط صورة الحساب مطلوب ويجب أن يكون رابطاً صحيحاً", 'error');
+    }
     try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
         let bin = (await res.json()).record;
         if(isReg) {
             const safeU = uVal.replace(/[^a-z0-9]/g, '');
             if(bin.us.find(u => u.username.replace(/[^a-z0-9]/g, '') === safeU)) return showToast("هذا الاسم محجوز بالفعل", 'error');
-            const newUser = { full_name: document.getElementById('regFullName').value || uVal, avatar: document.getElementById('regAvatar').value || "https://placehold.co/100?text=User", username: uVal, password: pVal, bio: '', social: '', cover: '' };
+            const now = new Date();
+            const newUser = { 
+                full_name: document.getElementById('regFullName').value || uVal, 
+                avatar: document.getElementById('regAvatar').value, 
+                username: uVal, password: pVal, bio: '', social: '', cover: '',
+                createdat: `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`
+            };
             bin.us.push(newUser);
             await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
             login(newUser, true);
@@ -179,7 +190,7 @@ async function processAuth() {
 function login(u, save) {
     currentUser = u;
     if(save) localStorage.setItem('mc_session', JSON.stringify({ user: u, expiry: Date.now() + 86400000 }));
-    document.getElementById('authSection').classList.add('hidden');
+    document.getElementById('authSection').style.display = 'none';
     document.getElementById('mainSection').classList.remove('hidden');
     document.getElementById('welcomeMsg').innerText = "أهلاً، " + u.full_name;
     document.getElementById('pr_user').value = "@" + u.username;
@@ -194,17 +205,23 @@ function login(u, save) {
 function logout() { localStorage.removeItem('mc_session'); window.location.reload(); }
 
 async function updateProfile() {
+    const passVal = document.getElementById('pr_pass').value;
+    const av = document.getElementById('pr_avatar').value;
+    const co = document.getElementById('pr_cover').value;
+    const so = document.getElementById('pr_social').value;
+    if(av && !isValidURL(av)) return showToast("رابط الصورة غير صحيح", 'error');
+    if(co && !isValidURL(co)) return showToast("رابط الغلاف غير صحيح", 'error');
+    if(so && !isValidURL(so)) return showToast("رابط التواصل غير صحيح", 'error');
     try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}/latest`, { headers: {"X-Master-Key": JB_KEY} });
         let bin = (await res.json()).record;
         const idx = bin.us.findIndex(u => u.username === currentUser.username);
         if(idx !== -1) {
             bin.us[idx].full_name = document.getElementById('pr_name').value;
-            bin.us[idx].avatar = document.getElementById('pr_avatar').value;
-            bin.us[idx].cover = document.getElementById('pr_cover').value;
+            bin.us[idx].avatar = av; bin.us[idx].cover = co;
             bin.us[idx].bio = document.getElementById('pr_bio').value;
-            bin.us[idx].social = document.getElementById('pr_social').value;
-            if(document.getElementById('pr_pass').value) bin.us[idx].password = document.getElementById('pr_pass').value;
+            bin.us[idx].social = so;
+            if(passVal) bin.us[idx].password = passVal;
             await fetch(`https://api.jsonbin.io/v3/b/${JB_ID}`, { method: 'PUT', headers: {"Content-Type": "application/json", "X-Master-Key": JB_KEY}, body: JSON.stringify(bin) });
             currentUser = bin.us[idx]; login(currentUser, true); showToast("تم تحديث الحساب");
         }
@@ -230,9 +247,8 @@ async function fetchMyMods() {
 
 function renderMyMods() {
     const q = document.getElementById('searchMod').value.toLowerCase();
-    const type = document.getElementById('f_type').value;
-    let mods = myModsList.filter(m => m.title.toLowerCase().includes(q) && (type==='all' || m.item_type === type));
-    mods.sort((a,b) => editSort==='desc' ? new Date(b.$createdAt) - new Date(a.$createdAt) : new Date(a.$createdAt) - new Date(b.$createdAt));
+    let mods = myModsList.filter(m => m.title.toLowerCase().includes(q) && (currentType==='all' || m.item_type === currentType));
+    mods.sort((a,b) => sortOrder==='desc' ? new Date(b.$createdAt) - new Date(a.$createdAt) : new Date(a.$createdAt) - new Date(b.$createdAt));
     document.getElementById('myModsList').innerHTML = mods.map(m => `
         <div class="mod-card">
             <div class="mod-card-main">
@@ -245,8 +261,8 @@ function renderMyMods() {
                         <span><i class="fas fa-thumbs-down"></i> ${m.dislikes}</span>
                         <span><i class="fas fa-download"></i> ${m.downloads}</span>
                     </div>
-                    <span class="mod-date">نشر: ${new Date(m.$createdAt).toLocaleDateString()}</span>
-                    <span class="mod-date">تعديل: ${new Date(m.updated_at || m.$updatedAt).toLocaleDateString()}</span>
+                    <span class="mod-date">نشر: ${new Date(m.$createdAt).toLocaleString()}</span>
+                    <span class="mod-date">تعديل: ${new Date(m.updated_at || m.$updatedAt).toLocaleString()}</span>
                 </div>
             </div>
             <div class="mod-actions">
@@ -258,7 +274,20 @@ function renderMyMods() {
         </div>`).join('');
 }
 
-function toggleEditSort() { editSort = editSort==='desc'?'asc':'desc'; renderMyMods(); }
+function toggleSort() {
+    sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+    document.getElementById('sortIcon').className = sortOrder === 'desc' ? 'fas fa-sort-amount-down' : 'fas fa-sort-amount-up';
+    renderMyMods();
+}
+
+document.getElementById('editFilters').addEventListener('click', (e) => {
+    if(e.target.classList.contains('filter-item')) {
+        document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+        e.target.classList.add('active');
+        currentType = e.target.getAttribute('data-type');
+        renderMyMods();
+    }
+});
 
 function showMyStats() {
     const s = myModsList.reduce((acc, m) => {
@@ -281,6 +310,10 @@ function closeModal() { document.getElementById('modalContainer').classList.add(
 async function submitMod() {
     const data = { title: document.getElementById('p_title').value, cover_url: document.getElementById('p_cover').value, download_url: document.getElementById('p_dl').value, item_type: document.getElementById('p_type').value, mod_version: document.getElementById('p_ver').value, target_mc: document.getElementById('p_mc').value, short_desc: document.getElementById('p_short').value, long_desc: document.getElementById('p_long').value, author_handle: "@"+currentUser.username, updated_at: new Date().toISOString() };
     if(!data.title || !data.cover_url || !data.download_url) return showToast("أكمل البيانات الأساسية", 'error');
+    if(!isValidURL(data.cover_url)) return showToast("رابط الغلاف غير صحيح", 'error');
+    if(!isValidURL(data.download_url)) return showToast("رابط التحميل غير صحيح", 'error');
+    if(data.short_desc.length < 5) return showToast("الوصف القصير يجب أن يكون 5 حروف على الأقل", 'error');
+    if(data.long_desc.length < 40) return showToast("الوصف المفصل يجب أن يكون 40 حرفاً على الأقل", 'error');
     try {
         if(editingModId) { await db.updateDocument(AW_CONF.d, AW_CONF.c, editingModId, data); showToast("تم تحديث المود"); cancelEditMode(); }
         else { data.likes=0; data.dislikes=0; data.views=0; data.downloads=0; await db.createDocument(AW_CONF.d, AW_CONF.c, ID.unique(), data); showToast("تم النشر بنجاح"); resetF(); }
@@ -303,7 +336,7 @@ function copyL(id) { navigator.clipboard.writeText(`https://tamaa-pro.github.io/
 
 function confirmAccountDelete() {
     const mc = document.getElementById('modalContainer');
-    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف الحساب نهائياً؟</h3><p>سيتم حذف بياناتك وكل منشوراتك (${myModsList.length}) للأبد.</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteAccountFinal()">نعم، احذف</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
+    mc.innerHTML = `<div class="modal-overlay"><div class="modal-card"><h3>حذف الحساب نهائياً؟</h3><p>سيتم حذف بياناتك وكل منشوراتك للأبد.</p><div style="display:flex;gap:10px;margin-top:15px"><button class="btn btn-danger" style="flex:1" onclick="deleteAccountFinal()">نعم، احذف</button><button class="btn btn-primary" style="flex:1;background:#444" onclick="closeModal()">إلغاء</button></div></div></div>`;
     mc.classList.remove('hidden');
 }
 
@@ -327,8 +360,8 @@ document.getElementById('toggleAuth').onclick = function() {
 };
 
 window.onload = checkSession;
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.onselectstart = e => { if (['INPUT','TEXTAREA'].includes(e.target.tagName)) return true; return false; };
+document.addEventListener('contextmenu', e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return; e.preventDefault(); });
+document.onselectstart = e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return true; return false; };
 </script>
 </body>
 </html>
