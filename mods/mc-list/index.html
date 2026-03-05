@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>قائمة المودات و المابات | Minecraft Bedrock</title>
+<title>قائمة المودات و المابات</title>
 <link rel="icon" href="https://k.top4top.io/p_3715l1x3y1.jpg" type="image/png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -126,6 +126,17 @@ const url=`${DOWNLOAD_URL}#${id}`;
 if(navigator.share)navigator.share({title:title,url:url});else{navigator.clipboard.writeText(url);alert("تم النسخ");}
 }
 window.onload=fetchMods;
+</script>
+<style>
+img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+</style>
+<script>
+document.addEventListener('contextmenu', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
+document.addEventListener('dragstart', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
 </script>
 </body>
 </html>
