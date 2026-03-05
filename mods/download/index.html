@@ -13,7 +13,7 @@ window.stop();document.execCommand('Stop');
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>تحميل | Minecraft Library</title>
+<title>صفحة التحميل</title>
 <link rel="icon" href="https://k.top4top.io/p_3715l1x3y1.jpg" type="image/png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -153,6 +153,17 @@ function showToast(){const t=document.getElementById('toast');t.style.display='b
 function copyPageLink(){navigator.clipboard.writeText(window.location.href).then(showToast);}
 function sharePage(){if(navigator.share)navigator.share({url:window.location.href});}
 window.onload=loadPage;
+</script>
+<style>
+img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+</style>
+<script>
+document.addEventListener('contextmenu', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
+document.addEventListener('dragstart', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
 </script>
 </body>
 </html>
