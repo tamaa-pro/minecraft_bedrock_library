@@ -364,5 +364,16 @@ window.onload = checkSession;
 document.addEventListener('contextmenu', e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return; e.preventDefault(); });
 document.onselectstart = e => { if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return true; return false; };
 </script>
+<style>
+img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+</style>
+<script>
+document.addEventListener('contextmenu', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
+document.addEventListener('dragstart', function(e) {
+if (e.target.tagName === 'IMG') e.preventDefault();
+}, false);
+</script>
 </body>
 </html>
