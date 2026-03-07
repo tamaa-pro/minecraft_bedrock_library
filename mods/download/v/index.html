@@ -1,0 +1,157 @@
+ 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script>
+(function(){const ua=navigator.userAgent||navigator.vendor||window.opera;if(/FBAN|FBAV|Instagram/i.test(ua)){if(/Android/i.test(ua)){window.location.href="intent://"+window.location.href.replace(/^https?:///,"")+"#Intent;scheme=https;package=com.android.chrome;end";}else{alert("يرجى فتح الصفحة في متصفح خارجي لضمان عمل كافة المميزات.");}window.stop();document.execCommand('Stop');}})();
+</script>
+<script>
+if(!sessionStorage.getItem("r_sync")){sessionStorage.setItem("r_sync","t");const u=new URL(window.location.href);u.searchParams.set('t',Date.now());window.location.replace(u.href);}
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>صفحة التحميل</title>
+<link rel="icon" href="https://e.top4top.io/p_3716vfy0q1.jpg" type="image/png">
+<link rel="stylesheet" href="[suspicious link removed]">
+<style>
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:5px;overflow-x:hidden;line-height:1.4;-webkit-user-select:none;user-select:none}input,textarea,select{-webkit-user-select:text!important;user-select:text!important}.hidden{display:none!important}.container{max-width:480px;margin:0 auto}.main-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:8px;position:relative}.cover-wrapper{position:relative;width:100%;background:#000}.cover-img{width:100%;height:auto;display:block}.mod-title-overlay{position:absolute;bottom:8px;right:8px;background:rgba(24,24,27,0.8);backdrop-filter:blur(5px);padding:4px 10px;border-radius:8px;font-size:12px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1)}.meta-section{padding:12px}.publisher-line{display:flex;align-items:center;gap:8px;margin-bottom:12px;cursor:pointer}.pub-avatar{width:40px;height:40px;border-radius:50%;border:2px solid var(--accent);object-fit:cover}.pub-name{font-weight:700;font-size:0.85rem;display:flex;align-items:center;gap:4px}.verified-badge{color:var(--accent);font-size:0.8rem}.admin-badge{color:#fbbf24;font-size:0.9rem}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;background:var(--input);padding:10px;border-radius:12px;border:1px solid var(--border)}.info-item{font-size:0.65rem;color:var(--text-sub);display:flex;align-items:center;gap:4px}.info-item i{color:var(--accent);width:12px}.interaction-bar{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:12px}.stat-btn{background:transparent;border:none;color:var(--text-sub);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:0.65rem;cursor:pointer;outline:none}.stat-btn i{font-size:1rem}.stat-btn.active-like{color:var(--success)}.stat-btn.active-dislike{color:var(--error)}.dl-button{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;outline:none}.dl-button span{font-size:0.6rem;font-weight:400;opacity:0.8;margin-top:2px}.desc-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:12px;margin-bottom:8px}.desc-card h3{margin:0 0 8px;font-size:0.85rem;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:5px}.desc-content{font-size:0.8rem;color:var(--text-sub);white-space:pre-wrap}.ad-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:10px}.btn-row{display:flex;gap:6px}.btn-sub{flex:1;padding:8px;border-radius:8px;background:var(--input);border:1px solid var(--border);color:var(--text);font-size:0.7rem;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px}.action-float{position:fixed;top:12px;left:12px;display:flex;gap:6px;z-index:100}.mini-btn{width:30px;height:30px;border-radius:8px;background:rgba(24,24,27,0.8);backdrop-filter:blur(5px);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.skeleton{background:linear-gradient(90deg,#18181b 25%,#27272a 50%,#18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--text);padding:8px 16px;border-radius:8px;border:1px solid var(--accent);font-size:0.75rem;z-index:1000;display:none;box-shadow:0 10px 25px rgba(0,0,0,0.5)}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+</style>
+</head>
+<body>
+<div id="toast" class="toast">تم نسخ الرابط بنجاح</div>
+<div class="action-float">
+<div class="mini-btn" onclick="copyPageLink()"><i class="fas fa-link"></i></div>
+<div class="mini-btn" onclick="sharePage()"><i class="fas fa-share-alt"></i></div>
+</div>
+<div class="container" id="mainContent">
+<div id="loading"><div class="main-card skeleton" style="height:450px"></div></div>
+<div id="modDetails" class="hidden">
+<div class="main-card">
+<div class="cover-wrapper"><img id="m_cover" class="cover-img"><div id="m_title" class="mod-title-overlay"></div></div>
+<div class="meta-section">
+<div class="publisher-line" id="publisherAction"><img id="u_avatar" class="pub-avatar"><span id="u_name" class="pub-name"></span></div>
+<div class="info-grid">
+<div class="info-item"><i class="fas fa-calendar-plus"></i> <span id="m_date"></span></div>
+<div class="info-item" id="edit_box"><i class="fas fa-history"></i> <span id="m_edit"></span></div>
+<div class="info-item" id="ver_box"><i class="fas fa-layer-group"></i> <span id="m_ver"></span></div>
+<div class="info-item" id="mc_box"><i class="fas fa-cube"></i> <span id="m_mc"></span></div>
+<div class="info-item"><i class="fas fa-folder"></i> <span id="m_type"></span></div>
+</div>
+<div class="interaction-bar">
+<button class="stat-btn" id="btnLike" onclick="handleVote('like')"><i class="fas fa-thumbs-up"></i><span id="c_likes">0</span></button>
+<button class="stat-btn" id="btnDis" onclick="handleVote('dislike')"><i class="fas fa-thumbs-down"></i><span id="c_dis">0</span></button>
+<button class="stat-btn"><i class="fas fa-eye"></i><span id="c_views">0</span></button>
+<button class="stat-btn"><i class="fas fa-download"></i><span id="c_dl">0</span></button>
+</div>
+<button class="dl-button" id="dlAction">
+<label style="display:flex;align-items:center;gap:8px;pointer-events:none"><i class="fas fa-external-link-alt"></i> فتح رابط التحميل</label>
+<span id="dlDomain">جارٍ التحقق...</span>
+</button>
+</div>
+</div>
+<div class="desc-card"><h3>وصف المود</h3><div id="m_long" class="desc-content"></div></div>
+<div class="ad-card">
+<div class="btn-row">
+<a href="../mc-list" class="btn-sub"><i class="fas fa-list-ul"></i> القائمة</a>
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library" class="btn-sub"><i class="fas fa-download"></i> التطبيق</a>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+<script>
+const AW_CONF={p:'69922bf4002571605f46',d:'69922c8e001dbb613d69',c:'mods'};
+const {Client,Databases}=Appwrite;
+const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p.setProject(AW_CONF.p));
+const db=new Databases(sdk);
+const modId=window.location.hash.substring(1);
+let modData=null;
+function formatDT(s){return new Date(s).toLocaleString('ar-EG-u-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
+function getDomain(url){try{return new URL(url).hostname.replace('www.','');}catch(e){return 'رابط خارجي';}}
+async function loadPage(){
+if(!modId)return;
+try{
+modData=await db.getDocument(AW_CONF.d,AW_CONF.c,modId);
+await fetchUser(modData.author_handle);
+render();
+trackStat('view','v_seen_');
+}catch(e){document.body.innerHTML="<div style='padding:50px;text-align:center'>404 - المود غير موجود</div>";}
+finally{if(document.getElementById('loading'))document.getElementById('loading').remove();document.getElementById('modDetails').classList.remove('hidden');}
+}
+function render(){
+document.getElementById('m_cover').src=modData.cover_url;
+document.getElementById('m_title').innerText=modData.title;
+document.getElementById('m_date').innerText=formatDT(modData.$createdAt);
+if(modData.updated_at&&modData.updated_at!==modData.createdAt){
+document.getElementById('m\_edit').innerText=formatDT(modData.updated\_at);
+document.getElementById('edit\_box').classList.remove('hidden');
+}else{document.getElementById('edit\_box').classList.add('hidden');}
+if(modData.mod\_version)document.getElementById('m\_ver').innerText=modData.mod\_version;else document.getElementById('ver\_box').classList.add('hidden');
+if(modData.target\_mc)document.getElementById('m\_mc').innerText=modData.target\_mc;else document.getElementById('mc\_box').classList.add('hidden');
+document.getElementById('m\_type').innerText=modData.item\_type;
+document.getElementById('dlDomain').innerText=getDomain(modData.download\_url);
+updateCountersUI();
+document.getElementById('m\_long').innerHTML=modData.long\_desc;
+document.getElementById('dlAction').onclick=()=\>{trackStat('download','v\_dl\_');window.location.href=modData.download\_url;};
+applyVoteStyles();
+}
+function updateCountersUI(){
+document.getElementById('c\_likes').innerText=(modData.likes||0).toLocaleString();
+document.getElementById('c\_dis').innerText=(modData.dislikes||0).toLocaleString();
+document.getElementById('c\_views').innerText=(modData.views||0).toLocaleString();
+document.getElementById('c\_dl').innerText=(modData.downloads||0).toLocaleString();
+}
+async function trackStat(type,prefix){
+const key=prefix+modId;
+const last=localStorage.getItem(key);
+if(last&&(Date.now()-last\<86400000))return;
+try{
+const fresh=await db.getDocument(AW\_CONF.d,AW\_CONF.c,modId);
+const upd={}; upd[type==='view'?'views':'downloads']=(fresh[type==='view'?'views':'downloads']||0)+1;
+await db.updateDocument(AW\_CONF.d,AW\_CONF.c,modId,upd);
+localStorage.setItem(key,Date.now());
+}catch(e){}
+}
+async function handleVote(v){
+const key='v\_vote\_'+modId;
+const old=localStorage.getItem(key);
+if(old===v){localStorage.removeItem(key);}else{localStorage.setItem(key,v);}
+applyVoteStyles();
+try{
+const fresh=await db.getDocument(AW\_CONF.d,AW\_CONF.c,modId);
+let upd={likes:fresh.likes||0,dislikes:fresh.dislikes||0};
+if(old===v){upd[v==='like'?'likes':'dislikes']--;}
+else{if(old)upd[old==='like'?'likes':'dislikes']--;upd[v==='like'?'likes':'dislikes']++;}
+await db.updateDocument(AW\_CONF.d,AW\_CONF.c,modId,upd);
+modData.likes=upd.likes;modData.dislikes=upd.dislikes;
+updateCountersUI();
+}catch(e){localStorage.setItem(key,old||'');applyVoteStyles();}
+}
+function applyVoteStyles(){
+const v=localStorage.getItem('v\_vote\_'+modId);
+document.getElementById('btnLike').className='stat-btn'+(v==='like'?' active-like':'');
+document.getElementById('btnDis').className='stat-btn'+(v==='dislike'?' active-dislike':'');
+}
+async function fetchUser(h){
+try{
+const res=await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`,{headers:{"X-Master-Key":"$2a$10F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
+const user=(await res.json()).record.us.find(u=>"@"+u.username===h);
+if(user){
+document.getElementById('u_avatar').src=user.avatar;
+let vIcon='';
+if(user.role==='admin')vIcon='<span class="admin-badge"><i class="fas fa-shield-alt"></i></span>';
+else if(user.verified)vIcon='<i class="fas fa-check-circle verified-badge"></i>';
+document.getElementById('u_name').innerHTML=${user.full\_name} ${vIcon};
+document.getElementById('publisherAction').onclick=()=>window.location.href=../user/#${user.username}\;
+}
+}catch(e){}
+}
+function showToast(){const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>{t.style.display='none'},2000);}
+function copyPageLink(){navigator.clipboard.writeText(window.location.href).then(showToast);}
+function sharePage(){if(navigator.share)navigator.share({url:window.location.href});}
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG')e.preventDefault();});
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault();});
+window.onload=loadPage;
+</script>
+</body>
+</html>
