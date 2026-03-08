@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script>
+(function(){
+const ua=navigator.userAgent||navigator.vendor||window.opera;
+if(/FBAN|FBAV|Instagram/i.test(ua)){
+if(/Android/i.test(ua)){window.location.href="intent://"+window.location.href.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";}
+else{alert("يرجى فتح الصفحة في متصفح خارجي لضمان عمل كافة المميزات.");}
+window.stop();document.execCommand('Stop');
+}
+})();
+</script>
+<script>
+if(performance.navigation.type!==1&&!sessionStorage.getItem("reloaded")){
+sessionStorage.setItem("reloaded","true");
+location.reload();
+}else{sessionStorage.removeItem("reloaded");}
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>صفحة التحميل</title>
+<link rel="icon" href="https://e.top4top.io/p_3716vfy0q1.jpg" type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:5px;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}.container{max-width:480px;margin:0 auto}.main-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:5px;position:relative}.cover-wrapper{position:relative;width:100%;background:#000;aspect-ratio:16/9}.cover-img{width:100%;height:100%;object-fit:cover;display:block}.mod-title-overlay{position:absolute;bottom:10px;right:10px;background:rgba(24,24,27,0.75);backdrop-filter:blur(4px);padding:5px 10px;border-radius:8px;font-size:13px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1)}.meta-section{padding:15px}.publisher-line{display:flex;align-items:center;gap:10px;margin-bottom:15px;cursor:pointer}.pub-avatar{width:45px;height:45px;border-radius:50%;border:2px solid var(--accent);object-fit:cover}.pub-name{font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:5px}.verified-badge{color:var(--accent);font-size:0.85rem}.admin-badge{position:relative;color:#fbbf24;font-size:1rem;display:flex;align-items:center;justify-content:center}.admin-badge .fa-check{position:absolute;font-size:0.45rem;color:var(--card)}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px;background:var(--input);padding:12px;border-radius:15px;border:1px solid var(--border)}.info-item{font-size:0.7rem;color:var(--text-sub);display:flex;align-items:center;gap:5px}.info-item i{color:var(--accent);width:12px}.interaction-bar{display:flex;justify-content:space-between;padding:12px 5px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:15px}.stat-btn{background:transparent;border:none;color:var(--text-sub);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:0.7rem;cursor:pointer;transition:0.2s;outline:none}.stat-btn i{font-size:1.1rem}.stat-btn.active-like{color:var(--success)}.stat-btn.active-dislike{color:var(--error)}.dl-button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:0.2s;outline:none}.dl-button:active{transform:scale(0.96);opacity:0.9}.dl-button span{font-size:0.65rem;font-weight:400;opacity:0.8;margin-top:2px}.desc-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:5px}.desc-card h3{margin:0 0 10px;font-size:0.9rem;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:8px}.desc-content{font-size:0.85rem;color:var(--text-sub);white-space:pre-wrap}.ad-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:12px}.btn-row{display:flex;gap:8px}.btn-sub{flex:1;padding:10px;border-radius:10px;background:var(--input);border:1px solid var(--border);color:var(--text);font-size:0.75rem;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s}.btn-sub:active{transform:scale(0.95);background:var(--border)}.action-float{position:fixed;top:15px;left:15px;display:flex;gap:8px;z-index:100}.mini-btn{width:33px;height:33px;border-radius:10px;background:rgba(24,24,27,0.8);backdrop-filter:blur(8px);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.2s}.mini-btn:active{transform:scale(0.9);background:var(--accent)}.skeleton{background:linear-gradient(90deg,#18181b 25%,#27272a 50%,#18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--text);padding:10px 20px;border-radius:10px;border:1px solid var(--accent);font-size:0.8rem;z-index:1000;display:none;box-shadow:0 10px 25px rgba(0,0,0,0.5)}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+</style>
+</head>
+<body>
+<div id="toast" class="toast">تم نسخ الرابط بنجاح</div>
+<div class="action-float">
+<div class="mini-btn" onclick="copyPageLink()"><i class="fas fa-link"></i></div>
+<div class="mini-btn" onclick="sharePage()"><i class="fas fa-share-alt"></i></div>
+</div>
+<div class="container" id="mainContent">
+<div id="loading"><div class="main-card skeleton" style="height:550px"></div></div>
+<div id="modDetails" class="hidden">
+<div class="main-card">
+<div class="cover-wrapper"><img id="m_cover" class="cover-img"><div id="m_title" class="mod-title-overlay"></div></div>
+<div class="meta-section">
+<div class="publisher-line" id="publisherAction"><img id="u_avatar" class="pub-avatar"><span id="u_name" class="pub-name"></span></div>
+<div class="info-grid">
+<div class="info-item"><i class="fas fa-calendar-plus"></i> <span id="m_date"></span></div>
+<div class="info-item" id="edit_box"><i class="fas fa-history"></i> <span id="m_edit"></span></div>
+<div class="info-item" id="ver_box"><i class="fas fa-layer-group"></i> <span id="m_ver"></span></div>
+<div class="info-item" id="mc_box"><i class="fas fa-cube"></i> <span id="m_mc"></span></div>
+<div class="info-item"><i class="fas fa-folder"></i> <span id="m_type"></span></div>
+</div>
+<div class="interaction-bar">
+<button class="stat-btn" id="btnLike" onclick="handleVote('like')"><i class="fas fa-thumbs-up"></i><span id="c_likes">0</span></button>
+<button class="stat-btn" id="btnDis" onclick="handleVote('dislike')"><i class="fas fa-thumbs-down"></i><span id="c_dis">0</span></button>
+<button class="stat-btn"><i class="fas fa-eye"></i><span id="c_views">0</span></button>
+<button class="stat-btn"><i class="fas fa-download"></i><span id="c_dl">0</span></button>
+</div>
+<button class="dl-button" id="dlAction">
+<label style="display:flex;align-items:center;gap:8px;pointer-events:none"><i class="fas fa-external-link-alt"></i> فتح رابط التحميل</label>
+<span id="dlDomain">جارٍ التحقق...</span>
+</button>
+</div>
+</div>
+<div class="desc-card"><h3>وصف المود</h3><div id="m_long" class="desc-content"></div></div>
+<div class="ad-card">
+<div class="btn-row">
+<a href="../mc-list" class="btn-sub"><i class="fas fa-list-ul"></i> القائمة العامة</a>
+<a href="https://tamaa-pro.github.io/minecraft_bedrock_library" class="btn-sub"><i class="fas fa-download"></i> تطبيق المكتبة</a>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+<script>
+const AW_CONF={p:'69922bf4002571605f46',d:'69922c8e001dbb613d69',c:'mods'};
+const {Client,Databases}=Appwrite;
+const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
+const db=new Databases(sdk);
+const modId=window.location.hash.substring(1);
+let modData=null;
+const formatDT=s=>new Date(s).toLocaleString('ar-EG-u-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+const getDomain=u=>{try{return new URL(u).hostname.replace('www.','');}catch(e){return 'رابط خارجي';}};
+async function loadPage(){
+if(!modId)return;
+try{
+modData=await db.getDocument(AW_CONF.d,AW_CONF.c,modId);
+await fetchUser(modData.author_handle);
+render();
+trackStat('view','v_seen_');
+}catch(e){document.body.innerHTML="<div style='padding:50px;text-align:center'>المود غير موجود (Error 404)</div>";}
+finally{
+const loader=document.getElementById('loading');
+if(loader)loader.remove();
+document.getElementById('modDetails').classList.remove('hidden');
+}
+}
+function render(){
+document.getElementById('m_cover').src=modData.cover_url;
+document.getElementById('m_title').innerText=modData.title;
+document.getElementById('m_date').innerText=formatDT(modData.$createdAt);
+if(modData.updated_at&&modData.updated_at!==modData.$createdAt){
+document.getElementById('m_edit').innerText=formatDT(modData.updated_at);
+document.getElementById('edit_box').classList.remove('hidden');
+}else{document.getElementById('edit_box').classList.add('hidden');}
+if(modData.mod_version)document.getElementById('m_ver').innerText=modData.mod_version;else document.getElementById('ver_box').classList.add('hidden');
+if(modData.target_mc)document.getElementById('m_mc').innerText=modData.target_mc;else document.getElementById('mc_box').classList.add('hidden');
+document.getElementById('m_type').innerText=modData.item_type;
+document.getElementById('dlDomain').innerText=getDomain(modData.download_url);
+document.getElementById('m_long').innerHTML=modData.long_desc;
+document.getElementById('dlAction').onclick=()=>{trackStat('download','v_dl_');window.location.href=modData.download_url;};
+updateCountersUI();
+applyVoteStyles();
+}
+function updateCountersUI(){
+document.getElementById('c_likes').innerText=(modData.likes||0).toLocaleString('ar-EG-u-nu-latn');
+document.getElementById('c_dis').innerText=(modData.dislikes||0).toLocaleString('ar-EG-u-nu-latn');
+document.getElementById('c_views').innerText=(modData.views||0).toLocaleString('ar-EG-u-nu-latn');
+document.getElementById('c_dl').innerText=(modData.downloads||0).toLocaleString('ar-EG-u-nu-latn');
+}
+async function trackStat(type,prefix){
+const key=prefix+modId,last=localStorage.getItem(key),now=Date.now();
+if(last&&(now-last<86400000))return;
+const upd={};
+upd[type==='view'?'views':'downloads']=(modData[type==='view'?'views':'downloads']||0)+1;
+try{await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);localStorage.setItem(key,now);}catch(e){}
+}
+async function handleVote(v){
+const key='v_vote_'+modId,old=localStorage.getItem(key);
+let upd={likes:modData.likes||0,dislikes:modData.dislikes||0};
+if(old===v){
+upd[v==='like'?'likes':'dislikes']--;
+localStorage.removeItem(key);
+}else{
+if(old)upd[old==='like'?'likes':'dislikes']--;
+upd[v==='like'?'likes':'dislikes']++;
+localStorage.setItem(key,v);
+}
+modData.likes=upd.likes;modData.dislikes=upd.dislikes;
+updateCountersUI();applyVoteStyles();
+try{await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);}catch(e){}
+}
+function applyVoteStyles(){
+const v=localStorage.getItem('v_vote_'+modId);
+document.getElementById('btnLike').className='stat-btn'+(v==='like'?' active-like':'');
+document.getElementById('btnDis').className='stat-btn'+(v==='dislike'?' active-dislike':'');
+}
+async function fetchUser(h){
+try{
+const res=await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`,{headers:{"X-Master-Key":"$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
+const user=(await res.json()).record.us.find(u=>"@"+u.username===h);
+if(user){
+document.getElementById('u_avatar').src=user.avatar;
+let vIcon='';
+if(user.vf==='true')vIcon='<i class="fas fa-check-circle verified-badge"></i>';
+else if(user.vf==='admin')vIcon='<span class="admin-badge"><i class="fas fa-certificate"></i><i class="fas fa-check"></i></span>';
+document.getElementById('u_name').innerHTML=`${user.full_name} ${vIcon}`;
+document.getElementById('publisherAction').onclick=()=>window.location.href=`../user/#${user.username}`;
+}
+}catch(e){}
+}
+function showToast(){const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>{t.style.display='none'},2000);}
+function copyPageLink(){navigator.clipboard.writeText(window.location.href).then(showToast);}
+function sharePage(){if(navigator.share)navigator.share({url:window.location.href});}
+document.addEventListener('contextmenu',e=>{if(e.target.tagName==='IMG')e.preventDefault();},false);
+document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG')e.preventDefault();},false);
+window.onload=loadPage;
+</script>
+</body>
+</html>
