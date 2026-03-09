@@ -1,322 +1,107 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<script>
-(function(){
-const ua=navigator.userAgent||navigator.vendor||window.opera;
-if(/FBAN|FBAV|Instagram/i.test(ua)){
-if(/Android/i.test(ua)){window.location.href="intent://"+window.location.href.replace(/^https?:\/\//,"")+"#Intent;scheme=https;package=com.android.chrome;end";}
-else{alert("يرجى فتح الصفحة في متصفح خارجي لضمان عمل كافة المميزات.");}
-window.stop();document.execCommand('Stop');
-}
-})();
-</script>
-<script>
-if(performance.navigation.type!==1&&!sessionStorage.getItem("reloaded")){
-sessionStorage.setItem("reloaded","true");
-location.reload();
-}else{sessionStorage.removeItem("reloaded");}
-</script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>صفحة التحميل</title>
-<link rel="icon" href="https://e.top4top.io/p_3716vfy0q1.jpg" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رادار الشبكة الاحترافي</title>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-:root{--bg:#09090b;--card:#18181b;--border:#27272a;--accent:#3b82f6;--text:#fafafa;--text-sub:#a1a1aa;--success:#22c55e;--error:#ef4444;--input:#0c0c0e}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;margin:0;padding:5px;overflow-x:hidden;line-height:1.6;-webkit-user-select:none;user-select:none}.hidden{display:none!important}.container{max-width:480px;margin:0 auto}.main-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:5px;position:relative}.cover-wrapper{position:relative;width:100%;background:#000;aspect-ratio:16/9}.cover-img{width:100%;height:100%;object-fit:cover;display:block}.mod-title-overlay{position:absolute;bottom:10px;right:10px;background:rgba(24,24,27,0.75);backdrop-filter:blur(4px);padding:5px 10px;border-radius:8px;font-size:13px;color:#fff;max-width:85%;border:1px solid rgba(255,255,255,0.1)}.meta-section{padding:15px}.publisher-line{display:flex;align-items:center;gap:10px;margin-bottom:15px;cursor:pointer}.pub-avatar{width:45px;height:45px;border-radius:50%;border:2px solid var(--accent);object-fit:cover}.pub-name{font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:5px}.verified-badge{color:var(--accent);font-size:0.85rem}.admin-badge{position:relative;color:#fbbf24;font-size:1rem;display:flex;align-items:center;justify-content:center}.admin-badge .fa-check{position:absolute;font-size:0.45rem;color:var(--card)}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px;background:var(--input);padding:12px;border-radius:15px;border:1px solid var(--border)}.info-item{font-size:0.7rem;color:var(--text-sub);display:flex;align-items:center;gap:5px}.info-item i{color:var(--accent);width:12px}.interaction-bar{display:flex;justify-content:space-between;padding:12px 5px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:15px}.stat-btn{background:transparent;border:none;color:var(--text-sub);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:0.7rem;cursor:pointer;transition:0.2s;outline:none}.stat-btn i{font-size:1.1rem}.stat-btn.active-like{color:var(--success)}.stat-btn.active-dislike{color:var(--error)}.dl-button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:0.2s;outline:none}.dl-button:active{transform:scale(0.96);opacity:0.9}.dl-button span{font-size:0.65rem;font-weight:400;opacity:0.8;margin-top:2px}.desc-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:5px}.desc-card h3{margin:0 0 10px;font-size:0.9rem;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:8px}.desc-content{font-size:0.85rem;color:var(--text-sub);white-space:pre-wrap}.ad-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:12px}.btn-row{display:flex;gap:8px}.btn-sub{flex:1;padding:10px;border-radius:10px;background:var(--input);border:1px solid var(--border);color:var(--text);font-size:0.75rem;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s;-webkit-touch-callout:none;user-select:none}.btn-sub:active{transform:scale(0.95);background:var(--border)}.action-float{position:fixed;top:15px;left:15px;display:flex;gap:8px;z-index:100}.mini-btn{width:33px;height:33px;border-radius:10px;background:rgba(24,24,27,0.8);backdrop-filter:blur(8px);border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:0.2s}.mini-btn:active{transform:scale(0.9);background:var(--accent)}.skeleton{background:linear-gradient(90deg,#18181b 25%,#27272a 50%,#18181b 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--text);padding:10px 20px;border-radius:10px;border:1px solid var(--accent);font-size:0.8rem;z-index:2000;display:none;box-shadow:0 10px 25px rgba(0,0,0,0.5)}@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}.comm-card{background:var(--card);border:1px solid var(--border);border-radius:18px;margin-bottom:5px;overflow:hidden}.comm-header{display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--input);border-bottom:1px solid var(--border)}.comm-controls{display:flex;gap:10px;align-items:center}.comm-action-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:8px;font-size:0.7rem;cursor:pointer}.comm-total{font-size:0.75rem;font-weight:bold;color:var(--accent)}.comm-list{max-height:0;overflow-y:auto;padding:0 10px;transition:0.3s cubic-bezier(0.4,0,0.2,1);scrollbar-width:thin;scrollbar-color:var(--border) transparent}.comm-list::-webkit-scrollbar{width:4px}.comm-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}.comm-item{padding:12px 0;border-bottom:1px solid var(--border)}.comm-item:last-child{border-bottom:none}.c-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}.c-avatar{width:28px;height:28px;border-radius:50%;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid var(--border)}.c-avatar img{width:100%;height:100%;object-fit:cover}.c-user{font-size:0.8rem;font-weight:bold;color:var(--text);cursor:pointer}.c-text-box{background:var(--input);padding:10px;border-radius:12px;font-size:0.8rem;color:var(--text-sub);margin-bottom:8px;word-break:break-word}.c-footer{display:flex;justify-content:space-between;align-items:center;font-size:0.65rem}.c-actions{display:flex;gap:12px;color:var(--text-sub)}.c-action{cursor:pointer;display:flex;align-items:center;gap:4px}.c-action.active-l{color:var(--success)}.c-action.active-d{color:var(--error)}.c-date{color:var(--text-sub);opacity:0.7}.c-replies{margin-top:10px;padding-right:15px;border-right:2px solid var(--border)}.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:1500;padding:15px;opacity:0;pointer-events:none;transition:0.2s}.modal-overlay.active{opacity:1;pointer-events:auto}.modal-box{background:var(--card);border:1px solid var(--border);border-radius:20px;width:100%;max-width:400px;padding:20px;position:relative}.modal-title{font-size:1rem;font-weight:bold;margin-bottom:15px;color:var(--accent);display:flex;align-items:center;justify-content:space-between}.modal-close{cursor:pointer;font-size:1.2rem}.modal-form{display:flex;flex-direction:column;gap:12px}.m-input{background:var(--input);border:1px solid var(--border);border-radius:10px;padding:10px;color:var(--text);font-size:0.8rem;outline:none}.m-input:focus{border-color:var(--accent)}.m-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.m-btn{padding:12px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;font-size:0.85rem}.m-btn-pub{background:var(--accent);color:#fff}.m-btn-del{background:var(--error);color:#fff}.help-pop{position:fixed;bottom:80px;right:20px;background:var(--card);border:1px solid var(--accent);padding:15px;border-radius:15px;font-size:0.75rem;max-width:250px;z-index:2000;display:none;box-shadow:0 10px-30px rgba(0,0,0,0.5)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Changa',sans-serif}body{background-color:#0d1117;color:#c9d1d9;padding:15px;line-height:1.4}header{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#161b22;border-radius:12px;margin-bottom:20px;border:1px solid #30363d}h1{font-size:1.4rem;color:#a855f7}#refresh-btn{background:#238636;color:#fff;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}.card{background:#161b22;border:1px solid #30363d;padding:18px;border-radius:12px;position:relative}.card h2{font-size:1.1rem;color:#facc15;margin-bottom:15px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #30363d;padding-bottom:8px}.info-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:0.95rem}.label{color:#8b949e;display:flex;align-items:center;gap:6px}.value{color:#fff;font-weight:700;text-align:left}.flag-img{height:18px;vertical-align:middle;border-radius:2px;margin-right:5px}.status-tag{padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:700}.tag-yes{background:rgba(52,211,153,0.1);color:#34d399}.tag-no{background:rgba(248,113,113,0.1);color:#f87171}#map-trigger{background:#30363d;color:#fff;text-align:center;padding:15px;border-radius:10px;cursor:pointer;margin-top:10px;border:2px dashed #484f58;transition:0.3s}#map-trigger:hover{background:#484f58;border-color:#a855f7}#map{height:250px;width:100%;border-radius:10px;margin-top:10px;display:none;border:1px solid #a855f7}
 </style>
 </head>
 <body>
-<div id="toast" class="toast"></div>
-<div class="action-float">
-<div class="mini-btn" onclick="copyPageLink()"><i class="fas fa-link"></i></div>
-<div class="mini-btn" onclick="sharePage()"><i class="fas fa-share-alt"></i></div>
+<div class="container">
+<header>
+<h1><i class="fas fa-radar"></i> رادار الشبكة</h1>
+<button id="refresh-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث</button>
+</header>
+<div id="loader" style="text-align:center;padding:50px;color:#a855f7;"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+<div id="content" class="grid" style="display:none">
+<div class="card">
+<h2><i class="fas fa-network-wired"></i> اتصال الإنترنت</h2>
+<div class="info-row"><span class="label"><i class="fas fa-fingerprint"></i> IP:</span><span class="value" id="ip">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-server"></i> المزود (ISP):</span><span class="value" id="isp">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-route"></i> ASN:</span><span class="value" id="asn">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-bolt"></i> السرعة:</span><span class="value" id="downlink">-</span></div>
 </div>
-<div class="container" id="mainContent">
-<div id="loading"><div class="main-card skeleton" style="height:550px"></div></div>
-<div id="modDetails" class="hidden">
-<div class="main-card">
-<div class="cover-wrapper"><img id="m_cover" class="cover-img"><div id="m_title" class="mod-title-overlay"></div></div>
-<div class="meta-section">
-<div class="publisher-line" id="publisherAction"><img id="u_avatar" class="pub-avatar"><span id="u_name" class="pub-name"></span></div>
-<div class="info-grid">
-<div class="info-item"><i class="fas fa-calendar-plus"></i> <span id="m_date"></span></div>
-<div class="info-item" id="edit_box"><i class="fas fa-history"></i> <span id="m_edit"></span></div>
-<div class="info-item" id="ver_box"><i class="fas fa-layer-group"></i> <span id="m_ver"></span></div>
-<div class="info-item" id="mc_box"><i class="fas fa-cube"></i> <span id="m_mc"></span></div>
-<div class="info-item"><i class="fas fa-folder"></i> <span id="m_type"></span></div>
+<div class="card">
+<h2><i class="fas fa-map-marker-alt"></i> البيانات الجغرافية</h2>
+<div class="info-row"><span class="label"><i class="fas fa-flag"></i> الدولة:</span><span class="value" id="country">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-city"></i> المدينة:</span><span class="value" id="city">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-clock"></i> التوقيت:</span><span class="value" id="timezone">-</span></div>
+<div class="info-row"><span class="label"><i class="fas fa-coins"></i> العملة:</span><span class="value" id="currency">-</span></div>
+<div id="map-trigger" onclick="loadMap()"><i class="fas fa-map-marked-alt"></i> عرض الموقع</div>
+<div id="map"></div>
 </div>
-<div class="interaction-bar">
-<button class="stat-btn" id="btnLike" onclick="handleVote('like')"><i class="fas fa-thumbs-up"></i><span id="c_likes">0</span></button>
-<button class="stat-btn" id="btnDis" onclick="handleVote('dislike')"><i class="fas fa-thumbs-down"></i><span id="c_dis">0</span></button>
-<button class="stat-btn"><i class="fas fa-eye"></i><span id="c_views">0</span></button>
-<button class="stat-btn"><i class="fas fa-download"></i><span id="c_dl">0</span></button>
+<div class="card">
+<h2><i class="fas fa-shield-halved"></i> الأمان</h2>
+<div class="info-row"><span class="label">Proxy/VPN:</span><span id="is_proxy" class="value">-</span></div>
+<div class="info-row"><span class="label">مركز بيانات:</span><span id="is_hosting" class="value">-</span></div>
+<div class="info-row"><span class="label">بيانات خلوي:</span><span id="is_mobile" class="value">-</span></div>
 </div>
-<button class="dl-button" id="dlAction">
-<label style="display:flex;align-items:center;gap:8px;pointer-events:none"><i class="fas fa-external-link-alt"></i> فتح رابط التحميل</label>
-<span id="dlDomain">جارٍ التحقق...</span>
-</button>
-</div>
-</div>
-<div class="desc-card"><h3>وصف المود</h3><div id="m_long" class="desc-content"></div></div>
-<div class="comm-card">
-<div class="comm-header">
-<div class="comm-controls">
-<button class="comm-action-btn" onclick="openCommModal()"><i class="fas fa-pen"></i> نشر تعليق</button>
-</div>
-<div class="comm-total" id="commCount">التعليقات: 0</div>
-<div class="comm-controls">
-<button class="comm-action-btn" onclick="toggleSort()"><i class="fas fa-sort-amount-down"></i></button>
-</div>
-</div>
-<div id="commList" class="comm-list"></div>
-</div>
-<div class="ad-card">
-<div class="btn-row">
-<a href="../mc-list" class="btn-sub"><i class="fas fa-list-ul"></i> القائمة العامة</a>
-<a href="https://tamaa-pro.github.io/minecraft_bedrock_library" class="btn-sub"><i class="fas fa-download"></i> تطبيق المكتبة</a>
+<div class="card">
+<h2><i class="fas fa-microchip"></i> العتاد</h2>
+<div class="info-row"><span class="label">البطارية:</span><span class="value" id="battery">-</span></div>
+<div class="info-row"><span class="label">المعالج:</span><span class="value" id="cpu">-</span></div>
+<div class="info-row"><span class="label">الشاشة:</span><span class="value" id="screen">-</span></div>
 </div>
 </div>
 </div>
-</div>
-<div id="commModal" class="modal-overlay">
-<div class="modal-box">
-<div class="modal-title"><span id="modalTitle">نشر تعليق جديد</span><i class="fas fa-question-circle" style="font-size:1rem;color:var(--text-sub)" onclick="toggleHelp()"></i><i class="fas fa-times modal-close" onclick="closeCommModal()"></i></div>
-<div class="modal-form" id="commForm">
-<input type="url" id="f_icon" class="m_input" placeholder="رابط صورة الحساب (اختياري)">
-<input type="text" id="f_name" class="m_input" placeholder="اسم المستخدم (مطلوب)" maxlength="30">
-<textarea id="f_comment" class="m_input" style="height:80px;resize:none" placeholder="اكتب تعليقك هنا..." maxlength="500"></textarea>
-<input type="url" id="f_contact" class="m_input" placeholder="رابط تواصل (فيسبوك/انستجرام فقط)">
-<input type="password" id="f_code" class="m_input" placeholder="رمز تعديل التعليق (لاتيني ورموز فقط)" maxlength="20">
-<div class="m_row">
-<button id="submitComm" class="m_btn m_btn-pub" onclick="processComment()">نشر التعليق</button>
-<button id="deleteComm" class="m_btn m_btn-del hidden" onclick="deleteComment()">حذف</button>
-</div>
-</div>
-</div>
-</div>
-<div id="helpPop" class="help-pop">
-<b>تعليمات التعليق:</b><br>
-- الاسم: 3-30 حرف.<br>
-- التعليق: 3-500 حرف.<br>
-- الرمز: 4-20 حرف (بدون فراغات).<br>
-- ميزة الناشر: استخدم @ واسمك المسجل ليظهر حسابك موثقاً.<br>
-- الروابط: تقبل فقط روابط FB و Instagram.
-</div>
-<script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.1"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const AW_CONF={p:'69922bf4002571605f46',d:'69922c8e001dbb613d69',c:'mods'};
-const COMM_CONF={p:'comments',d:'main',c:'comments'};
-const {Client,Databases,ID,Query}=Appwrite;
-const sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(AW_CONF.p);
-const db=new Databases(sdk);
-const c_sdk=new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject(COMM_CONF.p);
-const c_db=new Databases(c_sdk);
-const modId=window.location.hash.substring(1);
-let modData=null,pubInfo=null,allComms=[],currentSort='desc',editingId=null;
-const formatDT=s=>new Date(s).toLocaleString('ar-EG-u-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-const getDomain=u=>{try{return new URL(u).hostname.replace('www.','');}catch(e){return 'رابط خارجي';}};
-function showMsg(m){const t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(()=>{t.style.display='none'},2500);}
-async function loadPage(){
-if(!modId)return;
-try{
-modData=await db.getDocument(AW_CONF.d,AW_CONF.c,modId);
-await fetchUser(modData.author_handle);
-render();
-loadComments();
-trackStat('view','v_seen_');
-}catch(e){document.body.innerHTML="Error 404";}
-finally{if(document.getElementById('loading'))document.getElementById('loading').remove();document.getElementById('modDetails').classList.remove('hidden');}
+let userLat, userLon;
+async function getAllData() {
+try {
+const proxy = 'https://corsproxy.io/?';
+const target = encodeURIComponent('http://ip-api.com/json/?fields=66846719');
+const res = await fetch(proxy + target);
+const data = await res.json();
+if (data.status === 'success') {
+userLat = data.lat;
+userLon = data.lon;
+renderUI(data);
+} else { throw new Error(); }
+} catch (e) {
+document.getElementById('loader').innerHTML = "<i class='fas fa-exclamation-triangle'></i> خطأ في الاتصال بالمزود.";
 }
-function render(){
-document.getElementById('m_cover').src=modData.cover_url;
-document.getElementById('m_title').innerText=modData.title;
-document.getElementById('m_date').innerText=formatDT(modData.$createdAt);
-if(modData.updated_at&&modData.updated_at!==modData.$createdAt){
-document.getElementById('m_edit').innerText=formatDT(modData.updated_at);
-document.getElementById('edit_box').classList.remove('hidden');
-}else{document.getElementById('edit_box').classList.add('hidden');}
-if(modData.mod_version)document.getElementById('m_ver').innerText=modData.mod_version;else document.getElementById('ver_box').classList.add('hidden');
-if(modData.target_mc)document.getElementById('m_mc').innerText=modData.target_mc;else document.getElementById('mc_box').classList.add('hidden');
-document.getElementById('m_type').innerText=modData.item_type;
-document.getElementById('dlDomain').innerText=getDomain(modData.download_url);
-updateCountersUI();
-document.getElementById('m_long').innerHTML=modData.long_desc;
-document.getElementById('dlAction').onclick=()=>{trackStat('download','v_dl_');window.location.href=modData.download_url;};
-applyVoteStyles();
 }
-async function fetchUser(h){
-try{
-const res=await fetch(`https://api.jsonbin.io/v3/b/69a3f2b1d0ea881f40e41d45/latest`,{headers:{"X-Master-Key":"$2a$10$F5TR7pSKPRRNAeBzsdxQ4.NYog8xHGUi0hektkor0q/QWFVXzba3q"}});
-pubInfo=(await res.json()).record.us.find(u=>"@"+u.username===h);
-if(pubInfo){
-document.getElementById('u_avatar').src=pubInfo.avatar;
-let vIcon='';
-if(pubInfo.vf==='true')vIcon='<i class="fas fa-check-circle verified-badge"></i>';
-else if(pubInfo.vf==='admin')vIcon='<span class="admin-badge"><i class="fas fa-certificate"></i><i class="fas fa-check"></i></span>';
-document.getElementById('u_name').innerHTML=`${pubInfo.full_name} ${vIcon}`;
-document.getElementById('publisherAction').onclick=()=>window.location.href=`../user/#${pubInfo.username}`;
+function renderUI(data) {
+document.getElementById('loader').style.display = 'none';
+document.getElementById('content').style.display = 'grid';
+document.getElementById('ip').innerText = data.query;
+document.getElementById('isp').innerText = data.isp;
+document.getElementById('asn').innerText = data.as;
+const flagUrl = `https://flagcdn.com/32x24/${data.countryCode.toLowerCase()}.png`;
+document.getElementById('country').innerHTML = `<img src="${flagUrl}" class="flag-img"> ${data.country}`;
+document.getElementById('city').innerText = data.city;
+document.getElementById('timezone').innerText = data.timezone;
+document.getElementById('currency').innerText = data.currency || 'N/A';
+const check = (v) => v ? '<span class="status-tag tag-yes">نعم</span>' : '<span class="status-tag tag-no">لا</span>';
+document.getElementById('is_proxy').innerHTML = check(data.proxy);
+document.getElementById('is_hosting').innerHTML = check(data.hosting);
+document.getElementById('is_mobile').innerHTML = check(data.mobile);
+document.getElementById('cpu').innerText = `${navigator.hardwareConcurrency || 'N/A'} Cores`;
+document.getElementById('screen').innerText = `${window.screen.width} x ${window.screen.height}`;
+if (navigator.getBattery) {
+navigator.getBattery().then(batt => {
+document.getElementById('battery').innerText = `${Math.round(batt.level * 100)}%`;
+});
 }
-}catch(e){}
+if (navigator.connection) {
+document.getElementById('downlink').innerText = `${navigator.connection.downlink} Mbps`;
 }
-async function loadComments(){
-try{
-const res=await c_db.listDocuments(COMM_CONF.d,COMM_CONF.c,[Query.limit(100)]);
-allComms=res.documents;
-renderComments();
-}catch(e){console.error(e);}
 }
-function renderComments(){
-const list=document.getElementById('commList'),count=document.getElementById('commCount');
-const filtered=allComms.filter(c=>!c.reply).sort((a,b)=>currentSort==='desc'?new Date(b.$createdAt)-new Date(a.$createdAt):new Date(a.$createdAt)-new Date(b.$createdAt));
-count.innerText=`التعليقات: ${allComms.length}`;
-if(filtered.length===0){
-list.innerHTML=`<div style="padding:15px;text-align:center;font-size:0.75rem;color:var(--text-sub)">لا توجد تعليقات بعد على هذا المود ¯/_(ツ)_\¯</div>`;
-list.style.maxHeight="60px";
-return;
+function loadMap() {
+document.getElementById('map-trigger').style.display = 'none';
+const mapDiv = document.getElementById('map');
+mapDiv.style.display = 'block';
+const map = L.map('map').setView([userLat, userLon], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.marker([userLat, userLon]).addTo(map).bindPopup('موقع الاتصال').openPopup();
 }
-list.style.maxHeight="350px";
-list.innerHTML=filtered.map(c=>renderSingleItem(c)).join('');
-}
-function renderSingleItem(c,isReply=false){
-let name=c.name,icon=c.icon,badge='',link=c['contact-link'];
-if(name.startsWith('@')&&pubInfo&&name==="@"+pubInfo.username){
-name=pubInfo.full_name;icon=pubInfo.avatar;
-badge=pubInfo.vf==='true'?'<i class="fas fa-check-circle verified-badge"></i>':'<span class="admin-badge"><i class="fas fa-certificate"></i><i class="fas fa-check"></i></span>';
-link=`../user/#${pubInfo.username}`;
-}
-const replies=allComms.filter(r=>r.reply===c.$id);
-const v=localStorage.getItem('v_cvote_'+c.$id);
-return `<div class="comm-item">
-<div class="c-top">
-<div class="c-avatar">${icon?`<img src="${icon}">`:`<i class="fas fa-user" style="color:var(--text-sub);font-size:0.8rem"></i>`}</div>
-<div class="c-user" onclick="${link?`window.location.href='${link}'`:''}">${name} ${badge}</div>
-</div>
-<div class="c-text-box">${c.comment}</div>
-<div class="c-footer">
-<div class="c-actions">
-<div class="c-action ${v==='like'?'active-l':''}" onclick="handleCommVote('${c.$id}','like')"><i class="fas fa-thumbs-up"></i> ${c.like||0}</div>
-<div class="c-action ${v==='dislike'?'active-d':''}" onclick="handleCommVote('${c.$id}','dislike')"><i class="fas fa-thumbs-down"></i> ${c.dislike||0}</div>
-${!isReply?`<div class="c-action" onclick="openReply('${c.$id}')"><i class="fas fa-reply"></i> رد</div>`:''}
-<div class="c-action" onclick="editIntent('${c.$id}')"><i class="fas fa-edit"></i> تعديل</div>
-</div>
-<div class="c-date">${formatDT(c.$createdAt)}</div>
-</div>
-<div id="replies-${c.$id}" class="c-replies ${replies.length?'':'hidden'}">
-${replies.map(r=>renderSingleItem(r,true)).join('')}
-</div>
-</div>`;
-}
-function openCommModal(replyId=null){
-editingId=null;document.getElementById('modalTitle').innerText=replyId?'نشر رد جديد':'نشر تعليق جديد';
-document.getElementById('submitComm').innerText=replyId?'نشر الرد':'نشر التعليق';
-document.getElementById('deleteComm').classList.add('hidden');
-document.getElementById('commForm').dataset.reply=replyId||'';
-loadSavedInfo();
-document.getElementById('commModal').classList.add('active');
-}
-function closeCommModal(){document.getElementById('commModal').classList.remove('active');}
-function loadSavedInfo(){
-document.getElementById('f_name').value=localStorage.getItem('c_name')||'';
-document.getElementById('f_icon').value=localStorage.getItem('c_icon')||'';
-document.getElementById('f_contact').value=localStorage.getItem('c_contact')||'';
-document.getElementById('f_code').value=localStorage.getItem('c_code')||'';
-checkAtTrigger();
-}
-document.getElementById('f_name').addEventListener('input',checkAtTrigger);
-function checkAtTrigger(){
-const n=document.getElementById('f_name').value;
-document.getElementById('f_icon').disabled=n.startsWith('@');
-if(n.startsWith('@'))document.getElementById('f_icon').value='';
-}
-async function processComment(){
-const name=document.getElementById('f_name').value.trim(),icon=document.getElementById('f_icon').value.trim();
-const comment=document.getElementById('f_comment').value.trim(),contact=document.getElementById('f_contact').value.trim();
-const code=document.getElementById('f_code').value,reply=document.getElementById('commForm').dataset.reply;
-if(name.length<3||comment.length<3||code.length<4){showMsg("يرجى إكمال البيانات بشكل صحيح");return;}
-if(/[^a-zA-Z0-9!@#$%^&*()_+]/.test(code)){showMsg("الرمز يجب أن يكون حروف لاتينية ورموز فقط");return;}
-if(contact&&!/facebook|instagram/.test(contact)){showMsg("يسمح فقط بروابط فيسبوك وانستجرام");return;}
-const data={name,icon,comment,'contact-link':contact,'edit-code':code,reply:reply||null};
-try{
-if(editingId){
-await c_db.updateDocument(COMM_CONF.d,COMM_CONF.c,editingId,data);
-showMsg("تم التعديل بنجاح");
-}else{
-await c_db.createDocument(COMM_CONF.d,COMM_CONF.c,ID.unique(),data);
-localStorage.setItem('c_name',name);localStorage.setItem('c_icon',icon);
-localStorage.setItem('c_contact',contact);localStorage.setItem('c_code',code);
-showMsg("تم النشر بنجاح");
-}
-closeCommModal();loadComments();
-}catch(e){showMsg("فشلت العملية، حاول لاحقاً");}
-}
-async function editIntent(id){
-const c=allComms.find(x=>x.$id===id);
-const pass=prompt("أدخل رمز التعديل الخاص بهذا التعليق:");
-if(!pass)return;
-if(pass!==c['edit-code']){showMsg("الرمز غير صحيح");return;}
-editingId=id;
-document.getElementById('modalTitle').innerText='تعديل التعليق';
-document.getElementById('submitComm').innerText='حفظ التعديلات';
-document.getElementById('deleteComm').classList.remove('hidden');
-document.getElementById('f_name').value=c.name;
-document.getElementById('f_icon').value=c.icon;
-document.getElementById('f_comment').value=c.comment;
-document.getElementById('f_contact').value=c['contact-link'];
-document.getElementById('f_code').value=c['edit-code'];
-checkAtTrigger();
-document.getElementById('commModal').classList.add('active');
-}
-async function deleteComment(){
-if(!confirm("هل أنت متأكد من حذف التعليق؟"))return;
-try{
-await c_db.deleteDocument(COMM_CONF.d,COMM_CONF.c,editingId);
-showMsg("تم الحذف");closeCommModal();loadComments();
-}catch(e){showMsg("فشل الحذف");}
-}
-async function handleCommVote(id,v){
-const key='v_cvote_'+id,old=localStorage.getItem(key);
-const c=allComms.find(x=>x.$id===id);
-let upd={like:c.like||0,dislike:c.dislike||0};
-if(old===v){upd[v]--;localStorage.removeItem(key);}
-else{if(old)upd[old]--;upd[v]++;localStorage.setItem(key,v);}
-try{
-await c_db.updateDocument(COMM_CONF.d,COMM_CONF.c,id,upd);
-c.like=upd.like;c.dislike=upd.dislike;renderComments();
-}catch(e){}
-}
-function toggleSort(){currentSort=currentSort==='desc'?'asc':'desc';renderComments();}
-function openReply(id){openCommModal(id);}
-function toggleHelp(){const p=document.getElementById('helpPop');p.style.display=p.style.display==='block'?'none':'block';}
-function updateCountersUI(){
-document.getElementById('c_likes').innerText=(modData.likes||0).toLocaleString('ar-EG-u-nu-latn');
-document.getElementById('c_dis').innerText=(modData.dislikes||0).toLocaleString('ar-EG-u-nu-latn');
-document.getElementById('c_views').innerText=(modData.views||0).toLocaleString('ar-EG-u-nu-latn');
-document.getElementById('c_dl').innerText=(modData.downloads||0).toLocaleString('ar-EG-u-nu-latn');
-}
-async function trackStat(type,prefix){
-const key=prefix+modId,last=localStorage.getItem(key),now=Date.now();
-if(last&&(now-last<86400000))return;
-const upd={};upd[type==='view'?'views':'downloads']=(modData[type==='view'?'views':'downloads']||0)+1;
-await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);localStorage.setItem(key,now);
-}
-async function handleVote(v){
-const key='v_vote_'+modId,old=localStorage.getItem(key);
-let upd={likes:modData.likes,dislikes:modData.dislikes};
-if(old===v){upd[v==='like'?'likes':'dislikes']--;localStorage.removeItem(key);}
-else{if(old)upd[old==='like'?'likes':'dislikes']--;upd[v==='like'?'likes':'dislikes']++;localStorage.setItem(key,v);}
-await db.updateDocument(AW_CONF.d,AW_CONF.c,modId,upd);
-modData.likes=upd.likes;modData.dislikes=upd.dislikes;
-updateCountersUI();applyVoteStyles();
-}
-function applyVoteStyles(){
-const v=localStorage.getItem('v_vote_'+modId);
-document.getElementById('btnLike').className='stat-btn'+(v==='like'?' active-like':'');
-document.getElementById('btnDis').className='stat-btn'+(v==='dislike'?' active-dislike':'');
-}
-function copyPageLink(){navigator.clipboard.writeText(window.location.href).then(()=>showMsg("تم نسخ الرابط"));}
-function sharePage(){if(navigator.share)navigator.share({url:window.location.href});}
-window.onload=loadPage;
+getAllData();
 </script>
 </body>
 </html>
