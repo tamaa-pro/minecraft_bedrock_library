@@ -7,40 +7,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;padding:0;background-color:#0b0b0b;color:#ddd;font-family:'Changa',sans-serif;user-select:none;-webkit-user-select:none;touch-action:manipulation;overflow-x:hidden}
-.app-wrapper{max-width:550px;margin:0 auto;padding:10px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;padding:5px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+body{margin:0;padding:0;background-color:#080808;color:#ddd;font-family:'Changa',sans-serif;touch-action:manipulation;overflow-x:hidden}
+body.modal-open{overflow:hidden}
+.app-wrapper{max-width:550px;margin:0 auto;padding:12px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
 .brand-section{display:flex;align-items:center;gap:12px}
-.app-icon{width:65px;height:65px;border-radius:12px;object-fit:cover}
-.brand-text h1{margin:0;font-size:18px;color:#fff;line-height:1.2}
-.studio-name{color:#00a8ff;font-size:12px;margin-top:2px;display:block}
-.menu-toggle{background:#1a1a1a;border:1px solid #333;color:#fff;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:14px}
-.info-card{background:#151515;border:1px solid #222;border-radius:10px;overflow:hidden;margin-bottom:15px}
-.card-top-bar{background:#1c1c1c;padding:10px;display:flex;justify-content:space-around;border-bottom:1px solid #222}
-.bar-item{text-align:center}
-.bar-item i{font-size:12px;color:#888;margin-left:4px}
-.bar-val{display:block;font-size:13px;font-weight:700;color:#fff}
-.bar-lbl{font-size:9px;color:#666;text-transform:uppercase}
-.card-body{padding:12px;display:flex;justify-content:space-between;font-size:12px}
-.body-item i{color:#01875f;margin-left:5px}
-.download-btn{width:100%;background:#01875f;color:#fff;border:none;padding:10px;border-radius:6px;font-family:'Changa';font-weight:700;font-size:15px;cursor:pointer;margin-bottom:15px;transition:0.2s}
-.download-btn:disabled{background:#333;color:#777;cursor:not-allowed}
-.screenshots{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:15px;scrollbar-width:none}
+.app-icon{width:80px;height:80px;border-radius:15px;object-fit:cover;background:#000;border:1px solid #222}
+.brand-text h1{margin:0;font-size:20px;color:#fff}
+.studio-name{color:#00a8ff;font-size:13px;display:block}
+.menu-toggle{background:#1a1a1a;border:1px solid #333;color:#fff;width:40px;height:40px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px}
+.info-card{background:#121212;border:1px solid #222;border-radius:10px;margin-bottom:15px;overflow:hidden}
+.card-top-bar{background:#181818;padding:12px;display:flex;justify-content:space-around;border-bottom:1px solid #222}
+.bar-item{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff}
+.bar-item i{color:#888;font-size:14px}
+.card-body{padding:10px;display:flex;justify-content:space-around;font-size:11px;color:#aaa}
+.card-body span i{color:#00e676;margin-left:4px}
+.download-btn{width:100%;background:#00c853;color:#fff;border:none;padding:12px;border-radius:8px;font-family:'Changa';font-weight:700;font-size:16px;cursor:pointer;margin-bottom:20px}
+.download-btn:disabled{background:#222;color:#555;cursor:not-allowed}
+.screenshots{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:15px;scrollbar-width:none}
 .screenshots::-webkit-scrollbar{display:none}
-.screen-item{flex:0 0 91px;height:180px;background:#000;border-radius:6px;overflow:hidden;border:1px solid #222;position:relative}
-.screen-item img{width:100%;height:100%;object-fit:cover}
-.screen-lbl{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.8);font-size:8px;text-align:center;padding:2px;color:#aaa}
-.full-desc{font-size:13px;line-height:1.6}
-.menu-overlay{display:none;background:#151515;border:1px solid #333;border-radius:8px;margin-bottom:15px;padding:12px}
-.menu-item{display:flex;align-items:center;gap:12px;padding:10px;color:#fff;text-decoration:none;font-size:13px;border-bottom:1px solid #222}
-.menu-item:last-child{border:none}
-.menu-item img{width:35px;height:35px;border-radius:50%;object-fit:cover;border:1px solid #444}
-.menu-item i{font-size:18px;width:25px;text-align:center;color:#00a8ff}
-.info-section{padding:10px;font-size:11px;color:#888;background:#111;border-radius:6px;margin:10px 0}
-.info-line{display:flex;justify-content:space-between;margin-bottom:4px}
-.separator{height:1px;background:#222;margin:10px 0}
-.stats-link{display:flex;align-items:center;justify-content:center;gap:8px;background:#222;color:#fff;padding:8px;border-radius:6px;text-decoration:none;font-size:12px}
+.screen-item{flex:0 0 100px;height:200px;background:#000;border-radius:6px;overflow:hidden;border:1px solid #222;position:relative}
+.screen-item img{width:100%;height:100%;object-fit:cover;background:#000}
+.screen-lbl{position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.85);font-size:8px;text-align:center;padding:3px;color:#ccc}
+.full-desc{font-size:13px;line-height:1.7}
+.menu-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.menu-card{background:#151515;width:90%;max-width:380px;border-radius:12px;border:1px solid #333;padding:0;max-height:90vh;overflow-y:auto;position:relative}
+.close-icon{position:absolute;top:10px;left:10px;color:#777;font-size:20px;cursor:pointer;z-index:1001;width:30px;height:30px;display:flex;align-items:center;justify-content:center}
+.menu-header-padding{padding:30px 0 10px 0}
+.menu-item{display:flex;align-items:center;gap:15px;padding:12px 15px;color:#fff;text-decoration:none;font-size:13px}
+.menu-item img{width:50px;height:50px;border-radius:50%;object-fit:cover;background:#000;border:1px solid #333}
+.menu-item i{font-size:20px;width:30px;text-align:center;color:#00a8ff}
+hr{border:0;height:1px;background:#252525;margin:0;width:100%}
+.info-section{background:#0d0d0d;padding:12px;font-size:10px;color:#777}
+.info-line{display:flex;justify-content:space-between;margin-bottom:5px}
+.stats-link{display:flex;align-items:center;justify-content:center;gap:10px;background:#1a1a1a;color:#fff;padding:12px;text-decoration:none;font-size:13px}
+/* تأثير الضغط التلقائي فقط للعناصر التفاعلية */
+button:active, a:active, .menu-toggle:active, .close-icon:active, .menu-item:active { transform: translateY(2px) !important; transition: transform 0.05s ease; }
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -53,49 +56,25 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 <span class="studio-name">TAMAA PRO STUDIO</span>
 </div>
 </div>
-<button class="menu-toggle" id="toggleBtn"><i class="fas fa-ellipsis-v"></i></button>
+<div class="menu-toggle" onclick="toggleMenu(true)"><i class="fas fa-bars-staggered"></i></div>
 </header>
-<div class="menu-overlay" id="menuBox">
-<a href="https://www.facebook.com/minecraft.bedrock.library" class="menu-item">
-<i class="fab fa-facebook"></i> <span>صفحة المكتبة على فيسبوك</span>
-</a>
-<div class="menu-item">
-<img src="https://tamaa-pro.github.io/azro/data/pictures/tamaa_pro_icon.png"> <span>TAMAA PRO STUDIO</span>
-</div>
-<div class="menu-item">
-<img src="https://k.top4top.io/p_3716t91u71.jpg"> <span>Sifaw Tinsti (المسؤول)</span>
-</div>
-<div class="separator"></div>
-<div style="font-size:10px;color:#555;margin-bottom:8px">معلومات عن صفحة التحميل</div>
-<div class="info-section">
-<div class="info-line"><span>تاريخ إنشاء الصفحة:</span> <span>2025/06/01</span></div>
-<div class="info-line"><span>آخر تحديث للصفحة:</span> <span>2026/03/11</span></div>
-<div class="info-line"><span>رمز آخر تعديل:</span> <span>(M0950)-128</span></div>
-<div class="info-line"><span>تحديث الحزمة (2.7):</span> <span>2026/02/10</span></div>
-<div class="info-line"><span>إصدار (2.0):</span> <span>2025/02/07</span></div>
-<div class="info-line"><span>إصدار (1.0):</span> <span>2024/06/16</span></div>
-<div class="info-line"><span>إصدار البيتا الأول:</span> <span>2024/01/07</span></div>
-</div>
-<div class="separator"></div>
-<a href="/stats" class="stats-link"><i class="fas fa-chart-pie"></i> صفحة الإحصائيات</a>
-</div>
 <div class="info-card">
 <div class="card-top-bar">
-<div class="bar-item"><span class="bar-val" id="dl-count">0</span><span class="bar-lbl"><i class="fas fa-cloud-download-alt"></i> تحميل</span></div>
-<div class="bar-item"><span class="bar-val">2.7</span><span class="bar-lbl"><i class="fas fa-code-branch"></i> إصدار</span></div>
-<div class="bar-item"><span class="bar-val">31 MB</span><span class="bar-lbl"><i class="fas fa-weight-hanging"></i> حجم</span></div>
+<div class="bar-item"><i class="fas fa-download"></i> <span id="dl-count">0</span></div>
+<div class="bar-item"><i class="fas fa-code-branch"></i> <span>2.7</span></div>
+<div class="bar-item"><i class="fas fa-database"></i> <span>31 MB</span></div>
 </div>
 <div class="card-body">
-<span><i class="far fa-calendar-alt"></i> آخر تحديث: 2026/02/10</span>
+<span><i class="far fa-calendar-check"></i> 2026/02/10</span>
 <span><i class="fab fa-android"></i> اندرويد فقط</span>
 </div>
 </div>
 <button id="dlBtn" class="download-btn">تحميل التطبيق (APK)</button>
 <div class="screenshots" id="scrBox"></div>
 <div class="full-desc">
-<div style="background:#1a1a1a;padding:12px;border-radius:8px;font-size:12px;margin-bottom:15px">
-<p style="line-height:1.6">✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة ، و كذلك أقسام متنوعة .</p>
-<ul style="line-height:1.6;color:#bbb">
+<div style="background:#151515;padding:12px;border-radius:10px;border:1px solid #222;margin-bottom:15px">
+<p>✦ تطبيق المكتبة يوفر سجلًا بكل إصدارات ماين كرافت البيدروك مع إمكانية تحميلها بسهولة وأمان . كما يتيح تحميل آخر إصدار (رسمي و بيتا) في الوقت الفعلي ، سواء نسخة مخففة أو الكاملة ، و كذلك أقسام متنوعة .</p>
+<ul style="color:#bbb;padding-right:20px">
 <li>قسم للإصدارات الأساسية .</li>
 <li>أقسام لقوائم الإصدارات الرسمية .</li>
 <li>قسم لتحميل نسخة الباتش .</li>
@@ -103,25 +82,52 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 <li>قسم للبرامج والمواقع المقترحة .</li>
 <li>قسم للدردشة وأقسام جانبية أخرى...</li>
 </ul>
-<p style="line-height:1.6">• يتم تحديث الإصدار بعد بضع ساعات من صدوره .<br>• الإصدار 2.0 بديل للنسخة القديمة (2025/02/07) .<br>• التحديثات داخلية ولا تتطلب إعادة التحميل غالباً .</p>
-<div style="margin-top:10px;background:#0f0f0f;padding:10px;border-radius:6px;font-size:10px;color:#888">هدف التطبيق جمع كل الإصدارات وتنظيمها في مكان واحد مع إضافات متنوعة، والروابط خاصة بمواقع الأرشفة المعروفة.</div>
+<p>• يتم تحديث الإصدار بعد بضع ساعات من صدوره .<br>• الإصدار 2.0 بديل للنسخة القديمة (2025/02/07) .<br>• التحديثات داخلية ولا تتطلب إعادة التحميل غالباً .</p>
+<div style="background:#0a0a0a;padding:10px;border-radius:6px;font-size:10px;color:#666;border:1px solid #1a1a1a">هدف التطبيق هو جمع كل الإصدارات وتنظيمها في مكان واحد مع إضافات جانبية بسيطة، وروابط التحميل خاصة بمواقع الأرشفة المعروفة.</div>
 </div>
-<div id="bedrock-card" style="background:#111;border-radius:6px;border:1px solid #444;color:#fff;direction:rtl;margin-bottom:15px">
-<div style="padding:10px;font-size:10px"><b>نافذة التحقق من آخر إصدار رسمي:</b></div>
-<div style="height:1px;background:#222"></div>
-<div style="padding:10px;display:flex;justify-content:space-between">
-<div><span>رسمي: </span><span id="stable-text" style="color:#e6d97a">...</span></div>
-<span id="stable-refresh" style="cursor:pointer;opacity:.5">⌕</span>
+<div id="bedrock-card" style="background:#111;border-radius:8px;border:1px solid #333;margin-bottom:15px;overflow:hidden">
+<div style="padding:10px;font-size:10px;background:#1a1a1a"><b>التحقق من آخر إصدار رسمي (Minecraft):</b></div>
+<div style="padding:12px;display:flex;justify-content:space-between;border-bottom:1px solid #222">
+<div>رسمي: <span id="stable-text" style="color:#e6d97a">...</span></div>
+<span onclick="location.reload()" style="cursor:pointer;opacity:0.5">⌕</span>
 </div>
-<div style="padding:10px;display:flex;justify-content:space-between;border-top:1px solid #222">
-<div><span>بيتا: </span><span id="beta-text" style="color:#e6d97a">...</span></div>
-<span id="beta-refresh" style="cursor:pointer;opacity:.5">⌕</span>
+<div style="padding:12px;display:flex;justify-content:space-between">
+<div>بيتا: <span id="beta-text" style="color:#e6d97a">...</span></div>
+<span onclick="location.reload()" style="cursor:pointer;opacity:0.5">⌕</span>
 </div>
 </div>
-<div style="background:#8B0000;padding:12px;border-radius:8px;font-size:11px;color:#fff">
+<div style="background:#8B0000;padding:12px;border-radius:10px;font-size:11px">
 <b>تنبيه مهم عند تسجيل الدخول ⚠︎</b><br>
-يرجى عدم إدخال الاسم الحقيقي كاملاً أو صورة شخصية. الحسابات مخصصة للهوية داخل الدردشة، وأي مخالفة للقواعد تؤدي للحظر الكلي والدائم.
+يرجى عدم إدخال الاسم الحقيقي كاملاً أو صورة شخصية. الحسابات مخصصة للهوية داخل الدردشة، وأي مخالفة تؤدي للحظر الكلي والدائم.
 </div>
+</div>
+</div>
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu(false)">
+<div class="menu-card" onclick="event.stopPropagation()">
+<div class="close-icon" onclick="toggleMenu(false)"><i class="fas fa-times"></i></div>
+<div class="menu-header-padding"></div>
+<a href="https://www.facebook.com/minecraft.bedrock.library" class="menu-item"><i class="fab fa-facebook"></i> <span>صفحة المكتبة على فيسبوك</span></a>
+<hr>
+<a href="#" class="menu-item"><i class="fas fa-users"></i> <span>مجموعة المكتبة العامة</span></a>
+<hr>
+<a href="#" class="menu-item"><i class="fas fa-users-rectangle"></i> <span>مجموعة المكتبة الخاصة</span></a>
+<hr>
+<div class="menu-item"><img src="https://tamaa-pro.github.io/azro/data/pictures/tamaa_pro_icon.png"> <span>TAMAA PRO STUDIO</span></div>
+<hr>
+<div class="menu-item"><img src="https://k.top4top.io/p_3716t91u71.jpg"> <span>Sifaw Tinsti (المسؤول)</span></div>
+<hr>
+<div class="info-section">
+<div style="font-size:11px;color:#999;margin-bottom:10px">معلومات صفحة التحميل</div>
+<div class="info-line"><span>تاريخ إنشاء الصفحة:</span> <span>2025/06/01</span></div>
+<div class="info-line"><span>آخر تحديث للصفحة:</span> <span>2026/03/12</span></div>
+<div class="info-line"><span>رمز آخر تعديل:</span> <span>(S0738)-1230</span></div>
+<div class="info-line"><span>تحديث الحزمة (2.7):</span> <span>2026/02/10</span></div>
+<div class="info-line"><span>الإصدار (2.0):</span> <span>2025/02/07</span></div>
+<div class="info-line"><span>إصدار (1.0):</span> <span>2024/06/16</span></div>
+<div class="info-line"><span>إصدار البيتا الأول:</span> <span>2024/01/07</span></div>
+</div>
+<hr>
+<a href="/stats" class="stats-link"><i class="fas fa-chart-simple"></i> صفحة الإحصائيات</a>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/appwrite@11.0.0"></script>
@@ -133,30 +139,30 @@ let d=document.createElement('div'); d.className='screen-item';
 d.innerHTML=`<img src="https://tamaa-pro.github.io/minecraft_bedrock_library/data/screenshots/${i[0]}"><div class="screen-lbl">${i[1]}</div>`;
 scrBox.appendChild(d);
 });
-const { Client, Databases } = Appwrite;
-const client = new Client().setEndpoint('https://fra.cloud.appwrite.io/v1').setProject('minecraft-bedrock-library');
-const db = new Databases(client);
-const D_ID='download-page', C_ID='download-page', DOC='downloads_info';
-async function getDl(){try{let r=await db.getDocument(D_ID,C_ID,DOC);document.getElementById('dl-count').textContent=r.downloads;}catch(e){}}
+function toggleMenu(s){ 
+    const m = document.getElementById('menuOverlay');
+    m.style.display = s ? 'flex' : 'none';
+    document.body.classList.toggle('modal-open', s);
+}
+const {Client,Databases}=Appwrite;
+const client=new Client().setEndpoint('https://fra.cloud.appwrite.io/v1').setProject('minecraft-bedrock-library');
+const db=new Databases(client);
+// البيانات من الصورة المرفقة حرفياً
+const DB_ID='mbl-stats', C_ID='download-page', DOC_ID='downloads'; 
+async function getDl(){try{let r=await db.getDocument(DB_ID,C_ID,DOC_ID);document.getElementById('dl-count').textContent=r.downloads;}catch(e){console.error("خطأ في الجلب: "+e.message)}}
 document.getElementById('dlBtn').onclick=async function(){
-const btn=this; const now=Date.now(); const last=localStorage.getItem('lib_dl_time');
+const btn=this; const now=Date.now(); const last=localStorage.getItem('lib_dl_v3');
 btn.disabled=true; btn.textContent="جاري التحميل...";
 window.location.href="https://github.com/tamaa-pro/minecraft_bedrock_library/releases/download/v2.7/library.apk";
 if(!last||(now-last)>86400000){
-try{let r=await db.getDocument(D_ID,C_ID,DOC);
-await db.updateDocument(D_ID,C_ID,DOC,{downloads:r.downloads+1});
-localStorage.setItem('lib_dl_time',now); getDl();
-}catch(e){}}
-setTimeout(()=>{btn.disabled=false; btn.textContent="تحميل التطبيق (APK)";},5000);
+try{let r=await db.getDocument(DB_ID,C_ID,DOC_ID);
+await db.updateDocument(DB_ID,C_ID,DOC_ID,{downloads:r.downloads+1});
+localStorage.setItem('lib_dl_v3',now); getDl();
+}catch(e){console.error("فشل التحديث: "+e.message)}}
+setTimeout(()=>{btn.disabled=false; btn.textContent="تحميل التطبيق (APK)";},300000);
 };
 getDl();
-document.getElementById('toggleBtn').onclick=()=> {
-const m=document.getElementById('menuBox'); m.style.display=m.style.display==='block'?'none':'block';
-};
-const p="https://corsproxy.io/?",
-f=async u=>{try{let r=await fetch(p+encodeURIComponent(u));return await r.text()}catch{return ""}},
-v=t=>(t.match(/\d+(?:\.\d+)+(?:\/\d+)?/)||[])[0]||"نقص",
-U=async(e,u)=>{let t=await f(u);e.textContent=v(t)};
+const p="https://corsproxy.io/?",v=t=>(t.match(/\d+(?:\.\d+)+(?:\/\d+)?/)||[])[0]||"..",U=async(e,u)=>{try{let r=await fetch(p+encodeURIComponent(u));let t=await r.text();e.textContent=v(t)}catch{e.textContent="خطأ"}};
 U(document.getElementById("stable-text"),"https://feedback.minecraft.net/hc/en-us/sections/360001186971-Release-Changelogs");
 U(document.getElementById("beta-text"),"https://feedback.minecraft.net/hc/en-us/sections/360001185332-Beta-and-Preview-Information-and-Changelogs");
 </script>
